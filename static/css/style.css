@@ -34,3 +34,17 @@ section {
     font-family: "Delicious Handrawn", cursive;
     font-size: 1.6rem;
 }
+
+#logo-container {
+    position: relative;
+}
+
+#logo-brand {
+    width: 15vw;
+    aspect-ratio: 1/1;
+    background: url('/media/images/bakery-logo.png') no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: -6vw;
+    right: 15%;
+}

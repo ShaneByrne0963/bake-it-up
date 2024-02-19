@@ -24,12 +24,14 @@
     <header>
         <div id="hero-image"></div>
         <nav id="navbar" class="px-2 align-middle">
-            <a href="" class="nav-logo"></a>
+            <div id="logo-container">
+                <a href="" id="logo-brand"></a>
+            </div>
             <a href="" class="nav-link">All Products</a>
             <a href="" class="nav-link">Breads</a>
             <a href="" class="nav-link">Sweets & Treats</a>
             <a href="" class="nav-link">Cakes</a>
-            <button class="btn btn-link nav-link">
+            <button class="btn btn-link nav-link mr-3">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </nav>
@@ -37,7 +39,7 @@
     <section>
         <div id="main-content" class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 pt-3">
                     {% block content %}
                     {% endblock %}
                 </div>
