@@ -15,11 +15,11 @@ body {
 }
 
 section {
-    background: #BBBBBB;
+    background: #EEEEEE;
 }
 
 #main-content {
-    background: white;
+    background-color: white;
     min-height: 100%;
 }
 
@@ -31,4 +31,6 @@ section {
 
 .nav-link {
     color: white;
+    font-family: "Delicious Handrawn", cursive;
+    font-size: 1.6rem;
 }
