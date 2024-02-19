@@ -9,6 +9,7 @@ body {
 
 #hero-image {
     background-image: url('/media/images/hero-image-test.webp');
+    background-position: top center;
     background-size: cover;
     height: 256px;
 }
@@ -20,4 +21,14 @@ section {
 #main-content {
     background: white;
     min-height: 100%;
+}
+
+#navbar {
+    background-image: url('/media/images/navbar-back-test.png');
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+}
+
+.nav-link {
+    color: white;
 }
