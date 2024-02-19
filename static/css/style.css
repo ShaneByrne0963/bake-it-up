@@ -1,9 +1,15 @@
 /* --------------------------------------------------------Base Template */
 body {
+    font-family: "Handlee", serif;
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
+}
+
+h1 {
+    font-family: "Just Another Hand", cursive;
+    font-size: 4em;
 }
 
 #hero-image {
@@ -27,13 +33,23 @@ body {
     grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
 }
 
-.nav-link {
+.nav-link>a,
+.nav-link>button {
     color: white;
     font-family: "Delicious Handrawn", cursive;
+}
+
+.nav-link>a {
     font-size: 1.6rem;
 }
 
-.nav-link:hover,
+.nav-link>button {
+    font-size: 1.3rem;
+    padding: 2px 6px;
+}
+
+.nav-link>a:hover,
+.nav-link>button:hover,
 #footer-content a:hover {
     font-style: italic;
     text-decoration: underline;
