@@ -31,6 +31,7 @@ DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = [
     '8000-shanebyrne0963-bakeitup-lde3yz7pdl4.ws-eu108.gitpod.io',
+    'bake-it-up-e014260e4351.herokuapp.com'
 ]
 
 
