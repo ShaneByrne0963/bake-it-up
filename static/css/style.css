@@ -1,0 +1,23 @@
+/* --------------------------------------------------------Base Template */
+body {
+    width: 100vw;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+#hero-image {
+    background-image: url('/media/images/hero-image-test.webp');
+    background-size: cover;
+    height: 256px;
+}
+
+section {
+    background: #BBBBBB;
+}
+
+#main-content {
+    background: white;
+    min-height: 100%;
+}

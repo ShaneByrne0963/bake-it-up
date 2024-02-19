@@ -1,12 +1,32 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Bake It Up{% block extra_title %}{% endblock %}</title>
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
+    <header>
+        <div id="hero-image"></div>
+    </header>
+    <section>
+        <div id="main-content" class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
