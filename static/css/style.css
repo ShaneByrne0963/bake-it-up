@@ -95,3 +95,26 @@ h1 {
 .footer-list>li {
     margin-bottom: 6px;
 }
+
+/* --------------------------------------------------------"Back To Top" button */
+
+#to-top {
+    background: url('/media/images/navbar-back-test.png');
+    border: 1px solid white;
+    color: white;
+    position: fixed;
+    right: 4px;
+    bottom: 4px;
+    padding: 2px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+}
+
+#to-top>div {
+    border: 1px solid white;
+    color: white;
+    padding: 6px 30px 4px;
+    border-radius: 32px;
+    font-weight: bold;
+}
