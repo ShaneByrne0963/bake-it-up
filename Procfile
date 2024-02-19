@@ -1,0 +1,1 @@
+web: gunicorn bake_it_up.wsgi:application
