@@ -23,7 +23,7 @@
 <body>
     <header>
         <div id="hero-image"></div>
-        <nav id="navbar" class="nav px-2 align-middle">
+        <nav id="navbar" class="nav align-middle">
             <div id="logo-container">
                 <a href="" id="logo-brand"></a>
             </div>
@@ -36,12 +36,14 @@
             </button>
         </nav>
     </header>
-    <section>
-        <div id="main-content" class="container">
+    <section id="main-body">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-12 pt-3">
+                <div id="main-content" class="col-10 offset-1 pt-3">
                     {% block content %}
                     {% endblock %}
+
+                    {% include 'includes/footer.html' %}
                 </div>
             </div>
         </div>
