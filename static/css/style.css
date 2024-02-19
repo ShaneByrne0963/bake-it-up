@@ -27,10 +27,27 @@ h1 {
     background-color: white;
 }
 
+/* --------------------------------------------------------Navigation */
+
 #navbar {
     background-image: url('/media/images/navbar-back-test.png');
     display: grid;
     grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
+}
+
+#logo-container {
+    position: relative;
+}
+
+#logo-brand {
+    width: 15vw;
+    aspect-ratio: 1/1;
+    background: url('/media/images/bakery-logo.png') no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: -6vw;
+    right: 15%;
+    z-index: 2;
 }
 
 .nav-link>a,
@@ -54,21 +71,6 @@ h1 {
     font-style: italic;
     text-decoration: underline;
     color: #DDDDDD;
-}
-
-#logo-container {
-    position: relative;
-}
-
-#logo-brand {
-    width: 15vw;
-    aspect-ratio: 1/1;
-    background: url('/media/images/bakery-logo.png') no-repeat center center;
-    background-size: cover;
-    position: absolute;
-    top: -6vw;
-    right: 15%;
-    z-index: 2;
 }
 
 /* --------------------------------------------------------Footer */
@@ -104,8 +106,8 @@ h1 {
     color: white;
     position: fixed;
     right: 8px;
-    bottom: -48px;
-    transition: bottom 0.3s ease-in-out;
+    bottom: -50px;
+    transition: bottom 0.3s ease-out;
     padding: 2px;
     border-radius: 32px;
     display: flex;
@@ -115,11 +117,19 @@ h1 {
 #to-top>div {
     border: 2px solid white;
     color: white;
-    padding: 6px 30px 4px;
+    padding: 4px 30px;
     border-radius: 32px;
-    font-weight: bold;
+    font-family: "Delicious Handrawn", cursive;
+    font-size: 1.3rem;
 }
 
 #to-top.visible {
     bottom: 8px;
+}
+
+/* --------------------------------------------------------Using a more formal font for forms */
+form input,
+form button {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.5em;
 }
