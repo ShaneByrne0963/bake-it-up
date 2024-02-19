@@ -26,13 +26,19 @@ section {
 #navbar {
     background-image: url('/media/images/navbar-back-test.png');
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+    grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
 }
 
 .nav-link {
     color: white;
     font-family: "Delicious Handrawn", cursive;
     font-size: 1.6rem;
+}
+
+.nav-link:hover {
+    font-style: italic;
+    text-decoration: underline;
+    color: #DDDDDD;
 }
 
 #logo-container {
