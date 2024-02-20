@@ -29,6 +29,7 @@ h1 {
 
 /* --------------------------------------------------------Overriding Bootstrap elements */
 
+/* Buttons */
 .btn.btn-primary {
     background-color: #784812;
     border-color: #8f5715;
@@ -57,6 +58,21 @@ h1 {
 .btn.btn-secondary:not(disabled):not(.disabled):focus {
     background-color: #363333;
     border-color: #3c3a3b;
+}
+
+/* Allowing disabled text to be shown as normal text. Mostly used to disable hover actions */
+.disabled.text-default {
+    color: #212529;
+}
+
+/* Dropdown Selection */
+.dropdown-item:active {
+    background-color: #3c3a3b;
+}
+
+.dropdown-item:focus {
+    background-color: #635f5e;
+    color: white;
 }
 
 /* --------------------------------------------------------Navigation */
@@ -172,6 +188,7 @@ h1 {
 /* --------------------------------------------------------Using a more formal font for forms */
 form input,
 button.btn,
-a.btn {
+a.btn,
+#account-nav .dropdown-item {
     font-family: "Roboto", sans-serif;
 }

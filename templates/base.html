@@ -31,7 +31,7 @@
         <div id="hero-image"></div>
         <nav id="navbar" class="nav align-middle">
             <div id="logo-container">
-                <a href="" id="logo-brand"></a>
+                <a href="{% url 'home' %}" id="logo-brand" aria-label="Go to the home page"></a>
             </div>
             <div class="nav-link">
                 <a href="" class="d-inline">All Products</a>
@@ -61,6 +61,18 @@
         <!-- Account navigation at top right corner of screen -->
         <div id="account-nav">
             {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-lg fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-item disabled text-default">{{ user }}</div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Favourites</a>
+                        <a class="dropdown-item" href="#">Account Settings</a>
+                        <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                    </div>
+                </div>
             {% else %}
                 <a href="{% url 'account_login' %}" class="btn btn-secondary shadow-none">Login</a>
                 <a href="{% url 'account_signup' %}" class="btn btn-secondary shadow-none">Signup</a>
