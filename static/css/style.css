@@ -7,6 +7,11 @@ body {
     grid-template-rows: auto 1fr;
 }
 
+/* Prevents the account nav from overlapping into the scrollbar */
+header {
+    position: relative;
+}
+
 h1 {
     font-family: "Just Another Hand", cursive;
     font-size: 4em;

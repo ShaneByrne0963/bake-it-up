@@ -77,6 +77,7 @@
                 <a href="{% url 'account_login' %}" class="btn btn-secondary shadow-none">Login</a>
                 <a href="{% url 'account_signup' %}" class="btn btn-secondary shadow-none">Signup</a>
             {% endif %}
+            <button class="btn btn-secondary" data-toggle="modal" data-target="#modal-action">Test Modal</button>
         </div>
     </header>
     <section id="main-body">
@@ -98,6 +99,9 @@
             Back To Top
         </div>
     </button>
+
+    <!-- Custom Modal -->
+    {% include 'includes/modal.html' %}
 
     <!-- JavaScript -->
     <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
