@@ -1,27 +1,33 @@
 {% load crispy_forms_tags %}
 
 <div class="modal fade" id="modal-action" tabindex="-1" aria-labelledby="modal-heading" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-content-inner">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-heading">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form id="modal-login-form" action="{% url 'account_login' %}" method="POST">
-                  {% csrf_token %}
-                  {{ login_form|crispy }}
-                  <button type="submit" class="btn btn-primary">Log In</button>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary shadow-none">Okay</button>
-              </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form id="modal-content-inner" method="POST">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-heading">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancel</button>
+          <button id="modal-confirm" type="submit" class="btn btn-primary shadow-none">Confirm</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
+
+<!-- Forms to be copied into the modal when necessary -->
+<div id="modal-forms" class="d-none" aria-hidden="true">
+  <div id="modal-form-login" class="modal-form" data-url="{% url 'account_login' %}">
+    {{ login_form|crispy }}
+  </div>
+  <div id="modal-form-signup" class="modal-form" data-url="{% url 'account_signup' %}">
+    {{ signup_form|crispy }}
+  </div>
+</div>

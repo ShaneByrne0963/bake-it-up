@@ -130,6 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Allauth config variables
 
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 # Internationalization

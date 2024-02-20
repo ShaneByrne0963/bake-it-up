@@ -204,10 +204,11 @@ h1 {
     color: whitesmoke;
     font-size: 1.2em;
     padding: 8px;
-    height: 60vh;
+    min-height: 60vh;
+    display: grid;
 }
 
-.modal-content-inner {
+#modal-content-inner {
     border: 6px solid whitesmoke;
     border-radius: 48px;
     height: 100%;
@@ -216,7 +217,7 @@ h1 {
     padding: 8px 16px;
 }
 
-.modal-content-inner>div {
+#modal-content-inner>div {
     border: none;
 }
 
