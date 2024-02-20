@@ -58,13 +58,14 @@
                 <button class="btn btn-primary" type="submit">Search</button>
             </form>
         </div>
-        {% if user.is_authenticated %}
-        {% else %}
-            <div id="account-nav">
-                <a href="{% url 'account_login' %}" class="btn btn-primary">Login</a>
-                <a href="{% url 'account_signup' %}" class="btn btn-primary">Signup</a>
-            </div>
-        {% endif %}
+        <!-- Account navigation at top right corner of screen -->
+        <div id="account-nav">
+            {% if user.is_authenticated %}
+            {% else %}
+                <a href="{% url 'account_login' %}" class="btn btn-secondary shadow-none">Login</a>
+                <a href="{% url 'account_signup' %}" class="btn btn-secondary shadow-none">Signup</a>
+            {% endif %}
+        </div>
     </header>
     <section id="main-body">
         <div class="container-fluid">

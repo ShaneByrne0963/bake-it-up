@@ -44,6 +44,21 @@ h1 {
     border-color: #8f5715;
 }
 
+.btn.btn-secondary {
+    background-color: #3c3a3b;
+    border-color: #363333;
+}
+
+.btn.btn-secondary:hover {
+    background-color: #635f5e;
+}
+
+.btn.btn-secondary:not(disabled):not(.disabled):active,
+.btn.btn-secondary:not(disabled):not(.disabled):focus {
+    background-color: #363333;
+    border-color: #3c3a3b;
+}
+
 /* --------------------------------------------------------Navigation */
 
 #navbar {
@@ -91,7 +106,7 @@ h1 {
 }
 
 #search-collapse {
-    border-bottom: 1px solid #8a8582;
+    background-color: #635f5e;
 }
 
 #account-nav {
@@ -156,7 +171,7 @@ h1 {
 
 /* --------------------------------------------------------Using a more formal font for forms */
 form input,
-form button {
+button.btn,
+a.btn {
     font-family: "Roboto", sans-serif;
-    font-size: 0.5em;
 }
