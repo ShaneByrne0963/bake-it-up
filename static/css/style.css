@@ -27,6 +27,23 @@ h1 {
     background-color: white;
 }
 
+/* --------------------------------------------------------Overriding Bootstrap elements */
+
+.btn.btn-primary {
+    background-color: #784812;
+    border-color: #8f5715;
+}
+
+.btn.btn-primary:hover {
+    background-color: #8f5a1d;
+}
+
+.btn.btn-primary:not(disabled):not(.disabled):active,
+.btn.btn-primary:not(disabled):not(.disabled):focus {
+    background-color: #5e3609;
+    border-color: #8f5715;
+}
+
 /* --------------------------------------------------------Navigation */
 
 #navbar {
