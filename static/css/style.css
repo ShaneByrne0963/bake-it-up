@@ -19,7 +19,7 @@ h1 {
 
 #hero-image {
     background-image: url('/media/images/hero-image-test.webp');
-    background-position: top center;
+    background-position-x: center;
     background-size: cover;
     height: 256px;
 }
