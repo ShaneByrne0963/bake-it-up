@@ -90,6 +90,16 @@ h1 {
     color: #DDDDDD;
 }
 
+#search-collapse {
+    border-bottom: 1px solid #8a8582;
+}
+
+#account-nav {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
 /* --------------------------------------------------------Footer */
 
 #footer-content {
