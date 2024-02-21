@@ -36,7 +36,10 @@ class CustomLogin(LoginView):
 
         request.session['global_context'] = {
             'modal_show': 'login',
+            'val_login': username,
             'modal_form_errors': login_form.errors.as_json(),
         }
+        if 'remember' in request.POST:
+            request.session['global_context']['val_remember'] = True
 
         return redirect(url_next)

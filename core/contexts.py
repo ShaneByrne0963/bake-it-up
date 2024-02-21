@@ -7,17 +7,21 @@ from allauth.account.forms import LoginForm, SignupForm
     'modal_show' {String}: Shows the modal on page load if
         exists. The string value indicates the form to be
         displayed in the modal
+
     'modal_form_errors' {JSON}: A list of errors to be
         displayed in a modal form
+
+    val_login {String}: The prefilled value for the login username
+
+    val_remember {Truthy Expression}: The prefilled value for the
+        login "Remember Me" checkbox
 }
 """
 # endregion
 
 def get_base_context(request):
-    login_form = LoginForm()
     signup_form = SignupForm()
     context = {
-        'login_form': login_form,
         'signup_form': signup_form,
     }
 
