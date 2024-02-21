@@ -6,7 +6,6 @@ function triggerModal(context) {
     let modal = $('#modal-action').find('.modal-content').get(0);
     let modalTitle = $(modal).find('h5').get(0);
     let modalForm = $(modal).find('#modal-content-inner');
-    let modalFormList = $('#modal-forms').get(0);
 
     // Setting the modal title
     $(modalTitle).text('');
@@ -20,12 +19,6 @@ function triggerModal(context) {
     }
     else {
         modalForm.removeAttr('action');
-    }
-
-    // Detaching any previous form from the modal body before adding another
-    let modalForms = modal.getElementsByClassName('modal-form');
-    for (let form of modalForms) {
-        modalFormList.appendChild(form);
     }
 
     // Attaching the form detected in the context
@@ -88,6 +81,20 @@ $(document).ready(() => {
     });
     $('.modal-trigger-signup').click(() => {
         modalFormInit('signup');
+    });
+
+    //Resetting the modal when hidden
+    $('#modal-action').on('hidden.bs.modal', function() {
+        
+        // Making all invalid feedback messages hidden
+        $('.modal-feedback.invalid-feedback').removeClass('d-block');
+
+        // Detaching any previous form from the modal body before adding another
+        let modalFormList = $('#modal-forms').get(0);
+        let modalForms = this.getElementsByClassName('modal-form');
+        for (let form of modalForms) {
+            modalFormList.appendChild(form);
+        }
     });
 
     // Removing the fade class from the modal means we want it to be shown on page load
