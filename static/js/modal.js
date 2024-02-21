@@ -42,14 +42,14 @@ function triggerModal(context) {
 
 /**
  * Triggers the modal with a form
- * @param {String} modalType The type of form to be included in the modal ['login', 'signup']
+ * @param {String} formType The type of form to be included in the modal ['login', 'signup']
  */
-function modalFormInit(modalType) {
+function modalFormInit(formType) {
     let context = {
-        form: modalType,
+        form: formType,
     };
     
-    switch (modalType) {
+    switch (formType) {
         case 'login':
             context.title = 'Log In';
             break;
@@ -59,6 +59,15 @@ function modalFormInit(modalType) {
     }
 
     triggerModal(context);
+}
+
+
+/**
+ * Sorts errors into their respective
+ * @param {String} formType The type of form to be included in the modal ['login', 'signup']
+ */
+function handleModalErrors(formType) {
+
 }
 
 
@@ -77,6 +86,10 @@ $(document).ready(() => {
         if ($('.modal-form-load').length > 0) {
             let modalForm = $('.modal-form-load').attr('id').replace('modal-form-', '');
             modalFormInit(modalForm);
+
+            if ($('#modal-errors').length > 0) {
+
+            }
         }
         
         $('#modal-action').modal('show').addClass('fade');
