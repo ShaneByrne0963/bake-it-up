@@ -80,10 +80,10 @@ function handleModalErrors() {
     for (let key in errors) {
         console.log(key);
         for (let error of errors[key]) {
-            if (form == 'login') {
-                $('#modal-login-feedback').text(error.message).addClass('d-block');
+            if (key === '__all__') {
+                $(`#modal-${form}-feedback`).text(error.message).addClass('d-block');
             }
-            else if (form == 'signup') {
+            else {
                 $(`#modal-${key}-feedback`).text(error.message).addClass('d-block');
             }
         }
