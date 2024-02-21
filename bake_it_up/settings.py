@@ -55,6 +55,17 @@ INSTALLED_APPS = [
 SITE_ID = 1
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# Allauth config variables
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/email_confirmed'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -126,11 +137,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# Allauth config variables
-
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 # Internationalization

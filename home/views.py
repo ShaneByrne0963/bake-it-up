@@ -60,3 +60,16 @@ class CustomSignup(SignupView):
             'modal_form_errors': signup_form.errors.as_json(),
         }
         return redirect(url_next)
+
+
+class EmailConfirmed(View):
+    """
+    Redirects the user to the home page after the user verifies
+    their email, and causes the login modal to appear
+    """
+    def get(self, request):
+        request.session['global_context'] = {
+            'modal_show': 'login',
+            'modal_load_fade': 'True',
+        }
+        return redirect('home')

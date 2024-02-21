@@ -146,7 +146,7 @@ $(document).ready(() => {
     });
 
     // Removing the fade class from the modal means we want it to be shown on page load
-    if (!$('#modal-action').hasClass('fade')) {
+    if ($('#modal-action').hasClass('show-on-load')) {
         // Prefilling the modal with the form specified if one exists
         if ($('.modal-form-load').length > 0) {
             let modalForm = $('.modal-form-load').attr('id').replace('modal-form-', '');
@@ -157,6 +157,9 @@ $(document).ready(() => {
                 handleModalErrors();
             }
         }
-        $('#modal-action').modal('show').addClass('fade');
+        $('#modal-action').modal('show').removeClass('show-on-load');
+        if (!$('#modal-action').hasClass('fade')) {
+            $('#modal-action').addClass('fade');
+        }
     }
 });
