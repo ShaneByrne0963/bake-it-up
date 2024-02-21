@@ -81,6 +81,12 @@ h1 {
     color: whitesmoke;
 }
 
+/* Form error messages */
+
+.modal-feedback.invalid-feedback {
+    color: #e2a08d;
+}
+
 /* --------------------------------------------------------Navigation */
 
 #navbar {

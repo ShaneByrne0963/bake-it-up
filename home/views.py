@@ -36,7 +36,7 @@ class CustomLogin(LoginView):
 
         request.session['global_context'] = {
             'modal_show': 'login',
-            'modal_form_errors': login_form.errors,
+            'modal_form_errors': login_form.errors.as_json(),
         }
 
         return redirect(url_next)

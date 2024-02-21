@@ -1,6 +1,18 @@
 from allauth.account.forms import LoginForm, SignupForm
 
 
+# region List of Available Context Keys
+"""
+{
+    'modal_show' {String}: Shows the modal on page load if
+        exists. The string value indicates the form to be
+        displayed in the modal
+    'modal_form_errors' {JSON}: A list of errors to be
+        displayed in a modal form
+}
+"""
+# endregion
+
 def get_base_context(request):
     login_form = LoginForm()
     signup_form = SignupForm()

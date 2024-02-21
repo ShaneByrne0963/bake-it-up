@@ -63,11 +63,21 @@ function modalFormInit(formType) {
 
 
 /**
- * Sorts errors into their respective
+ * Sorts errors into their respective fields
  * @param {String} formType The type of form to be included in the modal ['login', 'signup']
  */
 function handleModalErrors(formType) {
-
+    let errors = JSON.parse($('#modal-errors').text());
+    let form = $('#modal-errors').data('form');
+    console.log(errors);
+    
+    for (let key in errors) {
+        for (let error of errors[key]) {
+            if (form == 'login') {
+                $('#modal-login-feedback').text(error.message).addClass('d-block');
+            }
+        }
+    }
 }
 
 
@@ -87,8 +97,9 @@ $(document).ready(() => {
             let modalForm = $('.modal-form-load').attr('id').replace('modal-form-', '');
             modalFormInit(modalForm);
 
+            // Sorting any errors into their respective place
             if ($('#modal-errors').length > 0) {
-
+                handleModalErrors(modalForm);
             }
         }
         
