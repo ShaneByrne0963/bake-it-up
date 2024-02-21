@@ -13,13 +13,17 @@ function triggerModal(context) {
         $(modalTitle).text(context.title);
     }
 
-    // Adding the URL to the submit button
+    // Adding the URL to the form submit
     if ('url' in context) {
         modalForm.attr('action', context.url);
     }
     else {
         modalForm.removeAttr('action');
     }
+
+    // Call to action button text
+    console.log(context);
+    $('#modal-confirm').text(context.button);
 
     // Attaching the form detected in the context
     if ('form' in context) {
@@ -50,6 +54,10 @@ function modalFormInit(formType) {
             context.title = 'Sign Up';
             break;
     }
+    if (!('button' in context)) {
+        console.log("Here");
+        context.button = context.title;
+    }
 
     triggerModal(context);
 }
@@ -57,9 +65,8 @@ function modalFormInit(formType) {
 
 /**
  * Sorts errors into their respective fields
- * @param {String} formType The type of form to be included in the modal ['login', 'signup']
  */
-function handleModalErrors(formType) {
+function handleModalErrors() {
     let errors = JSON.parse($('#modal-errors').text());
     let form = $('#modal-errors').data('form');
     console.log(errors);
@@ -85,7 +92,7 @@ $(document).ready(() => {
 
     //Resetting the modal when hidden
     $('#modal-action').on('hidden.bs.modal', function() {
-        
+
         // Making all invalid feedback messages hidden
         $('.modal-feedback.invalid-feedback').removeClass('d-block');
 
@@ -106,7 +113,7 @@ $(document).ready(() => {
 
             // Sorting any errors into their respective place
             if ($('#modal-errors').length > 0) {
-                handleModalErrors(modalForm);
+                handleModalErrors();
             }
         }
         
