@@ -24,10 +24,18 @@ class CustomLogin(LoginView):
     the modal
     """
     def post(self, request):
+        url_next = request.POST['next']
+        username = request.POST['login']
+        password = request.POST['password']
         login_form = LoginForm(request.POST)
+
         if login_form.is_valid():
             user = authenticate(username=username, password=password)
             if user is not None:
-                super().post(request)
+                return super().post(request)
+
+        request.session['global_context'] = {
+            'modal_show': 'login',
+        }
 
         return redirect(url_next)
