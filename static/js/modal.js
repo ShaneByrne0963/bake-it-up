@@ -78,12 +78,17 @@ function handleModalErrors() {
     console.log(errors);
     
     for (let key in errors) {
+        console.log(key);
         for (let error of errors[key]) {
             if (form == 'login') {
                 $('#modal-login-feedback').text(error.message).addClass('d-block');
             }
+            else if (form == 'signup') {
+                $(`#modal-${key}-feedback`).text(error.message).addClass('d-block');
+            }
         }
     }
+    $('#modal-errors').remove();
 }
 
 

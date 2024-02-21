@@ -53,20 +53,26 @@
     <input type="hidden" name="next" value="{{ request.path }}">
     <div class="form-group">
       <label for="id_username">Username*</label>
+
       <input type="text" id="id_username" name="username" minlength="1" maxlength="150"
         class="form-control"{% if val_username %} value="{{ val_username }}"{% endif %} required>
+
+      <div id="modal-username-feedback" class=" modal-feedback invalid-feedback"></div>
     </div>
     <div class="form-group">
       <label for="id_email">E-mail</label>
       <input type="email" id="id_email" name="email" maxlength="320" class="form-control"{% if val_email %} value="{{ val_email }}"{% endif %}>
+      <div id="modal-email-feedback" class=" modal-feedback invalid-feedback"></div>
     </div>
     <div class="form-group">
       <label for="id_password1">Password*</label>
       <input type="password" name="password1" class="form-control" required id="id_password1">
+      <div id="modal-password1-feedback" class=" modal-feedback invalid-feedback"></div>
     </div>
     <div class="form-group">
       <label for="id_password2">Password (again)*</label>
       <input type="password" name="password2" class="form-control" required id="id_password2">
+      <div id="modal-password2-feedback" class=" modal-feedback invalid-feedback"></div>
     </div>
   </div>
 
