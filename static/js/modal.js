@@ -87,6 +87,27 @@ function handleModalErrors() {
 }
 
 
+/**
+ * Resets all inputs within an element
+ * @param {HTMLElement} element The element containing all the inputs
+ */
+function resetInputs(element) {
+    let elements = element.getElementsByTagName('input');
+    for (let input of elements) {
+        switch (input.getAttribute('type')) {
+            case 'hidden':
+                break;
+            case 'checkbox':
+                input.checked = false;
+                break;
+            default:
+                $(input).val('').removeAttr('value');
+                break;
+        }
+    }
+}
+
+
 $(document).ready(() => {
     // Event listeners for modal triggers
     $('.modal-trigger-login').click(() => {
@@ -106,6 +127,7 @@ $(document).ready(() => {
 
     //Resetting the modal when hidden
     $('#modal-action').on('hidden.bs.modal', function() {
+        resetInputs($('#modal-content-inner').get(0));
 
         // Making all invalid feedback messages hidden
         $('.modal-feedback.invalid-feedback').removeClass('d-block');
@@ -130,7 +152,6 @@ $(document).ready(() => {
                 handleModalErrors();
             }
         }
-        
         $('#modal-action').modal('show').addClass('fade');
     }
 });
