@@ -199,10 +199,6 @@ h1 {
 
 /* --------------------------------------------------------Modal */
 
-.modal-dialog {
-    min-width: 40%;
-}
-
 .modal-content {
     background-image: url('/media/images/navbar-back-test.png');
     border: 6px solid whitesmoke;
@@ -210,7 +206,6 @@ h1 {
     color: whitesmoke;
     font-size: 1.2em;
     padding: 8px;
-    min-height: 60vh;
     display: grid;
 }
 

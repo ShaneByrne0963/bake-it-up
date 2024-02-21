@@ -68,9 +68,12 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-item disabled text-default">{{ user }}</div>
                         <div class="dropdown-divider"></div>
+                        {% if user.is_superuser %}
+                            <a class="dropdown-item" href="/admin/">Admin Panel</a>
+                        {% endif %}
                         <a class="dropdown-item" href="#">Favourites</a>
                         <a class="dropdown-item" href="#">Account Settings</a>
-                        <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                        <button class="dropdown-item btn-link modal-trigger-logout" data-url="{% url 'account_logout' %}">Logout</button>
                     </div>
                 </div>
             {% else %}

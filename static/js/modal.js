@@ -5,12 +5,19 @@
 function triggerModal(context) {
     let modal = $('#modal-action').find('.modal-content').get(0);
     let modalTitle = $(modal).find('h5').get(0);
+    let modalBody = $(modal).find('.modal-body');
     let modalForm = $(modal).find('#modal-content-inner');
 
     // Setting the modal title
     $(modalTitle).text('');
     if ('title' in context) {
         $(modalTitle).text(context.title);
+    }
+
+    // The modal body
+    modalBody.html('');
+    if ('body' in context) {
+        modalBody.html(context.body);
     }
 
     // Adding the URL to the form submit
@@ -21,9 +28,13 @@ function triggerModal(context) {
         modalForm.removeAttr('action');
     }
 
-    // Call to action button text
-    console.log(context);
-    $('#modal-confirm').text(context.button);
+    // Call to action button text. Will be the same as the title if none is specified
+    if ('button' in context) {
+        $('#modal-confirm').text(context.button);
+    }
+    else {
+        $('#modal-confirm').text(context.title);
+    }
 
     // Attaching the form detected in the context
     if ('form' in context) {
@@ -54,11 +65,6 @@ function modalFormInit(formType) {
             context.title = 'Sign Up';
             break;
     }
-    if (!('button' in context)) {
-        console.log("Here");
-        context.button = context.title;
-    }
-
     triggerModal(context);
 }
 
@@ -88,6 +94,14 @@ $(document).ready(() => {
     });
     $('.modal-trigger-signup').click(() => {
         modalFormInit('signup');
+    });
+    $('.modal-trigger-logout').click(function() {
+        let context = {
+            title: "Log Out",
+            body: `<p>Are you sure you want to log out?</p>`,
+            url: $(this).data('url'),
+        };
+        triggerModal(context);
     });
 
     //Resetting the modal when hidden
