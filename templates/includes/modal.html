@@ -24,11 +24,13 @@
 
 <!-- Forms to be copied into the modal when necessary -->
 <div id="modal-forms" class="d-none" aria-hidden="true">
-  <div id="modal-form-login" class="modal-form" data-url="{% url 'account_login' %}">
+  <div id="modal-form-login" class="modal-form" data-url="{% url 'login' %}">
+    <input type="hidden" name="next" value="{{ request.path }}">
     {{ login_form|crispy }}
     <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
   </div>
   <div id="modal-form-signup" class="modal-form" data-url="{% url 'account_signup' %}">
+    <input type="hidden" name="next" value="{{ request.path }}">
     {{ signup_form|crispy }}
   </div>
 </div>

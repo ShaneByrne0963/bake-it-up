@@ -52,4 +52,9 @@ $(document).ready(() => {
         };
         triggerModal(context);
     });
+
+    // Removing the fade class from the modal means we want it to be shown on page load
+    if (!$('#modal-action').hasClass('fade')) {
+        $('#modal-action').modal('show').addClass('fade');
+    }
 });
