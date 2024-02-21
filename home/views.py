@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from allauth.account.views import LoginView
-from allauth.account.forms import LoginForm
+from allauth.account.views import LoginView, SignupView
+from allauth.account.forms import LoginForm, SignupForm
 from django.views import View
 from django.http import HttpResponse
 from core.contexts import get_base_context
@@ -26,13 +26,10 @@ class CustomLogin(LoginView):
     def post(self, request):
         url_next = request.POST['next']
         username = request.POST['login']
-        password = request.POST['password']
         login_form = LoginForm(request.POST)
 
         if login_form.is_valid():
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                return super().post(request)
+            return super().post(request)
 
         request.session['global_context'] = {
             'modal_show': 'login',
@@ -42,4 +39,24 @@ class CustomLogin(LoginView):
         if 'remember' in request.POST:
             request.session['global_context']['val_remember'] = True
 
+        return redirect(url_next)
+
+
+class CustomSignup(SignupView):
+
+    def post(self, request):
+        url_next = request.POST['next']
+        username = request.POST['username']
+        email = request.POST['email']
+        signup_form = SignupForm(request.POST)
+
+        if signup_form.is_valid():
+            return super().post(request)
+
+        request.session['global_context'] = {
+            'modal_show': 'signup',
+            'val_username': username,
+            'val_email': email,
+            'modal_form_errors': signup_form.errors.as_json(),
+        }
         return redirect(url_next)

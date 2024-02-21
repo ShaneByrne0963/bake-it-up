@@ -15,6 +15,10 @@ from allauth.account.forms import LoginForm, SignupForm
 
     val_remember {Truthy Expression}: The prefilled value for the
         login "Remember Me" checkbox
+    
+    val_username {String}: The prefilled value for the signup username
+
+    val_email {String}
 }
 """
 # endregion
