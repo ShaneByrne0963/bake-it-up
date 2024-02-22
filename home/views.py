@@ -45,9 +45,6 @@ class CustomLogin(LoginView):
 class CustomSignup(SignupView):
 
     def post(self, request):
-        url_next = request.POST['next']
-        username = request.POST['username']
-        email = request.POST['email']
         signup_form = SignupForm(request.POST)
 
         if signup_form.is_valid():
@@ -55,11 +52,12 @@ class CustomSignup(SignupView):
 
         request.session['global_context'] = {
             'modal_show': 'signup',
-            'val_username': username,
-            'val_email': email,
+            'val_first_name': request.POST['first_name'],
+            'val_last_name': request.POST['last_name'],
+            'val_email': request.POST['email'],
             'modal_form_errors': signup_form.errors.as_json(),
         }
-        return redirect(url_next)
+        return redirect(request.POST['next'])
 
 
 class EmailConfirmed(View):

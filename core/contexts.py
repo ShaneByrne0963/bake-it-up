@@ -27,5 +27,4 @@ def get_base_context(request):
 
     # Getting any persistent context from the previous page
     context = request.session.pop('global_context', {})
-
     return context
