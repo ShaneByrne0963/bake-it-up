@@ -24,7 +24,6 @@ function resizeWindow() {
     let headingGap = Math.ceil((logoHeight / 2) - (navHeight / 2));
     if (width < 768) {
         headingGap -= navHeight;
-        console.log('smol');
     }
     $('#content-header').css('min-height', '');
     if (headingGap > 0) {
@@ -33,7 +32,6 @@ function resizeWindow() {
 }
 
 $(document).ready(() => {
-    // Makes the "Back to Top" button only visible when the user has scrolled past the start of the page
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
     // Returns to the top of the screen when the "Back to Top" button is clicked
