@@ -91,8 +91,10 @@ h1 {
 
 #navbar {
     background-image: url('/media/images/navbar-back-test.png');
+    background-position: top center;
     display: grid;
     grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
+    min-height: 32px;
 }
 
 #logo-container {
@@ -245,4 +247,23 @@ button.btn,
 a.btn,
 #account-nav .dropdown-item {
     font-family: "Roboto", sans-serif;
+}
+
+/* -----------------------------------------------------------------------MEDIA QUERIES
+
+/* --------------------------------------------------------Bootstrap's medium breakpoint */
+@media (max-width: 768px) {
+    #logo-brand {
+        width: 20vw;
+        top: calc(-50% - 10vw);
+    }
+}
+
+/* --------------------------------------------------------Bootstrap's small breakpoint */
+@media (max-width: 576px) {
+    #logo-brand {
+        width: 30vw;
+        top: calc(-50% - 15vw);
+        right: 0;
+    }
 }

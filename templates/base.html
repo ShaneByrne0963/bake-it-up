@@ -33,19 +33,19 @@
             <div id="logo-container">
                 <a href="{% url 'home' %}" id="logo-brand" aria-label="Go to the home page"></a>
             </div>
-            <div class="nav-link">
+            <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
                 <a href="" class="d-inline">All Products</a>
             </div>
-            <div class="nav-link">
+            <div class="nav-link d-none d-md-flex d-lg-block align-items-center justify-content-center text-md-center text-lg-left">
                 <a href="" class="d-inline">Breads</a>
             </div>
-            <div class="nav-link">
+            <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
                 <a href="" class="d-inline">Sweets & Treats</a>
             </div>
-            <div class="nav-link">
+            <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
                 <a href="" class="d-inline">Cakes</a>
             </div>
-            <div class="nav-link">
+            <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
                 <button class="btn btn-link mr-3" type="button" data-toggle="collapse"
                     data-target="#search-collapse" aria-expanded="false" aria-controls="search-collapse">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -85,7 +85,7 @@
     <section id="main-body">
         <div class="container-fluid">
             <div class="row">
-                <div id="main-content" class="col-10 offset-1 pt-3">
+                <div id="main-content" class="col-12 col-sm-10 offset-sm-1 pt-3">
                     {% block content %}
                     {% endblock %}
 
@@ -98,7 +98,7 @@
     <button id="to-top">
         <div>
             <i class="fa-solid fa-arrow-up"></i>
-            Back To Top
+            <span class="d-none d-md-inline">Back To Top</span>
         </div>
     </button>
 
