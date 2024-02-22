@@ -105,7 +105,7 @@ h1 {
     background: url('/media/images/bakery-logo.png') no-repeat center center;
     background-size: cover;
     position: absolute;
-    top: -6vw;
+    top: calc(50% - 7.5vw);
     right: 15%;
     z-index: 2;
 }
