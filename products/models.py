@@ -31,7 +31,7 @@ class PastryProduct(models.Model):
     prop_contents = models.JSONField(blank=True, null=True)
     prop_icing = models.JSONField(blank=True, null=True)
     prop_toppings = models.JSONField(blank=True, null=True)
-    prop_text = models.CharField(max_length=100, blank=True, null=True)
+    prop_text = models.BooleanField(default=False)
 
     def __str__(self):
         return self.display_name
