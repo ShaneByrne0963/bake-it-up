@@ -149,7 +149,7 @@ h1 {
 
 #footer-content {
     background: url('/media/images/navbar-back-test.png');
-    height: 512px;
+    min-height: 512px;
     color: whitesmoke;
     display: grid;
     grid-template-columns: 1fr;
