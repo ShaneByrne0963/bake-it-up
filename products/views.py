@@ -10,7 +10,7 @@ class ProductList(generic.ListView):
     model = PastryProduct
     queryset = PastryProduct.objects.all()
     template_name = 'products/product_list.html'
-    paginate_by = 1
+    paginate_by = 48
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
