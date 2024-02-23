@@ -11,6 +11,11 @@
     justify-content: center;
 }
 
+.product-image>img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
 .product-card-category {
     position: relative;
     top: -12px;
