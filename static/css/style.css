@@ -30,7 +30,7 @@ h3, .product-card-title {
 }
 
 #hero-image {
-    background-image: url('/media/images/hero-image-test.webp');
+    background-image: url('/media/images/hero-image.webp');
     background-position-x: center;
     background-size: cover;
     height: 256px;
