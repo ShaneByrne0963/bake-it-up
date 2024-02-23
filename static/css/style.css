@@ -310,4 +310,8 @@ a.btn,
         top: calc(-50% - 15vw);
         right: 0;
     }
+
+    #hero-image {
+        height: 128px;
+    }
 }

@@ -29,6 +29,12 @@ function resizeWindow() {
     if (headingGap > 0) {
         $('#content-header').css('min-height', `${headingGap}px`);
     }
+
+    // Making the pagination bar small for smaller screens
+    $('.pagination').removeClass('pagination-sm');
+    if (width < 576) {
+        $('.pagination').addClass('pagination-sm');
+    }
 }
 
 $(document).ready(() => {
