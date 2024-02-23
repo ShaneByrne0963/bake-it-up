@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from allauth.account.views import LoginView, SignupView
 from allauth.account.forms import LoginForm, SignupForm
+from django.contrib.auth.models import User
 from django.views import View
 from django.http import HttpResponse
 from core.contexts import get_base_context
@@ -45,16 +46,28 @@ class CustomLogin(LoginView):
 class CustomSignup(SignupView):
 
     def post(self, request):
+        email = request.POST['email']
         signup_form = SignupForm(request.POST)
 
         if signup_form.is_valid():
-            return super().post(request)
+            next_url = super().post(request)
+
+            # Adding the first and/or last name if specified
+            user = User.objects.get(email=email)
+            if user:
+                if 'first_name' in request.POST:
+                    user.first_name = request.POST['first_name']
+                if 'last_name' in request.POST:
+                    user.last_name = request.POST['last_name']
+                user.save()
+
+            return next_url
 
         request.session['global_context'] = {
             'modal_show': 'signup',
             'val_first_name': request.POST['first_name'],
             'val_last_name': request.POST['last_name'],
-            'val_email': request.POST['email'],
+            'val_email': email,
             'modal_form_errors': signup_form.errors.as_json(),
         }
         return redirect(request.POST['next'])
