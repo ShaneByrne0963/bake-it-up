@@ -22,7 +22,17 @@
                         </div>
                         <div class="card-body px-2 py-0">
                             <p class="product-card-title mb-0">{{ product.display_name }}</p>
-                            <p class="product-card-category my-0"><small>{{ product.category }}</small></p>
+                            <p class="product-card-category my-0">
+                                <small class="d-flex align-items-center justify-content-between">
+                                    <span>{{ product.category }}</span>
+                                    {% if product.batch_size %}
+                                        <span>
+                                            <i class="fa-solid fa-box"></i>
+                                            {{ product.batch_size }}
+                                        </span>
+                                    {% endif %}
+                                </small>
+                            </p>
                         </div>
                         <div class="card-footer px-2 py-1 d-flex align-items-center justify-content-between">
                             <small>
