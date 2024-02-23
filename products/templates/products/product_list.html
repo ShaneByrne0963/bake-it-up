@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
 
 {% block extra_title %} - Products{% endblock %}
 
@@ -14,7 +19,7 @@
                     <img src="" class="card-img-top" alt="{{ product.display_name }}">
                     <div class="card-body">
                         <p class="product-card-title mb-0">{{ product.display_name }}</p>
-                        <p class="card-text mt-0">{{ product.category }}</p>
+                        <p class="product-card-category card-text mt-0"><small>{{ product.category }}</small></p>
                     </div>
                 </div>
             {% endfor %}

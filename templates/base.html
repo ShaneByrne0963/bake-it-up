@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Handlee&family=Roboto&family=Just+Another+Hand&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -91,9 +92,7 @@
                         {% block content_heading %}
                         {% endblock %}
                     </div>
-
-                    {% block content %}
-                    {% endblock %}
+                    {% block content %}{% endblock %}
 
                     {% include 'includes/footer.html' %}
                 </div>
