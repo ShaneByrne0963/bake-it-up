@@ -24,7 +24,7 @@ class PastryProduct(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     image_url = models.URLField(max_length=1024, blank=True,
                                 null=True)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     # Optional customizeable properties 
     prop_type = models.JSONField(blank=True, null=True)

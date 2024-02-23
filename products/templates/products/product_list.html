@@ -15,11 +15,19 @@
     <div class="container-fluid">
         <div class="row">
             {% for product in products %}
-                <div class="card col-12 col-md-6 col-lg-4 col-xl-3">
-                    <img src="" class="card-img-top" alt="{{ product.display_name }}">
-                    <div class="card-body">
-                        <p class="product-card-title mb-0">{{ product.display_name }}</p>
-                        <p class="product-card-category card-text mt-0"><small>{{ product.category }}</small></p>
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.display_name }}">
+                        <div class="card-body px-2 py-0">
+                            <p class="product-card-title mb-0">{{ product.display_name }}</p>
+                            <p class="product-card-category my-0"><small>{{ product.category }}</small></p>
+                        </div>
+                        <div class="card-footer px-2 py-1 d-flex align-items-center justify-content-between">
+                            <small>
+                                <i class="fa-regular fa-heart"></i> 100
+                            </small>
+                            <span>&euro;{{ product.price }}</span>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
