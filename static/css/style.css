@@ -257,6 +257,32 @@ h3, .product-card-title {
 
 /* --------------------------------------------------------Pagination */
 
+#pagination-container {
+    border: 2px solid whitesmoke;
+    padding: 4px;
+    background: url('/media/images/navbar-back-test.png');
+    border-radius: 16px;
+}
+
+.pagination {
+    border: 2px solid whitesmoke;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.page-link {
+    background: none;
+    border: none;
+    color: white;
+}
+
+.page-link:hover {
+    color: #212529;
+}
+
+.page-item.active>.page-link {
+    background-color: #784812;
+}
 
 
 /* --------------------------------------------------------Using a more formal font for forms */
