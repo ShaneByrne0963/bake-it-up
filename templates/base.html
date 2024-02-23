@@ -67,7 +67,12 @@
                         <i class="fa-regular fa-lg fa-user"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-item disabled text-default">{{ user }}</div>
+                        <div class="dropdown-item disabled text-default">
+                            {% if user.first_name %}
+                                {{ user.first_name }}{% if user.last_name %} {{ user.last_name }}{% endif %}
+                            {% else %}{{ user.email }}
+                            {% endif %}
+                        </div>
                         <div class="dropdown-divider"></div>
                         {% if user.is_superuser %}
                             <a class="dropdown-item" href="/admin/">Admin Panel</a>
