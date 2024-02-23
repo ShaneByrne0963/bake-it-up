@@ -17,7 +17,9 @@
             {% for product in products %}
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                     <div class="card">
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.display_name }}">
+                        <div class="product-image">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.display_name }}">
+                        </div>
                         <div class="card-body px-2 py-0">
                             <p class="product-card-title mb-0">{{ product.display_name }}</p>
                             <p class="product-card-category my-0"><small>{{ product.category }}</small></p>

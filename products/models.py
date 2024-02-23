@@ -22,13 +22,12 @@ class PastryProduct(models.Model):
     batch_size = models.IntegerField()
     ingredients = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    image_url = models.URLField(max_length=1024, blank=True,
-                                null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     # Optional customizeable properties 
     prop_type = models.JSONField(blank=True, null=True)
     prop_contents = models.JSONField(blank=True, null=True)
+    prop_color = models.JSONField(blank=True, null=True)
     prop_icing = models.JSONField(blank=True, null=True)
     prop_toppings = models.JSONField(blank=True, null=True)
     prop_text = models.BooleanField(default=False)
