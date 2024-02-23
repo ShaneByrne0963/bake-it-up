@@ -15,10 +15,11 @@
     <div class="container-fluid">
         <div class="row">
             {% for product in products %}
-                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-center justify-content-center mb-4">
                     <div class="card">
                         <div class="product-image">
                             <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.display_name }}">
+                            <div class="product-image-overlay"></div>
                         </div>
                         <div class="card-body px-2 py-0">
                             <p class="product-card-title mb-0">{{ product.display_name }}</p>
