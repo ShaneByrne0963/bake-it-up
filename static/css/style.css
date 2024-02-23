@@ -255,6 +255,10 @@ h3, .product-card-title {
     grid-template-columns: 1fr 1fr;
 }
 
+/* --------------------------------------------------------Pagination */
+
+
+
 /* --------------------------------------------------------Using a more formal font for forms */
 form input,
 button.btn,
