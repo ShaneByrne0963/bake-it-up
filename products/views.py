@@ -24,7 +24,10 @@ class ProductList(generic.ListView):
         context = super().get_context_data(**kwargs)
         context.update(get_base_context(self.request))
 
+        category = 'all'
         if 'category' in self.request.GET:
             category = self.request.GET['category']
             context['get_url'] = f'category={category}'
+        context['category'] = category
+
         return context
