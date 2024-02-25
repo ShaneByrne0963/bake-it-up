@@ -26,12 +26,12 @@
             <div class="col-10 col-md-4 col-xl-3 form-group">
                 <label for="product-sort" class="mb-1">Sort</label>
                 <select id="product-sort" name="sort" class="form-control" onchange="$(this).closest('form').submit();">
-                    <option value="favourites" {% if sort == 'favourites' and order == 'asc' %} selected{% endif %}>Most Liked</option>
-                    <option value="-favourites" {% if sort == 'favourites' and order == 'desc' %} selected{% endif %}>Least Liked</option>
-                    <option value="name" {% if sort == 'name' and order == 'asc' %} selected{% endif %}>A-Z</option>
-                    <option value="-name" {% if sort == 'name' and order == 'desc' %} selected{% endif %}>Z-A</option>
-                    <option value="price" {% if sort == 'price' and order == 'asc' %} selected{% endif %}>Price (Lowest to Highest)</option>
-                    <option value="-price" {% if sort == 'price' and order == 'desc' %} selected{% endif %}>Price (Highest to Lowest)</option>
+                    <option value="-favourites" {% if sort == '-favourites' %} selected{% endif %}>Most Liked</option>
+                    <option value="favourites" {% if sort == 'favourites' %} selected{% endif %}>Least Liked</option>
+                    <option value="name" {% if sort == 'name' %} selected{% endif %}>A-Z</option>
+                    <option value="-name" {% if sort == '-name' %} selected{% endif %}>Z-A</option>
+                    <option value="price" {% if sort == 'price' %} selected{% endif %}>Price (Lowest to Highest)</option>
+                    <option value="-price" {% if sort == '-price' %} selected{% endif %}>Price (Highest to Lowest)</option>
                 </select>
             </div>
         </form>
