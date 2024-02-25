@@ -28,10 +28,10 @@
                 <select id="product-sort" name="sort" class="form-control" onchange="$(this).closest('form').submit();">
                     <option value="-favourites" {% if sort == '-favourites' %} selected{% endif %}>Most Liked</option>
                     <option value="favourites" {% if sort == 'favourites' %} selected{% endif %}>Least Liked</option>
-                    <option value="name" {% if sort == 'name' %} selected{% endif %}>A-Z</option>
-                    <option value="-name" {% if sort == '-name' %} selected{% endif %}>Z-A</option>
                     <option value="price" {% if sort == 'price' %} selected{% endif %}>Price (Lowest to Highest)</option>
                     <option value="-price" {% if sort == '-price' %} selected{% endif %}>Price (Highest to Lowest)</option>
+                    <option value="name" {% if sort == 'name' %} selected{% endif %}>A-Z</option>
+                    <option value="-name" {% if sort == '-name' %} selected{% endif %}>Z-A</option>
                 </select>
             </div>
         </form>

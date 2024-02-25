@@ -20,6 +20,8 @@ class ProductList(generic.ListView):
 
         if 'sort' in self.request.GET:
             sort = self.request.GET['sort']
+            if 'name' in sort:
+                sort = sort.replace('name', 'display_name')
 
         products = PastryProduct.objects.all()
         if category != 'all':
