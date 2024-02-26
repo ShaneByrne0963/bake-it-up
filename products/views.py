@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
+from django.http import HttpResponseRedirect
 from django.views import generic, View
 from core.contexts import get_base_context
 from .models import PastryProduct
@@ -63,4 +64,12 @@ class ProductDetail(View):
         if len(pastry) > 0:
             context['product'] = pastry[0]
         return render(request, self.template, context)
+
+
+class AddToCart(View):
+    template = 'products/product_detail.html'
+
+    def post(self, request, product_name):
+        return HttpResponseRedirect(reverse(
+            'product_detail', args=[product_name]))
 

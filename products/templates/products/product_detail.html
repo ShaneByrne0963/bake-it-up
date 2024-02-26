@@ -36,7 +36,7 @@
                     <div id="product-detail-price" class="text-right font-weight-bold">Total: &euro;
                         <span id="total-price">{{ product.price }}</span>
                     </div>
-                    <form id="qty-selector" method="POST">
+                    <form id="qty-selector" method="POST" action="{% url 'add_to_cart' product.name %}">
                         {% csrf_token %}
                         <label for="product-quantity" class="mb-0"><strong>Quantity:</strong></label>
                         <div class="mx-xl-3 mb-3 mb-xl-0">
