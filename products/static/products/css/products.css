@@ -2,12 +2,17 @@
     aspect-ratio: 1/1;
     display: grid;
     grid-template-rows: 1fr auto auto;
-    cursor: pointer;
     transition: width 0.2s ease-in-out;
     width: 100%;
 }
 
-.card:hover {
+.card-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+}
+
+.card-container:hover>.card {
     width: 95%;
 }
 
@@ -38,6 +43,6 @@
     transition: background-color 0.2s ease-in-out;
 }
 
-.card:hover .product-image-overlay {
+.card-container:hover .product-image-overlay {
     background-color: rgba(0, 0, 0, 0.3);
 }
