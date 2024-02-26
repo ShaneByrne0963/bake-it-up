@@ -9,7 +9,6 @@
 .card-container {
     width: 100%;
     aspect-ratio: 1/1;
-    cursor: pointer;
 }
 
 .card-container:hover>.card {

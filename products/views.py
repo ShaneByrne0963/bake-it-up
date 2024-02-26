@@ -52,3 +52,15 @@ class ProductList(generic.ListView):
         context['get_url'] = get_url
 
         return context
+
+
+class ProductDetail(View):
+    template = 'products/product_detail.html'
+
+    def get(self, request, product_name):
+        context = get_base_context(request)
+        pastry = PastryProduct.objects.filter(name=product_name)
+        if len(pastry) > 0:
+            context['product'] = pastry[0]
+        return render(request, self.template, context)
+

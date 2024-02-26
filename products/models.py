@@ -13,7 +13,7 @@ class Category(models.Model):
 
 
 class PastryProduct(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     display_name = models.CharField(max_length=50)
     description = models.TextField()
     category = models.ForeignKey(Category,

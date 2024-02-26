@@ -94,6 +94,12 @@ h3, .product-card-title {
     color: whitesmoke;
 }
 
+.anchor-no-style,
+.anchor-no-style:hover {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 /* Form error messages */
 
 .modal-feedback.invalid-feedback {
