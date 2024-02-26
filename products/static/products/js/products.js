@@ -25,7 +25,6 @@ const allergens = [
  */
 function highlightAllergens() {
     let ingredients = $('#ingredients').text().split(' ');
-    console.log(ingredients);
     let ingredientsHtml = '';
     for (let i = 0; i < ingredients.length; i++) {
         let ingredient = ingredients[i];
@@ -46,7 +45,6 @@ function highlightAllergens() {
             finalText += ' ';
         }
         ingredientsHtml += finalText;
-        console.log(ingredientsHtml);
     }
     $('#ingredients').html(ingredientsHtml);
 }

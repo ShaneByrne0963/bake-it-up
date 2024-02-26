@@ -47,6 +47,41 @@ function resizeWindow() {
     }
 }
 
+/**
+ * Adds/subtracts from a number input
+ * @param {Element} target The button that was clicked
+ * @param {Integer} value The value to increase/decrease the number value by
+ */
+function updateQuantity(target, value) {
+    let inputParent = $(target).parent();
+    let numberInput = $(inputParent).find('input[type="number"]');
+    let currentVal = parseInt(numberInput.val());
+    let minVal = parseInt(numberInput.attr('min'));
+    let maxVal = parseInt(numberInput.attr('max'));
+
+    currentVal += value;
+    // Clamps the current value between the specified min and max value
+    currentVal = Math.min(maxVal, Math.max(currentVal, minVal));
+
+    // Disables the buttons when the value is at the min or max
+    $(inputParent).find('.qty-subtract').prop('disabled', currentVal == minVal);
+    $(inputParent).find('.qty-add').prop('disabled', currentVal == maxVal);
+
+    numberInput.val(currentVal);
+}
+
+
+/**
+ * Checks every number input with a + or - button, and disables the buttons
+ * if the value is at the minimum or maximum, respectively
+ */
+function checkAllDisableButtons() {
+    $('.qty-number').each(function() {
+        updateQuantity(this, 0);
+    });
+}
+
+
 $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
@@ -55,6 +90,18 @@ $(document).ready(() => {
         window.scrollTo(0, 0);
     });
 
+    // Quantity selector buttons
+    $('.qty-add').click(function() {
+        updateQuantity(this, 1);
+    });
+    $('.qty-subtract').click(function() {
+        updateQuantity(this, -1);
+    });
+    $('.qty-number').change(function() {
+        updateQuantity(this, 0);
+    });
+
+    checkAllDisableButtons();
     scrollScreen();
     resizeWindow();
 });

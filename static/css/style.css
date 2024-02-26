@@ -79,6 +79,13 @@ h3, .product-card-title {
     border-color: #3c3a3b;
 }
 
+/* Removes the number input spin button */
+/* Source: https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 /* Allowing disabled text to be shown as normal text. Mostly used to disable hover actions */
 .disabled.text-default {
     color: #212529;
