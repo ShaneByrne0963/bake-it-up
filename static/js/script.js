@@ -67,6 +67,13 @@ function updateQuantity(target, value) {
     $(inputParent).find('.qty-subtract').prop('disabled', currentVal == minVal);
     $(inputParent).find('.qty-add').prop('disabled', currentVal == maxVal);
 
+    // Apply the (quantity * price) value to a target, if one exists
+    console.log($(numberInput.data('update')));
+    if (numberInput.data('update')) {
+        let unitPrice = parseFloat(numberInput.data('price'));
+        $(numberInput.data('update')).text((unitPrice * currentVal).toFixed(2));
+    }
+
     numberInput.val(currentVal);
 }
 

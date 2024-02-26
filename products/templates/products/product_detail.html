@@ -32,15 +32,21 @@
                     <div id="product-image-mobile" class="d-block d-lg-none"></div>
                 </div>
                 <div>
-                    <div id="product-detail-price" class="text-right">Total: &euro;{{ product.price }}</div>
+                    <div class="small text-right">Unit Price: &euro;{{ product.price }}</div>
+                    <div id="product-detail-price" class="text-right font-weight-bold">Total: &euro;
+                        <span id="total-price">{{ product.price }}</span>
+                    </div>
                     <form id="qty-selector" method="POST">
                         {% csrf_token %}
                         <label for="product-quantity" class="mb-0"><strong>Quantity:</strong></label>
                         <div class="mx-xl-3 mb-3 mb-xl-0">
                             <div class="qty-input-group w-100">
                                 <button type="button" class="btn btn-dark qty-subtract">-</button>
+
                                 <input type="number" id="product-quantity" class="form-control qty-number text-right"
-                                    name="quantity" value="1" min="1" max="99">
+                                    name="quantity" value="1" min="1" max="99"
+                                    data-price="{{ product.price }}" data-update="#total-price">
+
                                 <button type="button" class="btn btn-dark qty-add">+</button>
                             </div>
                         </div>
