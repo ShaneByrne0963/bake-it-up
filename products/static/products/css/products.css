@@ -50,11 +50,18 @@
 
 /* --------------------------------------------------------Product Details */
 
+#product-properties {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
 #add-to-favourites {
     font-size: 2rem;
 }
 
-#product-detail-category {
+#product-detail-category,
+#product-detail-price {
     font-size: 1.5rem;
 }
 
@@ -66,4 +73,36 @@
 #product-detail-image>img {
     max-width: 100%;
     max-height: 100%;
+}
+
+/* --------------------------------------------------------Quantity Selector Input */
+
+#qty-selector,
+.qty-input-group {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+}
+
+#qty-selector>* {
+    display: flex;
+    align-items: center;
+}
+
+.qty-number {
+    border-radius: 0;
+}
+
+.qty-add,
+.qty-subtract {
+    width: 38px;
+}
+
+.qty-add {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.qty-subtract {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }

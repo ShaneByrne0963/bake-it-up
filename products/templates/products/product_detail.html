@@ -10,24 +10,40 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-5 offset-1 pl-0">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h1>{{ product.display_name }}</h1>
-                    <i id="add-to-favourites" class="fa-regular fa-heart"></i>
-                </div>
-                <div id="product-detail-category">{{ product.category }}</div>
-                <div class="text-muted mb-4">
-                    <i class="fa-solid fa-heart"></i>
-                    <span id="num-favourites">0 people added this to their favourites</span>
+            <div id="product-properties" class="col-5 offset-1 pl-0">
+                <div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h1>{{ product.display_name }}</h1>
+                        <i id="add-to-favourites" class="fa-regular fa-heart"></i>
+                    </div>
+                    <div id="product-detail-category">{{ product.category }}</div>
+                    <div class="text-muted mb-4">
+                        <i class="fa-solid fa-heart"></i>
+                        <span id="num-favourites">0 people added this to their favourites</span>
+                    </div>
+                    <div>
+                        <span>Ingredients:</span>
+                        <div id="ingredients" class="mb-2">{{ product.ingredients }}</div>
+                        <div class="text-right">
+                            <small class="text-muted">*All ingredients are highlighted in <strong>bold</strong>.</small>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
                 <div>
-                    <span>Ingredients:</span>
-                    <div id="ingredients" class="mb-2">{{ product.ingredients }}</div>
-                    <div class="text-right">
-                        <small class="text-muted">*All ingredients are highlighted in <strong>bold</strong>.</small>
-                    </div>
+                    <div id="product-detail-price" class="text-right">Total: &euro;{{ product.price }}</div>
+                    <form id="qty-selector" method="POST">
+                        <label for="product-quantity" class="mb-0"><strong>Quantity:</strong></label>
+                        <div class="mx-3">
+                            <div class="qty-input-group w-100">
+                                <button type="button" class="btn btn-dark qty-subtract">-</button>
+                                <input type="number" id="product-quantity" class="form-control qty-number">
+                                <button type="button" class="btn btn-dark qty-add">+</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-primary">Add to Cart</button>
+                    </form>
                 </div>
-                <hr>
             </div>
             <div class="col-5">
                 <div id="product-detail-image" class="d-flex align-items-center justify-content-center">
