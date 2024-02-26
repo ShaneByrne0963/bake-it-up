@@ -35,6 +35,16 @@ function resizeWindow() {
     if (width < 576) {
         $('.pagination').addClass('pagination-sm');
     }
+
+    // Moving the product detail image between the ingredients and the form
+    if ($('#product-image-container').length > 0) {
+        let currentScreen = $('#product-image-container').parent().attr('id').replace('product-image-', '');
+        let actualScreen = (width < 992) ? 'mobile' : 'desktop';
+        if (currentScreen != actualScreen) {
+            let imageContainer = $('#product-image-container').detach();
+            $(`#product-image-${actualScreen}`).append(imageContainer);
+        }
+    }
 }
 
 $(document).ready(() => {

@@ -106,3 +106,17 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+/* -----------------------------------------------------------------------MEDIA QUERIES
+
+/* --------------------------------------------------------Bootstrap's extra-large breakpoint */
+@media (max-width: 1200px) {
+    #logo-brand {
+        width: 20vw;
+        top: calc(-50% - 10vw);
+    }
+
+    #qty-selector {
+        display: block;
+    }
+}
