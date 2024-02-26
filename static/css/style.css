@@ -222,7 +222,7 @@ h3, .product-card-title {
 /* --------------------------------------------------------Modal */
 
 .modal-content {
-    background-image: url('/media/images/navbar-back-test.png'), #3c3a3b;
+    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
     border: 6px solid whitesmoke;
     border-radius: 64px;
     color: whitesmoke;
