@@ -103,7 +103,7 @@ h3, .product-card-title {
 /* --------------------------------------------------------Navigation */
 
 #navbar {
-    background-image: url('/media/images/navbar-back-test.png');
+    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
     background-position: top center;
     display: grid;
     grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
@@ -161,7 +161,7 @@ h3, .product-card-title {
 /* --------------------------------------------------------Footer */
 
 #footer-content {
-    background: url('/media/images/navbar-back-test.png');
+    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
     min-height: 512px;
     color: whitesmoke;
     font-size: 1rem;
@@ -187,7 +187,7 @@ h3, .product-card-title {
 /* --------------------------------------------------------"Back To Top" button */
 
 #to-top {
-    background: url('/media/images/navbar-back-test.png');
+    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
     border: 2px solid whitesmoke;
     color: whitesmoke;
     position: fixed;
@@ -216,7 +216,7 @@ h3, .product-card-title {
 /* --------------------------------------------------------Modal */
 
 .modal-content {
-    background-image: url('/media/images/navbar-back-test.png');
+    background-image: url('/media/images/navbar-back-test.png'), #3c3a3b;
     border: 6px solid whitesmoke;
     border-radius: 64px;
     color: whitesmoke;
@@ -260,7 +260,7 @@ h3, .product-card-title {
 #pagination-container {
     border: 2px solid whitesmoke;
     padding: 4px;
-    background: url('/media/images/navbar-back-test.png');
+    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
     border-radius: 16px;
 }
 
