@@ -11,7 +11,7 @@ from itertools import chain
 class ProductList(generic.ListView):
     template_name = 'products/product_list.html'
     context_object_name = 'products'
-    paginate_by = 48
+    paginate_by = 12
 
     def get_queryset(self):
         category = 'all'
