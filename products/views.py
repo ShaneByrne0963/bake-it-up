@@ -1,7 +1,7 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic, View
-from core.contexts import get_base_context
+from core.contexts import get_base_context, sort_queryset
 from .models import BreadProduct, PastryProduct
 from django.conf import settings
 from itertools import chain
@@ -39,10 +39,7 @@ class ProductList(generic.ListView):
         else:
             products = pastries.filter(category__name='cakes')
 
-        # Product sorting
-        if 'favourites' not in sort:
-            pass
-            # products = products.order_by(sort)
+        products = sort_queryset(products, sort)
 
         return products
 
