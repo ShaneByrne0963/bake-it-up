@@ -3,7 +3,7 @@
 {
     'modal_show' {String}: Shows the modal on page load if
         exists. The string value indicates the form to be
-        displayed in the modal
+        displayed in the modal, if any
     
     'modal_load_fade' {Truthy Expression}: Allows the modal fade
         animation on page load
@@ -18,7 +18,7 @@
     
     val_username {String}: The prefilled value for the signup username
 
-    val_email {String}
+    val_email {String}: The prefilled value for the signup email address
 }
 """
 # endregion
