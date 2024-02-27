@@ -1,9 +1,10 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic, View
 from core.contexts import get_base_context
-from .models import PastryProduct
+from .models import BreadProduct, PastryProduct
 from django.conf import settings
+from itertools import chain
 
 # Create your views here.
 
@@ -24,11 +25,24 @@ class ProductList(generic.ListView):
             if 'name' in sort:
                 sort = sort.replace('name', 'display_name')
 
-        products = PastryProduct.objects.all()
-        if category != 'all':
-            products = products.filter(category__name=category)
+        products = None
+        breads = BreadProduct.objects.all()
+        pastries = PastryProduct.objects.all()
+
+        # Product filtering
+        if category == 'all':
+            products = list(chain(breads, pastries))
+        elif category == 'bread':
+            products = breads
+        elif category == 'pastries':
+            products = pastries
+        else:
+            products = pastries.filter(category__name='cakes')
+
+        # Product sorting
         if 'favourites' not in sort:
-            products = products.order_by(sort)
+            pass
+            # products = products.order_by(sort)
 
         return products
 
@@ -60,9 +74,12 @@ class ProductDetail(View):
 
     def get(self, request, product_name):
         context = get_base_context(request)
-        pastry = PastryProduct.objects.filter(name=product_name)
-        if len(pastry) > 0:
-            context['product'] = pastry[0]
+        bread = BreadProduct.objects.filter(name=product_name)
+        if len(bread) > 0:
+            context['product'] = bread[0]
+        else:
+            product = get_object_or_404(PastryProduct, name=product_name)
+            context['product'] = product
         return render(request, self.template, context)
 
 
