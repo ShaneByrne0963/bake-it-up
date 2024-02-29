@@ -1,5 +1,5 @@
 import unittest
-from .cart import add_to_cart
+from .cartfunctions import add_to_cart
 
 
 class TestAddToCart(unittest.TestCase):

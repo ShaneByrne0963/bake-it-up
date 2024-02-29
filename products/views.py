@@ -1,9 +1,11 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic, View
+
 from core.contexts import get_base_context, sort_queryset, \
     get_product_by_name
 from .models import BreadProduct, PastryProduct
+
 from itertools import chain
 
 # Create your views here.
