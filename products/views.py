@@ -1,7 +1,8 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic, View
-from core.contexts import get_base_context, sort_queryset
+from core.contexts import get_base_context, sort_queryset, \
+    get_product_by_name
 from .models import BreadProduct, PastryProduct
 from itertools import chain
 
@@ -70,10 +71,5 @@ class ProductDetail(View):
 
     def get(self, request, product_name):
         context = get_base_context(request)
-        bread = BreadProduct.objects.filter(name=product_name)
-        if len(bread) > 0:
-            context['product'] = bread[0]
-        else:
-            product = get_object_or_404(PastryProduct, name=product_name)
-            context['product'] = product
+        context['product'] = get_product_by_name(product_name)
         return render(request, self.template, context)

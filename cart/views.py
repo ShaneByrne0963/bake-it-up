@@ -7,5 +7,7 @@ class AddToCart(View):
     template = 'products/product_detail.html'
 
     def post(self, request, product_name):
+        cart = request.session.get('cart', [])
+
         return HttpResponseRedirect(reverse(
             'product_detail', args=[product_name]))

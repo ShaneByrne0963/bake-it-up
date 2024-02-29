@@ -1,3 +1,7 @@
+from products.models import BreadProduct, PastryProduct
+from django.shortcuts import get_object_or_404
+
+
 # region List of Available Context Keys
 """
 {
@@ -50,3 +54,15 @@ def sort_queryset(queryset, sort):
             return new_query
         else:
             return queryset.order_by(sort)
+
+
+def get_product_by_name(name):
+    """
+    Gets a product from either the BreadProduct or
+    PastryProduct model with the specified name
+    """
+    bread = BreadProduct.objects.filter(name=name)
+    if len(bread) > 0:
+        return bread[0]
+    else:
+        return get_object_or_404(PastryProduct, name=name)
