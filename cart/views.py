@@ -49,9 +49,17 @@ class RemoveCartItem(View):
 
     def post(self, request, item_id):
         cart = request.session['cart']
+        cart_total = request.session['cart_total']
+
         if len(cart) > item_id:
+            price = cart[item_id]['price']
+            quantity = cart[item_id]['quantity']
+            cart_total -= price * quantity
             del cart[item_id]
+
         request.session['cart'] = cart
+        request.session['cart_total'] = cart_total
+
         return redirect('cart')
 
 
