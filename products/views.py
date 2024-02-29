@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django.views import generic, View
 from core.contexts import get_base_context, sort_queryset
 from .models import BreadProduct, PastryProduct
-from django.conf import settings
 from itertools import chain
 
 # Create your views here.
@@ -78,12 +77,3 @@ class ProductDetail(View):
             product = get_object_or_404(PastryProduct, name=product_name)
             context['product'] = product
         return render(request, self.template, context)
-
-
-class AddToCart(View):
-    template = 'products/product_detail.html'
-
-    def post(self, request, product_name):
-        return HttpResponseRedirect(reverse(
-            'product_detail', args=[product_name]))
-
