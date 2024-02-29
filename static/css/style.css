@@ -45,6 +45,17 @@ h3, .product-card-title {
     font-size: 1.2em;
 }
 
+.pseudo-anchor {
+    color: #007bff;
+}
+
+a:hover,
+.pseudo-anchor:hover {
+    text-decoration: underline;
+    font-style: italic;
+    cursor: pointer;
+}
+
 /* --------------------------------------------------------Overriding Bootstrap elements */
 
 /* Buttons */

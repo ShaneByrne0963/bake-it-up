@@ -45,6 +45,16 @@ class AddToCart(View):
             'product_detail', args=[product_name]))
 
 
+class RemoveCartItem(View):
+
+    def post(self, request, item_id):
+        cart = request.session['cart']
+        if len(cart) > item_id:
+            del cart[item_id]
+        request.session['cart'] = cart
+        return redirect('cart')
+
+
 class ClearCart(View):
 
     def get(self, request):

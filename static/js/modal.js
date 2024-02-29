@@ -93,7 +93,7 @@ function handleModalErrors() {
 
 
 /**
- * Resets all inputs within an element
+ * Resets all inputs within an element. Does not need to be in a form
  * @param {HTMLElement} element The element containing all the inputs
  */
 function resetInputs(element) {
@@ -125,6 +125,15 @@ $(document).ready(() => {
         let context = {
             title: "Log Out",
             body: `<p>Are you sure you want to log out?</p>`,
+            url: $(this).data('url'),
+        };
+        triggerModal(context);
+    });
+    $('.modal-trigger-remove-item').click(function() {
+        let context = {
+            title: "Remove Item",
+            body: `<p>Are you sure you want to remove this item from your cart?</p>`,
+            button: 'Remove',
             url: $(this).data('url'),
         };
         triggerModal(context);
