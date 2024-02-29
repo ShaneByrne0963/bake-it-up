@@ -1,0 +1,30 @@
+.cart-product-info {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.cart-item-name {
+    font-size: 1.3em;
+}
+
+.cart-image {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+}
+
+.cart-image>img {
+    width: 100%;
+}
+
+/* -----------------------------------------------------------------------MEDIA QUERIES
+
+/* --------------------------------------------------------Bootstrap's large breakpoint */
+@media (max-width: 992px) {
+    .cart-product-info {
+        font-size: 0.8em;
+    }
+}
