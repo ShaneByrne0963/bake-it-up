@@ -62,6 +62,13 @@
         </div>
         <!-- Account navigation at top right corner of screen -->
         <div id="account-nav">
+            {% if cart_total %}
+                <a href="{% url 'cart' %}" class="btn btn-nav shadow-none">
+                    <i class="fa-solid fa-cart-shopping mr-2"></i>
+                    <span>&euro;{{ cart_total }}</span>
+                </a>
+                <a href="{% url 'clear_cart' %}" class="btn btn-danger">Clear Cart</a>
+            {% endif %}
             {% if user.is_authenticated %}
                 <div class="dropdown d-inline-block">
                     <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">

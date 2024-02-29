@@ -1,9 +1,25 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.views import View
 
 from .cartfunctions import add_to_cart
-from core.contexts import get_product_by_name
+from core.contexts import get_base_context, get_product_by_name, \
+    get_cart_context
+from core.shortcuts import price_as_int
+
+
+class ViewCart(View):
+    template = 'cart/view_cart.html'
+
+    def get(self, request):
+        context = get_cart_context(request)
+
+        if 'cart_products' not in context:
+            messages.error(request, "Your cart is empty")
+            return redirect('home')
+
+        return render(request, self.template, context)
 
 
 class AddToCart(View):
@@ -11,16 +27,30 @@ class AddToCart(View):
     def post(self, request, product_name):
         product = get_product_by_name(product_name)
         cart = request.session.get('cart', [])
+        cart_total = request.session.get('cart_total', 0)
 
         quantity = int(request.POST['quantity'])
-        parsed_price = int(product.price * 100)
+        parsed_price = price_as_int(product.price)
 
         order = {
             'name': product_name,
             'quantity': quantity,
             'price': parsed_price,
         }
+        cart_total += parsed_price * quantity
         request.session['cart'] = add_to_cart(order, cart)
+        request.session['cart_total'] = cart_total
 
         return HttpResponseRedirect(reverse(
             'product_detail', args=[product_name]))
+
+
+class ClearCart(View):
+
+    def get(self, request):
+        if 'cart' in request.session:
+            del request.session['cart']
+        if 'cart_total' in request.session:
+            del request.session['cart_total']
+
+        return redirect('home')

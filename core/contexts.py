@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 
 from products.models import BreadProduct, PastryProduct
+from .shortcuts import price_as_float
 
 
 # region List of Available Context Keys
@@ -34,6 +35,43 @@ def get_base_context(request):
     """
     # Getting any persistent context from the previous page
     context = request.session.pop('global_context', {})
+
+    # Getting the cart total
+    if 'cart_total' in request.session \
+            and request.session['cart_total'] > 0:
+        cart_total = request.session['cart_total']
+
+        parsed_total = price_as_float(cart_total)
+        context['cart_total'] = parsed_total
+
+    return context
+
+
+def get_cart_context(request):
+    """
+    Returns the base context, along with a list of products in the
+    shopping cart
+    """
+    context = get_base_context(request)
+    cart = request.session.get('cart', [])
+    cart_products = []
+    for item in cart:
+        product = get_product_by_name(item['name'])
+        quantity = int(item['quantity'])
+        price = price_as_float(item['price'])
+        subtotal = quantity * price
+        item_dict = {
+            'name': item['name'],
+            'product': product,
+            'quantity': quantity,
+            'price': price,
+            'subtotal': subtotal,
+        }
+        cart_products.append(item_dict)
+
+    if len(cart_products) > 0:
+        context['cart_products'] = cart_products
+
     return context
 
 
