@@ -44,7 +44,7 @@ def create_choice_input(prop, product_attrs):
     Creates a multiple choice input that changes depending
     on the number of available answers:
     - 1 answer: Checkbox
-    - 2-4 answers: Radio Input Group
+    - 2-4 answers: Radio Button Group
     - 5+ answers: Select Input
     """
     label = prop['default_label']
@@ -56,53 +56,76 @@ def create_choice_input(prop, product_attrs):
 
     answers = product_attrs['answers']
     if len(answers) == 1:
-        input_html = f"""
+        input_html = create_checkbox(name, answers[0])
+    elif len(answers) < 5:
+        input_html = create_button_group(name, label, answers)
+    else:
+        input_html = create_select_input(name, label, answers)
+
+    return input_html
+
+
+def create_checkbox(name, label):
+    """
+    Returns an HTML string for a checkbox input
+    """
+    return f"""
         <div class="form-group form-check">
             <input type="checkbox" id="prop-{name}"
-                class="form-check-input">
+                class="form-check-input" name=prop_{name}>
             <label for="prop-{name}" class="form-check-label">
-                {answers[0]}
+                {label}
             </label>
         </div>
         """
-    elif len(answers) < 5:
-        input_html = f"""
-        <div class="form-group">
-            <p class="mb-0">{label}</p>
-            <div class="btn-group btn-group-toggle"
-                data-toggle="buttons">
-        """
-        for count, answer in enumerate(answers):
-            active = " active" if count == 0 else ""
-            checked = " checked" if count == 0 else ""
 
-            input_html += f"""
-            <label class="btn btn-dark" for="{name}-{count}"{active}>
-                 <input type="radio" id="{name}-{count}"
-                    name="prop_{name}" value="{count}"{checked}>
-                {answer}
-            </label>
-            """
-        input_html += """
-            </div>
+
+def create_button_group(name, label, answers):
+    """
+    Returns an HTML string for a button group input
+    """
+    input_html = f"""
+    <div class="form-group">
+        <p class="mb-0">{label}</p>
+        <div class="btn-group btn-group-toggle"
+            data-toggle="buttons">
+    """
+    for count, answer in enumerate(answers):
+        active = " active" if count == 0 else ""
+        checked = " checked" if count == 0 else ""
+
+        input_html += f"""
+        <label class="btn btn-dark" for="{name}-{count}"{active}>
+                <input type="radio" id="{name}-{count}"
+                name="prop_{name}" value="{count}"{checked}>
+            {answer}
+        </label>
+        """
+    input_html += """
         </div>
-        """
-    else:
-        input_html = f"""
-        <div class="form-group">
-            <label for="prop-{name}" class="mb-0">{label}</label>
-            <select class="form-control" id="prop-{name}"
-                name="prop_{name}">
+    </div>
+    """
+    return input_html
+
+
+def create_select_input(name, label, answers):
+    """
+    Returns an HTML string for a select input
+    """
+    input_html = f"""
+    <div class="form-group">
+        <label for="prop-{name}" class="mb-0">{label}</label>
+        <select class="form-control" id="prop-{name}"
+            name="prop_{name}">
+    """
+
+    for count, answer in enumerate(answers):
+        input_html += f"""
+        <option value={count}>{answer}</option>
         """
 
-        for count, answer in enumerate(answers):
-            input_html += f"""
-            <option value={count}>{answer}</option>
-            """
-
-        input_html += """
-            </select>
-        </div>
-        """
-
+    input_html += """
+        </select>
+    </div>
+    """
     return input_html
