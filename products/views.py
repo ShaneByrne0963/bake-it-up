@@ -5,6 +5,7 @@ from django.views import generic, View
 from core.contexts import get_base_context, sort_queryset, \
     get_product_by_name
 from .models import BreadProduct, PastryProduct
+from .forms import create_properties_form
 
 from itertools import chain
 
@@ -74,4 +75,5 @@ class ProductDetail(View):
     def get(self, request, product_name):
         context = get_base_context(request)
         context['product'] = get_product_by_name(product_name)
+        context['prop'] = create_properties_form(product_name)
         return render(request, self.template, context)
