@@ -75,6 +75,12 @@
     max-height: 100%;
 }
 
+/* --------------------------------------------------------Custom Property Inputs */
+
+.btn-group-toggle>.btn.active:not(.disabled) {
+    background-color: #784812;
+}
+
 /* --------------------------------------------------------Quantity Selector Input */
 
 #qty-selector,

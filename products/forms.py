@@ -54,8 +54,12 @@ def create_choice_input(prop, product_attrs):
     input_html = ""
 
     answers = product_attrs['answers']
-    if len(answers) == 1:
-        input_html = create_checkbox(name, answers[0])
+    if isinstance(answers, str) or len(answers) == 1:
+        input_html = create_checkbox(
+            name,
+            label,
+            answers[0] if isinstance(answers, list) else answers
+        )
     elif len(answers) < 5:
         input_html = create_button_group(name, label, answers)
     else:
@@ -64,19 +68,25 @@ def create_choice_input(prop, product_attrs):
     return input_html
 
 
-def create_checkbox(name, label):
+def create_checkbox(name, label, answer):
     """
     Returns an HTML string for a checkbox input
     """
+    # Only adding a label if one is specified
+    label_html = ''
+    if {'name': name, 'default_label': label} not in properties:
+        label_html = f'<p class="mb-0">{label}</p>'
+
     return f"""
-        <div class="form-group form-check">
-            <input type="checkbox" id="prop-{name}"
-                class="form-check-input" name=prop_{name}>
-            <label for="prop-{name}" class="form-check-label">
-                {label}
-            </label>
-        </div>
-        """
+    {label_html}
+    <div class="form-group form-check">
+        <input type="checkbox" id="prop-{name}"
+            class="form-check-input" name=prop_{name}>
+        <label for="prop-{name}" class="form-check-label">
+            {answer}
+        </label>
+    </div>
+    """
 
 
 def create_button_group(name, label, answers):
@@ -94,10 +104,10 @@ def create_button_group(name, label, answers):
         checked = " checked" if count == 0 else ""
 
         input_html += f"""
-        <label class="btn btn-dark" for="{name}-{count}"{active}>
-                <input type="radio" id="{name}-{count}"
+        <label class="btn btn-dark{active}" for="{name}-{count}">
+            <input type="radio" id="{name}-{count}"
                 name="prop_{name}" value="{count}"{checked}>
-            {answer}
+                {answer}
         </label>
         """
     input_html += """
