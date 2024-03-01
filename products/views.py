@@ -75,5 +75,5 @@ class ProductDetail(View):
     def get(self, request, product_name):
         context = get_base_context(request)
         context['product'] = get_product_by_name(product_name)
-        context['prop'] = create_properties_form(product_name)
+        context['prop_form'] = create_properties_form(product_name)
         return render(request, self.template, context)

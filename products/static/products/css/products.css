@@ -79,6 +79,7 @@
 
 .btn-group-toggle>.btn.active:not(.disabled) {
     background-color: #784812;
+    border-color: #8f5715;
 }
 
 /* --------------------------------------------------------Quantity Selector Input */

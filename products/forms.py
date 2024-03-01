@@ -11,7 +11,6 @@ properties = [
     { 'name': 'color', 'default_label': 'Icing Colour' },
     { 'name': 'icing', 'default_label': 'Icing Flavour' },
     { 'name': 'decoration', 'default_label': 'Decoration' },
-    { 'name': 'text', 'default_label': 'Text' },
 ]
 
 
