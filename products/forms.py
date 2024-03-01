@@ -29,8 +29,7 @@ def create_properties_form(product_name):
         if hasattr(product, prop_name):
             product_attrs = getattr(product, prop_name)
 
-            if (isinstance(product_attrs, dict)
-                        and 'label' in product_attrs):
+            if isinstance(product_attrs, dict):
                 form_html += create_choice_input(
                     prop,
                     product_attrs
