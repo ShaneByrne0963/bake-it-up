@@ -34,7 +34,7 @@
                 <form class="d-flex flex-column justify-content-between" method="POST" action="{% url 'add_to_cart' product.name %}">
                     {% csrf_token %}
                     <!-- Custom properties -->
-                    <div class="mb-4">
+                    <div class="mb-5">
                         {{ prop_form|safe }}
                     </div>
                     <!-- Form footer -->

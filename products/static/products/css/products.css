@@ -82,6 +82,28 @@
     border-color: #8f5715;
 }
 
+.color-picker {
+    height: 80px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+}
+
+.color-list {
+    overflow: hidden;
+    padding: 2px;
+    display: flex;
+}
+
+.color-list>div {
+    height: 100%;
+    aspect-ratio: 1/1;
+    border: 1px solid #ced4da;
+    border-radius: 50%;
+}
+
 /* --------------------------------------------------------Quantity Selector Input */
 
 #qty-selector,

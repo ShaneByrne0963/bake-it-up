@@ -29,10 +29,16 @@ def create_properties_form(product_name):
             product_attrs = getattr(product, prop_name)
 
             if isinstance(product_attrs, dict):
-                form_html += create_choice_input(
-                    prop,
-                    product_attrs
-                )
+                if prop['name'] == 'color':
+                    form_html += create_color_input(
+                        prop,
+                        product_attrs
+                    )
+                else:
+                    form_html += create_choice_input(
+                        prop,
+                        product_attrs
+                    )
 
     return form_html
 
@@ -78,7 +84,7 @@ def create_checkbox(name, label, answer):
 
     return f"""
     {label_html}
-    <div class="form-group form-check">
+    <div class="form-group form-check mb-4">
         <input type="checkbox" id="prop-{name}"
             class="form-check-input" name=prop_{name}>
         <label for="prop-{name}" class="form-check-label">
@@ -93,7 +99,7 @@ def create_button_group(name, label, answers):
     Returns an HTML string for a button group input
     """
     input_html = f"""
-    <div class="form-group">
+    <div class="form-group mb-4">
         <p class="mb-0">{label}</p>
         <div class="btn-group btn-group-toggle"
             data-toggle="buttons">
@@ -121,7 +127,7 @@ def create_select_input(name, label, answers):
     Returns an HTML string for a select input
     """
     input_html = f"""
-    <div class="form-group">
+    <div class="form-group mb-4">
         <label for="prop-{name}" class="mb-0">{label}</label>
         <select class="form-control" id="prop-{name}"
             name="prop_{name}">
@@ -134,6 +140,49 @@ def create_select_input(name, label, answers):
 
     input_html += """
         </select>
+    </div>
+    """
+    return input_html
+
+
+def create_color_input(prop, product_attrs):
+    """
+    Returns an HTML string for a color picker
+    """
+    label = prop['default_label']
+    name = prop['name']
+    if 'label' in product_attrs:
+        label = product_attrs['label']
+
+    # Starting HTML
+    input_html = f"""
+    <div class="form-group mb-4">
+        <label for="prop-{name}" class="mb-0">{label}</label>
+        <div class="color-picker">
+            <div class="d-flex align-items-center bg-dark">
+                <span class="carousel-control-prev-icon"
+                    aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </div>
+            <div class="color-list">
+    """
+
+    # Each color
+    answers = product_attrs['answers']
+    for answer in answers:
+        input_html += f"""
+        <div style="background-color: {answer}" class="mr-2"></div>
+        """
+
+    # Ending HTML
+    input_html += """
+            </div>
+            <div class="d-flex align-items-center bg-dark">
+                <span class="carousel-control-next-icon"
+                    aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </div>
+        </div>
     </div>
     """
     return input_html
