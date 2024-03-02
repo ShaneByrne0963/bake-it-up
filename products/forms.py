@@ -120,7 +120,7 @@ def create_button_group(name, label, answers):
         input_html += f"""
         <label class="btn{active}" for="{name}-{count}">
             <input type="radio" id="{name}-{count}"
-                name="prop_{name}" value="{count}"{checked}>
+                name="prop_{name}" value="{answer}"{checked}>
                 {answer}
         </label>
         """
@@ -143,9 +143,9 @@ def create_select_input(name, label, answers):
             name="prop_{name}">
     """
 
-    for count, answer in enumerate(answers):
+    for answer in answers:
         input_html += f"""
-        <option value={count}>{answer}</option>
+        <option value={answer}>{answer}</option>
         """
 
     input_html += """

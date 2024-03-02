@@ -54,17 +54,21 @@ def get_cart_context(request):
     """
     context = get_base_context(request)
     cart = request.session.get('cart', [])
+    print(cart)
     cart_products = []
     for item in cart:
         product = get_product_by_name(item['name'])
         quantity = int(item['quantity'])
         price = price_as_float(item['price'])
+        prop_list = item['prop_list']
         subtotal = quantity * price
+
         item_dict = {
             'name': item['name'],
             'product': product,
             'quantity': quantity,
             'price': price,
+            'prop_list': prop_list,
             'subtotal': subtotal,
         }
         cart_products.append(item_dict)
