@@ -67,7 +67,6 @@
                     <i class="fa-solid fa-cart-shopping mr-2"></i>
                     <span>&euro;{{ cart_total }}</span>
                 </a>
-                <a href="{% url 'clear_cart' %}" class="btn btn-danger">Clear Cart</a>
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="dropdown d-inline-block">

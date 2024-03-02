@@ -54,8 +54,8 @@ def get_cart_context(request):
     """
     context = get_base_context(request)
     cart = request.session.get('cart', [])
-    print(cart)
     cart_products = []
+    
     for item in cart:
         product = get_product_by_name(item['name'])
         quantity = int(item['quantity'])

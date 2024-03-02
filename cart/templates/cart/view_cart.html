@@ -38,9 +38,14 @@
             </div>
             <div class="col-3">
                 {% if item.prop_list %}
-                    <ul>
+                    <ul class="pl-2">
                         {% for prop in item.prop_list %}
-                            <li>{{ prop }}</li>
+                            {% if prop.value and prop.value != 'None' and prop.value != 'Plain' %}
+                                <li>
+                                    {% if prop.label %}{{ prop.label }}: {% endif %}
+                                    {{ prop.value }}
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 {% endif %}

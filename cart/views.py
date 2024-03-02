@@ -39,22 +39,23 @@ class AddToCart(View):
             'prop_list': []
         }
 
-        # Custom properties
-        for key in request.POST:
+        # Adding custom properties
+        for key, value in request.POST.items():
             if 'prop_' in key:
-                value = request.POST[key]
-                order[key] = value
+                name = key.replace('prop_', '')
 
-                # Creating a readable list for the cart
                 prop = key.replace('prop_', '')
                 prop_details = getattr(product, key)
-                prop_text = ''
+                label = ''
                 if 'label' in prop_details:
-                    prop_text = prop_details['label']
-                    prop_text += ': '
-                prop_text += value
+                    label = prop_details['label']
 
-                order['prop_list'].append(prop_text)
+                prop_dict = {
+                    'name': name,
+                    'label': label,
+                    'value': value
+                }
+                order['prop_list'].append(prop_dict)
 
         cart_total += parsed_price * quantity
         request.session['cart'] = add_to_cart(order, cart)
