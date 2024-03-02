@@ -155,7 +155,7 @@ def create_select_input(name, label, answers):
 
     for answer in answers:
         input_html += f"""
-        <option value={answer}>{answer}</option>
+        <option value="{answer}">{answer}</option>
         """
 
     input_html += """
