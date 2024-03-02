@@ -15,7 +15,7 @@ PROPERTIES = [
 ]
 
 # The height of the color option, plus its border
-COLOR_INPUT_HEIGHT = 84
+COLOR_INPUT_HEIGHT = 72
 # The gap between each color option
 COLOR_INPUT_GAP = 6
 # The color value of the border, in relation to the color
@@ -170,9 +170,11 @@ def create_color_input(prop, product_attrs):
     # Starting HTML
     input_html = f"""
     <div class="form-group mb-4">
+        <input type="hidden" id="prop-{name}" name="prop_{name}"
+            value="{answers[0]}" aria-hidden="true">
         <label for="prop-{name}" class="mb-0">{label}</label>
         <div class="color-picker">
-            <div class="d-flex align-items-center bg-dark">
+            <div class="d-flex align-items-center bg-dark px-2">
                 <span class="carousel-control-prev-icon"
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -183,7 +185,7 @@ def create_color_input(prop, product_attrs):
     """
 
     # Each color
-    for answer in answers:
+    for count, answer in enumerate(answers):
         # Making the border a slightly darker form of the color
         border_rgb = webcolors.hex_to_rgb(answer)
 
@@ -192,9 +194,11 @@ def create_color_input(prop, product_attrs):
         b = int(border_rgb[2] * COLOR_BORDER_VALUE)
 
         border = webcolors.rgb_to_hex((r, g, b))
+        selected = " selected" if count == 0 else ""
 
         input_html += f"""
-        <div style="background-color: {answer};
+        <div class="color-input{selected}"
+            style="background-color: {answer};
             border-color: {border};">
             <div class="color-overlay"></div>
         </div>
@@ -204,7 +208,7 @@ def create_color_input(prop, product_attrs):
     input_html += """
                 </div>
             </div>
-            <div class="d-flex align-items-center bg-dark">
+            <div class="d-flex align-items-center bg-dark px-2">
                 <span class="carousel-control-next-icon"
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>

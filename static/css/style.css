@@ -221,6 +221,7 @@ input::-webkit-inner-spin-button {
     border-radius: 32px;
     display: flex;
     align-items: center;
+    z-index: 100;
 }
 
 #to-top>div {

@@ -118,10 +118,11 @@
     height: 80px;
     padding: 6px;
     display: flex;
+    align-items: center;
 }
 
-.color-list>div {
-    height: 100%;
+.color-input {
+    height: 70%;
     aspect-ratio: 1/1;
     border: 2px solid #ced4da;
     border-radius: 50%;
@@ -129,6 +130,14 @@
     overflow: hidden;
     margin-right: 6px;
     cursor: pointer;
+}
+
+.color-input.animated {
+    transition: height .2s ease-in-out;
+}
+
+.color-input.selected {
+    height: 100%;
 }
 
 .color-overlay {
