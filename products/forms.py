@@ -109,21 +109,23 @@ def create_button_group(name, label, answers):
     input_html = f"""
     <div class="form-group mb-4">
         <p class="mb-0">{label}</p>
-        <div class="btn-group btn-group-toggle"
-            data-toggle="buttons">
+        <div class="btn-group-container">
+            <div class="btn-group btn-group-toggle"
+                data-toggle="buttons">
     """
     for count, answer in enumerate(answers):
         active = " active" if count == 0 else ""
         checked = " checked" if count == 0 else ""
 
         input_html += f"""
-        <label class="btn btn-dark{active}" for="{name}-{count}">
+        <label class="btn{active}" for="{name}-{count}">
             <input type="radio" id="{name}-{count}"
                 name="prop_{name}" value="{count}"{checked}>
                 {answer}
         </label>
         """
     input_html += """
+            </div>
         </div>
     </div>
     """
