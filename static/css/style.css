@@ -60,17 +60,18 @@ h3, .product-card-title {
 /* Buttons */
 .btn.btn-primary {
     background-color: #784812;
-    border-color: #8f5715;
+    border-color: #5e3609;
 }
 
 .btn.btn-primary:hover {
     background-color: #8f5a1d;
+    border-color: #8f5715;
 }
 
 .btn.btn-primary:not(disabled):not(.disabled):active,
 .btn.btn-primary:not(disabled):not(.disabled):focus {
     background-color: #5e3609;
-    border-color: #8f5715;
+    border-color: #784812;
 }
 
 .btn.btn-nav {
@@ -126,7 +127,7 @@ input::-webkit-inner-spin-button {
 /* --------------------------------------------------------Navigation */
 
 #navbar {
-    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
+    background: url('/media/images/ui-back.png'), #3c3a3b;
     background-position: top center;
     display: grid;
     grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
@@ -184,7 +185,7 @@ input::-webkit-inner-spin-button {
 /* --------------------------------------------------------Footer */
 
 #footer-content {
-    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
+    background: url('/media/images/ui-back.png'), #3c3a3b;
     min-height: 512px;
     color: whitesmoke;
     font-size: 1rem;
@@ -210,7 +211,7 @@ input::-webkit-inner-spin-button {
 /* --------------------------------------------------------"Back To Top" button */
 
 #to-top {
-    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
+    background: url('/media/images/ui-back.png'), #3c3a3b;
     border: 2px solid whitesmoke;
     color: whitesmoke;
     position: fixed;
@@ -240,7 +241,7 @@ input::-webkit-inner-spin-button {
 /* --------------------------------------------------------Modal */
 
 .modal-content {
-    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
+    background: url('/media/images/ui-back.png'), #3c3a3b;
     border: 6px solid whitesmoke;
     border-radius: 64px;
     color: whitesmoke;
@@ -284,7 +285,7 @@ input::-webkit-inner-spin-button {
 #pagination-container {
     border: 2px solid whitesmoke;
     padding: 4px;
-    background: url('/media/images/navbar-back-test.png'), #3c3a3b;
+    background: url('/media/images/ui-back.png'), #3c3a3b;
     border-radius: 16px;
 }
 

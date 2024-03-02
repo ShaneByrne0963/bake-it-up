@@ -1,6 +1,6 @@
 from .models import BreadProduct, PastryProduct
 from core.contexts import get_product_by_name
-import webcolors
+from core.shortcuts import shade_color
 
 
 # All possible properties a bread or pastry product can have
@@ -20,6 +20,16 @@ COLOR_INPUT_HEIGHT = 72
 COLOR_INPUT_GAP = 6
 # The color value of the border, in relation to the color
 COLOR_BORDER_VALUE = 0.8
+
+
+def get_default_label(name):
+    """
+    Finds the default label of a property
+    """
+    for prop in PROPERTIES:
+        if prop['name'] == name:
+            return prop['default_label']
+    return ''
 
 
 def create_properties_form(product_name):
@@ -93,8 +103,8 @@ def create_checkbox(name, label, answer):
     return f"""
     {label_html}
     <div class="form-group form-check mb-4">
-        <input type="checkbox" id="prop-{name}"
-            class="form-check-input" name=prop_{name}>
+        <input type="checkbox" id="prop-{name}" name=prop_{name}
+            value="!{answer}" class="form-check-input">
         <label for="prop-{name}" class="form-check-label">
             {answer}
         </label>
@@ -186,14 +196,7 @@ def create_color_input(prop, product_attrs):
 
     # Each color
     for count, answer in enumerate(answers):
-        # Making the border a slightly darker form of the color
-        border_rgb = webcolors.hex_to_rgb(answer)
-
-        r = int(border_rgb[0] * COLOR_BORDER_VALUE)
-        g = int(border_rgb[1] * COLOR_BORDER_VALUE)
-        b = int(border_rgb[2] * COLOR_BORDER_VALUE)
-
-        border = webcolors.rgb_to_hex((r, g, b))
+        border = shade_color(answer, COLOR_BORDER_VALUE)
         selected = " selected" if count == 0 else ""
 
         input_html += f"""

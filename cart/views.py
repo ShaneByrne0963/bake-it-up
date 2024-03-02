@@ -7,6 +7,7 @@ from .cartfunctions import add_to_cart
 from core.contexts import get_base_context, get_product_by_name, \
     get_cart_context
 from core.shortcuts import price_as_int
+from products.forms import get_default_label
 
 
 class ViewCart(View):
@@ -47,8 +48,16 @@ class AddToCart(View):
                 prop = key.replace('prop_', '')
                 prop_details = getattr(product, key)
                 label = ''
-                if 'label' in prop_details:
-                    label = prop_details['label']
+
+                # Values starting with "!" indicate no label
+                if value[0] != '!':
+                    if 'label' in prop_details:
+                        label = prop_details['label']
+                    else:
+                        label = get_default_label(name)
+                else:
+                    # Remove the "!" after use
+                    value = value[1:]
 
                 prop_dict = {
                     'name': name,
