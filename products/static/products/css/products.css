@@ -83,7 +83,6 @@
 }
 
 .color-picker {
-    height: 80px;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     width: 100%;
@@ -92,15 +91,29 @@
 }
 
 .color-list {
-    overflow: hidden;
-    padding: 2px;
+    height: 80px;
+    padding: 6px;
     display: flex;
 }
 
 .color-list>div {
     height: 100%;
     aspect-ratio: 1/1;
-    border: 1px solid #ced4da;
+    border: 2px solid #ced4da;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.color-overlay {
+    position: absolute;
+    bottom: 0;
+    left: -30%;
+    width: 160%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.64) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.6) 90%);
     border-radius: 50%;
 }
 

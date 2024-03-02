@@ -1,9 +1,10 @@
 from .models import BreadProduct, PastryProduct
 from core.contexts import get_product_by_name
+import webcolors
 
 
 # All possible properties a bread or pastry product can have
-properties = [
+PROPERTIES = [
     { 'name': 'type', 'default_label': 'Type' },
     { 'name': 'shape', 'default_label': 'Bread Shape' },
     { 'name': 'size', 'default_label': 'Size' },
@@ -12,6 +13,13 @@ properties = [
     { 'name': 'icing', 'default_label': 'Icing Flavour' },
     { 'name': 'decoration', 'default_label': 'Decoration' },
 ]
+
+# The height of the color option, plus its border
+COLOR_INPUT_HEIGHT = 84
+# The gap between each color option
+COLOR_INPUT_GAP = 6
+# The color value of the border, in relation to the color
+COLOR_BORDER_VALUE = 0.8
 
 
 def create_properties_form(product_name):
@@ -22,7 +30,7 @@ def create_properties_form(product_name):
     product = get_product_by_name(product_name)
     form_html = ''
 
-    for prop in properties:
+    for prop in PROPERTIES:
         prop_name = f'prop_{prop['name']}'
         
         if hasattr(product, prop_name):
@@ -79,7 +87,7 @@ def create_checkbox(name, label, answer):
     """
     # Only adding a label if one is specified
     label_html = ''
-    if {'name': name, 'default_label': label} not in properties:
+    if {'name': name, 'default_label': label} not in PROPERTIES:
         label_html = f'<p class="mb-0">{label}</p>'
 
     return f"""
@@ -153,6 +161,9 @@ def create_color_input(prop, product_attrs):
     name = prop['name']
     if 'label' in product_attrs:
         label = product_attrs['label']
+    answers = product_attrs['answers']
+    picker_width = len(answers) * \
+        (COLOR_INPUT_HEIGHT + COLOR_INPUT_GAP)
 
     # Starting HTML
     input_html = f"""
@@ -164,18 +175,32 @@ def create_color_input(prop, product_attrs):
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </div>
-            <div class="color-list">
+            <div class="overflow-hidden">
+                <div class="color-list"
+                    style="width: {picker_width}px;">
     """
 
     # Each color
-    answers = product_attrs['answers']
     for answer in answers:
+        # Making the border a slightly darker form of the color
+        border_rgb = webcolors.hex_to_rgb(answer)
+
+        r = int(border_rgb[0] * COLOR_BORDER_VALUE)
+        g = int(border_rgb[1] * COLOR_BORDER_VALUE)
+        b = int(border_rgb[2] * COLOR_BORDER_VALUE)
+
+        border = webcolors.rgb_to_hex((r, g, b))
+
         input_html += f"""
-        <div style="background-color: {answer}" class="mr-2"></div>
+        <div style="background-color: {answer};
+            border-color: {border};">
+            <div class="color-overlay"></div>
+        </div>
         """
 
     # Ending HTML
     input_html += """
+                </div>
             </div>
             <div class="d-flex align-items-center bg-dark">
                 <span class="carousel-control-next-icon"
