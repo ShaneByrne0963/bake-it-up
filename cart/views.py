@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import View
 
-from .cartfunctions import add_to_cart
+from .cartfunctions import add_to_cart, get_properties_from_dict
 from core.contexts import get_base_context, get_product_by_name, \
     get_cart_context
 from core.shortcuts import price_as_int
-from products.forms import get_default_label
 
 
 class ViewCart(View):
@@ -40,36 +39,9 @@ class AddToCart(View):
             'prop_list': []
         }
 
-        # Adding custom properties
-        for key, value in request.POST.items():
-            if 'prop_' in key:
-                name = key.replace('prop_', '')
-
-                prop = key.replace('prop_', '')
-                prop_details = getattr(product, key)
-                label = ''
-                answer = value
-
-                if 'label' in prop_details:
-                    label = prop_details['label']
-                elif value == 'on':
-                    if isinstance(prop_details['answers'], list):
-                        answer = prop_details['answers'][0]
-                    else:
-                        answer = prop_details['answers']
-                else:
-                    label = get_default_label(name)
-                
-                if value.isdigit():
-                    value = int(value)
-                    answer = prop_details['answers'][value]
-
-                prop_dict = {
-                    'name': name,
-                    'label': label,
-                    'value': answer
-                }
-                order['prop_list'].append(prop_dict)
+        order['prop_list'] = get_properties_from_dict(
+            product, request.POST
+        )
 
         cart_total += parsed_price * quantity
         request.session['cart'] = add_to_cart(order, cart)

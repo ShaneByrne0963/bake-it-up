@@ -1,5 +1,13 @@
-def add_to_cart(product, cart):
+from products.forms import get_default_label
 
+
+def add_to_cart(product, cart):
+    """
+    Adds an item to the session storage cart, combining
+    identical products with the same properties.
+    The "product" object must contain keys "name" and
+    "quantity". Everything else is optional
+    """
     # Error handling
     if not isinstance(product, dict):
         raise TypeError("product must be of type dict")
@@ -35,3 +43,46 @@ def add_to_cart(product, cart):
     if not is_in_cart:
         cart.append(product)
     return cart
+
+
+def get_properties_from_dict(product, properties):
+    """
+    Gets a list of all properties of a product
+    specified in the properties dict
+    """
+    list_of_properties = []
+    for key, value in properties.items():
+        if 'prop_' not in key:
+            continue
+        prop_details = getattr(product, key)
+        name = key.replace('prop_', '')
+        label = ''
+        answer = value
+
+        # Specifying the label to be shown in the cart
+        if 'label' in prop_details:
+            label = prop_details['label']
+        elif value == 'on':
+            # Checkbox inputs with no set label will just
+            # display the answer
+            if isinstance(prop_details['answers'], list):
+                answer = prop_details['answers'][0]
+            else:
+                answer = prop_details['answers']
+        else:
+            label = get_default_label(name)
+
+        # Finding the chosen answer from the model, to
+        # prevent users from editing the answer
+        if value.isdigit():
+            value = int(value)
+            answer = prop_details['answers'][value]
+
+        prop_dict = {
+            'name': name,
+            'label': label,
+            'value': answer
+        }
+        list_of_properties.append(prop_dict)
+
+    return list_of_properties
