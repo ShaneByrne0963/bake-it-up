@@ -61,7 +61,11 @@ class EditCartItem(View):
         context['order_item'] = order_item
         product_name = order_item['name']
         context['product'] = get_product_by_name(product_name)
-        prop_form = create_properties_form(product_name)
+        prop_form = create_properties_form(
+            product_name,
+            order_item['prop_list']
+        )
+        context['prop_form'] = prop_form
 
         return render(request, self.template, context)
 

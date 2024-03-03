@@ -41,15 +41,15 @@
                 {% if item.prop_list %}
                     <ul class="pl-2">
                         {% for prop in item.prop_list %}
-                            {% if prop.value and prop.value != 'None' and prop.value != 'Plain' %}
+                            {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' %}
                                 <li>
                                     <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
                                         {% if prop.name == 'color' %}
                                             <div class="d-inline-block cart-prop-color ml-2"
-                                                data-back="{{ prop.value }}" data-border="{% shade_color prop.value 0.8 %}">
+                                                data-back="{{ prop.answer }}" data-border="{% shade_color prop.answer 0.8 %}">
                                                 <div class="color-overlay"></div>
                                             </div>
-                                        {% else %}{{ prop.value }}
+                                        {% else %}{{ prop.answer }}
                                         {% endif %}
                                     </span>
                                 </li>

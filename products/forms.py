@@ -1,5 +1,6 @@
 from .models import BreadProduct, PastryProduct
 from core.contexts import get_product_by_name
+from core.shortcuts import find_dict_in_list
 from core.templatetags.custom_tags import shade_color
 
 
@@ -32,7 +33,7 @@ def get_default_label(name):
     return ''
 
 
-def create_properties_form(product_name):
+def create_properties_form(product_name, pre_fill=None):
     """
     Returns a form HTML string used to add custom properties to
     a product
@@ -42,6 +43,18 @@ def create_properties_form(product_name):
 
     for prop in PROPERTIES:
         prop_name = f'prop_{prop['name']}'
+        pre_fill_value = None
+
+        # Getting the pre-filled value, if any
+        try:
+            pre_fill_item = find_dict_in_list(
+                pre_fill,
+                'name',
+                prop['name']
+            )
+            pre_fill_value = int(pre_fill_item['value'])
+        except:
+            pass
         
         if hasattr(product, prop_name):
             product_attrs = getattr(product, prop_name)
@@ -50,18 +63,20 @@ def create_properties_form(product_name):
                 if prop['name'] == 'color':
                     form_html += create_color_input(
                         prop,
-                        product_attrs
+                        product_attrs,
+                        pre_fill_value
                     )
                 else:
                     form_html += create_choice_input(
                         prop,
-                        product_attrs
+                        product_attrs,
+                        pre_fill_value
                     )
 
     return form_html
 
 
-def create_choice_input(prop, product_attrs):
+def create_choice_input(prop, product_attrs, pre_fill_value):
     """
     Creates a multiple choice input that changes depending
     on the number of available answers:
@@ -81,17 +96,20 @@ def create_choice_input(prop, product_attrs):
         input_html = create_checkbox(
             name,
             label,
-            answers[0] if isinstance(answers, list) else answers
+            answers[0] if isinstance(answers, list) else answers,
+            pre_fill_value
         )
     elif len(answers) < 5:
-        input_html = create_button_group(name, label, answers)
+        input_html = create_button_group(name, label, answers,
+                                         pre_fill_value)
     else:
-        input_html = create_select_input(name, label, answers)
+        input_html = create_select_input(name, label, answers,
+                                         pre_fill_value)
 
     return input_html
 
 
-def create_checkbox(name, label, answer):
+def create_checkbox(name, label, answer, value):
     """
     Returns an HTML string for a checkbox input
     """
@@ -113,9 +131,10 @@ def create_checkbox(name, label, answer):
     """
 
 
-def create_button_group(name, label, answers):
+def create_button_group(name, label, answers, value):
     """
-    Returns an HTML string for a button group input
+    Returns an HTML string for a button group input,
+    with an optional value pre-filled in
     """
     input_html = f"""
     <div class="form-group mb-4">
@@ -124,9 +143,13 @@ def create_button_group(name, label, answers):
             <div class="btn-group btn-group-toggle"
                 data-toggle="buttons">
     """
+    # Default to the first option
+    if value is None:
+        value = 0
+
     for count, answer in enumerate(answers):
-        active = " active" if count == 0 else ""
-        checked = " checked" if count == 0 else ""
+        active = " active" if count == value else ""
+        checked = " checked" if count == value else ""
 
         input_html += f"""
         <label class="btn{active}" for="{name}-{count}">
@@ -143,9 +166,10 @@ def create_button_group(name, label, answers):
     return input_html
 
 
-def create_select_input(name, label, answers):
+def create_select_input(name, label, answers, value):
     """
-    Returns an HTML string for a select input
+    Returns an HTML string for a select input, with
+    an optional value pre-filled in
     """
     input_html = f"""
     <div class="form-group mb-4">
@@ -155,8 +179,9 @@ def create_select_input(name, label, answers):
     """
 
     for count, answer in enumerate(answers):
+        selected = ' selected' if count == value else ''
         input_html += f"""
-        <option value="{count}">{answer}</option>
+        <option value="{count}"{selected}>{answer}</option>
         """
 
     input_html += """
@@ -166,9 +191,10 @@ def create_select_input(name, label, answers):
     return input_html
 
 
-def create_color_input(prop, product_attrs):
+def create_color_input(prop, product_attrs, value):
     """
-    Returns an HTML string for a color picker
+    Returns an HTML string for a color picker, with
+    an optional value pre-filled in
     """
     label = prop['default_label']
     name = prop['name']
@@ -178,11 +204,15 @@ def create_color_input(prop, product_attrs):
     picker_width = len(answers) * \
         (COLOR_INPUT_HEIGHT + COLOR_INPUT_GAP)
 
+    # Default to the first option
+    if value is None:
+        value = 0
+
     # Starting HTML
     input_html = f"""
     <div class="form-group mb-4">
         <input type="hidden" id="prop-{name}" name="prop_{name}"
-            value="0" aria-hidden="true">
+            value="{value}" aria-hidden="true">
         <label for="prop-{name}" class="mb-0">{label}</label>
         <div class="color-picker">
             <button type="button" class="d-flex align-items-center
@@ -200,7 +230,7 @@ def create_color_input(prop, product_attrs):
     # Each color
     for count, answer in enumerate(answers):
         border = shade_color(answer, COLOR_BORDER_VALUE)
-        selected = " selected" if count == 0 else ""
+        selected = " selected" if count == value else ""
 
         input_html += f"""
         <div class="color-input{selected}" data-val={count}

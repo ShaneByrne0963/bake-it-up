@@ -81,7 +81,8 @@ def get_properties_from_dict(product, properties):
         prop_dict = {
             'name': name,
             'label': label,
-            'value': answer
+            'value': value,
+            'answer': answer
         }
         list_of_properties.append(prop_dict)
 
