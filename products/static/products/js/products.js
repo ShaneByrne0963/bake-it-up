@@ -59,10 +59,13 @@ function highlightAllergens() {
 // CSS properties of the color inputs that affect the total size
 const colorMargin = 3;
 const colorBorder = 2;
+
+// The margin of error for checking if the scroll list is at either end
+const edgeErrorMargin = 2;
 /**
  * Updates the color input scroll buttons when the screen is resized
  */
-function resizeColorInput() {
+function updateColorScrollButtons() {
     $('.color-scroll').prop('disabled', true).removeClass('disabled');
     global.containerWidth = $('.color-container').width();
 
@@ -72,14 +75,15 @@ function resizeColorInput() {
         let colorList = $('.color-list');
         let listPosition = parseInt($(colorList).css('left'));
 
-        if (listPosition === 0 && false) {
+        if (Math.abs(listPosition) <= edgeErrorMargin) {
             $('.scroll-left').addClass('disabled');
         }
         else {
             $('.scroll-left').prop('disabled', false);
         }
-
-        if (listPosition === -global.colorListWidth) {
+        
+        let scrollRightEdge = Math.round(listPosition - global.containerWidth + global.colorListWidth);
+        if (Math.abs(scrollRightEdge) <= edgeErrorMargin) {
             $('.scroll-right').addClass('disabled');
         }
         else {
@@ -103,6 +107,14 @@ const scrollMargin = 10;
  */
 function colorScroll(direction) {
     let colorList = $('.color-list');
+
+    // Blocking the scroll if a scroll animation is currently happening
+    if (colorList.hasClass('animated')) {
+        return;
+    }
+
+    // Prevents class duplicates
+    colorList.removeClass('animated');
     let listPosition = parseInt(colorList.css('left'));
 
     let colorInputs = colorList.get(0).children;
@@ -125,15 +137,18 @@ function colorScroll(direction) {
         colorIteration -= global.containerWidth;
     }
     let finalPosition = Math.round(-colorIteration);
-    colorList.css('left', `${finalPosition}px`);
+    colorList.css('left', `${finalPosition}px`).addClass('animated');
 }
 
 
 $(document).ready(() => {
+
     highlightAllergens();
 
-    // Initialize the position of the color input scroll
-    $('.color-list').css('left', '0');
+    $('.color-list').css('left', '0').on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+        updateColorScrollButtons();
+        $(this).removeClass('animated');
+    });
 
     // Finding the actual width of the color list. This is different
     // from the div's width as we want the color inputs to have sufficient space
@@ -148,10 +163,10 @@ $(document).ready(() => {
         $('#prop-color').val($(this).data('val'));
     });
 
+    // Functionality for the scroll buttons
     $('.scroll-right').click(() => {
         colorScroll(1);
     });
-
     $('.scroll-left').click(() => {
         colorScroll(-1);
     });

@@ -47,7 +47,7 @@ function resizeWindow() {
     }
 
     if ($('.color-container').length > 0) {
-        resizeColorInput();
+        updateColorScrollButtons();
     }
 }
 
