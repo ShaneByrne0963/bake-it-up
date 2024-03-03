@@ -55,6 +55,18 @@ h3, .product-card-title {
     cursor: pointer;
 }
 
+/* Overlay to add color to a color input */
+
+.color-overlay {
+    position: absolute;
+    bottom: 0;
+    left: -30%;
+    width: 160%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.64) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.6) 90%);
+    border-radius: 50%;
+}
+
 /* --------------------------------------------------------Overriding Bootstrap elements */
 
 /* Buttons */

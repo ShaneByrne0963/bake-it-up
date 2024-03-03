@@ -52,6 +52,7 @@ function highlightAllergens() {
 $(document).ready(() => {
     highlightAllergens();
 
+    // Adding functionality to the color radio input
     $('.color-input').addClass('animated').click(function() {
         $('.color-input').removeClass('selected');
         $(this).addClass('selected');

@@ -47,7 +47,7 @@
                                         {% if prop.name == 'color' %}
                                             <div class="d-inline-block cart-prop-color ml-2"
                                                 data-back="{{ prop.value }}" data-border="{% shade_color prop.value 0.8 %}">
-                                                <div class="cart-color-overlay"></div>
+                                                <div class="color-overlay"></div>
                                             </div>
                                         {% else %}{{ prop.value }}
                                         {% endif %}
@@ -73,6 +73,7 @@
     </div>
 {% endblock %}
 
-{% block extra_javascript %}
+{% block postloadjs %}
+    {{ block.super }}
     <script src="{% static 'cart/js/cart.js' %}"></script>
 {% endblock %}

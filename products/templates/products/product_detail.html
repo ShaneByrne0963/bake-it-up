@@ -73,6 +73,7 @@
     </div>
 {% endblock %}
 
-{% block extra_javascript %}
+{% block postloadjs %}
     <script src="{% static 'products/js/products.js' %}" type="text/javascript"></script>
+    {{ block.super }}
 {% endblock %}

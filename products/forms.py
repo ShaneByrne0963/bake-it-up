@@ -185,11 +185,12 @@ def create_color_input(prop, product_attrs):
             value="0" aria-hidden="true">
         <label for="prop-{name}" class="mb-0">{label}</label>
         <div class="color-picker">
-            <div class="d-flex align-items-center bg-dark px-2">
+            <button type="button" class="d-flex align-items-center
+                btn btn-dark px-2 disabled" disabled>
                 <span class="carousel-control-prev-icon"
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
-            </div>
+            </button>
             <div class="overflow-hidden">
                 <div class="color-list"
                     style="width: {picker_width}px;">
@@ -212,11 +213,12 @@ def create_color_input(prop, product_attrs):
     input_html += """
                 </div>
             </div>
-            <div class="d-flex align-items-center bg-dark px-2">
+            <button type="button" class="d-flex align-items-center
+                btn btn-dark px-2 disabled" disabled>
                 <span class="carousel-control-next-icon"
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
-            </div>
+            </button>
         </div>
     </div>
     """
