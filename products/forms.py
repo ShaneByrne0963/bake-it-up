@@ -18,7 +18,7 @@ PROPERTIES = [
 COLOR_INPUT_HEIGHT = 72
 # The gap between each color option
 COLOR_INPUT_GAP = 6
-# The color value of the border, in relation to the color
+# The brightness of the border, in relation to the color
 COLOR_BORDER_VALUE = 0.8
 
 
@@ -97,14 +97,20 @@ def create_checkbox(name, label, answer):
     """
     # Only adding a label if one is specified
     label_html = ''
+    # Values prefixed with a "!" will not have their label
+    # shown in the cart
+    exclude_label_tag = '!'
     if {'name': name, 'default_label': label} not in PROPERTIES:
         label_html = f'<p class="mb-0">{label}</p>'
+        exclude_label_tag = ''
 
+    # The checkbox HTML
     return f"""
     {label_html}
     <div class="form-group form-check mb-4">
         <input type="checkbox" id="prop-{name}" name=prop_{name}
-            value="!{answer}" class="form-check-input">
+            value="{exclude_label_tag}{answer}"
+            class="form-check-input">
         <label for="prop-{name}" class="form-check-label">
             {answer}
         </label>
@@ -130,7 +136,7 @@ def create_button_group(name, label, answers):
         input_html += f"""
         <label class="btn{active}" for="{name}-{count}">
             <input type="radio" id="{name}-{count}"
-                name="prop_{name}" value="{answer}"{checked}>
+                name="prop_{name}" value="{count}"{checked}>
                 {answer}
         </label>
         """
@@ -153,9 +159,9 @@ def create_select_input(name, label, answers):
             name="prop_{name}">
     """
 
-    for answer in answers:
+    for count, answer in enumerate(answers):
         input_html += f"""
-        <option value="{answer}">{answer}</option>
+        <option value="{count}">{answer}</option>
         """
 
     input_html += """
@@ -181,7 +187,7 @@ def create_color_input(prop, product_attrs):
     input_html = f"""
     <div class="form-group mb-4">
         <input type="hidden" id="prop-{name}" name="prop_{name}"
-            value="{answers[0]}" aria-hidden="true">
+            value="0" aria-hidden="true">
         <label for="prop-{name}" class="mb-0">{label}</label>
         <div class="color-picker">
             <div class="d-flex align-items-center bg-dark px-2">
@@ -200,7 +206,7 @@ def create_color_input(prop, product_attrs):
         selected = " selected" if count == 0 else ""
 
         input_html += f"""
-        <div class="color-input{selected}"
+        <div class="color-input{selected}" data-val={count}
             style="background-color: {answer};
             border-color: {border};">
             <div class="color-overlay"></div>

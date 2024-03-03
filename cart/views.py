@@ -48,21 +48,26 @@ class AddToCart(View):
                 prop = key.replace('prop_', '')
                 prop_details = getattr(product, key)
                 label = ''
+                answer = value
 
-                # Values starting with "!" indicate no label
-                if value[0] != '!':
-                    if 'label' in prop_details:
-                        label = prop_details['label']
+                if 'label' in prop_details:
+                    label = prop_details['label']
+                elif value == 'on':
+                    if isinstance(prop_details['answers'], list):
+                        answer = prop_details['answers'][0]
                     else:
-                        label = get_default_label(name)
+                        answer = prop_details['answers']
                 else:
-                    # Remove the "!" after use
-                    value = value[1:]
+                    label = get_default_label(name)
+                
+                if value.isdigit():
+                    value = int(value)
+                    answer = prop_details['answers'][value]
 
                 prop_dict = {
                     'name': name,
                     'label': label,
-                    'value': value
+                    'value': answer
                 }
                 order['prop_list'].append(prop_dict)
 

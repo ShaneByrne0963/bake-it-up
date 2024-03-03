@@ -55,6 +55,6 @@ $(document).ready(() => {
     $('.color-input').addClass('animated').click(function() {
         $('.color-input').removeClass('selected');
         $(this).addClass('selected');
-        $('#prop-color').val($(this).css('background-color'));
+        $('#prop-color').val($(this).data('val'));
     });
 });
