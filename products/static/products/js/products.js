@@ -101,39 +101,28 @@ const scrollMargin = 10;
  * @param {Integer} direciton The direction of the scroll movement. Must
  * be 1 (right) or -1 (left)
  */
-function colorScroll(direciton) {
+function colorScroll(direction) {
     let colorList = $('.color-list');
     let listPosition = parseInt(colorList.css('left'));
 
-    let colorIteration = 0
     let colorInputs = colorList.get(0).children;
-    for (let color of colorInputs) {
-        let colorWidth = $(color).width() + (colorMargin * 2) + (colorBorder * 2);
-        colorIteration += colorWidth;
+    isRight = (direction > 0);
+    let colorIteration = (isRight) ? 0 : global.colorListWidth;
+    let iterationStart = (isRight) ? 0 : colorInputs.length - 1;
 
-        if (colorIteration > global.containerWidth - listPosition + scrollMargin) {
+    for (let i = iterationStart; i >= 0 && i < colorInputs.length; i += direction) {
+        let color = colorInputs[i];
+        let colorWidth = $(color).width() + (colorMargin * 2) + (colorBorder * 2);
+        colorIteration += (colorWidth * direction);
+
+        // Checks if the current color input extends past the container border
+        if ((isRight && colorIteration > global.containerWidth - listPosition + scrollMargin)
+            || (!isRight && colorIteration < -listPosition - scrollMargin)) {
             break;
         }
     }
-    let finalPosition = Math.round(global.containerWidth - colorIteration);
-    colorList.css('left', `${finalPosition}px`);
-}
-
-
-function colorScrollLeft(direciton) {
-    let colorList = $('.color-list');
-    let listPosition = parseInt(colorList.css('left'));
-
-    let colorIteration = global.colorListWidth;
-    let colorInputs = colorList.get(0).children;
-    for (let i = colorInputs.length - 1; i >= 0; i--) {
-        let color = colorInputs[i];
-        let colorWidth = $(color).width() + (colorMargin * 2) + (colorBorder * 2);
-        colorIteration -= colorWidth;
-
-        if (colorIteration < -listPosition - scrollMargin) {
-            break;
-        }
+    if (direction > 0) {
+        colorIteration -= global.containerWidth;
     }
     let finalPosition = Math.round(-colorIteration);
     colorList.css('left', `${finalPosition}px`);
@@ -164,6 +153,6 @@ $(document).ready(() => {
     });
 
     $('.scroll-left').click(() => {
-        colorScrollLeft(1);
+        colorScroll(-1);
     });
 });
