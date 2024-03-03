@@ -45,6 +45,10 @@ function resizeWindow() {
             $(`#product-image-${actualScreen}`).append(imageContainer);
         }
     }
+
+    if ($('.color-container').length > 0) {
+        resizeColorInput();
+    }
 }
 
 /**

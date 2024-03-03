@@ -116,9 +116,9 @@
 
 .color-list {
     height: 80px;
-    padding: 6px;
     display: flex;
     align-items: center;
+    padding: 6px 0;
 }
 
 .color-input {
@@ -128,7 +128,7 @@
     border-radius: 50%;
     position: relative;
     overflow: hidden;
-    margin-right: 6px;
+    margin: 3px;
     cursor: pointer;
 }
 

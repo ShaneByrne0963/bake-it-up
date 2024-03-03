@@ -19,6 +19,11 @@ const allergens = [
     'soya',
 ]
 
+// Global variables. Initialize here ONLY
+const global = {
+    scrollSnap: 'left'
+}
+
 
 /**
  * Highlights any allergens in a product's ingredients in bold
@@ -48,6 +53,28 @@ function highlightAllergens() {
     }
     $('#ingredients').html(ingredientsHtml);
 }
+
+
+// CSS properties of the color inputs that affect the total size
+const colorMargin = 3;
+const colorBorder = 2;
+/**
+ * Updates the color input scroll buttons when the screen is resized
+ */
+function resizeColorInput() {
+    let containerWidth = $('.color-container').width();
+    let colorsWidth = 0;
+    $('.color-input').each(function() {
+        colorsWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
+    });
+
+    let containerHidden = (colorsWidth > containerWidth);
+    $('.color-scroll').prop('disabled', !containerHidden).removeClass('disabled');
+    if (!containerHidden) {
+        $('.color-scroll').addClass('disabled');
+    }
+}
+
 
 $(document).ready(() => {
     highlightAllergens();
