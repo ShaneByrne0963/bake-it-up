@@ -1,6 +1,6 @@
 from .models import BreadProduct, PastryProduct
 from core.contexts import get_product_by_name
-from core.shortcuts import shade_color
+from core.templatetags.custom_tags import shade_color
 
 
 # All possible properties a bread or pastry product can have

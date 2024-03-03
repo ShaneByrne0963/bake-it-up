@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}" type="text/css">
@@ -42,8 +43,15 @@
                         {% for prop in item.prop_list %}
                             {% if prop.value and prop.value != 'None' and prop.value != 'Plain' %}
                                 <li>
-                                    {% if prop.label %}{{ prop.label }}: {% endif %}
-                                    {{ prop.value }}
+                                    <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
+                                        {% if prop.name == 'color' %}
+                                            <div class="d-inline-block cart-prop-color ml-2"
+                                                style="background-color: {{ prop.value }}; border-color: {% shade_color prop.value 0.8 %}">
+                                                <div class="cart-color-overlay"></div>
+                                            </div>
+                                        {% else %}{{ prop.value }}
+                                        {% endif %}
+                                    </span>
                                 </li>
                             {% endif %}
                         {% endfor %}
