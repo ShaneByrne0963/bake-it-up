@@ -46,7 +46,7 @@
                                     <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
                                         {% if prop.name == 'color' %}
                                             <div class="d-inline-block cart-prop-color ml-2"
-                                                style="background-color: {{ prop.value }}; border-color: {% shade_color prop.value 0.8 %}">
+                                                data-back="{{ prop.value }}" data-border="{% shade_color prop.value 0.8 %}">
                                                 <div class="cart-color-overlay"></div>
                                             </div>
                                         {% else %}{{ prop.value }}
@@ -71,4 +71,8 @@
         {% endif %}
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block extra_javascript %}
+    <script src="{% static 'cart/js/cart.js' %}"></script>
 {% endblock %}
