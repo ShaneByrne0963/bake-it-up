@@ -7,6 +7,7 @@ from .cartfunctions import add_to_cart, get_properties_from_dict
 from core.contexts import get_base_context, get_product_by_name, \
     get_cart_context
 from core.shortcuts import price_as_int
+from products.forms import create_properties_form
 
 
 class ViewCart(View):
@@ -49,6 +50,20 @@ class AddToCart(View):
 
         return HttpResponseRedirect(reverse(
             'product_detail', args=[product_name]))
+
+
+class EditCartItem(View):
+    template = 'cart/edit_cart_item.html'
+
+    def get(self, request, item_index):
+        context = get_base_context(request)
+        order_item = request.session['cart'][item_index]
+        context['order_item'] = order_item
+        product_name = order_item['name']
+        context['product'] = get_product_by_name(product_name)
+        prop_form = create_properties_form(product_name)
+
+        return render(request, self.template, context)
 
 
 class RemoveCartItem(View):
