@@ -186,7 +186,8 @@ def create_color_input(prop, product_attrs):
         <label for="prop-{name}" class="mb-0">{label}</label>
         <div class="color-picker">
             <button type="button" class="d-flex align-items-center
-                color-scroll btn btn-dark px-2 disabled" disabled>
+                color-scroll scroll-left btn btn-dark px-2 disabled"
+                disabled>
                 <span class="carousel-control-prev-icon"
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -214,7 +215,8 @@ def create_color_input(prop, product_attrs):
                 </div>
             </div>
             <button type="button" class="d-flex align-items-center
-                color-scroll btn btn-dark px-2 disabled" disabled>
+                color-scroll scroll-right btn btn-dark px-2 disabled"
+                disabled>
                 <span class="carousel-control-next-icon"
                     aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>

@@ -19,9 +19,10 @@ const allergens = [
     'soya',
 ]
 
-// Global variables. Initialize here ONLY
+// Global variables. Initialize here ONLY. Ensure no duplicates
 const global = {
-    scrollSnap: 'left'
+    containerWidth: 0,
+    colorListWidth: 0
 }
 
 
@@ -62,27 +63,83 @@ const colorBorder = 2;
  * Updates the color input scroll buttons when the screen is resized
  */
 function resizeColorInput() {
-    let containerWidth = $('.color-container').width();
-    let colorsWidth = 0;
-    $('.color-input').each(function() {
-        colorsWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
-    });
+    $('.color-scroll').prop('disabled', true).removeClass('disabled');
+    global.containerWidth = $('.color-container').width();
 
-    let containerHidden = (colorsWidth > containerWidth);
-    $('.color-scroll').prop('disabled', !containerHidden).removeClass('disabled');
-    if (!containerHidden) {
-        $('.color-scroll').addClass('disabled');
+    let containerHidden = (global.colorListWidth > global.containerWidth);
+
+    if (containerHidden) {
+        let colorList = $('.color-list');
+        let listPosition = parseInt($(colorList).css('left'));
+
+        if (listPosition === 0) {
+            $('.scroll-left').addClass('disabled');
+        }
+        else {
+            $('.scroll-left').prop('disabled', false);
+        }
+
+        if (listPosition === -global.colorListWidth) {
+            $('.scroll-right').addClass('disabled');
+        }
+        else {
+            $('.scroll-right').prop('disabled', false);
+        }
     }
+    else {
+        // Moves the list to its starting position when there is enough space for it
+        $('.color-list').css('left', '0');
+    }
+}
+
+
+// If the end of a color input is this close to the container, it will scroll to the
+// next color
+const scrollMargin = 10;
+/**
+ * Scrolls the color input in a given direction
+ * @param {Integer} direciton The direction of the scroll movement. Must
+ * be 1 (right) or -1 (left)
+ */
+function colorScroll(direciton) {
+    let colorList = $('.color-list');
+    let listPosition = parseInt(colorList.css('left'));
+
+    let colorIteration = 0
+    let colorInputs = colorList.get(0).children;
+    for (let color of colorInputs) {
+        let colorWidth = $(color).width() + (colorMargin * 2) + (colorBorder * 2);
+        colorIteration += colorWidth;
+
+        if (colorIteration > global.containerWidth - listPosition + scrollMargin) {
+            break;
+        }
+    }
+    let finalPosition = Math.round(global.containerWidth - colorIteration);
+    colorList.css('left', `${finalPosition}px`);
 }
 
 
 $(document).ready(() => {
     highlightAllergens();
 
+    // Initialize the position of the color input scroll
+    $('.color-list').css('left', '0');
+
+    // Finding the actual width of the color list. This is different
+    // from the div's width as we want the color inputs to have sufficient space
+    $('.color-input').each(function() {
+        global.colorListWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
+    });
+
     // Adding functionality to the color radio input
     $('.color-input').addClass('animated').click(function() {
         $('.color-input').removeClass('selected');
         $(this).addClass('selected');
         $('#prop-color').val($(this).data('val'));
+    });
+
+    $('.scroll-right').click(() => {
+        colorScroll(1);
     });
 });
