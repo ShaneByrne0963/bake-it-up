@@ -43,7 +43,7 @@ def create_properties_form(product_name, pre_fill=None):
 
     for prop in PROPERTIES:
         prop_name = f'prop_{prop['name']}'
-        pre_fill_value = None
+        value = None
 
         # Getting the pre-filled value, if any
         try:
@@ -52,7 +52,7 @@ def create_properties_form(product_name, pre_fill=None):
                 'name',
                 prop['name']
             )
-            pre_fill_value = int(pre_fill_item['value'])
+            value = pre_fill_item['value']
         except:
             pass
         
@@ -64,19 +64,19 @@ def create_properties_form(product_name, pre_fill=None):
                     form_html += create_color_input(
                         prop,
                         product_attrs,
-                        pre_fill_value
+                        value
                     )
                 else:
                     form_html += create_choice_input(
                         prop,
                         product_attrs,
-                        pre_fill_value
+                        value
                     )
 
     return form_html
 
 
-def create_choice_input(prop, product_attrs, pre_fill_value):
+def create_choice_input(prop, product_attrs, value):
     """
     Creates a multiple choice input that changes depending
     on the number of available answers:
@@ -97,14 +97,14 @@ def create_choice_input(prop, product_attrs, pre_fill_value):
             name,
             label,
             answers[0] if isinstance(answers, list) else answers,
-            pre_fill_value
+            value
         )
     elif len(answers) < 5:
         input_html = create_button_group(name, label, answers,
-                                         pre_fill_value)
+                                         value)
     else:
         input_html = create_select_input(name, label, answers,
-                                         pre_fill_value)
+                                         value)
 
     return input_html
 
@@ -117,13 +117,14 @@ def create_checkbox(name, label, answer, value):
     label_html = ''
     if {'name': name, 'default_label': label} not in PROPERTIES:
         label_html = f'<p class="mb-0">{label}</p>'
+    checked = ' checked' if value == 'on' else ''
 
     # The checkbox HTML
     return f"""
     {label_html}
     <div class="form-group form-check mb-4">
         <input type="checkbox" id="prop-{name}" name=prop_{name}
-            class="form-check-input">
+            class="form-check-input"{checked}>
         <label for="prop-{name}" class="form-check-label">
             {answer}
         </label>
