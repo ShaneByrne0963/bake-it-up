@@ -57,10 +57,14 @@ class EditCartItem(View):
 
     def get(self, request, item_index):
         context = get_base_context(request)
+        context['item_index'] = item_index
+
         order_item = request.session['cart'][item_index]
         context['order_item'] = order_item
+
         product_name = order_item['name']
         context['product'] = get_product_by_name(product_name)
+
         prop_form = create_properties_form(
             product_name,
             order_item['prop_list']
@@ -68,6 +72,40 @@ class EditCartItem(View):
         context['prop_form'] = prop_form
 
         return render(request, self.template, context)
+    
+    def post(self, request, item_index):
+        cart = request.session['cart']
+        order_item = cart[item_index]
+        product_name = order_item['name']
+        product = get_product_by_name(product_name)
+
+        # Removing the old price from the total
+        cart_total = request.session.get('cart_total', 0)
+        cart_total -= order_item['price'] * order_item['quantity']
+
+        # Instead of updating the old order item, a new one
+        # is created, so it can be appended to an identical one
+        cart.remove(order_item)
+
+        quantity = int(request.POST['quantity'])
+        parsed_price = price_as_int(product.price)
+
+        order = {
+            'name': product_name,
+            'quantity': quantity,
+            'price': parsed_price,
+            'prop_list': []
+        }
+
+        order['prop_list'] = get_properties_from_dict(
+            product, request.POST
+        )
+
+        cart_total += parsed_price * quantity
+        request.session['cart'] = add_to_cart(order, cart)
+        request.session['cart_total'] = cart_total
+
+        return redirect('cart')
 
 
 class RemoveCartItem(View):

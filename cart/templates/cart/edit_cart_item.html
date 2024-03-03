@@ -31,7 +31,7 @@
                     <hr>
                     <div id="product-image-mobile" class="d-block d-lg-none"></div>
                 </div>
-                <form class="d-flex flex-column justify-content-between" method="POST" action="{% url 'add_to_cart' product.name %}">
+                <form class="d-flex flex-column justify-content-between" method="POST" action="{% url 'edit_cart_item' item_index %}">
                     {% csrf_token %}
                     <!-- Custom properties -->
                     <div class="mb-5">
@@ -50,13 +50,13 @@
                                     <button type="button" class="btn btn-dark qty-subtract">-</button>
 
                                     <input type="number" id="product-quantity" class="form-control qty-number text-right"
-                                        name="quantity" value="1" min="1" max="99"
+                                        name="quantity" value="{{ order_item.quantity }}" min="1" max="99"
                                         data-price="{{ product.price }}" data-update="#total-price">
 
                                     <button type="button" class="btn btn-dark qty-add">+</button>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-lg btn-primary">Add to Cart</button>
+                            <button type="submit" class="btn btn-lg btn-primary">Save Changes</button>
                         </div>
                     </div>
                 </form>
