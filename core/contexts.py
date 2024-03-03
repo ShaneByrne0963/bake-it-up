@@ -61,7 +61,7 @@ def get_cart_context(request):
         quantity = int(item['quantity'])
         price = price_as_float(item['price'])
         prop_list = item['prop_list']
-        subtotal = quantity * price
+        subtotal = round(quantity * price, 2)
 
         item_dict = {
             'name': item['name'],
