@@ -62,14 +62,9 @@ def get_properties_from_dict(product, properties):
         # Specifying the label to be shown in the cart
         if 'label' in prop_details:
             label = prop_details['label']
-        elif value == 'on':
+        elif value != 'on':
             # Checkbox inputs with no set label will just
             # display the answer
-            if isinstance(prop_details['answers'], list):
-                answer = prop_details['answers'][0]
-            else:
-                answer = prop_details['answers']
-        else:
             label = get_default_label(name)
 
         # Finding the chosen answer from the model, to
@@ -77,6 +72,11 @@ def get_properties_from_dict(product, properties):
         if value.isdigit():
             value = int(value)
             answer = prop_details['answers'][value]
+        else:
+            if isinstance(prop_details['answers'], list):
+                answer = prop_details['answers'][0]
+            else:
+                answer = prop_details['answers']
 
         prop_dict = {
             'name': name,

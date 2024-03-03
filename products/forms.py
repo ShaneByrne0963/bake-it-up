@@ -97,19 +97,14 @@ def create_checkbox(name, label, answer):
     """
     # Only adding a label if one is specified
     label_html = ''
-    # Values prefixed with a "!" will not have their label
-    # shown in the cart
-    exclude_label_tag = '!'
     if {'name': name, 'default_label': label} not in PROPERTIES:
         label_html = f'<p class="mb-0">{label}</p>'
-        exclude_label_tag = ''
 
     # The checkbox HTML
     return f"""
     {label_html}
     <div class="form-group form-check mb-4">
         <input type="checkbox" id="prop-{name}" name=prop_{name}
-            value="{exclude_label_tag}{answer}"
             class="form-check-input">
         <label for="prop-{name}" class="form-check-label">
             {answer}
