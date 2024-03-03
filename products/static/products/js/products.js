@@ -72,7 +72,7 @@ function resizeColorInput() {
         let colorList = $('.color-list');
         let listPosition = parseInt($(colorList).css('left'));
 
-        if (listPosition === 0) {
+        if (listPosition === 0 && false) {
             $('.scroll-left').addClass('disabled');
         }
         else {
@@ -120,6 +120,26 @@ function colorScroll(direciton) {
 }
 
 
+function colorScrollLeft(direciton) {
+    let colorList = $('.color-list');
+    let listPosition = parseInt(colorList.css('left'));
+
+    let colorIteration = global.colorListWidth;
+    let colorInputs = colorList.get(0).children;
+    for (let i = colorInputs.length - 1; i >= 0; i--) {
+        let color = colorInputs[i];
+        let colorWidth = $(color).width() + (colorMargin * 2) + (colorBorder * 2);
+        colorIteration -= colorWidth;
+
+        if (colorIteration < -listPosition - scrollMargin) {
+            break;
+        }
+    }
+    let finalPosition = Math.round(-colorIteration);
+    colorList.css('left', `${finalPosition}px`);
+}
+
+
 $(document).ready(() => {
     highlightAllergens();
 
@@ -141,5 +161,9 @@ $(document).ready(() => {
 
     $('.scroll-right').click(() => {
         colorScroll(1);
+    });
+
+    $('.scroll-left').click(() => {
+        colorScrollLeft(1);
     });
 });
