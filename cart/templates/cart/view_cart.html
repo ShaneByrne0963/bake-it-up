@@ -12,7 +12,7 @@
 
 {% block content %}
     <div class="container-fluid">
-        <div class="row mb">
+        <div class="row mb d-none d-md-flex">
             <div class="col-5 font-weight-bold">Product Informaton</div>
             <div class="col-3 font-weight-bold">Properties</div>
             <div class="col-2 font-weight-bold text-right">Quantity</div>
@@ -20,14 +20,14 @@
         </div>
         <hr>
         {% for item in cart_products %}
-        <div class="row cart-product">
-            <div class="col-5 cart-product-info">
-                <div class="cart-image mr-3">
+        <div class="row">
+            <div class="col-12 cart-product">
+                <div class="cart-image mr-3 mb-3 mb-md-0">
                     <img src="{{ item.product.image.url }}" alt="{{ item.product.display_name }}">
                 </div>
-                <div>
+                <div class="cart-product-info">
                     <div class="cart-item-name">{{ item.product.display_name }}</div>
-                    <p class="small">{{ item.product.category.display_name }}</p>
+                    <p class="small mb-0 mb-md-4">{{ item.product.category.display_name }}</p>
                     <div>&euro;{{ item.price }} each</div>
                     {% if item.product.batch_size and item.product.batch_size > 1 %}
                         <span>
@@ -36,34 +36,34 @@
                         </span>
                     {% endif %}
                 </div>
-            </div>
-            <div class="col-3">
-                {% if item.prop_list %}
-                    <ul class="pl-2">
-                        {% for prop in item.prop_list %}
-                            {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' %}
-                                <li>
-                                    <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
-                                        {% if prop.name == 'color' %}
-                                            <div class="d-inline-block cart-prop-color ml-2"
-                                                data-back="{{ prop.answer }}" data-border="{% shade_color prop.answer 0.8 %}">
-                                                <div class="color-overlay"></div>
-                                            </div>
-                                        {% else %}{{ prop.answer }}
-                                        {% endif %}
-                                    </span>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-            <div class="col-2 text-right">{{ item.quantity }}</div>
-            <div class="col-2 text-right">&euro;{{ item.subtotal }}</div>
-            <div class="cart-product-options">
-                <a href="{% url 'edit_cart_item' forloop.counter0 %}" class="mr-4" aria-label="Edit this product">Edit</a>
-                <span class="pseudo-anchor text-danger modal-trigger-remove-item"
-                    aria-label="Remove this product from your cart" data-url="{% url 'remove_cart_item' forloop.counter0 %}">Remove</span>
+                <div class="cart-properties-list">
+                    {% if item.prop_list %}
+                        <ul class="pl-3 pl-md-4">
+                            {% for prop in item.prop_list %}
+                                {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' %}
+                                    <li>
+                                        <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
+                                            {% if prop.name == 'color' %}
+                                                <div class="d-inline-block cart-prop-color ml-2"
+                                                    data-back="{{ prop.answer }}" data-border="{% shade_color prop.answer 0.8 %}">
+                                                    <div class="color-overlay"></div>
+                                                </div>
+                                            {% else %}{{ prop.answer }}
+                                            {% endif %}
+                                        </span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="cart-quantity text-right"><span class="d-md-none">Qty: </span>{{ item.quantity }}</div>
+                <div class="cart-subtotal text-right"><span class="d-md-none">Total: </span>&euro;{{ item.subtotal }}</div>
+                <div class="cart-product-options">
+                    <a href="{% url 'edit_cart_item' forloop.counter0 %}" class="mr-4" aria-label="Edit this product">Edit</a>
+                    <span class="pseudo-anchor text-danger modal-trigger-remove-item"
+                        aria-label="Remove this product from your cart" data-url="{% url 'remove_cart_item' forloop.counter0 %}">Remove</span>
+                </div>
             </div>
         </div>
         {% if not forloop.last %}

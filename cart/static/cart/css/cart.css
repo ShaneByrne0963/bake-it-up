@@ -1,10 +1,7 @@
 .cart-product {
-    position: relative;
-}
-
-.cart-product-info {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
 }
 
 .cart-item-name {
@@ -12,6 +9,8 @@
 }
 
 .cart-image {
+    grid-column-start: 1;
+    grid-column-end: 3;
     aspect-ratio: 1/1;
     overflow: hidden;
     display: flex;
@@ -24,10 +23,19 @@
     width: 100%;
 }
 
-.cart-product-options {
-    position: absolute;
-    bottom: 0;
-    right: 15px;
+.cart-product-info {
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+
+.cart-properties-list {
+    grid-column-start: 6;
+    grid-column-end: 10;
+}
+
+.cart-subtotal {
+    grid-column-start: 11;
+    grid-column-end: 13;
 }
 
 .property-item {
@@ -44,11 +52,69 @@
     overflow: hidden;
 }
 
+.cart-product-options {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+}
+
 /* -----------------------------------------------------------------------MEDIA QUERIES
 
 /* --------------------------------------------------------Bootstrap's large breakpoint */
 @media (max-width: 992px) {
     .cart-product-info {
         font-size: 0.8em;
+    }
+}
+
+/* --------------------------------------------------------Bootstrap's medium breakpoint */
+@media (max-width: 768px) {
+    .cart-product {
+        grid-template-rows: repeat(5, auto);
+    }
+
+    .cart-properties-list {
+        font-size: 0.8em;
+        grid-column-start: 1;
+        grid-column-end: 8;
+        grid-row-start: 2;
+        grid-row-end: 6;
+    }
+
+    .cart-image {
+        grid-column-end: 7;
+    }
+
+    .cart-product-info {
+        grid-column-start: 7;
+        grid-column-end: 13;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    .cart-quantity {
+        grid-column-start: 8;
+        grid-column-end: 13;
+        grid-row-start: 3;
+        grid-row-end: 4;
+    }
+
+    .cart-subtotal {
+        font-weight: bold;
+        grid-column-start: 8;
+        grid-column-end: 13;
+        grid-row-start: 4;
+        grid-row-end: 5;
+    }
+
+    .cart-product-options {
+        font-size: 0.8em;
+        position: static;
+        display: inline-block;
+        grid-column-start: 8;
+        grid-column-end: 13;
+        grid-row-start: 5;
+        grid-row-end: 6;
+        text-align: right;
     }
 }
