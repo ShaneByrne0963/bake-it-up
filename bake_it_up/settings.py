@@ -53,7 +53,10 @@ INSTALLED_APPS = [
     'home',
     'products',
     'cart',
+    'checkout',
 ]
+
+# Bake It UP public config variables
 
 SITE_ID = 1
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

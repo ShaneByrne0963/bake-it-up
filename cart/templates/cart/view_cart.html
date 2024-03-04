@@ -68,14 +68,14 @@
             </div>
             <hr>
         {% endfor %}
-        <form method="POST" class="row mt-4">
+        <form method="POST" class="row mt-4" action="{% url 'checkout' %}">
             {% csrf_token %}
             <div class="col-12 col-md-6 col-xl-4 form-group mb-0">
                 <label for="note">Add a Note:</label>
                 <textarea id="note" name="note" class="form-control" rows="6"></textarea>
             </div>
             <div class="col-12 col-md-6 col-xl-4 offset-xl-4">
-                <div id="cart-footer" class="px-3">
+                <div id="cart-footer" class="px-md-3 mt-4 mt-md-0">
                     <div id="cart-total">
                         <div>Cart Total:</div>
                         <div class="text-right">&euro;{{ cart_total }}</div>
@@ -85,10 +85,9 @@
                         <div class="h2 text-right mb-0 font-weight-bold">&euro;{{ cart_total }}</div>
                     </div>
                     <div class="text-right mt-3">
-                        <a class="btn btn-nav btn-lg mr-2">
+                        <a class="btn btn-nav align-bottom">
                             <i class="fa-solid fa-caret-left"></i>
-                            <span class="d-none d-sm-inline">Continue Shopping</span>
-                            <span class="d-inline d-sm-none">Back</span>
+                            Back
                         </a>
                         <button type="submit" class="btn btn-primary btn-lg">Checkout</button>
                     </div>
