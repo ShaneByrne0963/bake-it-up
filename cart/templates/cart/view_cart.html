@@ -20,56 +20,81 @@
         </div>
         <hr>
         {% for item in cart_products %}
-        <div class="row">
-            <div class="col-12 cart-product">
-                <div class="cart-image mr-3 mb-3 mb-md-0">
-                    <img src="{{ item.product.image.url }}" alt="{{ item.product.display_name }}">
-                </div>
-                <div class="cart-product-info">
-                    <div class="cart-item-name">{{ item.product.display_name }}</div>
-                    <p class="small mb-0 mb-md-4">{{ item.product.category.display_name }}</p>
-                    <div>&euro;{{ item.price }} each</div>
-                    {% if item.product.batch_size and item.product.batch_size > 1 %}
-                        <span>
-                            <i class="fa-solid fa-box"></i>
-                            Pack of {{ item.product.batch_size }}
-                        </span>
-                    {% endif %}
-                </div>
-                <div class="cart-properties-list">
-                    {% if item.prop_list %}
-                        <ul class="pl-3 pl-md-4">
-                            {% for prop in item.prop_list %}
-                                {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' %}
-                                    <li>
-                                        <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
-                                            {% if prop.name == 'color' %}
-                                                <div class="d-inline-block cart-prop-color ml-2"
-                                                    data-back="{{ prop.answer }}" data-border="{% shade_color prop.answer 0.8 %}">
-                                                    <div class="color-overlay"></div>
-                                                </div>
-                                            {% else %}{{ prop.answer }}
-                                            {% endif %}
-                                        </span>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-                <div class="cart-quantity text-right"><span class="d-md-none">Qty: </span>{{ item.quantity }}</div>
-                <div class="cart-subtotal text-right"><span class="d-md-none">Total: </span>&euro;{{ item.subtotal }}</div>
-                <div class="cart-product-options">
-                    <a href="{% url 'edit_cart_item' forloop.counter0 %}" class="mr-4" aria-label="Edit this product">Edit</a>
-                    <span class="pseudo-anchor text-danger modal-trigger-remove-item"
-                        aria-label="Remove this product from your cart" data-url="{% url 'remove_cart_item' forloop.counter0 %}">Remove</span>
+            <div class="row">
+                <div class="col-12 cart-product">
+                    <div class="cart-image mr-3 mb-3 mb-md-0">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.display_name }}">
+                    </div>
+                    <div class="cart-product-info">
+                        <div class="cart-item-name">{{ item.product.display_name }}</div>
+                        <p class="small mb-0 mb-md-4">{{ item.product.category.display_name }}</p>
+                        <div>&euro;{{ item.price }} each</div>
+                        {% if item.product.batch_size and item.product.batch_size > 1 %}
+                            <span>
+                                <i class="fa-solid fa-box"></i>
+                                Pack of {{ item.product.batch_size }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div class="cart-properties-list">
+                        {% if item.prop_list %}
+                            <ul class="pl-3 pl-md-4">
+                                {% for prop in item.prop_list %}
+                                    {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' %}
+                                        <li>
+                                            <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
+                                                {% if prop.name == 'color' %}
+                                                    <div class="d-inline-block cart-prop-color ml-2"
+                                                        data-back="{{ prop.answer }}" data-border="{% shade_color prop.answer 0.8 %}">
+                                                        <div class="color-overlay"></div>
+                                                    </div>
+                                                {% else %}{{ prop.answer }}
+                                                {% endif %}
+                                            </span>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="cart-quantity text-right"><span class="d-md-none">Qty: </span>{{ item.quantity }}</div>
+                    <div class="cart-subtotal text-right"><span class="d-md-none">Total: </span>&euro;{{ item.subtotal }}</div>
+                    <div class="cart-product-options">
+                        <a href="{% url 'edit_cart_item' forloop.counter0 %}" class="mr-4" aria-label="Edit this product">Edit</a>
+                        <span class="pseudo-anchor text-danger modal-trigger-remove-item"
+                            aria-label="Remove this product from your cart" data-url="{% url 'remove_cart_item' forloop.counter0 %}">Remove</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% if not forloop.last %}
             <hr>
-        {% endif %}
         {% endfor %}
+        <form method="POST" class="row mt-4">
+            {% csrf_token %}
+            <div class="col-12 col-md-6 col-xl-4 form-group mb-0">
+                <label for="note">Add a Note:</label>
+                <textarea id="note" name="note" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4 offset-xl-4">
+                <div id="cart-footer" class="px-3">
+                    <div id="cart-total">
+                        <div>Cart Total:</div>
+                        <div class="text-right">&euro;{{ cart_total }}</div>
+                        <div class="small text-muted mb-2">Delivery Charge:</div>
+                        <div class="small text-right text-muted">N/A</div>
+                        <div class="h2 mb-0 font-weight-bold">Order Total:</div>
+                        <div class="h2 text-right mb-0 font-weight-bold">&euro;{{ cart_total }}</div>
+                    </div>
+                    <div class="text-right mt-3">
+                        <a class="btn btn-nav btn-lg mr-2">
+                            <i class="fa-solid fa-caret-left"></i>
+                            <span class="d-none d-sm-inline">Continue Shopping</span>
+                            <span class="d-inline d-sm-none">Back</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}
 

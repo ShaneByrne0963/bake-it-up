@@ -109,6 +109,11 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+.form-control:focus {
+    border-color: #8f5a1d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(143, 90, 29, 0.6);
+  }
+
 /* Allowing disabled text to be shown as normal text. Mostly used to disable hover actions */
 .disabled.text-default {
     color: #212529;
