@@ -102,8 +102,8 @@ function toastPopup() {
     let hiddenToasts = $('.toast-message.hidden');
     let toastNumber = hiddenToasts.length;
 
-    $(hiddenToasts.get(0)).removeClass('hidden').animate({'left': '-100%'}, toastAnimSpeed, function() {
-        setTimeout(closeToast, toastVisibleTime, this);
+    $(hiddenToasts.get(0)).removeClass('hidden').addClass('active').animate({'left': '-100%'}, toastAnimSpeed, function() {
+        setTimeout(closeToast, toastVisibleTime, this, false);
     });
     if (toastNumber > 1) {
         setTimeout(toastPopup, toastDelay);
@@ -114,10 +114,18 @@ function toastPopup() {
 const toastCloseSpeed = 500;
 /**
  * Closes a toast message
+ * @param {Element} toastElement The element of the toast to be closed
+ * @param {Boolean} forceRemove Deletes the element if true, keeps it if false
  */
-function closeToast(toastElement) {
+function closeToast(toastElement, forceRemove) {
     $(toastElement).closest('.toast-message').animate({'left': '0'}, toastCloseSpeed, function() {
-        $(this).remove();
+        $(this).removeClass('active');
+        if (forceRemove) {
+            $(this).remove();
+        }
+        if ($('.toast-message.active').length === 0) {
+            $('#toast-container').remove();
+        }
     });
 }
 
@@ -143,7 +151,7 @@ $(document).ready(() => {
 
     // Toast close button
     $('.toast-close').click(function() {
-        closeToast($(this).closest('.toast-message'));
+        closeToast($(this).closest('.toast-message'), true);
     });
 
     checkAllDisableButtons();
