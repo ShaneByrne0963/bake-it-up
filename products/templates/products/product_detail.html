@@ -17,6 +17,12 @@
                         <i id="add-to-favourites" class="fa-regular fa-heart mt-4"></i>
                     </div>
                     <div id="product-detail-category">{{ product.category }}</div>
+                    {% if product.batch_size > 1 %}
+                        <div>
+                            <i class="fa-solid fa-box"></i>
+                            {{ product.batch_size }} Pack
+                        </div>
+                    {% endif %}
                     <div class="text-muted mb-4">
                         <i class="fa-solid fa-heart"></i>
                         <span id="num-favourites">0 people added this to their favourites</span>
