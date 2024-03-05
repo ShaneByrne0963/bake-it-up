@@ -92,6 +92,33 @@ function checkAllDisableButtons() {
 }
 
 
+const toastDelay = 200;
+/**
+ * Reveals each toast message, one by one
+ */
+function toastPopup() {
+    let hiddenToasts = $('.toast-message.hidden');
+    let toastNumber = hiddenToasts.length;
+
+    $(hiddenToasts.get(0)).removeClass('hidden').addClass('active');
+    if (toastNumber > 1) {
+        setTimeout(toastPopup, toastDelay);
+    }
+}
+
+
+const toastCloseSpeed = 0.5;
+/**
+ * Closes a toast message
+ */
+function closeToast(toastElement) {
+    $(toastElement).closest('.toast-message').removeClass('active').css('transition', `left ${toastCloseSpeed}s ease-in-out`)
+        .on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+        $(this).remove();
+    });
+}
+
+
 $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
@@ -111,7 +138,13 @@ $(document).ready(() => {
         updateQuantity(this, 0);
     });
 
+    // Toast close button
+    $('.toast-close').click(function() {
+        closeToast($(this).closest('.toast-message'));
+    });
+
     checkAllDisableButtons();
     scrollScreen();
     resizeWindow();
+    toastPopup();
 });

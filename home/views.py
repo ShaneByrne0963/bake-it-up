@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
-from allauth.account.views import LoginView, SignupView
-from allauth.account.forms import LoginForm, SignupForm
-from django.contrib.auth.models import User
 from django.views import View
 from django.http import HttpResponse
-from core.contexts import get_base_context
+
+from django.contrib import messages
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+
+from allauth.account.views import LoginView, SignupView
+from allauth.account.forms import LoginForm, SignupForm
+
+from core.contexts import get_base_context
 
 
 class Home(View):
@@ -83,4 +87,27 @@ class EmailConfirmed(View):
             'modal_show': 'login',
             'modal_load_fade': 'True',
         }
+        return redirect('home')
+
+
+class TestToast(View):
+
+    def get(self, request, toast_type):
+        message_type = None
+        message_body = ''
+
+        if toast_type == 'success':
+            message_body = 'This is a success toast'
+            message_type = messages.SUCCESS
+        elif toast_type == 'info':
+            message_body = 'This is an info toast'
+            message_type = messages.INFO
+        elif toast_type == 'warning':
+            message_body = 'This is a warning toast'
+            message_type = messages.WARNING
+        else:
+            message_body = 'This is an error toast'
+            message_type = messages.ERROR
+        
+        messages.add_message(request, message_type, message_body)
         return redirect('home')

@@ -8,4 +8,5 @@ urlpatterns = [
     path('signup', views.CustomSignup.as_view(), name='signup'),
     path('email_confirmed', views.EmailConfirmed.as_view(),
          name='email_confirmed'),
+    path('toast/<str:toast_type>', views.TestToast.as_view(), name='add_toast'),
 ]

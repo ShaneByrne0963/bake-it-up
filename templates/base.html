@@ -93,6 +93,19 @@
                 <button type="button" class="btn btn-nav shadow-none modal-trigger-login">Login</button>
                 <button type="button" class="btn btn-nav shadow-none modal-trigger-signup">Signup</button>
             {% endif %}
+
+            <!-- Test toast -->
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Test Toast
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'add_toast' 'success' %}">Success</a>
+                    <a class="dropdown-item" href="{% url 'add_toast' 'info' %}">Info</a>
+                    <a class="dropdown-item" href="{% url 'add_toast' 'warning' %}">Warining</a>
+                    <a class="dropdown-item" href="{% url 'add_toast' 'error' %}">Error</a>
+                </div>
+            </div>
         </div>
     </header>
     <section id="main-body">
@@ -125,7 +138,7 @@
     {% if messages %}
         <div class="toast-container">
             {% for message in messages %}
-                <div class="toast-message">
+                <div class="toast-message hidden mb-4">
                     <div>
                         <div class="toast-title font-weight-bold d-flex justify-content-between">
                             {% with message.level as level %}
