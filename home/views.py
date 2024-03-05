@@ -109,5 +109,6 @@ class TestToast(View):
             message_body = 'This is an error toast'
             message_type = messages.ERROR
         
-        messages.add_message(request, message_type, message_body)
+        for i in range(5):
+            messages.add_message(request, message_type, message_body)
         return redirect('home')

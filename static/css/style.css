@@ -334,12 +334,7 @@ input::-webkit-inner-spin-button {
     min-height: 120px;
     position: relative;
     left: 0;
-    transition: left 0.8s ease-in-out;
     display: grid;
-}
-
-.toast-message.active {
-    left: -100%;
 }
 
 .toast-message>div {

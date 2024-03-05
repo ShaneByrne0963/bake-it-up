@@ -92,6 +92,8 @@ function checkAllDisableButtons() {
 }
 
 
+const toastAnimSpeed = 800;
+const toastVisibleTime = 5000;
 const toastDelay = 200;
 /**
  * Reveals each toast message, one by one
@@ -100,20 +102,21 @@ function toastPopup() {
     let hiddenToasts = $('.toast-message.hidden');
     let toastNumber = hiddenToasts.length;
 
-    $(hiddenToasts.get(0)).removeClass('hidden').addClass('active');
+    $(hiddenToasts.get(0)).removeClass('hidden').animate({'left': '-100%'}, toastAnimSpeed, function() {
+        setTimeout(closeToast, toastVisibleTime, this);
+    });
     if (toastNumber > 1) {
         setTimeout(toastPopup, toastDelay);
     }
 }
 
 
-const toastCloseSpeed = 0.5;
+const toastCloseSpeed = 500;
 /**
  * Closes a toast message
  */
 function closeToast(toastElement) {
-    $(toastElement).closest('.toast-message').removeClass('active').css('transition', `left ${toastCloseSpeed}s ease-in-out`)
-        .on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+    $(toastElement).closest('.toast-message').animate({'left': '0'}, toastCloseSpeed, function() {
         $(this).remove();
     });
 }
