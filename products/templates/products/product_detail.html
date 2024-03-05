@@ -16,13 +16,15 @@
                         <h1 class="mb-0">{{ product.display_name }}</h1>
                         <i id="add-to-favourites" class="fa-regular fa-heart mt-4"></i>
                     </div>
-                    <div id="product-detail-category">{{ product.category }}</div>
-                    {% if product.batch_size > 1 %}
-                        <div>
-                            <i class="fa-solid fa-box"></i>
-                            {{ product.batch_size }} Pack
-                        </div>
-                    {% endif %}
+                    <div id="product-detail-category" class="d-flex align-items-center justify-content-between">
+                        <span>{{ product.category }}</span>
+                        {% if product.batch_size > 1 %}
+                            <small>
+                                <i class="fa-solid fa-box"></i>
+                                {{ product.batch_size }} Pack
+                            </small>
+                        {% endif %}
+                    </div>
                     <div class="text-muted mb-4">
                         <i class="fa-solid fa-heart"></i>
                         <span id="num-favourites">0 people added this to their favourites</span>
@@ -30,7 +32,7 @@
                     <div>
                         <span>Ingredients:</span>
                         <div id="ingredients" class="mb-2">{{ product.ingredients }}</div>
-                        <div class="text-right">
+                        <div>
                             <small class="text-muted">*All allergens are highlighted in <strong>bold</strong>.</small>
                         </div>
                     </div>
