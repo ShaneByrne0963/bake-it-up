@@ -48,6 +48,12 @@ class AddToCart(View):
         request.session['cart'] = add_to_cart(order, cart)
         request.session['cart_total'] = cart_total
 
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f'Added {product.display_name} to your cart!'
+        )
+
         return HttpResponseRedirect(reverse(
             'product_detail', args=[product_name]))
 
@@ -105,6 +111,12 @@ class EditCartItem(View):
         request.session['cart'] = add_to_cart(order, cart)
         request.session['cart_total'] = cart_total
 
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f'Updated {product.display_name}!'
+        )
+
         return redirect('cart')
 
 
@@ -113,6 +125,7 @@ class RemoveCartItem(View):
     def post(self, request, item_id):
         cart = request.session['cart']
         cart_total = request.session['cart_total']
+        product_name = cart[item_id]['name']
 
         if len(cart) > item_id:
             price = cart[item_id]['price']
@@ -123,15 +136,10 @@ class RemoveCartItem(View):
         request.session['cart'] = cart
         request.session['cart_total'] = cart_total
 
+        product = get_product_by_name(product_name)
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f'Removed {product.display_name} from your cart'
+        )
         return redirect('cart')
-
-
-class ClearCart(View):
-
-    def get(self, request):
-        if 'cart' in request.session:
-            del request.session['cart']
-        if 'cart_total' in request.session:
-            del request.session['cart_total']
-
-        return redirect('home')

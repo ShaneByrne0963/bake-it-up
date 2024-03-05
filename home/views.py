@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 
-from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
@@ -87,28 +86,4 @@ class EmailConfirmed(View):
             'modal_show': 'login',
             'modal_load_fade': 'True',
         }
-        return redirect('home')
-
-
-class TestToast(View):
-
-    def get(self, request, toast_type):
-        message_type = None
-        message_body = ''
-
-        if toast_type == 'success':
-            message_body = 'This is a success toast'
-            message_type = messages.SUCCESS
-        elif toast_type == 'info':
-            message_body = 'This is an info toast'
-            message_type = messages.INFO
-        elif toast_type == 'warning':
-            message_body = 'This is a warning toast'
-            message_type = messages.WARNING
-        else:
-            message_body = 'This is an error toast'
-            message_type = messages.ERROR
-        
-        for i in range(5):
-            messages.add_message(request, message_type, message_body)
         return redirect('home')

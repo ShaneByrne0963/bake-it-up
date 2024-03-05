@@ -10,6 +10,4 @@ urlpatterns = [
           name='edit_cart_item'),
      path('remove/<int:item_id>', views.RemoveCartItem.as_view(),
           name='remove_cart_item'),
-     path('clear', views.ClearCart.as_view(),
-          name='clear_cart'),
 ]

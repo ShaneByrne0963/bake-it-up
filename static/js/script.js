@@ -157,5 +157,5 @@ $(document).ready(() => {
     checkAllDisableButtons();
     scrollScreen();
     resizeWindow();
-    toastPopup();
+    setTimeout(toastPopup, 100);
 });
