@@ -68,7 +68,7 @@
             </div>
             <hr>
         {% endfor %}
-        <form method="POST" class="row mt-4" action="{% url 'checkout' %}">
+        <form method="POST" class="row mt-4">
             {% csrf_token %}
             <div class="col-12 col-md-6 col-xl-4 form-group mb-0">
                 <label for="note">Add a Note:</label>

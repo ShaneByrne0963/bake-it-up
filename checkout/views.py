@@ -8,7 +8,7 @@ from core.contexts import get_base_context
 class Checkout(View):
     template = 'checkout/checkout.html'
 
-    def post(self, request):
+    def get(self, request):
         context = get_base_context(request)
         context['form'] = CheckoutForm()
 

@@ -21,6 +21,15 @@ class ViewCart(View):
             return redirect('home')
 
         return render(request, self.template, context)
+    
+    def post(self, request):
+        if 'note' in request.POST:
+            note = request.POST['note']
+            request.session['global_context'] = {
+                'note': note
+            }
+
+        return redirect('checkout')
 
 
 class AddToCart(View):
