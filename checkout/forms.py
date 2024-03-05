@@ -12,3 +12,4 @@ class CheckoutForm(forms.Form):
     phone = forms.CharField(label="Phone Number",
                             max_length=20,
                             required=True)
+    street_address1 = forms.CharField()
