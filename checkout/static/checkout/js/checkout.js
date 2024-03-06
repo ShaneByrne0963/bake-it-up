@@ -5,11 +5,12 @@
  */
 function handlePaymentErrors(event, errorID) {
     let errorDiv = $(errorID);
-    errorDiv.text('');
+    let divText = '';
 
     if (event.error) {
-        errorDiv.text(event.error.message);
+        divText = event.error.message;
     }
+    errorDiv.text(divText);
 }
 
 
@@ -21,7 +22,7 @@ let elements = stripe.elements();
 
 let style = {
     base: {
-        color: '#495057',
+        color: '#3c3a3b',
         fontFamily: '"Roboto", sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '17px',
@@ -30,7 +31,7 @@ let style = {
         }
     },
     invalid: {
-        color: '#495057',
+        color: '#3c3a3b',
         iconColor: '#dc3545'
     }
 };
@@ -52,4 +53,10 @@ cardExpiry.addEventListener('change', function(event) {
 });
 cardCvc.addEventListener('change', function(event) {
     handlePaymentErrors(event, '#card-cvc-errors');
+});
+
+// Triggering the payment modal when the first form is valid
+$('#checkout-form').on('submit', function(event) {
+    event.preventDefault();
+    modalFormInit('payment');
 });
