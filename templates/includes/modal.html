@@ -84,6 +84,22 @@
     </div>
   </div>
 
+  <div id="modal-form-payment" class="modal-form">
+    <!-- Payment Form -->
+    <span>Card Number</span>
+    <div id="card-number" class="mb-4"></div>
+      <div id="card-expiry-cvc">
+        <div class="mr-2">
+          <span>Expiration Date</span>
+          <div id="card-expiry"></div>
+        </div>
+        <div class="ml-2">
+          <span>CVC</span>
+          <div id="card-cvc"></div>
+        </div>
+      </div>
+  </div>
+
   {% if modal_form_errors %}
     <div id="modal-errors" data-form="{{ modal_show }}">
       {{ modal_form_errors }}
