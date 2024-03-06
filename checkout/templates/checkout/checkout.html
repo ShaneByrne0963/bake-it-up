@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content_heading %}
     <h1>Checkout</h1>
@@ -44,4 +45,9 @@
     </div>
 </form>
     
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'checkout/js/checkout.js' %}"></script>
 {% endblock %}
