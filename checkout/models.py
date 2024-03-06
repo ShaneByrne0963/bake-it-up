@@ -29,7 +29,15 @@ class Order(models.Model):
     def __str__(self):
         return f'Order No. {order_number}'
 
-    def generate_order_number(self):
+    def save(self, *args, **kwargs):
+        """
+        Adds an order number if one is not present
+        """
+        if not self.order_number:
+            self.order_number = self._generate_order_number()
+        super().save(*args, **kwargs)
+
+    def _generate_order_number(self):
         """
         Generates a unique order number
         """
@@ -52,6 +60,18 @@ class Order(models.Model):
         Converts the grand total to a float
         """
         return price_as_float(self.grand_total)
+    
+    def update_totals(self):
+        """
+        Updates the cart total and grand total
+        """
+        lineitems_total = self.line_items.aggregate(
+            models.Sum('lineitem_total')
+        )['lineitem_total__sum']
+
+        self.cart_total = lineitems_total
+        self.grand_total = self.delivery_cost + lineitems_total
+        self.save()
 
 
 class OrderLineItem(models.Model):
@@ -69,6 +89,17 @@ class OrderLineItem(models.Model):
     prop_icing = models.CharField(max_length=30, blank=True, null=True)
     prop_decoration = models.CharField(max_length=30, blank=True, null=True)
     prop_text = models.CharField(max_length=40, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.order.order_number}: {self.product_name} X {self.quantity}'
+
+    def save(self, *args, **kwargs):
+        """
+        Updates the lineitem total on save
+        """
+        product = get_product_by_name(product_name)
+        self.lineitem_total = product.price * self.quantity
+        super().save(*args, *(kwargs))
 
     def get_product(self):
         """

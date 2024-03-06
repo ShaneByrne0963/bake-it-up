@@ -60,12 +60,18 @@ class CheckoutForm(forms.Form):
     )
     street_address2 = forms.CharField(
         label="Address Line 2",
-        max_length=60
+        max_length=60,
+        required=False
     )
     town_or_city = forms.CharField(
         label="Town/City",
-        max_length=60
+        max_length=60,
+        required=True
     )
     county = forms.ChoiceField(
         choices=COUNTY_CHOICES
+    )
+    postcode = forms.CharField(
+        label="Postal Code",
+        max_length=10
     )

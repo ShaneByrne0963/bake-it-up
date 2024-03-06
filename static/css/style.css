@@ -394,6 +394,7 @@ input::-webkit-inner-spin-button {
 
 /* --------------------------------------------------------Using a more formal font for forms */
 form input,
+form select,
 button.btn,
 a.btn,
 #account-nav .dropdown-item {

@@ -64,6 +64,10 @@ function modalFormInit(formType) {
         case 'signup':
             context.title = 'Sign Up';
             break;
+        case 'payment':
+            context.title = 'Card Details';
+            context.button = 'Pay';
+            break;
     }
     triggerModal(context);
 }
@@ -137,6 +141,9 @@ $(document).ready(() => {
             url: $(this).data('url'),
         };
         triggerModal(context);
+    });
+    $('.modal-trigger-payment').click(() => {
+        modalFormInit('payment');
     });
 
     //Resetting the modal when hidden
