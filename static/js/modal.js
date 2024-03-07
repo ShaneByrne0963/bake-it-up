@@ -177,6 +177,7 @@ $(document).ready(() => {
 
         // Making all invalid feedback messages hidden
         $('.modal-feedback.invalid-feedback').removeClass('d-block');
+        $('.card-feedback').text('');
 
         // Removing any hidden inputs
         $('#modal-hidden-inputs').empty();

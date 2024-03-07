@@ -88,19 +88,22 @@
     <!-- Payment Form -->
     <span>Card Number</span>
     <div id="card-number"></div>
-    <div class="mb-4 ui-error" id="card-number-errors" role="alert"></div>
-    <div id="card-expiry-cvc">
+    <div class="mb-4 card-feedback ui-error" id="card-number-errors" role="alert"></div>
+    <div id="card-expiry-cvc" class="mb-4">
       <div class="mr-2">
         <span>Expiration Date</span>
         <div id="card-expiry"></div>
-        <div class="ui-error" id="card-expiry-errors" role="alert"></div>
+        <div class="card-feedback ui-error" id="card-expiry-errors" role="alert"></div>
       </div>
       <div class="ml-2">
         <span>CVC</span>
         <div id="card-cvc"></div>
-        <div class="ui-error" id="card-cvc-errors" role="alert"></div>
+        <div class="card-feedback ui-error" id="card-cvc-errors" role="alert"></div>
       </div>
     </div>
+    <span>Postal Code</span>
+    <div id="card-postcode"></div>
+    <div class="card-feedback ui-error" id="card-postcode-errors" role="alert"></div>
   </div>
 
   {% if modal_form_errors %}

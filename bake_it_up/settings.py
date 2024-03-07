@@ -56,15 +56,19 @@ INSTALLED_APPS = [
     'checkout',
 ]
 
+
 # Bake It Up public config variables
 
 SITE_ID = 1
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CURRENCY = 'EUR'
+
 
 # Environment variables
 
-STRIPE_PUBLIC_KEY = os.environ['STRIPE_PUBLIC_KEY']
-STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+
 
 # Allauth config variables
 
