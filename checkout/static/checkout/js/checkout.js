@@ -14,6 +14,11 @@ function handlePaymentErrors(event, errorID) {
 }
 
 
+function paymentSubmit() {
+    console.log('Completed!');
+}
+
+
 let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 let clientSecret = $('#id_client_secret').text().slice(1, -1);
 

@@ -44,6 +44,14 @@ function triggerModal(context) {
         modalForm.attr('action', $(form).data('url'));
     }
 
+    // Allows for extra code to be run before the form submits
+    if ('onSubmit' in context) {
+        $('#modal-content-inner').on('submit', function(event) {
+            event.preventDefault();
+            context['onSubmit']();
+        });
+    }
+
     $('#modal-action').modal('show');
 }
 
@@ -67,6 +75,7 @@ function modalFormInit(formType) {
         case 'payment':
             context.title = 'Card Details';
             context.button = 'Pay';
+            context.onSubmit = paymentSubmit;
             break;
     }
     triggerModal(context);
