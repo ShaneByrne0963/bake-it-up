@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views import View
 from django.conf import settings
 from django.contrib import messages
 
+from .models import Order, OrderLineItem
 from .forms import CheckoutForm
-from core.contexts import get_base_context
+from core.contexts import get_base_context, get_product_by_name
 from core.shortcuts import price_as_float
 
 import stripe
@@ -20,6 +21,7 @@ class Checkout(View):
                                  messages.ERROR,
                                  'Your cart is empty')
             return redirect('home')
+        print(cart)
 
         stripe_public_key = settings.STRIPE_PUBLIC_KEY
         stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -34,7 +36,6 @@ class Checkout(View):
             amount=grand_total,
             currency=settings.CURRENCY
         )
-        print(intent)
 
         context = get_base_context(request)
         context['form'] = CheckoutForm()
@@ -45,13 +46,81 @@ class Checkout(View):
         return render(request, self.template, context)
     
     def post(self, request):
-        return redirect('checkout_success')
+        """
+        Submits an order on payment
+        """
+        cart = request.session.get('cart', [])
+
+        checkout_data = {
+            'name': request.POST['name'],
+            'email': request.POST['email'],
+            'phone': request.POST['phone'],
+            'street_address1': request.POST['street_address1'],
+            'street_address2': request.POST['street_address2'],
+            'town_or_city': request.POST['town_or_city'],
+            'county': request.POST['county'],
+            'postcode': request.POST['postcode'],
+        }
+        checkout_form = CheckoutForm(checkout_data)
+        if checkout_form.is_valid():
+            order = Order(
+                full_name=checkout_data['name'],
+                email=checkout_data['email'],
+                phone_number=checkout_data['phone'],
+                street_address1=checkout_data['street_address1'],
+                street_address2=checkout_data['street_address2'],
+                town_or_city=checkout_data['town_or_city'],
+                county=checkout_data['county'],
+                postcode=checkout_data['postcode']
+            )
+            order.save()
+
+            for item in cart:
+                # Getting custom properties, with None as a default
+                properties = {
+                    'shape': None,
+                    'size': None,
+                    'contents': None,
+                    'type': None,
+                    'color': None,
+                    'icing': None,
+                    'decoration': None,
+                    'text': None
+                }
+                for prop in item['prop_list']:
+                    properties[prop['name']] = prop['answer']
+
+                line_item = OrderLineItem(
+                    order=order,
+                    product_name=item['name'],
+                    quantity=item['quantity'],
+                    prop_shape=properties['shape'],
+                    prop_size=properties['size'],
+                    prop_contents=properties['contents'],
+                    prop_type=properties['type'],
+                    prop_color=properties['color'],
+                    prop_icing=properties['icing'],
+                    prop_decoration=properties['decoration'],
+                    prop_text=properties['text'],
+                )
+                line_item.save()
+            request.session['save_info'] = 'save_info' in request.POST
+
+            return redirect(reverse('checkout_success', args=[order.order_number]))
+
+        messages.error(request, 'Your information was invalid. Please try again')
+        return redirect('checkout')
 
 
 class CheckoutSuccess(View):
     template = 'checkout/checkout_success.html'
 
-    def get(self, request):
+    def get(self, request, order_no):
         context = get_base_context(request)
+        order = get_object_or_404(Order, order_number=order_no)
+        save_info = request.session.get('save_info')
+
+        messages.success(request, f'Your payment was successful! A \
+            conformation email has been sent to {order.email}.')
 
         return render(request, self.template, context)
