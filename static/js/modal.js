@@ -76,9 +76,25 @@ function modalFormInit(formType) {
             context.title = 'Card Details';
             context.button = 'Pay';
             context.onSubmit = paymentSubmit;
+            addHiddenInputs('#checkout-form');
             break;
     }
     triggerModal(context);
+}
+
+
+/**
+ * Copies a form's elements into the modal form, allowing them to be used in the modal
+ * post form
+ * @param {String} form A jQuery selector for the form to be copied
+ */
+function addHiddenInputs(form) {
+    $(form).find('input, select, textarea').each(function() {
+        if ($(this).val() && $(this).attr('name') !== 'csrfmiddlewaretoken') {
+            let newHiddenInput = $('<input>').attr('type', 'hidden').attr('name', $(this).attr('name')).val($(this).val());
+            $('#modal-hidden-inputs').append(newHiddenInput);
+        }
+    });
 }
 
 
@@ -162,7 +178,10 @@ $(document).ready(() => {
         // Making all invalid feedback messages hidden
         $('.modal-feedback.invalid-feedback').removeClass('d-block');
 
-        // Detaching any previous form from the modal body before adding another
+        // Removing any hidden inputs
+        $('#modal-hidden-inputs').empty();
+
+        // Detaching the form
         let modalFormList = $('#modal-forms').get(0);
         let modalForms = this.getElementsByClassName('modal-form');
         for (let form of modalForms) {
@@ -170,7 +189,6 @@ $(document).ready(() => {
         }
     });
 
-    // Removing the fade class from the modal means we want it to be shown on page load
     if ($('#modal-action').hasClass('show-on-load')) {
         // Prefilling the modal with the form specified if one exists
         if ($('.modal-form-load').length > 0) {
