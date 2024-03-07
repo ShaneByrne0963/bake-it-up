@@ -43,3 +43,15 @@ class Checkout(View):
         context['grand_total'] = price_as_float(grand_total)
 
         return render(request, self.template, context)
+    
+    def post(self, request):
+        return redirect('checkout_success')
+
+
+class CheckoutSuccess(View):
+    template = 'checkout/checkout_success.html'
+
+    def get(self, request):
+        context = get_base_context(request)
+
+        return render(request, self.template, context)

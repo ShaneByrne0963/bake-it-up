@@ -76,7 +76,6 @@ function modalFormInit(formType) {
             context.title = 'Card Details';
             context.button = 'Pay';
             context.onSubmit = paymentSubmit;
-            addHiddenInputs('#checkout-form');
             break;
     }
     triggerModal(context);
