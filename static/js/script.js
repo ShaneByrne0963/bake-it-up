@@ -163,6 +163,15 @@ $(document).ready(() => {
     // Animate the order details on page load
     $('#order-container').addClass('shown');
 
+    // Changing any down caret to an up one within a collapse when it is shown
+    $('.collapse').on('show.bs.collapse', function() {
+        $(`#${$(this).attr('aria-labelledby')}`).find('i.fa-caret-down').removeClass('fa-caret-down').addClass('fa-caret-up');
+    });
+    // Changing any up caret to a down one within a collapse when it is hidden
+    $('.collapse').on('hide.bs.collapse', function() {
+        $(`#${$(this).attr('aria-labelledby')}`).find('i.fa-caret-up').removeClass('fa-caret-up').addClass('fa-caret-down');
+    });
+
     checkAllDisableButtons();
     scrollScreen();
     resizeWindow();
