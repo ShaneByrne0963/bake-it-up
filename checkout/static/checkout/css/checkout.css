@@ -35,3 +35,60 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+/* --------------------------------------------------------Checkout Success */
+
+#order-container {
+    font-size: 1.2em;
+    opacity: 0;
+    position: relative;
+    top: 128px;
+    transition: opacity 1s ease-out,
+                top 1s ease-out;
+}
+
+#order-container.shown {
+    opacity: 1;
+    top: 0;
+}
+
+.order-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    word-break: break-word;
+}
+
+.detail-value {
+    text-align: right;
+}
+
+.order-product-info button {
+    font-size: inherit;
+}
+
+
+/* -----------------------------------------------------------------------MEDIA QUERIES
+
+/* --------------------------------------------------------Bootstrap's large breakpoint */
+@media (max-width: 992px) {
+    #order-container {
+        font-size: 1rem;
+    }
+}
+
+/* --------------------------------------------------------Bootstrap's medium breakpoint */
+
+@media (max-width: 768px) {
+    .order-details {
+        display: block;
+    }
+
+    .detail-key {
+        font-weight: bold;
+    }
+
+    .detail-value {
+        text-align: left;
+        margin-bottom: 12px;
+    }
+}

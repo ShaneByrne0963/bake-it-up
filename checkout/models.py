@@ -1,7 +1,9 @@
 from django.db import models
+from django.conf import settings
+
 from core.contexts import get_product_by_name
 from core.shortcuts import price_as_int, price_as_float
-from django.conf import settings
+from core.constants import PRODUCT_PROPERTIES
 
 import uuid
 
@@ -113,3 +115,30 @@ class OrderLineItem(models.Model):
         Converts the total to a float
         """
         return price_as_float(self.lineitem_total)
+    
+    def prop_list(self):
+        """
+        Returns a list of properties in a form that can be
+        read by 'includes/property_list.html'
+        """
+        prop_items = []
+        product = self.get_product()
+        for prop in PRODUCT_PROPERTIES:
+            prop_name = prop['name']
+            prop_answer = getattr(self, f'prop_{prop_name}')
+            if prop_answer is not None:
+                product_prop = getattr(product, f'prop_{prop_name}')
+
+                label = ''
+                if 'label' in product_prop:
+                    label = product_prop['label']
+                elif len(product_prop['answers']) > 1:
+                    label = prop['default_label']
+
+                prop_dict = {
+                    'name': prop['name'],
+                    'label': label,
+                    'answer': prop_answer
+                }
+                prop_items.append(prop_dict)
+        return prop_items

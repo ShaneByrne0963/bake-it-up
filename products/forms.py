@@ -1,19 +1,9 @@
 from .models import BreadProduct, PastryProduct
+
 from core.contexts import get_product_by_name
 from core.shortcuts import find_dict_in_list
 from core.templatetags.custom_tags import shade_color
-
-
-# All possible properties a bread or pastry product can have
-PROPERTIES = [
-    { 'name': 'type', 'default_label': 'Type' },
-    { 'name': 'shape', 'default_label': 'Bread Shape' },
-    { 'name': 'size', 'default_label': 'Size' },
-    { 'name': 'contents', 'default_label': 'Contents' },
-    { 'name': 'color', 'default_label': 'Icing Colour' },
-    { 'name': 'icing', 'default_label': 'Icing Flavour' },
-    { 'name': 'decoration', 'default_label': 'Decoration' },
-]
+from core.constants import PRODUCT_PROPERTIES
 
 # The height of the color option, plus its border
 COLOR_INPUT_HEIGHT = 72
@@ -27,7 +17,7 @@ def get_default_label(name):
     """
     Finds the default label of a property
     """
-    for prop in PROPERTIES:
+    for prop in PRODUCT_PROPERTIES:
         if prop['name'] == name:
             return prop['default_label']
     return ''
@@ -41,7 +31,7 @@ def create_properties_form(product_name, pre_fill=None):
     product = get_product_by_name(product_name)
     form_html = ''
 
-    for prop in PROPERTIES:
+    for prop in PRODUCT_PROPERTIES:
         prop_name = f'prop_{prop['name']}'
         value = None
 
@@ -115,7 +105,7 @@ def create_checkbox(name, label, answer, value):
     """
     # Only adding a label if one is specified
     label_html = ''
-    if {'name': name, 'default_label': label} not in PROPERTIES:
+    if {'name': name, 'default_label': label} not in PRODUCT_PROPERTIES:
         label_html = f'<p class="mb-0">{label}</p>'
     checked = ' checked' if value == 'on' else ''
 

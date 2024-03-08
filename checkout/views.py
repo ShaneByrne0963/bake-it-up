@@ -21,7 +21,6 @@ class Checkout(View):
                                  messages.ERROR,
                                  'Your cart is empty')
             return redirect('home')
-        print(cart)
 
         stripe_public_key = settings.STRIPE_PUBLIC_KEY
         stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -118,6 +117,7 @@ class CheckoutSuccess(View):
     def get(self, request, order_no):
         context = get_base_context(request)
         order = get_object_or_404(Order, order_number=order_no)
+        context['order'] = order
         save_info = request.session.get('save_info')
 
         messages.success(request, f'Your payment was successful! A \

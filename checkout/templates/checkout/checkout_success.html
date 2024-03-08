@@ -1,5 +1,63 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_title %} - Payment Successful{% endblock %}
 
 {% block content_heading %}
     <h1>Payment Successful!</h1>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div id="order-container" class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-3 px-md-0">
+                <div class="order-details">
+                    <div class="detail-key">Order Number<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.order_number }}</div>
+                    <div class="detail-key">Ordered On<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.order_date }}</div>
+                    <div class="detail-key">Will Be Prepared On<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.bake_date }}</div>
+                </div>
+                <hr>
+                {% with order.line_items.count as num_items %}
+                <div class="detail-key">Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</span></div>
+                {% endwith %}
+                <div class="accordion" id="order-products">
+                    {% for item in order.line_items.all %}
+                        {% with forloop.counter as i %}
+                        {% with item.get_product as product %}
+                        <div class="card order-product-info">
+                            <div class="card-header px-2 px-md-3" id="product-heading-{{ i }}">
+                                <div class="mb-0">
+                                    <button class="btn-no-style btn-block text-left" type="button" data-toggle="collapse"
+                                        data-target="#product-collapse-{{ i }}" aria-expanded="true" aria-controls="product-collapse-{{ i }}">
+                                        <div class="d-flex justify-content-between">
+                                            <span>
+                                                <i class="fa-solid fa-caret-down mr-3"></i>
+                                                {{ product.display_name }} &times; {{ item.quantity }}
+                                            </span>
+                                            <span>&euro;{{ item.get_total }}</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="product-collapse-{{ i }}" class="collapse" aria-labelledby="product-heading-{{ i }}"
+                                data-parent="#order-products">
+                                <div class="card-body">
+                                    {% include 'includes/property_list.html' %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endwith %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

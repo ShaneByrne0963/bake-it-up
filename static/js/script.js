@@ -154,6 +154,15 @@ $(document).ready(() => {
         closeToast($(this).closest('.toast-message'), true);
     });
 
+    // Sets the color of the color property display
+    $('.prop-color').each(function() {
+        $(this).css('background-color', $(this).data('back')).removeData('back')
+        .css('border-color', $(this).data('border')).removeData('border');
+    });
+
+    // Animate the order details on page load
+    $('#order-container').addClass('shown');
+
     checkAllDisableButtons();
     scrollScreen();
     resizeWindow();

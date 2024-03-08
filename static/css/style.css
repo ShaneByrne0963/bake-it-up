@@ -150,7 +150,11 @@ input::-webkit-inner-spin-button {
 }
 
 .anchor-no-style,
-.anchor-no-style:hover {
+.anchor-no-style:hover,
+.btn-no-style,
+.btn-no-style:hover {
+    border: none;
+    background: none;
     color: inherit;
     text-decoration: inherit;
 }
@@ -399,6 +403,22 @@ button.btn,
 a.btn,
 #account-nav .dropdown-item {
     font-family: "Roboto", sans-serif;
+}
+
+/* --------------------------------------------------------Product property lists */
+
+.property-item {
+    display: flex;
+    align-items: center;
+}
+
+.prop-color {
+    height: 40px;
+    aspect-ratio: 1/1;
+    border: 2px solid;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
 }
 
 /* -----------------------------------------------------------------------MEDIA QUERIES

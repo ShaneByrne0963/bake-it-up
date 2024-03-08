@@ -38,21 +38,7 @@
     grid-column-end: 13;
 }
 
-.property-item {
-    display: flex;
-    align-items: center;
-}
-
-.cart-prop-color {
-    height: 40px;
-    aspect-ratio: 1/1;
-    border: 2px solid;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-}
-
-.cart-product-options {
+.product-options {
     position: absolute;
     bottom: 0;
     right: 15px;
