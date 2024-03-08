@@ -15,7 +15,9 @@
     <div class="container-fluid">
         <div class="row">
             <div id="order-container" class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-3 px-md-0">
-                <div class="order-details">
+                <div>Order Information</div>
+                <hr class="mt-1">
+                <div class="order-details mb-5">
                     <div class="detail-key">Order Number<span class="d-md-none">:</span></div>
                     <div class="detail-value">{{ order.order_number }}</div>
                     <div class="detail-key">Ordered On<span class="d-md-none">:</span></div>
@@ -23,11 +25,11 @@
                     <div class="detail-key">Will Be Prepared On<span class="d-md-none">:</span></div>
                     <div class="detail-value">{{ order.bake_date }}</div>
                 </div>
-                <hr>
                 {% with order.line_items.count as num_items %}
-                <div class="detail-key">Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>
+                <div>Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>
                 {% endwith %}
-                <div class="accordion" id="order-products">
+                <hr class="mt-1">
+                <div class="accordion mb-2" id="order-products">
                     {% for item in order.line_items.all %}
                         {% with forloop.counter as i %}
                         {% with item.get_product as product %}
@@ -57,8 +59,47 @@
                         {% endwith %}
                     {% endfor %}
                 </div>
-                <hr>
+                <div class="order-price mb-5 px-md-4">
+                    <div>Total:</div>
+                    <div class="text-right">&euro;{{ order.get_grand_total }}</div>
+                </div>
+                <div>Billing Information</div>
+                <hr class="mt-1">
+                <div class="order-details mb-5">
+                    <div class="detail-key">Name/Company Name<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.full_name }}</div>
 
+                    <div class="detail-key">Email<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.email }}</div>
+
+                    <div class="detail-key">Phone Number<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.phone_number }}</div>
+
+                    <div class="detail-key">Street Address{% if order.street_address2 %} (Line 1){% endif %}
+                        <span class="d-md-none">:</span>
+                    </div>
+                    <div class="detail-value">{{ order.street_address1 }}</div>
+
+                    {% if order.street_address2 %}
+                        <div class="detail-key">Street Address (Line 2)<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.street_address2 }}</div>
+                    {% endif %}
+
+                    <div class="detail-key">Town/City<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.town_or_city }}</div>
+
+                    <div class="detail-key">County<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.county }}</div>
+
+                    {% if order.postcode %}
+                        <div class="detail-key">Postcode<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.postcode }}</div>
+                    {% endif %}
+                </div>
+                <div class="text-center">
+                    <h2>Thank you for your purchase!</h2>
+                    <p>You'll be enjoying some delicious, freshly-baked treats in no time!</p>
+                </div>
             </div>
         </div>
     </div>
