@@ -128,11 +128,12 @@ class OrderLineItem(models.Model):
             prop_answer = getattr(self, f'prop_{prop_name}')
             if prop_answer is not None:
                 product_prop = getattr(product, f'prop_{prop_name}')
+                answers = product_prop['answers']
 
                 label = ''
                 if 'label' in product_prop:
                     label = product_prop['label']
-                elif len(product_prop['answers']) > 1:
+                elif isinstance(answers, list) and len(answers) > 1:
                     label = prop['default_label']
 
                 prop_dict = {

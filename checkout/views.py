@@ -104,6 +104,8 @@ class Checkout(View):
                 )
                 line_item.save()
             request.session['save_info'] = 'save_info' in request.POST
+            request.session['cart'].clear()
+            request.session['cart_total'] = 0
 
             return redirect(reverse('checkout_success', args=[order.order_number]))
 

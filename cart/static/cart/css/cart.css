@@ -38,7 +38,7 @@
     grid-column-end: 13;
 }
 
-.product-options {
+.cart-product-options {
     position: absolute;
     bottom: 0;
     right: 15px;
