@@ -320,7 +320,7 @@ input::-webkit-inner-spin-button {
 #toast-container {
     position: fixed;
     top: 32px;
-    left: 100vw;
+    left: 100%;
     z-index: 12;
 }
 
@@ -363,7 +363,7 @@ input::-webkit-inner-spin-button {
     color: white;
     font-family: "Just Another Hand", cursive;
     font-size: 2.5em;
-    margin-right: 40px;
+    text-align: right;
 }
 
 /* --------------------------------------------------------Pagination */

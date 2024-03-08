@@ -25,7 +25,7 @@
                 </div>
                 <hr>
                 {% with order.line_items.count as num_items %}
-                <div class="detail-key">Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</span></div>
+                <div class="detail-key">Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>
                 {% endwith %}
                 <div class="accordion" id="order-products">
                     {% for item in order.line_items.all %}
@@ -41,7 +41,7 @@
                                                 <i class="fa-solid fa-caret-down mr-3"></i>
                                                 {{ product.display_name }} &times; {{ item.quantity }}
                                             </span>
-                                            <span>&euro;{{ item.get_total }}</span>
+                                            <span class="ml-2">&euro;{{ item.get_total }}</span>
                                         </div>
                                     </button>
                                 </div>
@@ -57,6 +57,8 @@
                         {% endwith %}
                     {% endfor %}
                 </div>
+                <hr>
+
             </div>
         </div>
     </div>

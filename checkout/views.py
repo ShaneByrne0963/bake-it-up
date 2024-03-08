@@ -123,6 +123,9 @@ class CheckoutSuccess(View):
         save_info = request.session.get('save_info')
 
         messages.success(request, f'Your payment was successful! A \
-            conformation email has been sent to {order.email}.')
+            confirmation email has been sent to {order.email}.')
+        if save_info:
+            messages.success(request, 'Your billing information has \
+                been saved!')
 
         return render(request, self.template, context)
