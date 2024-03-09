@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from .models import Order, OrderLineItem
 from .forms import CheckoutForm
+from .order import create_order
 from core.contexts import get_base_context, get_product_by_name
 from core.shortcuts import price_as_float
 
@@ -64,47 +65,11 @@ class Checkout(View):
         }
         checkout_form = CheckoutForm(checkout_data)
         if checkout_form.is_valid():
-            order = Order(
-                full_name=checkout_data['name'],
-                email=checkout_data['email'],
-                phone_number=checkout_data['phone'],
-                street_address1=checkout_data['street_address1'],
-                street_address2=checkout_data['street_address2'],
-                town_or_city=checkout_data['town_or_city'],
-                county=checkout_data['county'],
-                postcode=checkout_data['postcode']
-            )
-            order.save()
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            checkout_data['pid'] = pid
 
-            for item in cart:
-                # Getting custom properties, with None as a default
-                properties = {
-                    'shape': None,
-                    'size': None,
-                    'contents': None,
-                    'type': None,
-                    'color': None,
-                    'icing': None,
-                    'decoration': None,
-                    'text': None
-                }
-                for prop in item['prop_list']:
-                    properties[prop['name']] = prop['answer']
+            order = create_order(checkout_data, cart)
 
-                line_item = OrderLineItem(
-                    order=order,
-                    product_name=item['name'],
-                    quantity=item['quantity'],
-                    prop_shape=properties['shape'],
-                    prop_size=properties['size'],
-                    prop_contents=properties['contents'],
-                    prop_type=properties['type'],
-                    prop_color=properties['color'],
-                    prop_icing=properties['icing'],
-                    prop_decoration=properties['decoration'],
-                    prop_text=properties['text'],
-                )
-                line_item.save()
             save_info = 'save_info' in request.POST
             request.session['save_info'] = save_info
             request.session['cart'].clear()
@@ -138,15 +103,23 @@ class CheckoutSuccess(View):
 def cache_checkout_data(request):
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
-        stripe.secret_key = settings.STRIPE_SECRET_KEY
-        stripe.PaymentIntent.modify(pid, metadata={
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        metadata = {
             'user': request.user,
-            'cart': json.dumps(request.session.get('cart', {})),
             'save_info': request.POST.get('save_info')
-        })
+        }
+
+        # Adding each item as its own key to avoid the 500 character limit
+        cart = request.session.get('cart', {})
+        for count, item in enumerate(cart):
+            metadata[f'product_{count}'] = json.dumps(item)
+        stripe.PaymentIntent.modify(pid, metadata=metadata)
+
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, """
-        Sorry, but your payment cannot be processed. Please try again.
+        messages.error(request, f"""
+        Sorry, but your payment cannot be processed.
+        Please try again. {e}
         """)
         return HttpResponse(content=e, status=400)

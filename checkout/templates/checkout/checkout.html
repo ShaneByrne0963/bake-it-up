@@ -13,6 +13,7 @@
 {% block content %}
 <form method="POST" id="checkout-form" class="container-fluid">
     {% csrf_token %}
+    <input type="hidden" name="client_secret" value="{{ client_secret }}">
     <div class="row">
         <div class="col-12 col-md-10 col-lg-8 col-xl-5 offset-md-1 mb-4">
             <h2>Please fill out your details below</h2>
