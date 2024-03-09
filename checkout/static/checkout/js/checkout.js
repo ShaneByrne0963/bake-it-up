@@ -73,7 +73,7 @@ function paymentSubmit() {
     setModalLoading(true);
     let form = $('#checkout-form').get(0);
 
-    let shipping_details = {
+    let base_details = {
         name: $.trim(form.name.value),
         phone: $.trim(form.phone.value),
         address: {
@@ -84,25 +84,41 @@ function paymentSubmit() {
             country: 'IE'
         }
     };
-    let billing_details = {...shipping_details};
+    let billing_details = {...base_details};
     billing_details.email = $.trim(form.email.value);
+
+    let shipping_details = {...base_details};
     shipping_details.address.postal_code = $.trim(form.postcode.value);
 
-    stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-            card: cardNumber,
-            billing_details: billing_details,
-        },
-        shipping: shipping_details,
-    }).then(function(result) {
-        if (result.error) {
-            $('#card-number-errors').text(result.error.message);
-            setModalLoading(false);
-        } else {
-            if (result.paymentIntent.status === 'succeeded') {
-                // Removes the event listener that triggers the modal
-                $('#checkout-form').off('submit').trigger('submit');
+    let saveInfo = Boolean($('#save-info').prop('checked'));
+    let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    let postData = {
+        'csrfmiddlewaretoken': csrfToken,
+        'client_secret': clientSecret,
+        'save_info': saveInfo
+    };
+    
+    let url = '/checkout/cache_data/';
+    $.post(url, postData).done(function() {
+        stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardNumber,
+                billing_details: billing_details,
+            },
+            shipping: shipping_details,
+        }).then(function(result) {
+            if (result.error) {
+                $('#card-number-errors').text(result.error.message);
+                setModalLoading(false);
+            } else {
+                if (result.paymentIntent.status === 'succeeded') {
+                    // Removes the event listener that triggers the modal
+                    $('#checkout-form').off('submit').trigger('submit');
+                }
             }
-        }
+        });
+    }).fail(function() {
+        // Reload the page on failing to cache the checkout data
+        location.reload();
     });
 }

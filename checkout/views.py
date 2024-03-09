@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views import View
+from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.contrib import messages
 
@@ -9,6 +10,7 @@ from core.contexts import get_base_context, get_product_by_name
 from core.shortcuts import price_as_float
 
 import stripe
+import json
 
 
 class Checkout(View):
@@ -130,3 +132,21 @@ class CheckoutSuccess(View):
         save_info = request.session.get('save_info')
 
         return render(request, self.template, context)
+
+
+@require_POST
+def cache_checkout_data(request):
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.secret_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'user': request.user,
+            'cart': json.dumps(request.session.get('cart', {})),
+            'save_info': request.POST.get('save_info')
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, """
+        Sorry, but your payment cannot be processed. Please try again.
+        """)
+        return HttpResponse(content=e, status=400)
