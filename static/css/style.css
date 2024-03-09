@@ -315,6 +315,31 @@ input::-webkit-inner-spin-button {
     grid-template-columns: 1fr 1fr;
 }
 
+#modal-load-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modal-load-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#modal-load-overlay>.spinner-border {
+    width: 64px;
+    height: 64px;
+    font-size: 1.5rem;
+}
+
 /* --------------------------------------------------------Toasts */
 
 #toast-container {

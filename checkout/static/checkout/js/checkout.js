@@ -76,6 +76,9 @@ function paymentSubmit() {
     cardPostalCode.update({ 'disabled': true});
 
     $('#modal-confirm').attr('disabled', true);
+    console.log('Here');
+    $('#modal-load-overlay').removeClass('hidden');
+
     stripe.confirmCardPayment(clientSecret, {
         payment_method: {
             card: cardNumber
@@ -89,6 +92,7 @@ function paymentSubmit() {
             cardPostalCode.update({ 'disabled': false});
 
             $('#modal-confirm').attr('disabled', false);
+            $('#modal-load-overlay').addClass('hidden');
         } else {
             if (result.paymentIntent.status === 'succeeded') {
                 // Removes the event listener that triggers the modal

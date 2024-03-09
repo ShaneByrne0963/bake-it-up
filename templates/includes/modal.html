@@ -1,9 +1,9 @@
 {% load crispy_forms_tags %}
 
-<div class="modal{% if modal_show %} show-on-load{% if modal_load_fade %} fade{% endif %}{% else %} fade{% endif %}" id="modal-action" tabindex="-1"
-  aria-labelledby="modal-heading" aria-hidden="true">
+<div class="modal{% if modal_show %} show-on-load{% if modal_load_fade %} fade{% endif %}{% else %} fade{% endif %}"
+  id="modal-action" tabindex="-1" aria-labelledby="modal-heading" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content overflow-hidden position-relative">
       <form id="modal-content-inner" method="POST">
         {% csrf_token %}
         <div class="modal-header">
@@ -19,8 +19,14 @@
           <button id="modal-confirm" type="submit" class="btn btn-primary shadow-none" aria-label="Confirm action">Confirm</button>
         </div>
       </form>
+      <div id="modal-load-overlay" class="hidden">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
     </div>
   </div>
+
 </div>
 
 <!-- Forms to be copied into the modal when necessary -->
