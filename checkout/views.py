@@ -103,9 +103,16 @@ class Checkout(View):
                     prop_text=properties['text'],
                 )
                 line_item.save()
-            request.session['save_info'] = 'save_info' in request.POST
+            save_info = 'save_info' in request.POST
+            request.session['save_info'] = save_info
             request.session['cart'].clear()
             request.session['cart_total'] = 0
+
+            messages.success(request, f'Your payment was successful! A \
+            confirmation email has been sent to {order.email}.')
+            if save_info:
+                messages.success(request, 'Your billing information has \
+                    been saved!')
 
             return redirect(reverse('checkout_success', args=[order.order_number]))
 
@@ -121,11 +128,5 @@ class CheckoutSuccess(View):
         order = get_object_or_404(Order, order_number=order_no)
         context['order'] = order
         save_info = request.session.get('save_info')
-
-        messages.success(request, f'Your payment was successful! A \
-            confirmation email has been sent to {order.email}.')
-        if save_info:
-            messages.success(request, 'Your billing information has \
-                been saved!')
 
         return render(request, self.template, context)

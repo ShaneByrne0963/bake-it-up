@@ -141,6 +141,18 @@ function resetInputs(element) {
 }
 
 
+/**
+ * Enables/Disables the modal loading overlay
+ * @param {Boolean} enabled True to enable the overlay. False to disable
+ */
+function setModalLoading(enabled) {
+    $('#modal-load-overlay').removeClass('hidden');
+    if (!enabled) {
+        $('#modal-load-overlay').addClass('hidden');
+    }
+}
+
+
 $(document).ready(() => {
     // Event listeners for modal triggers
     $('.modal-trigger-login').click(() => {
@@ -170,7 +182,7 @@ $(document).ready(() => {
         modalFormInit('payment');
     });
 
-    //Resetting the modal when hidden
+    //Resetting the modal form when hidden
     $('#modal-action').on('hidden.bs.modal', function() {
         resetInputs($('#modal-content-inner').get(0));
 
@@ -187,8 +199,14 @@ $(document).ready(() => {
         for (let form of modalForms) {
             modalFormList.appendChild(form);
         }
+    }).on('hide.bs.modal', function(event) {
+        // Prevents the user from clicking away when the overlay is visible
+        if (!$(this).find('#modal-load-overlay').hasClass('hidden')) {
+            event.preventDefault();
+        }
     });
 
+    // Showing the modal on page load, if specified
     if ($('#modal-action').hasClass('show-on-load')) {
         // Prefilling the modal with the form specified if one exists
         if ($('.modal-form-load').length > 0) {

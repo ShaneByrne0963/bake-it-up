@@ -70,29 +70,16 @@ $('#checkout-form').on('submit', function(event) {
  * Handles the payment submission
  */
 function paymentSubmit() {
-    cardNumber.update({ 'disabled': true});
-    cardExpiry.update({ 'disabled': true});
-    cardCvc.update({ 'disabled': true});
-    cardPostalCode.update({ 'disabled': true});
-
-    $('#modal-confirm').attr('disabled', true);
-    console.log('Here');
-    $('#modal-load-overlay').removeClass('hidden');
+    setModalLoading(true);
 
     stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-            card: cardNumber
+            card: cardNumber,
         }
     }).then(function(result) {
         if (result.error) {
             $('#card-number-errors').text(result.error.message);
-            cardNumber.update({ 'disabled': false});
-            cardExpiry.update({ 'disabled': false});
-            cardCvc.update({ 'disabled': false});
-            cardPostalCode.update({ 'disabled': false});
-
-            $('#modal-confirm').attr('disabled', false);
-            $('#modal-load-overlay').addClass('hidden');
+            setModalLoading(false);
         } else {
             if (result.paymentIntent.status === 'succeeded') {
                 // Removes the event listener that triggers the modal
