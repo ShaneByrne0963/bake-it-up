@@ -71,11 +71,29 @@ $('#checkout-form').on('submit', function(event) {
  */
 function paymentSubmit() {
     setModalLoading(true);
+    let form = $('#checkout-form').get(0);
+
+    let shipping_details = {
+        name: $.trim(form.name.value),
+        phone: $.trim(form.phone.value),
+        address: {
+            line1: $.trim(form.street_address1.value),
+            line2: $.trim(form.street_address2.value),
+            city: $.trim(form.town_or_city.value),
+            state: $.trim(form.county.value),
+            country: 'IE'
+        }
+    };
+    let billing_details = {...shipping_details};
+    billing_details.email = $.trim(form.email.value);
+    shipping_details.address.postal_code = $.trim(form.postcode.value);
 
     stripe.confirmCardPayment(clientSecret, {
         payment_method: {
             card: cardNumber,
-        }
+            billing_details: billing_details,
+        },
+        shipping: shipping_details,
     }).then(function(result) {
         if (result.error) {
             $('#card-number-errors').text(result.error.message);
