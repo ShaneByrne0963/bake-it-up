@@ -64,6 +64,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 CURRENCY = 'EUR'
 # After this 24 hour time, customers cannot order for next day
 NEXT_DAY_CUTOFF_TIME = 16
+# How many days a customer can order in advance. 0 for no limit
+ORDER_MAX_DAYS = 30
 
 
 # Environment variables

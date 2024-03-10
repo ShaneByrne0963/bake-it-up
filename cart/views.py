@@ -11,6 +11,8 @@ from core.contexts import get_base_context, get_product_by_name, \
 from core.shortcuts import price_as_int, convert_24_hour_to_12
 from products.forms import create_properties_form
 
+from datetime import datetime, timedelta
+
 
 class ViewCart(View):
     template = 'cart/view_cart.html'
@@ -21,12 +23,25 @@ class ViewCart(View):
         if 'cart_products' not in context:
             messages.error(request, "Your cart is empty")
             return redirect('home')
+        
+        current_date = datetime.now()
+        min_days_to_bake = 2
 
         if not has_reached_cutoff_time():
             next_day_cutoff = convert_24_hour_to_12(
                 settings.NEXT_DAY_CUTOFF_TIME
             )
             context['next_day_cutoff'] = next_day_cutoff
+            min_days_to_bake = 1
+        
+        # Getting the minimum date that can be selected
+        min_date_to_bake = current_date + timedelta(
+            days=min_days_to_bake
+        )
+        min_date_value = min_date_to_bake.strftime(
+            '%Y-%m-%d'
+        )
+        context['min_date_value'] = min_date_value
 
         return render(request, self.template, context)
     
