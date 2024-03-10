@@ -119,7 +119,7 @@ function paymentSubmit() {
         });
     }).fail(function(result) {
         // The attempt is forbidden if the user tries to order next day baking after the cutoff time
-        if (result.status === 401) {
+        if (result.status === 403) {
             // In this case, we return the user to the cart
             window.location = '/cart/';
         }

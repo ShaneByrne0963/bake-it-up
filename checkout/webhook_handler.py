@@ -24,6 +24,12 @@ class StripeWH_Handler():
         pid = intent.id
 
         save_info = intent.metadata.save_info
+        bake_date = intent.metadata.bake_date
+        customer_note = getattr(
+            intent.metadata,
+            'customer_note',
+            ''
+        )
 
         stripe_charge = stripe.Charge.retrieve(
             intent.latest_charge
@@ -68,6 +74,8 @@ class StripeWH_Handler():
 
             # Getting the checkout shipping details to fill into the new order
             checkout_data = {
+                'bake_date': bake_date,
+                'customer_note': customer_note,
                 'name': shipping_details.name,
                 'email': billing_details.email,
                 'phone': shipping_details.phone,

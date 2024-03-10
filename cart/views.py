@@ -73,7 +73,7 @@ class ViewCart(View):
             return redirect('cart')
         
         order_context = {
-            'note': note,
+            'customer_note': note,
             'bake_date': selected_date
         }
         request.session['order_context'] = order_context

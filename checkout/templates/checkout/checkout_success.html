@@ -22,8 +22,12 @@
                     <div class="detail-value">{{ order.order_number }}</div>
                     <div class="detail-key">Ordered On<span class="d-md-none">:</span></div>
                     <div class="detail-value">{{ order.order_date }}</div>
-                    <div class="detail-key">Will Be Prepared On<span class="d-md-none">:</span></div>
+                    <div class="detail-key">Will Be Baked On<span class="d-md-none">:</span></div>
                     <div class="detail-value">{{ order.bake_date }}</div>
+                    {% if order.customer_note %}
+                        <div class="detail-key mt-3">Added Message<span class="d-md-none">:</span></div>
+                        <div class="detail-value mt-md-3">{{ order.customer_note }}</div>
+                    {% endif %}
                 </div>
                 {% with order.line_items.count as num_items %}
                 <div>Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>

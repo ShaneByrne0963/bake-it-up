@@ -1,4 +1,5 @@
 from .models import Order, OrderLineItem
+from datetime import datetime
 
 
 # region checkout_data keys
@@ -21,7 +22,15 @@ def create_order(checkout_data, cart):
     """
     Creates an order
     """
+    bake_date = datetime.strptime(
+        checkout_data['bake_date'],
+        '%Y-%m-%d'
+    )
+    print(checkout_data['bake_date'])
+    print(bake_date)
     order = Order(
+        bake_date=checkout_data['bake_date'],
+        customer_note=checkout_data['customer_note'],
         full_name=checkout_data['name'],
         email=checkout_data['email'],
         phone_number=checkout_data['phone'],
