@@ -7,8 +7,9 @@ from django.conf import settings
 from .cartfunctions import add_to_cart, get_properties_from_dict, \
                            has_reached_cutoff_time
 from core.contexts import get_base_context, get_product_by_name, \
-    get_cart_context
-from core.shortcuts import price_as_int, convert_24_hour_to_12
+                          get_cart_context
+from core.shortcuts import price_as_int, convert_24_hour_to_12, \
+                           get_datetime_as_date_input
 from products.forms import create_properties_form
 
 from datetime import datetime, timedelta
@@ -34,14 +35,20 @@ class ViewCart(View):
             context['next_day_cutoff'] = next_day_cutoff
             min_days_to_bake = 1
         
-        # Getting the minimum date that can be selected
-        min_date_to_bake = current_date + timedelta(
-            days=min_days_to_bake
-        )
-        min_date_value = min_date_to_bake.strftime(
-            '%Y-%m-%d'
+        min_date_value = get_datetime_as_date_input(
+            min_days_to_bake
         )
         context['min_date_value'] = min_date_value
+
+        # Getting the maximum time an order can be placed for
+        if settings.ORDER_MAX_DAYS:
+            max_days_to_bake = settings.ORDER_MAX_DAYS \
+                + min_days_to_bake - 1
+        
+            max_date_value = get_datetime_as_date_input(
+                max_days_to_bake
+            )
+            context['max_date_value'] = max_date_value
 
         return render(request, self.template, context)
     

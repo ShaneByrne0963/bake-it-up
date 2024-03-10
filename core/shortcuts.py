@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+
+
 """
 Convenient functions that can be used across the site
 """
@@ -47,3 +50,16 @@ def convert_24_hour_to_12(hour):
         return f'{hour - 12}pm'
     else:
         return f'{hour}am'
+
+
+def get_datetime_as_date_input(added_days=0):
+    """
+    Returns a date, with optional added days, as a
+    string that can be used in the date input
+    """
+    current_date = datetime.now()
+    if added_days:
+        current_date += timedelta(days=added_days)
+    return current_date.strftime(
+        '%Y-%m-%d'
+    )

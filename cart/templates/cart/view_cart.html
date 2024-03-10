@@ -68,7 +68,7 @@
                     <div class="form-group py-3">
                         <label for="bake-date">Select a Date*</label>
                         <input type="date" id="bake-date" name="bake_date" class="form-control" value="{{ min_date_value }}"
-                            min="{{ min_date_value }}">
+                            min="{{ min_date_value }}"{% if max_date_value %} max="{{ max_date_value }}{% endif %}">
                         {% if next_day_cutoff is not None %}
                             <small class="font-weight-bold">Order by {{ next_day_cutoff }} so you can get your goodies tomorrow!</small>
                         {% endif %}
