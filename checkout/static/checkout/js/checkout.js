@@ -113,7 +113,7 @@ function paymentSubmit() {
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     // Removes the event listener that triggers the modal
-                    //$('#checkout-form').off('submit').trigger('submit');
+                    $('#checkout-form').off('submit').trigger('submit');
                 }
             }
         });

@@ -11,9 +11,9 @@ import uuid
 class Order(models.Model):
     order_number = models.CharField(max_length=32, null=False, editable=False)
     order_date = models.DateTimeField(auto_now_add=True)
-    bake_date = models.DateTimeField(auto_now_add=True)
+    bake_date = models.DateField()
     delivery = models.BooleanField(default=False)
-    customer_note = models.TextField(blank=True, null=True)
+    customer_note = models.CharField(max_length=200, blank=True, null=True)
     full_name = models.CharField(max_length=70)
     email = models.CharField(max_length=320)
     phone_number = models.CharField(max_length=20)

@@ -46,13 +46,6 @@
 
 /* Cart footer */
 
-#cart-footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-}
-
 #cart-total {
     display: grid;
     grid-template-columns: auto 1fr;

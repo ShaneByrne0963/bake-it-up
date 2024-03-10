@@ -62,6 +62,8 @@ INSTALLED_APPS = [
 SITE_ID = 1
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 CURRENCY = 'EUR'
+# After this 24 hour time, customers cannot order for next day
+NEXT_DAY_CUTOFF_TIME = 16
 
 
 # Environment variables

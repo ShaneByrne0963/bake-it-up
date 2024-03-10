@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import View
+from django.conf import settings
 
-from .cartfunctions import add_to_cart, get_properties_from_dict
+from .cartfunctions import add_to_cart, get_properties_from_dict, \
+                           has_reached_cutoff_time
 from core.contexts import get_base_context, get_product_by_name, \
     get_cart_context
-from core.shortcuts import price_as_int
+from core.shortcuts import price_as_int, convert_24_hour_to_12
 from products.forms import create_properties_form
 
 
@@ -19,6 +21,12 @@ class ViewCart(View):
         if 'cart_products' not in context:
             messages.error(request, "Your cart is empty")
             return redirect('home')
+
+        if not has_reached_cutoff_time():
+            next_day_cutoff = convert_24_hour_to_12(
+                settings.NEXT_DAY_CUTOFF_TIME
+            )
+            context['next_day_cutoff'] = next_day_cutoff
 
         return render(request, self.template, context)
     
