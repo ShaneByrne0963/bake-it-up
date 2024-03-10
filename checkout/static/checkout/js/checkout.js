@@ -117,8 +117,14 @@ function paymentSubmit() {
                 }
             }
         });
-    }).fail(function() {
-        // Reload the page on failing to cache the checkout data
-        location.reload();
+    }).fail(function(result) {
+        // The attempt is forbidden if the user tries to order next day baking after the cutoff time
+        if (result.status === 401) {
+            // In this case, we return the user to the cart
+            window.location = '/cart/';
+        }
+        else {
+            location.reload();
+        }
     });
 }

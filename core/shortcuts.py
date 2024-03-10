@@ -63,3 +63,14 @@ def get_datetime_as_date_input(added_days=0):
     return current_date.strftime(
         '%Y-%m-%d'
     )
+
+
+def is_tomorrows_date(current_date):
+    """
+    Returns a boolean value that is true if the date input
+    is tomorrow's date
+    """
+    datetime_tomorrow = (datetime.now() + timedelta(days=1)) \
+        .strftime('%Y-%m-%d')
+    
+    return current_date == datetime_tomorrow

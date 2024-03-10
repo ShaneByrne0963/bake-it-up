@@ -8,7 +8,8 @@ from .models import Order, OrderLineItem
 from .forms import CheckoutForm
 from .order import create_order
 from core.contexts import get_base_context, get_product_by_name
-from core.shortcuts import price_as_float
+from core.shortcuts import price_as_float, is_tomorrows_date
+from cart.cartfunctions import has_reached_cutoff_time
 
 import stripe
 import json
@@ -101,12 +102,36 @@ class CheckoutSuccess(View):
 
 @require_POST
 def cache_checkout_data(request):
+    # The final check to ensure the next day bake date is valid
+    bake_date = ''
+    customer_message = ''
+    if 'order_context' in request.session:
+        order_context = request.session['order_context']
+        bake_date = order_context['bake_date']
+        customer_message = order_context.get('note', '')
+
+        if is_tomorrows_date(bake_date) \
+                and has_reached_cutoff_time():
+            request.session['global_context'] = {
+                'val_note': customer_message,
+                'cutoff_reached': True
+            }
+            messages.error(request, "Sorry, but you have \
+                passed the time for next day baking!")
+            return HttpResponse(status=401)
+    else:
+        messages.error(request, 'Your cart details are missing. \
+            Please fill them out again')
+        return HttpResponse(status=401)
+
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         metadata = {
             'user': request.user,
+            'bake_date': bake_date,
+            'customer_message': customer_message,
             'save_info': request.POST.get('save_info')
         }
 

@@ -172,6 +172,11 @@ $(document).ready(() => {
         $(`#${$(this).attr('aria-labelledby')}`).find('i.fa-caret-up').removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
+    // Removing any invalid feedback for a date input field once it changes
+    $('input[type="date"]').on('change', function() {
+        $(this).parent().find('.invalid-date').remove();
+    });
+
     checkAllDisableButtons();
     scrollScreen();
     resizeWindow();

@@ -4,7 +4,7 @@ from products.models import BreadProduct, PastryProduct
 from .shortcuts import price_as_float
 
 
-# region List of Available Context Keys
+# region List of Available Context Keys for global_context
 """
 {
     'modal_show' {String}: Shows the modal on page load if
@@ -25,6 +25,13 @@ from .shortcuts import price_as_float
     val_username {String}: The prefilled value for the signup username
 
     val_email {String}: The prefilled value for the signup email address
+
+    val_note {String}: The prefilled value for the user's note in
+        the cart
+    
+    cutoff_reached {Truthy Expression}: If true, displays an error
+        message in the cart that the user has reached the cutoff
+        time for next day bake date
 }
 """
 # endregion

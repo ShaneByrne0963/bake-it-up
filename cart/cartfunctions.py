@@ -2,7 +2,7 @@ from django.conf import settings
 from products.forms import get_default_label
 from core.shortcuts import convert_24_hour_to_12
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def add_to_cart(product, cart):
@@ -93,12 +93,15 @@ def get_properties_from_dict(product, properties):
     return list_of_properties
 
 
-def has_reached_cutoff_time():
+def has_reached_cutoff_time(current_datetime=None):
     """
     Returns true if the current time has passed the cutoff time
     to bake the products the next day
     """
-    current_time = datetime.time(datetime.now()).strftime('%H:%M')
+    if not current_datetime:
+        current_datetime = datetime.now()
+
+    current_time = datetime.time(current_datetime).strftime('%H:%M')
     current_hour = current_time.split(':')[0]
     current_hour = int(current_hour)
 

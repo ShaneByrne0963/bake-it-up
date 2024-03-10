@@ -9,10 +9,11 @@ from .cartfunctions import add_to_cart, get_properties_from_dict, \
 from core.contexts import get_base_context, get_product_by_name, \
                           get_cart_context
 from core.shortcuts import price_as_int, convert_24_hour_to_12, \
-                           get_datetime_as_date_input
+                           get_datetime_as_date_input, \
+                           is_tomorrows_date
 from products.forms import create_properties_form
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 class ViewCart(View):
@@ -28,6 +29,7 @@ class ViewCart(View):
         current_date = datetime.now()
         min_days_to_bake = 2
 
+        # Allowing the user to order for tomorrow before the cutoff
         if not has_reached_cutoff_time():
             next_day_cutoff = convert_24_hour_to_12(
                 settings.NEXT_DAY_CUTOFF_TIME
@@ -53,12 +55,29 @@ class ViewCart(View):
         return render(request, self.template, context)
     
     def post(self, request):
+        # The user's attached message
+        note = ''
         if 'note' in request.POST:
             note = request.POST['note']
+        
+        # Checking if the cutoff point has been reached since page load
+        selected_date = request.POST['bake_date']
+        if (is_tomorrows_date(selected_date) \
+                and has_reached_cutoff_time()):
             request.session['global_context'] = {
-                'note': note
+                'val_note': note,
+                'cutoff_reached': True
             }
-
+            messages.error(request, "Sorry, but you have \
+                passed the time for next day baking!")
+            return redirect('cart')
+        
+        order_context = {
+            'note': note,
+            'bake_date': selected_date
+        }
+        request.session['order_context'] = order_context
+        
         return redirect('checkout')
 
 

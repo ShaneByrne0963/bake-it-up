@@ -56,7 +56,7 @@
             <div class="col-12 col-md-6 col-xl-5 mb-0">
                 <div class="form-group">
                     <label for="note">Add a Note</label>
-                    <textarea id="note" name="note" class="form-control" maxlength="200" rows="6"></textarea>
+                    <textarea id="note" name="note" class="form-control" maxlength="200" rows="6">{{ val_note }}</textarea>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-xl-5 offset-xl-2">
@@ -65,11 +65,16 @@
                         <div class="h3 font-weight-bold">Cart Total:</div>
                         <div class="h3 text-right font-weight-bold">&euro;{{ cart_total }}</div>
                     </div>
-                    <div class="form-group py-3">
+                    <hr class="mt-0">
+                    <div class="form-group py-2">
                         <label for="bake-date">Select a Date*</label>
                         <input type="date" id="bake-date" name="bake_date" class="form-control" value="{{ min_date_value }}"
                             min="{{ min_date_value }}"{% if max_date_value %} max="{{ max_date_value }}{% endif %}">
-                        {% if next_day_cutoff is not None %}
+                        {% if cutoff_reached %}
+                            <small class="font-weight-bold text-danger invalid-date">
+                                Sorry, but you have passed the time for next day baking
+                            </small>
+                        {% elif next_day_cutoff is not None %}
                             <small class="font-weight-bold">Order by {{ next_day_cutoff }} so you can get your goodies tomorrow!</small>
                         {% endif %}
                     </div>
