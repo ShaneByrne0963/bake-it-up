@@ -89,9 +89,14 @@ h3, .product-card-title {
 /* --------------------------------------------------------Overriding Bootstrap elements */
 
 /* Buttons */
+.btn {
+    padding-bottom: 0.3rem;
+}
+
 .btn.btn-primary {
     background-color: #784812;
     border-color: #5e3609;
+    font-weight: bold;
 }
 
 .btn.btn-primary:hover {
@@ -110,6 +115,7 @@ h3, .product-card-title {
     background-color: #3c3a3b;
     border-color: #363333;
     color: whitesmoke;
+    font-size: 1.1em;
 }
 
 .btn.btn-nav:hover {
@@ -424,8 +430,6 @@ input::-webkit-inner-spin-button {
 /* --------------------------------------------------------Using a more formal font for forms */
 form input,
 form select,
-button.btn,
-a.btn,
 #account-nav .dropdown-item {
     font-family: "Roboto", sans-serif;
 }
