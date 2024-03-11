@@ -58,15 +58,20 @@
         </nav>
         <div class="position-relative">
             <div id="search-collapse" class="invisible d-none d-md-block">
-                <form action="" method="GET" class="d-flex justify-content-center">
+                <form action="{% url 'product_list' %}" method="GET" class="d-flex justify-content-center">
+                    {% if category %}
+                        <input type="hidden" name="category" value="{{ category }}" aria-hidden="true">
+                    {% endif %}
+                    {% if sort %}
+                        <input type="hidden" name="sort" value="{{ sort }}" aria-hidden="true">
+                    {% endif %}
                     <div id="search-bar-container">
                         <div id="search-bar">
                             <i class="fa-solid fa-magnifying-glass px-2"></i>
-                            <input type="text" class="form-control">
+                            <input type="text" name="q" class="form-control" required>
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
                     </div>
-                    
                 </form>
             </div>
         </div>

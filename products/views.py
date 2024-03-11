@@ -2,12 +2,10 @@ from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic, View
 
-from core.contexts import get_base_context, sort_queryset, \
+from core.contexts import get_base_context, get_products, \
     get_product_by_name
 from .models import BreadProduct, PastryProduct
 from .forms import create_properties_form
-
-from itertools import chain
 
 # Create your views here.
 
@@ -19,31 +17,22 @@ class ProductList(generic.ListView):
     def get_queryset(self):
         category = 'all'
         sort = 'favourites'
+        q = None
 
         if 'category' in self.request.GET:
             category = self.request.GET['category']
 
         if 'sort' in self.request.GET:
             sort = self.request.GET['sort']
-            if 'name' in sort:
-                sort = sort.replace('name', 'display_name')
+        
+        if 'q' in self.request.GET:
+            q = self.request.GET['q']
 
-        products = None
-        breads = BreadProduct.objects.all()
-        pastries = PastryProduct.objects.all()
-
-        # Product filtering
-        if category == 'all':
-            products = list(chain(breads, pastries))
-        elif category == 'bread':
-            products = breads
-        elif category == 'pastries':
-            products = pastries
-        else:
-            products = pastries.filter(category__name='cakes')
-
-        products = sort_queryset(products, sort)
-
+        products = get_products(
+            category=category,
+            sort=sort,
+            q=q
+        )
         return products
 
     def get_context_data(self, **kwargs):

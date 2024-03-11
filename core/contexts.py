@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from products.models import BreadProduct, PastryProduct
 from .shortcuts import price_as_float
+
+from itertools import chain
 
 
 # region List of Available Context Keys for global_context
@@ -84,6 +87,48 @@ def get_cart_context(request):
         context['cart_products'] = cart_products
 
     return context
+
+
+def get_products(**kwargs):
+    """
+    Gets a list of all products, with the option to
+    filter by category, and sort
+    """
+    category = kwargs['category'] if 'category' in kwargs else 'all'
+    sort = kwargs['sort'] if 'sort' in kwargs else 'favourites'
+    q = kwargs['q'] if 'q' in kwargs else None
+
+    products = None
+    breads = None
+    pastries = None
+
+    if q:
+        breads = BreadProduct.objects.filter(
+            Q(display_name__icontains=q) | \
+            Q(description__icontains=q)
+        )
+        pastries = PastryProduct.objects.filter(
+            Q(display_name__icontains=q) | \
+            Q(description__icontains=q)
+        )
+    else:
+        breads = BreadProduct.objects.all()
+        pastries = PastryProduct.objects.all()
+
+    # Product filtering
+    if category == 'all':
+        products = list(chain(breads, pastries))
+    elif category == 'bread':
+        products = breads
+    elif category == 'pastries':
+        products = pastries
+    else:
+        products = pastries.filter(category__name='cakes')
+
+    if sort:
+        sort = sort.replace('name', 'display_name')
+        return sort_queryset(products, sort)
+    return products
 
 
 def sort_queryset(queryset, sort):
