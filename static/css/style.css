@@ -351,7 +351,7 @@ input::-webkit-inner-spin-button {
 #to-top>div {
     border: 2px solid whitesmoke;
     color: whitesmoke;
-    padding: 4px 30px;
+    padding: 4px 16px;
     border-radius: 32px;
     font-family: "Delicious Handrawn", cursive;
     font-size: 1.3rem;

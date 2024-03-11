@@ -48,6 +48,21 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+/* --------------------------------------------------------Products Not Found */
+
+#products-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+}
+
+#products-not-found>i {
+    font-size: 4rem;
+    margin-bottom: 16px;
+}
+
 /* --------------------------------------------------------Product Details */
 
 #product-properties {
