@@ -138,6 +138,17 @@ $(document).ready(() => {
         window.scrollTo(0, 0);
     });
 
+    // Toggles the search bar
+    $('#search-toggle').click(function() {
+        $('#search-collapse').removeClass('invisible').toggleClass('shown');
+    });
+
+    $('#search-collapse').on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+        if (!$(this).hasClass('shown')) {
+            $(this).addClass('invisible');
+        }
+    });
+
     // Quantity selector buttons
     $('.qty-add').click(function() {
         updateQuantity(this, 1);

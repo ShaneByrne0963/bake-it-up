@@ -34,6 +34,8 @@ h3, .product-card-title {
     background-position-x: center;
     background-size: cover;
     height: 256px;
+    z-index: 4;
+    position: relative;
 }
 
 #main-body {
@@ -173,6 +175,8 @@ input::-webkit-inner-spin-button {
     display: grid;
     grid-template-columns: 8fr 4fr 3fr 5fr 4fr auto;
     min-height: 32px;
+    z-index: 5;
+    position: relative;
 }
 
 #logo-container {
@@ -187,7 +191,7 @@ input::-webkit-inner-spin-button {
     position: absolute;
     top: calc(50% - 7.5vw);
     right: 15%;
-    z-index: 2;
+    z-index: 6;
 }
 
 .nav-link>a,
@@ -213,14 +217,33 @@ input::-webkit-inner-spin-button {
     color: #DDDDDD;
 }
 
-#search-collapse {
-    background-color: #635f5e;
-}
-
 #account-nav {
     position: absolute;
     top: 8px;
     right: 8px;
+}
+
+/* --------------------------------------------------------Search Bar */
+
+#search-collapse {
+    background: url('/media/images/ui-back.png');
+    position: absolute;
+    top: calc(-1.5em - 1.75rem - 18px);
+    left: 0;
+    width: 100%;
+    /* The same height as the text input, plus the padding */
+    height: calc(1.5em + 1.75rem + 18px);
+    z-index: 2;
+    padding: 8px 0;
+    transition: top 0.4s ease-in-out;
+}
+
+#search-collapse.shown {
+    top: 0;
+}
+
+#search-collapse input {
+    width: 30%;
 }
 
 /* --------------------------------------------------------Footer */

@@ -50,18 +50,19 @@
             <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
                 <a href="{% url 'product_list' %}?category=cakes" class="d-inline">Cakes</a>
             </div>
-            <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
-                <button class="btn btn-link mr-3" type="button" data-toggle="collapse"
-                    data-target="#search-collapse" aria-expanded="false" aria-controls="search-collapse">
+            <div id="search-toggle" class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
+                <button class="btn btn-link mr-3 shadow-none" type="button" aria-label="Toggle the search bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
         </nav>
-        <div class="collapse" id="search-collapse">
-            <form action="" method="GET" class="form-inline justify-content-center">
-                <input type="text" class="form-control my-2">
-                <button class="btn btn-primary" type="submit">Search</button>
-            </form>
+        <div class="position-relative">
+            <div id="search-collapse" class="invisible">
+                <form action="" method="GET" class="form-inline justify-content-center">
+                    <input type="text" class="form-control my-2">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
         </div>
         <!-- Account navigation at top right corner of screen -->
         <div id="account-nav">
