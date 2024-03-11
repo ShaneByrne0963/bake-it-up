@@ -140,6 +140,7 @@ $(document).ready(() => {
 
     // Toggles the search bar
     $('#search-toggle').click(function() {
+        $(this).toggleClass('toggled');
         $('#search-collapse').removeClass('invisible').toggleClass('shown');
     });
 

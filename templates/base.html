@@ -50,17 +50,23 @@
             <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
                 <a href="{% url 'product_list' %}?category=cakes" class="d-inline">Cakes</a>
             </div>
-            <div id="search-toggle" class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
-                <button class="btn btn-link mr-3 shadow-none" type="button" aria-label="Toggle the search bar">
+            <div class="nav-link d-none d-md-flex d-lg-block align-items-center text-md-center text-lg-left">
+                <button id="search-toggle" class="btn btn-link mr-3 shadow-none" type="button" aria-label="Toggle the search bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
         </nav>
         <div class="position-relative">
-            <div id="search-collapse" class="invisible">
-                <form action="" method="GET" class="form-inline justify-content-center">
-                    <input type="text" class="form-control my-2">
-                    <button class="btn btn-primary" type="submit">Search</button>
+            <div id="search-collapse" class="invisible d-none d-md-block">
+                <form action="" method="GET" class="d-flex justify-content-center">
+                    <div id="search-bar-container">
+                        <div id="search-bar">
+                            <i class="fa-solid fa-magnifying-glass px-2"></i>
+                            <input type="text" class="form-control">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                    
                 </form>
             </div>
         </div>

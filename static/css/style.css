@@ -221,6 +221,7 @@ input::-webkit-inner-spin-button {
     position: absolute;
     top: 8px;
     right: 8px;
+    z-index: 10;
 }
 
 /* --------------------------------------------------------Search Bar */
@@ -234,7 +235,7 @@ input::-webkit-inner-spin-button {
     /* The same height as the text input, plus the padding */
     height: calc(1.5em + 1.75rem + 18px);
     z-index: 2;
-    padding: 8px 0;
+    padding-bottom: 16px;
     transition: top 0.4s ease-in-out;
 }
 
@@ -243,7 +244,53 @@ input::-webkit-inner-spin-button {
 }
 
 #search-collapse input {
-    width: 30%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#search-collapse button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#search-toggle.toggled {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+#search-bar-container {
+    min-width: 30%;
+    border: 2px solid whitesmoke;
+    border-radius: 36px;
+    padding: 3px;
+}
+
+#search-bar {
+    border: 2px solid whitesmoke;
+    border-radius: 24px;
+    padding-left: 4px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    overflow: hidden
+}
+
+#search-bar>* {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: white;
+    box-shadow: none;
+}
+
+#search-bar>i {
+    font-size: 1.2em;
+}
+
+#search-bar>input {
+    font-family: "Handlee", serif;
+    font-size: 1.2em;
+    background: none;
+    padding: 0.3rem 0.75rem 0.3rem 0;
 }
 
 /* --------------------------------------------------------Footer */
