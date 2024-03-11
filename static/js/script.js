@@ -145,7 +145,10 @@ $(document).ready(() => {
     });
 
     $('#search-collapse').on('transitionend webkitTransitionEnd oTransitionEnd', function() {
-        if (!$(this).hasClass('shown')) {
+        if ($(this).hasClass('shown')) {
+            $(this).find('input[type="text"]').focus();
+        }
+        else {
             $(this).addClass('invisible');
         }
     });
