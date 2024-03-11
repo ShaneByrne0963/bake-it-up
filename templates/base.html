@@ -68,7 +68,7 @@
                     <div id="search-bar-container">
                         <div id="search-bar">
                             <i class="fa-solid fa-magnifying-glass px-2"></i>
-                            <input type="text" name="q" class="form-control" required>
+                            <input type="text" name="q" class="form-control"{% if q %} value="{{ q }}"{% endif %} required>
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
                     </div>
