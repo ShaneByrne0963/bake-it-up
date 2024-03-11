@@ -38,6 +38,7 @@ class ProductList(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(get_base_context(self.request))
+        query_length = len(self.object_list)
 
         category = 'all'
         sort = '-favourites'
@@ -55,6 +56,42 @@ class ProductList(generic.ListView):
         context['sort'] = sort
         context['get_url'] = get_url
 
+        q = None
+        if 'q' in self.request.GET:
+            q = self.request.GET['q']
+            context['q'] = q
+        
+        # Building the title
+        product_title = ''
+        if q:
+            product_title = f'{query_length} '
+            
+            if category == 'bread':
+                product_title += 'Bread'
+            elif category == 'pastries':
+                product_title += 'Pastry'
+            elif category == 'cakes':
+                product_title += 'Cake'
+            product_title += ' Product'
+
+            if query_length != 1:
+                product_title += 's'
+
+            product_title += '  Found'
+            product_subtitle = f'With the term "{q}"'
+            context['product_subtitle'] = product_subtitle
+        else:
+            product_title = 'Our '
+            if category == 'bread':
+                product_title += 'Freshly Baked Bread'
+            elif category == 'pastries':
+                product_title += ' Pastries'
+            elif category == 'cakes':
+                product_title += 'Delicious Cakes'
+            else:
+                product_title += 'Products'
+        
+        context['product_title'] = product_title
         return context
 
 

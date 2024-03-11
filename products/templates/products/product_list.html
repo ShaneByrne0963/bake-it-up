@@ -8,7 +8,10 @@
 {% block extra_title %} - Products{% endblock %}
 
 {% block content_heading %}
-    <h1>Our Products</h1>
+    <h1{% if product_subtitle %} class="mb-0"{% endif %}>{{ product_title }}</h1>
+    {% if product_subtitle %}
+        <h3>{{ product_subtitle }}</h3>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
