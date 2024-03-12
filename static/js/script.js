@@ -146,27 +146,56 @@ function highlightQueries() {
             let elementLower = elementText.toLowerCase();
 
             let finalHtml = '';
-
-            let foundQueries = 0;
-            let previousPosition = 0;
             while (elementLower.includes(query)) {
                 let queryPosition = elementLower.search(query);
-                // Adding the text between the end of the last query and the start of this one
-                finalHtml += elementText.slice(previousPosition, queryPosition + (foundQueries * query.length));
 
-                // Finding the query with the original text's casing. Add the number
-                let originalText = elementText.slice(queryPosition + (foundQueries * query.length), queryPosition + ((foundQueries + 1) * query.length));
+                // If the query is only part of a word, we will encase that word in an inline block to prevent
+                // word breaks
+                let isWholeWord = true;
+
+                // Finding the start of the word
+                let startOfWord = queryPosition
+                while (startOfWord > 0 && elementLower[startOfWord - 1] !== ' ') {
+                    startOfWord--;
+                    isWholeWord = false;
+                }
+                // And the end of the word
+                let endOfWord = queryPosition + query.length - 1;
+                while (endOfWord < elementLower.length && elementLower[endOfWord] !== ' ') {
+                    endOfWord++;
+                    isWholeWord = false;
+                }
+
+                if (isWholeWord) {
+                    // Adding the text between the end of the last query and the start of this one
+                    finalHtml += elementText.slice(0, queryPosition);
+                }
+                else {
+                    finalHtml += elementText.slice(0, startOfWord) + '<div class="d-inline-block">';
+                    finalHtml += elementText.slice(startOfWord, queryPosition);
+                }
+
+                // Finding the query with the original text's casing
+                let originalText = elementText.slice(queryPosition, queryPosition + query.length);
 
                 // Building the new HTML to replace the query
                 let queryHtml = `<span class="found-query">${originalText}<div class="highlight hidden${thinHighlight}"></div></span>`;
                 finalHtml += queryHtml;
 
-                // Removing the first query from the lowercase string being checked
-                elementLower = elementLower.slice(0, queryPosition).concat(elementLower.slice(queryPosition + query.length));
-                foundQueries++;
-                previousPosition = queryPosition + (foundQueries * query.length);
+                // Adding the end of the word and closing the inline block
+                if (isWholeWord) {
+                    elementText = elementText.slice(queryPosition + query.length);
+                    elementLower = elementLower.slice(queryPosition + query.length);
+                }
+                else {
+                    finalHtml += elementText.slice(queryPosition + query.length, endOfWord);
+                    finalHtml += '</div>';
+                    elementText = elementText.slice(endOfWord);
+                    elementLower = elementLower.slice(endOfWord);
+                }
             }
-            finalHtml += elementText.slice(previousPosition);
+            // Add the remainder of the text
+            finalHtml += elementText;
             $(this).html(finalHtml);
         });
     }
