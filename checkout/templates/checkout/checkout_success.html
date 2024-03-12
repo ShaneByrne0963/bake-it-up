@@ -100,6 +100,33 @@
                         <div class="detail-value">{{ order.postcode }}</div>
                     {% endif %}
                 </div>
+                {% if order.delivery and order.delivery_line1 %}
+                    <div>Delivery Information</div>
+                    <hr class="mt-1">
+
+                    <div class="order-details mb-5">
+                        <div class="detail-key">Delivery Address{% if order.delivery_line2 %} (Line 1){% endif %}
+                            <span class="d-md-none">:</span>
+                        </div>
+                        <div class="detail-value">{{ order.delivery_line1 }}</div>
+    
+                        {% if order.delivery_line2 %}
+                            <div class="detail-key">Delivery Address (Line 2)<span class="d-md-none">:</span></div>
+                            <div class="detail-value">{{ order.delivery_line2 }}</div>
+                        {% endif %}
+    
+                        <div class="detail-key">Town/City<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.delivery_city }}</div>
+    
+                        <div class="detail-key">County<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.delivery_county }}</div>
+    
+                        {% if order.delivery_postcode %}
+                            <div class="detail-key">Postcode<span class="d-md-none">:</span></div>
+                            <div class="detail-value">{{ order.delivery_postcode }}</div>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <div class="text-center">
                     <h2>Thank you for your purchase!</h2>
                     <p>You'll be enjoying some delicious, freshly-baked treats in no time!</p>

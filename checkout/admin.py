@@ -26,7 +26,9 @@ class OrderAdmin(admin.ModelAdmin):
               'street_address1', 'street_address2',
               'town_or_city', 'county', 'postcode',
               'cart_total', 'delivery_cost',
-              'grand_total')
+              'grand_total', 'delivery_line1',
+              'delivery_line2', 'delivery_city',
+              'delivery_county', 'delivery_postcode')
     list_display = ('order_number', 'bake_date',
                     'customer_note', 'grand_total')
     ordering = ('-order_date',)

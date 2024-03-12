@@ -93,6 +93,27 @@ class Checkout(View):
             pid = request.POST.get('client_secret').split('_secret')[0]
             checkout_data['pid'] = pid
 
+            # Adding delivery details, if delivery is selected
+            delivery_details = {
+                'delivery_line1': None,
+                'delivery_line2': None,
+                'delivery_city': None,
+                'delivery_county': None,
+                'delivery_postcode': None
+            }
+            is_delivery = 'delivery' in request.POST
+            checkout_data['delivery'] = is_delivery
+            if is_delivery and 'delivery_other_address' in request.POST:
+                delivery_details.update({
+                    'delivery_line1': request.POST['delivery_line1'],
+                    'delivery_city': request.POST['delivery_city'],
+                    'delivery_county': request.POST['delivery_county'],
+                    'delivery_postcode': request.POST['delivery_postcode']
+                })
+                if 'delivery_line2' in request.POST:
+                    delivery_details['delivery_line2'] = request.POST['delivery_line2']
+            checkout_data.update(delivery_details)
+
             order = create_order(checkout_data, cart)
 
             save_info = 'save_info' in request.POST

@@ -5,6 +5,9 @@ from datetime import datetime
 # region checkout_data keys
 """
 checkout_data = {
+    'bake_date',
+    'customer_note',
+    'delivery',
     'name',
     'email',
     'phone',
@@ -13,7 +16,12 @@ checkout_data = {
     'town_or_city',
     'county',
     'postcode',
-    'pid'
+    'pid',
+    'delivery_line1',
+    'delivery_line2',
+    'delivery_city',
+    'delivery_county',
+    'delivery_postcode'
 }
 """
 # endregion
@@ -29,6 +37,7 @@ def create_order(checkout_data, cart):
     order = Order(
         bake_date=checkout_data['bake_date'],
         customer_note=checkout_data['customer_note'],
+        delivery=checkout_data['delivery'],
         full_name=checkout_data['name'],
         email=checkout_data['email'],
         phone_number=checkout_data['phone'],
@@ -37,7 +46,12 @@ def create_order(checkout_data, cart):
         town_or_city=checkout_data['town_or_city'],
         county=checkout_data['county'],
         postcode=checkout_data['postcode'],
-        stripe_pid=checkout_data['pid']
+        stripe_pid=checkout_data['pid'],
+        delivery_line1=checkout_data['delivery_line1'],
+        delivery_line2=checkout_data['delivery_line2'],
+        delivery_city=checkout_data['delivery_city'],
+        delivery_county=checkout_data['delivery_county'],
+        delivery_postcode=checkout_data['delivery_postcode'],
     )
     order.save()
 
