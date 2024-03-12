@@ -27,6 +27,13 @@ class Order(models.Model):
     grand_total = models.IntegerField(default=0)
     stripe_pid = models.CharField(max_length=254)
 
+    # Optional delivery details
+    delivery_line1 = models.CharField(max_length=60, blank=True, null=True)
+    delivery_line2 = models.CharField(max_length=60, blank=True, null=True)
+    delivery_city = models.CharField(max_length=60, blank=True, null=True)
+    delivery_county = models.CharField(max_length=10, blank=True, null=True)
+    delivery_postcode = models.CharField(max_length=10, blank=True, null=True)
+
     def __str__(self):
         return f'Order No. {self.order_number}'
 
