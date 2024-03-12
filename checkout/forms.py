@@ -1,4 +1,6 @@
 from django import forms
+from django.conf import settings
+
 
 # A list of all counties for the select field
 COUNTY_CHOICES = (
@@ -55,7 +57,7 @@ class ContactDetailsForm(forms.Form):
     )
 
 
-class AddressDetailsForm(forms.Form):
+class BillingDetailsForm(forms.Form):
 
     street_address1 = forms.CharField(
         label="Address Line 1",
@@ -79,3 +81,7 @@ class AddressDetailsForm(forms.Form):
         label="Postal Code",
         max_length=10
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["county"].widget.attrs.update({"class": "special"})

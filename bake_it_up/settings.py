@@ -68,19 +68,19 @@ NEXT_DAY_CUTOFF_TIME = 16
 ORDER_MAX_DAYS = 30
 
 # How much each county has to pay for delivery in terms of cents
-# Negative numbers indicate no delivery available
-COUNTY_CHOICES = {
-    'Antrim': -1,
-    'Armagh': -1,
+# None means no delivery available for this county
+COUNTY_DELIVERY_COSTS = {
+    'Antrim': None,
+    'Armagh': None,
     'Carlow': 1200,
     'Cavan': 1200,
     'Clare': 4500,
     'Cork': 6000,
-    'Derry': -1,
-    'Donegal': -1,
-    'Down': -1,
+    'Derry': None,
+    'Donegal': None,
+    'Down': None,
     'Dublin': 500,
-    'Fermanagh': -1,
+    'Fermanagh': None,
     'Galway': 5000,
     'Kerry': 6000,
     'Kildare': 1000,
@@ -97,7 +97,7 @@ COUNTY_CHOICES = {
     'Roscommon': 3500,
     'Sligo': 5500,
     'Tipperary': 3000,
-    'Tyrone': -1,
+    'Tyrone': None,
     'Waterford': 3500,
     'Westmeath': 1500,
     'Wexford': 1500,

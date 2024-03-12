@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 
 from .models import Order, OrderLineItem
-from .forms import ContactDetailsForm, AddressDetailsForm
+from .forms import ContactDetailsForm, BillingDetailsForm
 from .order import create_order
 from core.contexts import get_base_context, get_product_by_name
 from core.shortcuts import price_as_float, is_tomorrows_date
@@ -43,10 +43,24 @@ class Checkout(View):
 
         context = get_base_context(request)
         context['contact_form'] = ContactDetailsForm()
-        context['address_form'] = AddressDetailsForm()
+        context['billing_form'] = BillingDetailsForm()
         context['stripe_public_key'] = stripe_public_key
         context['client_secret'] = intent.client_secret
         context['grand_total'] = price_as_float(grand_total)
+
+        # Get the context to create the select form
+        county_options = []
+        for county, cost in settings.COUNTY_DELIVERY_COSTS.items():
+            parsed_cost = cost
+            if cost is not None:
+                parsed_cost = price_as_float(cost)
+
+            county_data = {
+                'name': county,
+                'cost': parsed_cost
+            }
+            county_options.append(county_data)
+        context['county_options'] = county_options
 
         return render(request, self.template, context)
     
@@ -73,9 +87,9 @@ class Checkout(View):
             'postcode': request.POST['postcode'],
         }
         contact_form = ContactDetailsForm(checkout_data)
-        address_form = AddressDetailsForm(checkout_data)
-        
-        if contact_form.is_valid() and address_form.is_valid():
+        billing_form = BillingDetailsForm(checkout_data)
+
+        if contact_form.is_valid() and billing_form.is_valid():
             pid = request.POST.get('client_secret').split('_secret')[0]
             checkout_data['pid'] = pid
 
