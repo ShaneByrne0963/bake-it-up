@@ -17,30 +17,44 @@ function handlePaymentErrors(event, errorID) {
 /**
  * Updates the delivery notice when delivery is checked
  */
-function updateDeliveryCheckbox() {
+function updateDeliveryDetails() {
     $('#delivery-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
     .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
+
+    $('#delivery-other-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
+    .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
+
+    $('#delivery-notice-content').text('');
+    $('#delivery-other-content').text('');
+
     $('#delivery-charge').text('N/A');
     $('#delivery-options').removeClass('d-none');
 
     if ($('#delivery').prop('checked')) {
-        let selectedCounty = $('#id_county').val();
+        // If "Deliver to another address" is selected, the second select input takes precedence
+        let deliverOtherAddress = Boolean($('#delivery-other-address').prop('checked'))
+        let countySelect = deliverOtherAddress ? '#delivery-county' : '#id_county';
+        let deliveryNotice = deliverOtherAddress ? '#delivery-other-notice' : '#delivery-notice';
+        let noticeContent = deliverOtherAddress ? '#delivery-other-content' : '#delivery-notice-content';
+
+        let selectedCounty = $(countySelect).val();
         let deliveryCost = $('#delivery-county').find(`option[value="${selectedCounty}"]`).data('cost');
         let deliveryText = '';
 
         if (deliveryCost === 'None') {
             deliveryText = 'Sorry, but delivery is not available in your selected county';
-            $('#delivery-notice').addClass('text-danger').find('i').addClass('fa-circle-xmark');
+            $(deliveryNotice).addClass('text-danger').find('i').addClass('fa-circle-xmark');
         }
         else {
             deliveryText = `Delivery charge to ${selectedCounty} is €${deliveryCost}`;
-            $('#delivery-notice').addClass('text-info').find('i').addClass('fa-circle-exclamation');
+            $(deliveryNotice).addClass('text-info').find('i').addClass('fa-circle-exclamation');
             $('#delivery-charge').text(`€${deliveryCost}`);
         }
-        $('#delivery-notice-content').text(deliveryText);
+        $(noticeContent).text(deliveryText);
     }
     else {
         $('#delivery-notice').addClass('d-none');
+        $('#delivery-other-notice').addClass('d-none');
         $('#delivery-options').addClass('d-none');
     }
     updateCheckoutTotal();
@@ -205,10 +219,11 @@ function paymentSubmit() {
 }
 
 $(document).ready(() => {
-    $('#delivery').click(updateDeliveryCheckbox);
-    $('#id_county').change(updateDeliveryCheckbox);
+    $('#delivery').click(updateDeliveryDetails);
+    $('#id_county').change(updateDeliveryDetails);
+    $('#delivery-county').change(updateDeliveryDetails);
 
     // Allows the delivery form checkbox to show/hide the collapse
-    $('#delivery-other-address').click(triggerDeliveryForm);
-    $('#delivery-form').on('shown.bs.collapse', triggerDeliveryForm).on('hidden.bs.collapse', triggerDeliveryForm);
+    $('#delivery-other-address').click(updateDeliveryDetails);
+    $('#delivery-form').on('shown.bs.collapse', updateDeliveryDetails).on('hidden.bs.collapse', updateDeliveryDetails);
 });
