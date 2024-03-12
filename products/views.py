@@ -80,6 +80,9 @@ class ProductList(generic.ListView):
             product_title += '  Found'
             product_subtitle = f'With the term "{q}"'
             context['product_subtitle'] = product_subtitle
+            self.request.session['global_context'] = {
+                'q': q
+            }
         else:
             product_title = 'Our '
             if category == 'bread':

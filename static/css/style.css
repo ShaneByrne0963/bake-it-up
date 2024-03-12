@@ -88,6 +88,32 @@ h3, .product-card-title {
     border-radius: 50%;
 }
 
+/* Highlights search results */
+
+.found-query {
+    position: relative;
+}
+
+.found-query>.highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #a31107;
+    opacity: 0.3;
+    transition: width 0.5s ease-in-out;
+}
+
+.found-query>.highlight.thin {
+    top: 10%;
+    height: 80%;
+}
+
+.found-query>.highlight.hidden {
+    width: 0;
+}
+
 /* --------------------------------------------------------Overriding Bootstrap elements */
 
 /* Buttons */

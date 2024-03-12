@@ -130,6 +130,50 @@ function closeToast(toastElement, forceRemove) {
 }
 
 
+const higlightAnimationTime = 600;
+/**
+ * Highlights all found search queries in a product's display
+ * name or description
+ */
+function highlightQueries() {
+    let query = $('#search-input').val().toLowerCase();
+
+    if (query !== null) {
+        $('.contains-query').each(function() {
+            let elementText = $(this).text();
+            let thinHighlight = ($(this).hasClass('thin')) ? ' thin' : '';
+            let elementLower = elementText.toLowerCase();
+
+            if (elementLower.includes(query)) {
+                let queryPosition = elementLower.search(query);
+                // The query with its original casing
+                let originalText = elementText.slice(queryPosition, queryPosition + query.length);
+                let newHtml = `<span class="found-query">${originalText}<div class="highlight hidden${thinHighlight}"></div></span>`;
+                elementText = elementText.slice(0, queryPosition).concat(newHtml).concat(elementText.slice(queryPosition + query.length));
+                elementLower = elementLower.slice(0, queryPosition).concat(elementLower.slice(queryPosition + query.length));
+            }
+            $(this).html(elementText);
+        });
+    }
+    setTimeout(revealHighlight, higlightAnimationTime);
+}
+
+// The time period between each highlight reveal. Leave at 0 for all highlights to reveal at once
+const highlightTimeBetween = 200;
+/**
+ * Begins a single or set of highlight animations
+ */
+function revealHighlight(delay=highlightTimeBetween) {
+    if (delay > 0) {
+        $($('.contains-query').find('.highlight.hidden').get(0)).removeClass('hidden');
+        setTimeout(revealHighlight, delay);
+    }
+    else {
+        $('.contains-query').find('.highlight').removeClass('hidden');
+    }
+}
+
+
 $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
@@ -195,5 +239,6 @@ $(document).ready(() => {
     checkAllDisableButtons();
     scrollScreen();
     resizeWindow();
+    highlightQueries();
     setTimeout(toastPopup, 100);
 });
