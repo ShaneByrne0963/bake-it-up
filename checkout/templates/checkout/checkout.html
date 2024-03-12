@@ -38,12 +38,15 @@
                     <input type="checkbox" id="delivery" name="delivery" class="form-check-input">
                     <label for="delivery" class="mb-0">Deliver to me</label>
                 </div>
-                <p id="delivery-notice" class="small text-danger font-weight-bold d-none"></p>
+                <p id="delivery-notice" class="small text-info font-weight-bold d-none">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="delivery-notice-content"></span>
+                </p>
                 <div class="mt-4">
                     <div class="form-group">
-                        <select class="form-control">
+                        <select id="delivery-county" class="form-control">
                             {% for county in county_options %}
-                                <option data-cost="{{ county.cost }}" value="{{ county.name }}">
+                                <option data-cost="{{ county.cost }}{% if county.cost %}0{% endif %}" value="{{ county.name }}">
                                     {{ county.name }}
                                     {% if county.cost %}(+&euro;{{ county.cost }}0)
                                     {% else %}(Delivery not available)

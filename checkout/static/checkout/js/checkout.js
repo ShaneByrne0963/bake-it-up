@@ -14,6 +14,34 @@ function handlePaymentErrors(event, errorID) {
 }
 
 
+/**
+ * Updates the delivery notice when delivery is checked
+ */
+function updateDeliveryCheckbox() {
+    $('#delivery-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
+    .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
+
+    if ($('#delivery').prop('checked')) {
+        let selectedCounty = $('#id_county').val();
+        let deliveryCost = $('#delivery-county').find(`option[value="${selectedCounty}"]`).data('cost');
+        let deliveryText = '';
+
+        if (deliveryCost === 'None') {
+            deliveryText = 'Sorry, but delivery is not available in your selected county';
+            $('#delivery-notice').addClass('text-danger').find('i').addClass('fa-circle-xmark');
+        }
+        else {
+            deliveryText = `Delivery charge to ${selectedCounty} is €${deliveryCost}`;
+            $('#delivery-notice').addClass('text-info').find('i').addClass('fa-circle-exclamation');
+        }
+        $('#delivery-notice-content').text(deliveryText);
+    }
+    else {
+        $('#delivery-notice').addClass('d-none');
+    }
+}
+
+
 let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 let clientSecret = $('#id_client_secret').text().slice(1, -1);
 
@@ -128,3 +156,8 @@ function paymentSubmit() {
         }
     });
 }
+
+$(document).ready(() => {
+    $('#delivery').click(updateDeliveryCheckbox);
+    $('#id_county').change(updateDeliveryCheckbox);
+});
