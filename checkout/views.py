@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 
 from .models import Order, OrderLineItem
-from .forms import CheckoutForm
+from .forms import ContactDetailsForm, AddressDetailsForm
 from .order import create_order
 from core.contexts import get_base_context, get_product_by_name
 from core.shortcuts import price_as_float, is_tomorrows_date
@@ -42,7 +42,8 @@ class Checkout(View):
         )
 
         context = get_base_context(request)
-        context['form'] = CheckoutForm()
+        context['contact_form'] = ContactDetailsForm()
+        context['address_form'] = AddressDetailsForm()
         context['stripe_public_key'] = stripe_public_key
         context['client_secret'] = intent.client_secret
         context['grand_total'] = price_as_float(grand_total)
@@ -71,8 +72,10 @@ class Checkout(View):
             'county': request.POST['county'],
             'postcode': request.POST['postcode'],
         }
-        checkout_form = CheckoutForm(checkout_data)
-        if checkout_form.is_valid():
+        contact_form = ContactDetailsForm(checkout_data)
+        address_form = AddressDetailsForm(checkout_data)
+        
+        if contact_form.is_valid() and address_form.is_valid():
             pid = request.POST.get('client_secret').split('_secret')[0]
             checkout_data['pid'] = pid
 

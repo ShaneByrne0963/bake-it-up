@@ -36,7 +36,7 @@ COUNTY_CHOICES = (
     ('Wicklow', 'Wicklow'),
 )
 
-class CheckoutForm(forms.Form):
+class ContactDetailsForm(forms.Form):
 
     name = forms.CharField(
         label="Name/Company Name",
@@ -53,6 +53,10 @@ class CheckoutForm(forms.Form):
         max_length=20,
         required=True
     )
+
+
+class AddressDetailsForm(forms.Form):
+
     street_address1 = forms.CharField(
         label="Address Line 1",
         max_length=60,

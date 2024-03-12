@@ -1,3 +1,11 @@
+#checkout-footer {
+    position: sticky;
+    top: 1rem;
+}
+
+
+/* --------------------------------------------------------Stripe Form */
+
 .StripeElement {
     box-sizing: border-box;
     height: calc(2em + 2px);
@@ -80,6 +88,10 @@
 /* --------------------------------------------------------Bootstrap's medium breakpoint */
 
 @media (max-width: 768px) {
+    #checkout-footer {
+        position: static;
+    }
+
     .order-details {
         display: block;
     }

@@ -94,7 +94,6 @@ class StripeWH_Handler():
                 status=200
             )
         except Exception as e:
-            print(e)
             if order:
                 order.delete()
 

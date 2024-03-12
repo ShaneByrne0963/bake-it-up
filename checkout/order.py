@@ -26,8 +26,6 @@ def create_order(checkout_data, cart):
         checkout_data['bake_date'],
         '%Y-%m-%d'
     )
-    print(checkout_data['bake_date'])
-    print(bake_date)
     order = Order(
         bake_date=checkout_data['bake_date'],
         customer_note=checkout_data['customer_note'],

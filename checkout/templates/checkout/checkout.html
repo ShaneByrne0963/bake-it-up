@@ -15,10 +15,17 @@
     {% csrf_token %}
     <input type="hidden" name="client_secret" value="{{ client_secret }}">
     <div class="row">
-        <div class="col-12 col-md-10 col-lg-8 col-xl-5 offset-md-1 mb-4">
+        <div class="col-12 col-md-10 offset-md-1">
             <h2>Please fill out your details below</h2>
             <hr>
-            {{ form|crispy }}
+            <h3>Contact Details</h3>
+        </div>
+        <div class="col-12 col-md-10 col-lg-8 col-xl-5 offset-md-1 mb-4">
+            {{ contact_form|crispy }}
+            <div class="mt-5">
+                <h3>Billing Details</h3>
+                {{ address_form|crispy }}
+            </div>
             {% if user.is_authenticated %}
                 <div class="form-group form-check">
                     <input type="checkbox" id="save-info" name="save_info" class="form-check-input">
@@ -26,25 +33,28 @@
                 </div>
             {% endif %}
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-10 col-lg-8 col-xl-5 offset-md-1">
-            <div class="form-group mb-5">
-                <label for="discount-code">Discount Code</label>
-                <div class="d-flex">
-                    <input type="text" id="discount-code" name="discount" class="form-control" maxlength="20">
-                    <button type="button" class="btn btn-primary ml-2">Apply</button>
+        <div class="col-12 col-md-10 col-lg-8 col-xl-5 offset-md-1 offset-xl-0">
+            <div id="checkout-footer">
+                <div class="form-group mb-5">
+                    <label for="discount-code">Discount Code</label>
+                    <div class="d-flex">
+                        <input type="text" id="discount-code" name="discount" class="form-control" maxlength="20">
+                        <button type="button" class="btn btn-primary ml-2">Apply</button>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="d-block d-md-flex align-items-center justify-content-between">
-                <div class="h4 mb-md-0">You'll Pay: &euro;
-                    <span id="checkout-total">{{ grand_total }}</span>
-                </div>
-                <div>
+                <div class="text-xl-right">
+                    <div class="mb-3">
+                        <div>Cart Total: &euro;{{ grand_total }}</div>
+                        <div>Delivery Charge: N/A</div>
+                    </div>
+                    <div class="h3 mb-md-0 font-weight-bold">
+                        You'll Pay: &euro;<span id="checkout-total">{{ grand_total }}</span>
+                    </div>
+                    <hr>
                     <a href="{% url 'cart' %}" class="btn btn-lg btn-nav">Back to cart</a>
                     <button type="submit" class="btn btn-primary btn-lg px-4">Pay</button>
                 </div>
+                
             </div>
         </div>
     </div>
