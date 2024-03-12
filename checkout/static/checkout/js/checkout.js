@@ -21,6 +21,7 @@ function updateDeliveryCheckbox() {
     $('#delivery-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
     .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
     $('#delivery-charge').text('N/A');
+    $('#delivery-options').removeClass('d-none');
 
     if ($('#delivery').prop('checked')) {
         let selectedCounty = $('#id_county').val();
@@ -40,8 +41,31 @@ function updateDeliveryCheckbox() {
     }
     else {
         $('#delivery-notice').addClass('d-none');
+        $('#delivery-options').addClass('d-none');
     }
     updateCheckoutTotal();
+    triggerDeliveryForm();
+}
+
+
+/**
+ * Shows or hides the delivery form collapse, depending on if the
+ * checkbox is checked or not
+ */
+function triggerDeliveryForm() {
+    let isChecked = Boolean($('#delivery-other-address').prop('checked'));
+    let collapseStatus = (isChecked) ? 'show' : 'hide';
+    $('#delivery-form').collapse(collapseStatus);
+
+    // Making all the inputs with the required class required when shown, and not when hidden
+    if (isChecked && $('#delivery').prop('checked')) {
+        $('#delivery-form').find('input').each(function() {
+            $(this).prop('required', Boolean($(this).hasClass('required')));
+        });
+    }
+    else {
+        $('#delivery-form').find('input').prop('required', false);
+    }
 }
 
 
@@ -183,4 +207,8 @@ function paymentSubmit() {
 $(document).ready(() => {
     $('#delivery').click(updateDeliveryCheckbox);
     $('#id_county').change(updateDeliveryCheckbox);
+
+    // Allows the delivery form checkbox to show/hide the collapse
+    $('#delivery-other-address').click(triggerDeliveryForm);
+    $('#delivery-form').on('shown.bs.collapse', triggerDeliveryForm).on('hidden.bs.collapse', triggerDeliveryForm);
 });
