@@ -20,6 +20,7 @@ function handlePaymentErrors(event, errorID) {
 function updateDeliveryCheckbox() {
     $('#delivery-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
     .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
+    $('#delivery-charge').text('N/A');
 
     if ($('#delivery').prop('checked')) {
         let selectedCounty = $('#id_county').val();
@@ -33,11 +34,33 @@ function updateDeliveryCheckbox() {
         else {
             deliveryText = `Delivery charge to ${selectedCounty} is €${deliveryCost}`;
             $('#delivery-notice').addClass('text-info').find('i').addClass('fa-circle-exclamation');
+            $('#delivery-charge').text(`€${deliveryCost}`);
         }
         $('#delivery-notice-content').text(deliveryText);
     }
     else {
         $('#delivery-notice').addClass('d-none');
+    }
+    updateCheckoutTotal();
+}
+
+
+const cartTotal = parseFloat($('#cart-total').text());
+/**
+ * Updates the checkout total on the checkout page
+ */
+function updateCheckoutTotal() {
+    let deliveryCostText = $('#delivery-charge').text();
+    if (deliveryCostText !== 'N/A') {
+        // Removes the euro sign from the text
+        let deliveryCost = 0.0 + parseFloat(deliveryCostText.slice(1));
+
+        let checkoutTotal = cartTotal + deliveryCost;
+        checkoutTotal = checkoutTotal;
+        $('#checkout-total').text(checkoutTotal.toFixed(2));
+    }
+    else {
+        $('#checkout-total').text(cartTotal.toFixed(2));
     }
 }
 

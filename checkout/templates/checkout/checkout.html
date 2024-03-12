@@ -42,6 +42,7 @@
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span id="delivery-notice-content"></span>
                 </p>
+                
                 <div class="mt-4">
                     <div class="form-group">
                         <select id="delivery-county" class="form-control">
@@ -69,8 +70,8 @@
                 </div>
                 <div class="text-xl-right">
                     <div class="mb-3">
-                        <div>Cart Total: &euro;{{ grand_total }}</div>
-                        <div>Delivery Charge: N/A</div>
+                        <div>Cart Total: &euro;<span id="cart-total">{{ grand_total }}</span></div>
+                        <div>Delivery Charge: <span id="delivery-charge">N/A</span></div>
                     </div>
                     <div class="h3 mb-md-0 font-weight-bold">
                         You'll Pay: &euro;<span id="checkout-total">{{ grand_total }}</span>
