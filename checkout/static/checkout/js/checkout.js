@@ -18,11 +18,16 @@ function handlePaymentErrors(event, errorID) {
  * Updates the delivery notice when delivery is checked
  */
 function updateDeliveryDetails() {
+    // Resetting all checks
     $('#delivery-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
     .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
 
     $('#delivery-other-notice').removeClass('d-none').removeClass('text-info').removeClass('text-danger')
     .find('i').removeClass('fa-circle-exclamation').removeClass('fa-circle-xmark');
+
+    // Removing any custom validity that will make the form fail
+    $('#id_county').get(0).setCustomValidity('');
+    $('#delivery-county').get(0).setCustomValidity('');
 
     $('#delivery-notice-content').text('');
     $('#delivery-other-content').text('');
@@ -44,6 +49,9 @@ function updateDeliveryDetails() {
         if (deliveryCost === 'None') {
             deliveryText = 'Sorry, but delivery is not available in your selected county';
             $(deliveryNotice).addClass('text-danger').find('i').addClass('fa-circle-xmark');
+
+            // Making the form fail if no valid delivery address is selected
+            $(countySelect).get(0).setCustomValidity('Please select a valid county to deliver to.');
         }
         else {
             deliveryText = `Delivery charge to ${selectedCounty} is €${deliveryCost}`;
