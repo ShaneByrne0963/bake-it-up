@@ -67,6 +67,43 @@ NEXT_DAY_CUTOFF_TIME = 16
 # How many days a customer can order in advance. 0 for no limit
 ORDER_MAX_DAYS = 30
 
+# How much each county has to pay for delivery in terms of cents
+# Negative numbers indicate no delivery available
+COUNTY_CHOICES = {
+    'Antrim': -1,
+    'Armagh': -1,
+    'Carlow': 1200,
+    'Cavan': 1200,
+    'Clare': 4500,
+    'Cork': 6000,
+    'Derry': -1,
+    'Donegal': -1,
+    'Down': -1,
+    'Dublin': 500,
+    'Fermanagh': -1,
+    'Galway': 5000,
+    'Kerry': 6000,
+    'Kildare': 1000,
+    'Kilkenny': 1500,
+    'Laois': 2000,
+    'Leitrim': 4000,
+    'Limerick': 5500,
+    'Longford': 2500,
+    'Louth': 1000,
+    'Mayo': 5500,
+    'Meath': 1000,
+    'Monaghan': 2000,
+    'Offaly': 2000,
+    'Roscommon': 3500,
+    'Sligo': 5500,
+    'Tipperary': 3000,
+    'Tyrone': -1,
+    'Waterford': 3500,
+    'Westmeath': 1500,
+    'Wexford': 1500,
+    'Wicklow': 1000,
+}
+
 
 # Environment variables
 
