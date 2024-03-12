@@ -17,7 +17,7 @@
             <div id="order-container" class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-3 px-md-0">
                 <div>Order Information</div>
                 <hr class="mt-1">
-                <div class="order-details mb-5">
+                <div class="order-details">
                     <div class="detail-key">Order Number<span class="d-md-none">:</span></div>
                     <div class="detail-value">{{ order.order_number }}</div>
                     <div class="detail-key">Ordered On<span class="d-md-none">:</span></div>
@@ -29,8 +29,14 @@
                         <div class="detail-value mt-md-3">{{ order.customer_note }}</div>
                     {% endif %}
                 </div>
+                {% if order.delivery %}
+                    <p id="delivery-other-notice" class="small text-info font-weight-bold">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="delivery-other-content">This order will be delivered to the given address</span>
+                    </p>
+                {% endif %}
                 {% with order.line_items.count as num_items %}
-                <div>Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>
+                <div class="mt-5">Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>
                 {% endwith %}
                 <hr class="mt-1">
                 <div class="accordion mb-2" id="order-products">
@@ -100,7 +106,7 @@
                         <div class="detail-value">{{ order.postcode }}</div>
                     {% endif %}
                 </div>
-                {% if order.delivery and order.delivery_line1 %}
+                {% if order.delivery_line1 %}
                     <div>Delivery Information</div>
                     <hr class="mt-1">
 

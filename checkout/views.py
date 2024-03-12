@@ -73,46 +73,29 @@ class Checkout(View):
 
         bake_date = order_context['bake_date']
         customer_note = order_context.get('customer_note', '')
+        is_delivery = 'delivery' in request.POST
 
-        checkout_data = {
+        checkout_data = request.POST.copy()
+        checkout_data.update({
             'bake_date': bake_date,
-            'customer_note': customer_note,
-            'name': request.POST['name'],
-            'email': request.POST['email'],
-            'phone': request.POST['phone'],
-            'street_address1': request.POST['street_address1'],
-            'street_address2': request.POST['street_address2'],
-            'town_or_city': request.POST['town_or_city'],
-            'county': request.POST['county'],
-            'postcode': request.POST['postcode'],
-        }
+            'customer_note': customer_note
+        })
+
         contact_form = ContactDetailsForm(checkout_data)
         billing_form = BillingDetailsForm(checkout_data)
 
         if contact_form.is_valid() and billing_form.is_valid():
             pid = request.POST.get('client_secret').split('_secret')[0]
-            checkout_data['pid'] = pid
+            checkout_data['stripe_pid'] = pid
 
-            # Adding delivery details, if delivery is selected
-            delivery_details = {
-                'delivery_line1': None,
-                'delivery_line2': None,
-                'delivery_city': None,
-                'delivery_county': None,
-                'delivery_postcode': None
-            }
-            is_delivery = 'delivery' in request.POST
-            checkout_data['delivery'] = is_delivery
-            if is_delivery and 'delivery_other_address' in request.POST:
-                delivery_details.update({
-                    'delivery_line1': request.POST['delivery_line1'],
-                    'delivery_city': request.POST['delivery_city'],
-                    'delivery_county': request.POST['delivery_county'],
-                    'delivery_postcode': request.POST['delivery_postcode']
+            # Overriding any unwanted inputs
+            if is_delivery and 'delivery_other_address' not in request.POST:
+                checkout_data.update({
+                    'delivery_line1': None,
+                    'delivery_city': None,
+                    'delivery_county': None,
+                    'delivery_postcode': None
                 })
-                if 'delivery_line2' in request.POST:
-                    delivery_details['delivery_line2'] = request.POST['delivery_line2']
-            checkout_data.update(delivery_details)
 
             order = create_order(checkout_data, cart)
 

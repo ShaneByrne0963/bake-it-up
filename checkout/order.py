@@ -2,29 +2,27 @@ from .models import Order, OrderLineItem
 from datetime import datetime
 
 
-# region checkout_data keys
-"""
-checkout_data = {
+# The fields the order is expecting. Everything else is deleted
+EXPECTED_FIELDS = [
     'bake_date',
     'customer_note',
     'delivery',
-    'name',
+    'full_name',
     'email',
-    'phone',
+    'phone_number',
     'street_address1',
     'street_address2',
     'town_or_city',
     'county',
     'postcode',
-    'pid',
+    'stripe_pid',
     'delivery_line1',
     'delivery_line2',
     'delivery_city',
     'delivery_county',
     'delivery_postcode'
-}
-"""
-# endregion
+]
+
 
 def create_order(checkout_data, cart):
     """
@@ -34,26 +32,26 @@ def create_order(checkout_data, cart):
         checkout_data['bake_date'],
         '%Y-%m-%d'
     )
-    order = Order(
-        bake_date=checkout_data['bake_date'],
-        customer_note=checkout_data['customer_note'],
-        delivery=checkout_data['delivery'],
-        full_name=checkout_data['name'],
-        email=checkout_data['email'],
-        phone_number=checkout_data['phone'],
-        street_address1=checkout_data['street_address1'],
-        street_address2=checkout_data['street_address2'],
-        town_or_city=checkout_data['town_or_city'],
-        county=checkout_data['county'],
-        postcode=checkout_data['postcode'],
-        stripe_pid=checkout_data['pid'],
-        delivery_line1=checkout_data['delivery_line1'],
-        delivery_line2=checkout_data['delivery_line2'],
-        delivery_city=checkout_data['delivery_city'],
-        delivery_county=checkout_data['delivery_county'],
-        delivery_postcode=checkout_data['delivery_postcode'],
-    )
-    order.save()
+
+    # Deleting any unknown keys in the input
+    new_data = dict(checkout_data.copy())
+    for key, value in checkout_data.items():
+        if isinstance(value, list):
+            value = value[0]
+        if key == 'name':
+            new_data['full_name'] = value
+        if key == 'phone':
+            new_data['phone_number'] = value
+        if key == 'pid':
+            new_data['stripe_pid'] = value
+
+        new_data[key] = value
+
+        if key not in EXPECTED_FIELDS:
+            del new_data[key]
+    new_data['bake_date'] = bake_date
+
+    order = Order.objects.create(**new_data)
 
     for item in cart:
         # Getting custom properties, with None as a default
