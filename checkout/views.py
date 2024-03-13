@@ -81,39 +81,31 @@ class Checkout(View):
             'customer_note': customer_note
         })
 
-        contact_form = ContactDetailsForm(checkout_data)
-        billing_form = BillingDetailsForm(checkout_data)
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        checkout_data['stripe_pid'] = pid
 
-        if contact_form.is_valid() and billing_form.is_valid():
-            pid = request.POST.get('client_secret').split('_secret')[0]
-            checkout_data['stripe_pid'] = pid
+        # Overriding any unwanted inputs
+        if is_delivery and 'delivery_other_address' not in request.POST:
+            checkout_data.update({
+                'delivery_line1': None,
+                'delivery_city': None,
+                'delivery_county': None,
+                'delivery_postcode': None
+            })
+        order = create_order(checkout_data, cart)
 
-            # Overriding any unwanted inputs
-            if is_delivery and 'delivery_other_address' not in request.POST:
-                checkout_data.update({
-                    'delivery_line1': None,
-                    'delivery_city': None,
-                    'delivery_county': None,
-                    'delivery_postcode': None
-                })
+        save_info = 'save_info' in request.POST
+        request.session['save_info'] = save_info
+        request.session['cart'].clear()
+        request.session['cart_total'] = 0
 
-            order = create_order(checkout_data, cart)
+        messages.success(request, f'Your payment was successful! A \
+        confirmation email has been sent to {order.email}.')
+        if save_info:
+            messages.success(request, 'Your billing information has \
+                been saved!')
 
-            save_info = 'save_info' in request.POST
-            request.session['save_info'] = save_info
-            request.session['cart'].clear()
-            request.session['cart_total'] = 0
-
-            messages.success(request, f'Your payment was successful! A \
-            confirmation email has been sent to {order.email}.')
-            if save_info:
-                messages.success(request, 'Your billing information has \
-                    been saved!')
-
-            return redirect(reverse('checkout_success', args=[order.order_number]))
-
-        messages.error(request, 'Your information was invalid. Please try again')
-        return redirect('checkout')
+        return redirect(reverse('checkout_success', args=[order.order_number]))
 
 
 class CheckoutSuccess(View):
@@ -130,6 +122,15 @@ class CheckoutSuccess(View):
 
 @require_POST
 def cache_checkout_data(request):
+    # Validate the form before processing the payment
+    contact_form = ContactDetailsForm(request.POST)
+    billing_form = BillingDetailsForm(request.POST)
+
+    if not contact_form.is_valid() or not billing_form.is_valid():
+        messages.error(request, "Your form is invalid. \
+            Please double check your details")
+        return HttpResponse(status=400)
+
     # The final check to ensure the next day bake date is valid
     bake_date = ''
     customer_note = ''

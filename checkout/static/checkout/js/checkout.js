@@ -187,13 +187,24 @@ function paymentSubmit() {
     let shipping_details = {...base_details};
     shipping_details.address.postal_code = $.trim(form.postcode.value);
 
-    let saveInfo = Boolean($('#save-info').prop('checked'));
-    let csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
     let postData = {
-        'csrfmiddlewaretoken': csrfToken,
-        'client_secret': clientSecret,
-        'save_info': saveInfo
-    };
+        'client_secret': clientSecret
+    }
+    $('#checkout-form').find('input, select').each(function() {
+        let inputType = $(this).attr('type');
+        let inputName = $(this).attr('name');
+        switch(inputType) {
+            case 'checkbox':
+                postData[inputName] = Boolean($(this).prop('checked'));
+                return;
+            default:
+                postData[inputName] = $(this).val();
+                return;
+        }
+    });
+    if (!('save_info' in postData)) {
+        postData.save_info = false;
+    }
     
     let url = '/checkout/cache_data/';
     $.post(url, postData).done(function() {

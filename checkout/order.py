@@ -45,10 +45,17 @@ def create_order(checkout_data, cart):
         if key == 'pid':
             new_data['stripe_pid'] = value
 
-        new_data[key] = value
-
-        if key not in EXPECTED_FIELDS:
+        if key in EXPECTED_FIELDS:
+            # Checkbox values
+            if value == 'on':
+                new_data[key] = True
+            else:
+                new_data[key] = value
+        else:
             del new_data[key]
+
+    if 'delivery' not in new_data:
+        new_data['delivery'] = False
     new_data['bake_date'] = bake_date
 
     order = Order.objects.create(**new_data)
