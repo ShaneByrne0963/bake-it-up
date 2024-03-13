@@ -1,3 +1,4 @@
+from django.conf import settings
 from .models import Order, OrderLineItem
 from datetime import datetime
 
@@ -57,6 +58,17 @@ def create_order(checkout_data, cart):
     if 'delivery' not in new_data:
         new_data['delivery'] = False
     new_data['bake_date'] = bake_date
+
+    # Calculating the delivery cost
+    if new_data['delivery']:
+        delivery_county = None
+        if 'delivery_county' in new_data \
+                and new_data['delivery_county']:
+            delivery_county = new_data['delivery_county']
+        else:
+            delivery_county = new_data['county']
+        delivery_cost = settings.COUNTY_DELIVERY_COSTS[delivery_county]
+        new_data['delivery_cost'] = delivery_cost
 
     order = Order.objects.create(**new_data)
 
