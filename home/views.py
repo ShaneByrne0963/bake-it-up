@@ -9,6 +9,7 @@ from allauth.account.views import LoginView, SignupView
 from allauth.account.forms import LoginForm, SignupForm
 
 from core.contexts import get_base_context
+from profiles.models import UserProfile
 
 
 class Home(View):
@@ -56,13 +57,24 @@ class CustomSignup(SignupView):
             next_url = super().post(request)
 
             # Adding the first and/or last name if specified
-            user = User.objects.get(email=email)
-            if user:
+            try:
+                user = User.objects.get(email=email)
                 if 'first_name' in request.POST:
                     user.first_name = request.POST['first_name']
                 if 'last_name' in request.POST:
                     user.last_name = request.POST['last_name']
                 user.save()
+                # Creating the profile for this user
+                profile = UserProfile(
+                    user=user
+                )
+                profile.save()
+            except:
+                messages.error(
+                    request,
+                    "There was a problem creating your account. \
+                    Please try again."
+                )
 
             return next_url
 
