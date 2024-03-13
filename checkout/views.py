@@ -157,6 +157,14 @@ def cache_checkout_data(request):
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
+        # Updating the payment amount to include the delivery
+        cart_total = request.session['cart_total']
+        delivery_county = request.POST['delivery_county'] \
+            if 'delivery_other_address' in request.POST \
+            else request.POST['county']
+        delivery_cost = settings.COUNTY_DELIVERY_COSTS[delivery_county]
+        grand_total = cart_total + delivery_cost
+
         metadata = {
             'user': request.user,
             'bake_date': bake_date,
@@ -168,7 +176,11 @@ def cache_checkout_data(request):
         cart = request.session.get('cart', {})
         for count, item in enumerate(cart):
             metadata[f'product_{count}'] = json.dumps(item)
-        stripe.PaymentIntent.modify(pid, metadata=metadata)
+        stripe.PaymentIntent.modify(
+            pid,
+            metadata=metadata,
+            amount=grand_total
+        )
 
         return HttpResponse(status=200)
     except Exception as e:

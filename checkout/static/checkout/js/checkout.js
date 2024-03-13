@@ -195,11 +195,15 @@ function paymentSubmit() {
         let inputName = $(this).attr('name');
         switch(inputType) {
             case 'checkbox':
-                postData[inputName] = Boolean($(this).prop('checked'));
-                return;
+                if ($(this).prop('checked')) {
+                    postData[inputName] = 'on';
+                }
+                break;
             default:
-                postData[inputName] = $(this).val();
-                return;
+                if ($(this).val()) {
+                    postData[inputName] = $(this).val();
+                }
+                break;
         }
     });
     if (!('save_info' in postData)) {
