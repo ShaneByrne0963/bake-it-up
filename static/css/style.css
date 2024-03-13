@@ -460,7 +460,7 @@ input::-webkit-inner-spin-button {
     position: fixed;
     top: 32px;
     left: 100%;
-    z-index: 12;
+    z-index: 1051;
 }
 
 .toast-message {

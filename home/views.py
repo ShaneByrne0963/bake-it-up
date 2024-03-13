@@ -34,7 +34,13 @@ class CustomLogin(LoginView):
         login_form = LoginForm(request.POST)
 
         if login_form.is_valid():
-            return super().post(request)
+            login_next = super().post(request)
+
+            # Allowing a different URL to be redirected to
+            if 'login_custom_redirect' in request.POST:
+                return redirect(request.POST['login_custom_redirect'])
+            
+            return login_next
 
         request.session['global_context'] = {
             'modal_show': 'login',

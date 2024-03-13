@@ -10,15 +10,19 @@ from itertools import chain
 # region List of Available Context Keys for global_context
 """
 {
-    'modal_show' {String}: Shows the modal on page load if
+    modal_show {String}: Shows the modal on page load if
         exists. The string value indicates the form to be
         displayed in the modal, if any
     
-    'modal_load_fade' {Truthy Expression}: Allows the modal fade
+    modal_load_fade {Truthy Expression}: Allows the modal fade
         animation on page load
 
-    'modal_form_errors' {JSON}: A list of errors to be
+    modal_form_errors {JSON}: A list of errors to be
         displayed in a modal form
+    
+    login_custom_redirect {String}: A redirect string which will
+        take the user to a custom url on login (Is cleared
+        when the modal is closed)
 
     val_login {String}: The prefilled value for the login username
 
