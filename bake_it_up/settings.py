@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = [
-    '8000-shanebyrne0963-bakeitup-lde3yz7pdl4.ws-eu109.gitpod.io',
+    '8000-shanebyrne0963-bakeitup-lde3yz7pdl4.ws-eu110.gitpod.io',
     'bake-it-up-e014260e4351.herokuapp.com'
 ]
 

@@ -51,6 +51,10 @@
     grid-template-columns: auto 1fr;
 }
 
+#keep-shopping {
+    font-size: 1em;
+}
+
 /* -----------------------------------------------------------------------MEDIA QUERIES
 
 /* --------------------------------------------------------Bootstrap's large breakpoint */
