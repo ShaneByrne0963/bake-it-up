@@ -159,23 +159,35 @@ def cache_checkout_data(request):
 
         # Updating the payment amount to include the delivery
         cart_total = request.session['cart_total']
-        delivery_county = request.POST['delivery_county'] \
-            if 'delivery_other_address' in request.POST \
-            else request.POST['county']
-        delivery_cost = settings.COUNTY_DELIVERY_COSTS[delivery_county]
+        delivery = 'delivery' in request.POST
+        delivery_other_address = 'delivery_other_address' in request.POST
+        delivery_cost = 0
+        if delivery:
+            delivery_county = request.POST['delivery_county'] \
+                if delivery_other_address \
+                else request.POST['county']
+            delivery_cost = settings.COUNTY_DELIVERY_COSTS[
+                delivery_county
+            ]
         grand_total = cart_total + delivery_cost
 
         metadata = {
             'user': request.user,
             'bake_date': bake_date,
             'customer_note': customer_note,
-            'save_info': request.POST.get('save_info')
+            'save_info': request.POST.get('save_info'),
+            'delivery': delivery,
+            'delivery_other_address': delivery_other_address
         }
+        # Saving the original billing postcode as it is overwritten by Stripe
+        if delivery_other_address:
+            metadata['billing_postcode'] = request.POST['postcode']
 
         # Adding each item as its own key to avoid the 500 character limit
         cart = request.session.get('cart', {})
         for count, item in enumerate(cart):
             metadata[f'product_{count}'] = json.dumps(item)
+        
         stripe.PaymentIntent.modify(
             pid,
             metadata=metadata,

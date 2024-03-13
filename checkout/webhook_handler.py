@@ -25,6 +25,8 @@ class StripeWH_Handler():
 
         save_info = intent.metadata.save_info
         bake_date = intent.metadata.bake_date
+        delivery = (intent.metadata.delivery == 'True')
+        delivery_other_address = (intent.metadata.delivery_other_address == 'True')
         customer_note = getattr(
             intent.metadata,
             'customer_note',
@@ -76,16 +78,31 @@ class StripeWH_Handler():
             checkout_data = {
                 'bake_date': bake_date,
                 'customer_note': customer_note,
-                'name': shipping_details.name,
+                'delivery': delivery,
+                'name': billing_details.name,
                 'email': billing_details.email,
-                'phone': shipping_details.phone,
-                'street_address1': shipping_details.address.line1,
-                'street_address2': shipping_details.address.line2,
-                'town_or_city': shipping_details.address.city,
-                'county': shipping_details.address.state,
+                'phone': billing_details.phone,
+                'street_address1': billing_details.address.line1,
+                'street_address2': billing_details.address.line2,
+                'town_or_city': billing_details.address.city,
+                'county': billing_details.address.state,
                 'postcode': shipping_details.address.postal_code,
-                'pid': pid
+                'pid': pid,
+                'delivery_line1': None,
+                'delivery_line2': None,
+                'delivery_city': None,
+                'delivery_county': None,
+                'delivery_postcode': None
             }
+            if delivery_other_address:
+                checkout_data.update({
+                    'postcode': intent.metadata.billing_postcode,
+                    'delivery_line1': shipping_details.address.line1,
+                    'delivery_line2': shipping_details.address.line2,
+                    'delivery_city': shipping_details.address.city,
+                    'delivery_county': shipping_details.address.state,
+                    'delivery_postcode': shipping_details.address.postal_code
+                })
             order = create_order(checkout_data, cart)
 
             return HttpResponse(

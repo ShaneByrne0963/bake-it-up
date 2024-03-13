@@ -181,11 +181,26 @@ function paymentSubmit() {
             country: 'IE'
         }
     };
+
     let billing_details = {...base_details};
     billing_details.email = $.trim(form.email.value);
 
+    // Getting the correct shipping details
     let shipping_details = {...base_details};
-    shipping_details.address.postal_code = $.trim(form.postcode.value);
+    if (form.delivery_other_address.checked) {
+        shipping_details.address = {
+            line1: $.trim(form.delivery_line1.value),
+            line2: $.trim(form.delivery_line2.value),
+            city: $.trim(form.delivery_city.value),
+            state: $.trim(form.delivery_county.value),
+            country: 'IE',
+            postal_code: $.trim(form.delivery_postcode.value)
+        }
+    }
+    else {
+        shipping_details.address = {...base_details.address};
+        shipping_details.address.postal_code = $.trim(form.postcode.value);
+    }
 
     let postData = {
         'client_secret': clientSecret
@@ -225,7 +240,7 @@ function paymentSubmit() {
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     // Removes the event listener that triggers the modal
-                    $('#checkout-form').off('submit').trigger('submit');
+                    //$('#checkout-form').off('submit').trigger('submit');
                 }
             }
         });
