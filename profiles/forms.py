@@ -1,33 +1,37 @@
 from django import forms
-from django.conf import settings
 
 from core.constants import COUNTY_CHOICES
 
-class ContactDetailsForm(forms.Form):
+class ProfileContactForm(forms.Form):
 
-    name = forms.CharField(
-        label="Name/Company Name",
-        max_length=70,
-        required=True
+    profile_fname = forms.CharField(
+        label="First Name",
+        max_length=30,
+        required=False
+    )
+    profile_lname = forms.CharField(
+        label="Last Name",
+        max_length=30,
+        required=False
     )
     email = forms.EmailField(
         label="Email Address",
         max_length=320,
-        required=True
+        required=False
     )
     phone = forms.CharField(
         label="Phone Number",
         max_length=20,
-        required=True
+        required=False
     )
 
 
-class BillingDetailsForm(forms.Form):
+class ProfileBillingForm(forms.Form):
 
     street_address1 = forms.CharField(
         label="Address Line 1",
         max_length=60,
-        required=True
+        required=False
     )
     street_address2 = forms.CharField(
         label="Address Line 2",
@@ -37,12 +41,14 @@ class BillingDetailsForm(forms.Form):
     town_or_city = forms.CharField(
         label="Town/City",
         max_length=60,
-        required=True
+        required=False
     )
     county = forms.ChoiceField(
-        choices=COUNTY_CHOICES
+        choices=COUNTY_CHOICES,
+        required=False
     )
     postcode = forms.CharField(
         label="Postal Code",
-        max_length=10
+        max_length=10,
+        required=False
     )

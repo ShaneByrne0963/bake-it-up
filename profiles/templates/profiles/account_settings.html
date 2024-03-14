@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content_heading %}
     <h1>Your Profile</h1>
@@ -7,8 +8,67 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1">
-                <h3>Contact Details</h3>
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
+                <div id="contact-details" class="mb-5">
+                    <h3>Contact Details</h3>
+                    <div id="contact-info">
+                        {% if has_contact_details %}
+                            <ul class="mb-2">
+                                {% for key, detail in contact_details.items %}
+                                    {% if detail.value %}
+                                        <li>
+                                            <span class="font-weight-bold">{{ detail.label }}:</span>
+                                            <span>{{ detail.value }}</span>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="mb-0">You do not have any contact details saved to this account.</p>
+                        {% endif %}
+                        <button type="button" class="btn btn-primary shadow-none click-to-show" data-show="#contact-form" data-hide="#contact-info">
+                            {% if has_contact_details %}<i class="fa-solid fa-pen mr-2"></i>Edit
+                            {% else %}<i class="fa-solid fa-plus mr-2"></i>Add
+                            {% endif %}
+                        </button>
+                    </div>
+                    <form method="POST" action="" id="contact-form" class="mt-3 d-none">
+                        {{ contact_form|crispy }}
+                        <button type="button" class="btn btn-secondary shadow-none click-to-show"
+                            data-show="#contact-info" data-hide="#contact-form">Cancel</button>
+                        <button type="submit" class="btn btn-primary shadow-none">Save</button>
+                    </form>
+                </div>
+                <div id="billing-details" class="mb-5">
+                    <h3>Billing Details</h3>
+                    <div id="billing-info">
+                        {% if has_billing_details %}
+                            <ul class="mb-2">
+                                {% for key, detail in billing_details.items %}
+                                    {% if detail.value %}
+                                        <li>
+                                            <span class="font-weight-bold">{{ detail.label }}:</span>
+                                            <span>{{ detail.value }}</span>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="mb-0">You do not have any billing details saved to this account.</p>
+                        {% endif %}
+                        <button type="button" class="btn btn-primary shadow-none click-to-show" data-show="#billing-form" data-hide="#billing-info">
+                            {% if has_billing_details %}<i class="fa-solid fa-pen mr-2"></i>Edit
+                            {% else %}<i class="fa-solid fa-plus mr-2"></i>Add
+                            {% endif %}
+                        </button>
+                    </div>
+                    <form method="POST" action="" id="billing-form" class="mt-3 d-none">
+                        {{ billing_form|crispy }}
+                        <button type="button" class="btn btn-secondary shadow-none click-to-show"
+                            data-show="#billing-info" data-hide="#billing-form">Cancel</button>
+                        <button type="submit" class="btn btn-primary shadow-none">Save</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

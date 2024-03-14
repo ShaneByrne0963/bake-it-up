@@ -51,46 +51,6 @@ function resizeWindow() {
     }
 }
 
-/**
- * Adds/subtracts from a number input
- * @param {Element} target The button that was clicked
- * @param {Integer} value The value to increase/decrease the number value by
- */
-function updateQuantity(target, value) {
-    let inputParent = $(target).parent();
-    let numberInput = $(inputParent).find('input[type="number"]');
-    let currentVal = parseInt(numberInput.val());
-    let minVal = parseInt(numberInput.attr('min'));
-    let maxVal = parseInt(numberInput.attr('max'));
-
-    currentVal += value;
-    // Clamps the current value between the specified min and max value
-    currentVal = Math.min(maxVal, Math.max(currentVal, minVal));
-
-    // Disables the buttons when the value is at the min or max
-    $(inputParent).find('.qty-subtract').prop('disabled', currentVal == minVal);
-    $(inputParent).find('.qty-add').prop('disabled', currentVal == maxVal);
-
-    // Apply the (quantity * price) value to a target, if one exists
-    if (numberInput.data('update')) {
-        let unitPrice = parseFloat(numberInput.data('price'));
-        $(numberInput.data('update')).text((unitPrice * currentVal).toFixed(2));
-    }
-
-    numberInput.val(currentVal);
-}
-
-
-/**
- * Checks every number input with a + or - button, and disables the buttons
- * if the value is at the minimum or maximum, respectively
- */
-function checkAllDisableButtons() {
-    $('.qty-number').each(function() {
-        updateQuantity(this, 0);
-    });
-}
-
 
 const toastAnimSpeed = 800;
 const toastVisibleTime = 5000;
@@ -241,15 +201,12 @@ $(document).ready(() => {
         }
     });
 
-    // Quantity selector buttons
-    $('.qty-add').click(function() {
-        updateQuantity(this, 1);
-    });
-    $('.qty-subtract').click(function() {
-        updateQuantity(this, -1);
-    });
-    $('.qty-number').change(function() {
-        updateQuantity(this, 0);
+    // Reveals an element on click
+    $('.click-to-show').click(function() {
+        $($(this).data('show')).removeClass('d-none');
+        if ($(this).data('hide') !== null) {
+            $($(this).data('hide')).removeClass('d-none').addClass('d-none');
+        }
     });
 
     // Toast close button
@@ -280,7 +237,6 @@ $(document).ready(() => {
         $(this).parent().find('.invalid-date').remove();
     });
 
-    checkAllDisableButtons();
     scrollScreen();
     resizeWindow();
     highlightQueries();
