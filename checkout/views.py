@@ -93,29 +93,22 @@ class Checkout(View):
                 'delivery_county': None,
                 'delivery_postcode': None
             })
-        order = create_order(checkout_data, cart)
+        
+        # Updating the user profile if save info is checked
+        user = None
+        if request.user.is_authenticated:
+            user = request.user
+        save_info = 'save_info' in request.POST and user
 
-        save_info = 'save_info' in request.POST
-        request.session['save_info'] = save_info
+        order = create_order(checkout_data, cart, save_info, user)
+
         request.session['cart'].clear()
         request.session['cart_total'] = 0
 
+        # Confirmation toasts
         messages.success(request, f'Your payment was successful! A \
         confirmation email has been sent to {order.email}.')
-        if request.user.is_authenticated and save_info:
-            # The billing address is what is saved to the profile
-            user_profile = None
-            try:
-                user_profile = UserProfile.objects.get(user=request.user)
-            except UserProfile.DoesNotExist:
-                user_profile = UserProfile.objects.create(user=request.user)
-            user_profile.saved_phone_number = checkout_data['phone']
-            user_profile.saved_street_address1 = checkout_data['street_address1']
-            user_profile.saved_street_address2 = checkout_data['street_address2']
-            user_profile.saved_town_or_city = checkout_data['town_or_city']
-            user_profile.saved_county = checkout_data['county']
-            user_profile.saved_postcode = checkout_data['postcode']
-            user_profile.save()
+        if save_info:
             messages.success(request, 'Your billing information has \
                 been saved!')
 
@@ -186,7 +179,7 @@ def cache_checkout_data(request):
         grand_total = cart_total + delivery_cost
 
         metadata = {
-            'user': request.user,
+            'user': request.user.id,
             'bake_date': bake_date,
             'customer_note': customer_note,
             'save_info': request.POST.get('save_info'),

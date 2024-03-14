@@ -2,53 +2,43 @@ from django import forms
 
 from core.constants import COUNTY_CHOICES
 
-class ProfileContactForm(forms.Form):
-
-    profile_fname = forms.CharField(
-        label="First Name",
-        max_length=30,
-        required=False
-    )
-    profile_lname = forms.CharField(
-        label="Last Name",
-        max_length=30,
-        required=False
-    )
-    email = forms.EmailField(
-        label="Email Address",
-        max_length=320,
-        required=False
-    )
-    phone = forms.CharField(
-        label="Phone Number",
-        max_length=20,
-        required=False
-    )
+PROFILE_FORM_LABELS = {
+    'profile_fname': 'First Name',
+    'profile_lname': 'Last Name',
+    'email': 'Email Address',
+    'phone': 'Phone Number',
+    'street_address1': 'Street Address',
+    'street_address2': 'Street Address (Line 2)',
+    'town_or_city': 'Town/City',
+    'county': 'County',
+    'postcode': 'Postal Code'
+}
 
 
-class ProfileBillingForm(forms.Form):
+class BaseProfileForm(forms.Form):
+    """
+    Applies the label to both forms, and sets all
+    fields to not required
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, value in self.fields.items():
+            self.fields[key].label = PROFILE_FORM_LABELS[key]
+            self.fields[key].required = False
 
-    street_address1 = forms.CharField(
-        label="Address Line 1",
-        max_length=60,
-        required=False
-    )
-    street_address2 = forms.CharField(
-        label="Address Line 2",
-        max_length=60,
-        required=False
-    )
-    town_or_city = forms.CharField(
-        label="Town/City",
-        max_length=60,
-        required=False
-    )
-    county = forms.ChoiceField(
-        choices=COUNTY_CHOICES,
-        required=False
-    )
-    postcode = forms.CharField(
-        label="Postal Code",
-        max_length=10,
-        required=False
-    )
+
+class ProfileContactForm(BaseProfileForm):
+
+    profile_fname = forms.CharField(max_length=30)
+    profile_lname = forms.CharField(max_length=30)
+    email = forms.EmailField(max_length=320)
+    phone = forms.CharField(max_length=20)
+
+
+class ProfileBillingForm(BaseProfileForm):
+
+    street_address1 = forms.CharField(max_length=60)
+    street_address2 = forms.CharField(max_length=60)
+    town_or_city = forms.CharField(max_length=60)
+    county = forms.ChoiceField(choices=COUNTY_CHOICES)
+    postcode = forms.CharField(max_length=10)

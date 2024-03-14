@@ -1,5 +1,6 @@
 from django.conf import settings
 from .models import Order, OrderLineItem
+from profiles.models import UserProfile
 from datetime import datetime
 
 
@@ -25,7 +26,7 @@ EXPECTED_FIELDS = [
 ]
 
 
-def create_order(checkout_data, cart):
+def create_order(checkout_data, cart, save_info=False, user=None):
     """
     Creates an order
     """
@@ -101,4 +102,29 @@ def create_order(checkout_data, cart):
             prop_text=properties['text'],
         )
         line_item.save()
+    
+    # Saving the user's profile information
+    if save_info and user:
+        update_user_profile(new_data, user)
+
     return order
+
+
+def update_user_profile(checkout_data, user):
+    """
+    Saves the billing details to the user's profile
+    """
+    user_profile = None
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=user)
+    except Exception as e:
+        return
+    user_profile.saved_phone_number = checkout_data['phone_number']
+    user_profile.saved_street_address1 = checkout_data['street_address1']
+    user_profile.saved_street_address2 = checkout_data['street_address2']
+    user_profile.saved_town_or_city = checkout_data['town_or_city']
+    user_profile.saved_county = checkout_data['county']
+    user_profile.saved_postcode = checkout_data['postcode']
+    user_profile.save()

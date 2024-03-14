@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 from .order import create_order
 from .models import Order
@@ -23,7 +24,8 @@ class StripeWH_Handler():
         intent = event.data.object
         pid = intent.id
 
-        save_info = intent.metadata.save_info
+        # Extracting the metadata from the payment intent
+        save_info = (intent.metadata.save_info == 'on')
         bake_date = intent.metadata.bake_date
         delivery = (intent.metadata.delivery == 'True')
         delivery_other_address = (intent.metadata.delivery_other_address == 'True')
@@ -33,6 +35,14 @@ class StripeWH_Handler():
             ''
         )
 
+        # Getting the user to save their profile information
+        user = None
+        try:
+            user_id = int(intent.metadata.user)
+            user = User.objects.get(pk=user_id)
+        except:
+            save_info = False
+
         stripe_charge = stripe.Charge.retrieve(
             intent.latest_charge
         )
@@ -40,6 +50,7 @@ class StripeWH_Handler():
         shipping_details = intent.shipping
         grand_total = stripe_charge.amount
 
+        # Replacing empty strings with None
         for key, value in shipping_details.address.items():
             if value == '':
                 shipping_details.address[key] = None
@@ -103,7 +114,7 @@ class StripeWH_Handler():
                     'delivery_county': shipping_details.address.state,
                     'delivery_postcode': shipping_details.address.postal_code
                 })
-            order = create_order(checkout_data, cart)
+            order = create_order(checkout_data, cart, save_info, user)
 
             return HttpResponse(
                 content=f'Webhook received: {event['type']}. \

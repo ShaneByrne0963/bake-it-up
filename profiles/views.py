@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.views import View
 
 from core.contexts import get_base_context
-from .forms import ProfileContactForm, ProfileBillingForm
+from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
 
 
@@ -28,50 +28,30 @@ class AccountSettings(View):
             return redirect('home')
         context = get_base_context(request)
 
+        contact_details = {
+            'profile_fname': request.user.first_name,
+            'profile_lname': request.user.last_name,
+            'email': request.user.email,
+            'phone': '',
+        }
+        billing_details = {
+            'street_address1': '',
+            'street_address2': '',
+            'town_or_city': '',
+            'county': '',
+            'postcode': '',
+        }
+
         # Getting the user profile, or creating one if none exists
         try:
             profile = UserProfile.objects.get(user=request.user)
-            contact_details = {
-                'profile_fname': {
-                    'label': 'First Name',
-                    'value': request.user.first_name,
-                },
-                'profile_lname': {
-                    'label': 'Last Name',
-                    'value': request.user.last_name,
-                },
-                'email': {
-                    'label': 'Email Address',
-                    'value': request.user.email,
-                },
-                'phone': {
-                    'label': 'Phone Number',
-                    'value': profile.saved_phone_number,
-                },
-            }
-            billing_details = {
-                'street_address1': {
-                    'label': 'Street Address' + (' (Line 1)' \
-                        if profile.saved_street_address2 else ''),
-                    'value': profile.saved_street_address1,
-                },
-                'street_address2': {
-                    'label': 'Street Address (Line 2)',
-                    'value': profile.saved_street_address2,
-                },
-                'town_or_city': {
-                    'label': 'Town/City',
-                    'value': profile.saved_town_or_city,
-                },
-                'county': {
-                    'label': 'County',
-                    'value': profile.saved_county,
-                },
-                'postcode': {
-                    'label': 'Postal Code',
-                    'value': profile.saved_postcode,
-                },
-            }
+            contact_details['phone'] = profile.saved_phone_number
+            billing_details['street_address1'] = profile.saved_street_address1
+            billing_details['street_address2'] = profile.saved_street_address2
+            billing_details['town_or_city'] = profile.saved_town_or_city
+            billing_details['county'] = profile.saved_county
+            billing_details['postcode'] = profile.saved_postcode
+
         except UserProfile.DoesNotExist:
             profile = UserProfile.objects.create(user=request.user)
             messages.warning(
@@ -93,22 +73,28 @@ class AccountSettings(View):
         contact_form = None
         has_contact_details = False
         for key in contact_details:
-            if contact_details[key]['value']:
+            if contact_details[key]:
                 has_contact_details = True
-                context['contact_details'] = contact_details
-                contact_form = ProfileContactForm(
-                    {key: value['value'] for key, value in contact_details.items()}
-                )
+                context['contact_details'] = {
+                    key: {
+                        'label': PROFILE_FORM_LABELS[key],
+                        'value': value
+                    } for key, value in contact_details.items()
+                }
+                contact_form = ProfileContactForm(contact_details)
                 break
         billing_form = None
         has_billing_details = False
         for key in billing_details:
-            if billing_details[key]['value']:
+            if billing_details[key]:
                 has_billing_details = True
-                context['billing_details'] = billing_details
-                billing_form = ProfileBillingForm(
-                    {key: value['value'] for key, value in billing_details.items()}
-                )
+                context['billing_details'] = {
+                    key: {
+                        'label': PROFILE_FORM_LABELS[key],
+                        'value': value
+                    } for key, value in billing_details.items()
+                }
+                billing_form = ProfileBillingForm(billing_details)
                 break
         
         context['has_contact_details'] = has_contact_details
