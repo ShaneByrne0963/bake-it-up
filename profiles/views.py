@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.views import View
 
@@ -129,6 +130,9 @@ class AccountSettings(View):
                 )
                 request.user.last_name = request.POST.get(
                     'profile_lname', ''
+                )
+                request.user.email = request.POST.get(
+                    'email', ''
                 )
                 profile.saved_phone_number = request.POST.get('phone', '')
                 update_success = True

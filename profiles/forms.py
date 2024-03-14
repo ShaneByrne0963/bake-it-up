@@ -19,6 +19,8 @@ NO_COUNTY_OPTION = (
     ('', 'No Default County'),
 )
 
+REQUIRED_FIELDS = ('email',)
+
 
 class BaseProfileForm(forms.Form):
     """
@@ -29,14 +31,15 @@ class BaseProfileForm(forms.Form):
         super().__init__(*args, **kwargs)
         for key, value in self.fields.items():
             self.fields[key].label = PROFILE_FORM_LABELS[key]
-            self.fields[key].required = False
+            if key not in REQUIRED_FIELDS:
+                self.fields[key].required = False
 
 
 class ProfileContactForm(BaseProfileForm):
 
     profile_fname = forms.CharField(max_length=30)
     profile_lname = forms.CharField(max_length=30)
-    email = forms.EmailField(max_length=320)
+    email = forms.EmailField(max_length=320, required=True)
     phone = forms.CharField(max_length=20)
 
 
