@@ -84,6 +84,7 @@ class AccountSettings(View):
                 }
                 contact_form = ProfileContactForm(contact_details)
                 break
+    
         billing_form = None
         has_billing_details = False
         for key in billing_details:
@@ -123,8 +124,15 @@ class AccountSettings(View):
         if form_type == 'contact':
             form = ProfileContactForm(request.POST)
             if form.is_valid():
+                request.user.first_name = request.POST.get(
+                    'profile_fname', ''
+                )
+                request.user.last_name = request.POST.get(
+                    'profile_lname', ''
+                )
                 profile.saved_phone_number = request.POST.get('phone', '')
                 update_success = True
+                request.user.save()
     
         # The billing details form
         elif form_type == 'billing':
