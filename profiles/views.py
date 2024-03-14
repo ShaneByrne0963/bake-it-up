@@ -51,8 +51,8 @@ class AccountSettings(View):
             }
             billing_details = {
                 'street_address1': {
-                    'label': 'Street Address' + ' (Line 1)' \
-                        if profile.saved_street_address2 else '',
+                    'label': 'Street Address' + (' (Line 1)' \
+                        if profile.saved_street_address2 else ''),
                     'value': profile.saved_street_address1,
                 },
                 'street_address2': {
@@ -60,15 +60,15 @@ class AccountSettings(View):
                     'value': profile.saved_street_address2,
                 },
                 'town_or_city': {
-                    'label': 'First Name',
+                    'label': 'Town/City',
                     'value': profile.saved_town_or_city,
                 },
                 'county': {
-                    'label': 'First Name',
+                    'label': 'County',
                     'value': profile.saved_county,
                 },
                 'postcode': {
-                    'label': 'First Name',
+                    'label': 'Postal Code',
                     'value': profile.saved_postcode,
                 },
             }

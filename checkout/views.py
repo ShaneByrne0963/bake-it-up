@@ -10,6 +10,7 @@ from .order import create_order
 from core.contexts import get_base_context, get_product_by_name
 from core.shortcuts import price_as_float, is_tomorrows_date
 from cart.cartfunctions import has_reached_cutoff_time
+from profiles.models import UserProfile
 
 import stripe
 import json
@@ -101,7 +102,20 @@ class Checkout(View):
 
         messages.success(request, f'Your payment was successful! A \
         confirmation email has been sent to {order.email}.')
-        if save_info:
+        if request.user.is_authenticated and save_info:
+            # The billing address is what is saved to the profile
+            user_profile = None
+            try:
+                user_profile = UserProfile.objects.get(user=request.user)
+            except UserProfile.DoesNotExist:
+                user_profile = UserProfile.objects.create(user=request.user)
+            user_profile.saved_phone_number = checkout_data['phone']
+            user_profile.saved_street_address1 = checkout_data['street_address1']
+            user_profile.saved_street_address2 = checkout_data['street_address2']
+            user_profile.saved_town_or_city = checkout_data['town_or_city']
+            user_profile.saved_county = checkout_data['county']
+            user_profile.saved_postcode = checkout_data['postcode']
+            user_profile.save()
             messages.success(request, 'Your billing information has \
                 been saved!')
 
