@@ -32,7 +32,9 @@
                             {% endif %}
                         </button>
                     </div>
-                    <form method="POST" action="" id="contact-form" class="mt-3 d-none">
+                    <form method="POST" id="contact-form" class="mt-3 d-none">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="contact" aria-hidden="true">
                         {{ contact_form|crispy }}
                         <button type="button" class="btn btn-secondary shadow-none click-to-show"
                             data-show="#contact-info" data-hide="#contact-form">Cancel</button>
@@ -62,7 +64,9 @@
                             {% endif %}
                         </button>
                     </div>
-                    <form method="POST" action="" id="billing-form" class="mt-3 d-none">
+                    <form method="POST" id="billing-form" class="mt-3 d-none">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="billing" aria-hidden="true">
                         {{ billing_form|crispy }}
                         <button type="button" class="btn btn-secondary shadow-none click-to-show"
                             data-show="#billing-info" data-hide="#billing-form">Cancel</button>

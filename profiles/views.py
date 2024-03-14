@@ -28,6 +28,7 @@ class AccountSettings(View):
             return redirect('home')
         context = get_base_context(request)
 
+        # The default profile details
         contact_details = {
             'profile_fname': request.user.first_name,
             'profile_lname': request.user.last_name,
@@ -108,3 +109,54 @@ class AccountSettings(View):
         context['billing_form'] = billing_form
 
         return render(request, self.template, context)
+
+    def post(self, request):
+        """
+        Updates the user's information
+        """
+        profile = UserProfile.objects.get(user=request.user)
+        form = None
+        form_type = request.POST.get('form_type', '')
+        update_success = False
+
+        # The contact details form
+        if form_type == 'contact':
+            form = ProfileContactForm(request.POST)
+            if form.is_valid():
+                profile.saved_phone_number = request.POST.get('phone', '')
+                update_success = True
+    
+        # The billing details form
+        elif form_type == 'billing':
+            form = ProfileBillingForm(request.POST)
+            if form.is_valid:
+                profile.saved_street_address1 = request.POST.get(
+                    'street_address1', ''
+                )
+                profile.saved_street_address2 = request.POST.get(
+                    'street_address2', ''
+                )
+                profile.saved_town_or_city = request.POST.get(
+                    'town_or_city', ''
+                )
+                profile.saved_county = request.POST.get('county', '')
+                profile.saved_postcode = request.POST.get(
+                    'postcode', ''
+                )
+                update_success = True
+        else:
+            messages.error(request, 'Unknown form received')
+
+        if update_success:
+            profile.save()
+            messages.success(
+                request,
+                "Your profile has been updated!"
+            )
+        else:
+            messages.error(
+                request,
+                """Your information was invalid. Please double 
+                check your details"""
+            )
+        return redirect('account_settings')
