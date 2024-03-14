@@ -14,6 +14,11 @@ PROFILE_FORM_LABELS = {
     'postcode': 'Postal Code'
 }
 
+# Allows users to clear their county information
+NO_COUNTY_OPTION = (
+    ('', 'No Default County'),
+)
+
 
 class BaseProfileForm(forms.Form):
     """
@@ -40,5 +45,7 @@ class ProfileBillingForm(BaseProfileForm):
     street_address1 = forms.CharField(max_length=60)
     street_address2 = forms.CharField(max_length=60)
     town_or_city = forms.CharField(max_length=60)
-    county = forms.ChoiceField(choices=COUNTY_CHOICES)
+    county = forms.ChoiceField(
+        choices=(NO_COUNTY_OPTION + COUNTY_CHOICES)
+    )
     postcode = forms.CharField(max_length=10)
