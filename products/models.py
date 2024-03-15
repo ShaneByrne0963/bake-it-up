@@ -35,6 +35,13 @@ class BreadProduct(models.Model):
 
     def __str__(self):
         return self.display_name
+    
+    def number_of_favorites(self):
+        """
+        Returns the number of users that have added this
+        product to your favorites
+        """
+        return self.favorites.count()
 
 
 class PastryProduct(models.Model):
@@ -62,3 +69,10 @@ class PastryProduct(models.Model):
 
     def __str__(self):
         return self.display_name
+    
+    def number_of_favorites(self):
+        """
+        Returns the number of users that have added this
+        product to your favorites
+        """
+        return self.favorites.count()

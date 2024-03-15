@@ -118,8 +118,16 @@ class AddToFavorites(View):
             profile = UserProfile.objects.get(user=request.user)
             if product.favorites.filter(id=profile.id).exists():
                 product.favorites.remove(profile)
+                messages.success(
+                    request,
+                    f"Removed {product.display_name} from your favourites"
+                )
             else:
                 product.favorites.add(profile)
+                messages.success(
+                    request,
+                    f"Added {product.display_name} to your favourites"
+                )
         except Exception as e:
             messages.error(
                 request,

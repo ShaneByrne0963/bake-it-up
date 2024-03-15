@@ -69,7 +69,8 @@
                                 </div>
                                 <div class="card-footer px-2 py-1 d-flex align-items-center justify-content-between">
                                     <small>
-                                        <i class="fa-regular fa-heart"></i> 0
+                                        <i class="fa-{% if user.profile in product.favorites.all %}solid{% else %}regular{% endif %} fa-heart"></i>
+                                        {{ product.number_of_favorites }}
                                     </small>
                                     <strong>&euro;{{ product.price }}</strong>
                                 </div>

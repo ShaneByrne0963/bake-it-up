@@ -33,7 +33,9 @@
                     </div>
                     <div class="text-muted mb-4">
                         <i class="fa-solid fa-heart"></i>
-                        <span id="num-favourites">0 people added this to their favourites</span>
+                        {% with product.number_of_favorites as num_fav %}
+                        <span id="num-favourites">{{ num_fav }} {% if num_fav == 1 %}person{% else %}people{% endif %} added this to their favourites</span>
+                        {% endwith %}
                     </div>
                     <div>
                         <span>Ingredients:</span>
