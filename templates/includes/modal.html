@@ -43,7 +43,7 @@
       <input type="email" class="form-control" id="id_login" name="login"
         maxlength="320"{% if val_login %} value="{{ val_login }}"{% endif %} required>
 
-      <div id="modal-login-feedback" class=" modal-feedback invalid-feedback ui-error"></div>
+      <div id="modal-login-feedback" class="modal-feedback invalid-feedback ui-error"></div>
     </div>
     <div class="form-group">
       <label for="id_password">Password</label>
@@ -79,12 +79,12 @@
       <input type="email" id="id_signup_email" name="email" maxlength="320" class="form-control"
         {% if val_email %} value="{{ val_email }}"{% endif %} required>
 
-      <div id="modal-email-feedback" class=" modal-feedback invalid-feedback ui-error"></div>
+      <div id="modal-email-feedback" class="modal-feedback invalid-feedback ui-error"></div>
     </div>
     <div class="form-group">
       <label for="id_password1">Password*</label>
       <input type="password" name="password1" class="form-control" required id="id_password1">
-      <div id="modal-password1-feedback" class=" modal-feedback invalid-feedback ui-error"></div>
+      <div id="modal-password1-feedback" class="modal-feedback invalid-feedback ui-error"></div>
     </div>
     <div class="form-group">
       <label for="id_password2">Password (again)*</label>
@@ -120,4 +120,13 @@
       {{ modal_form_errors }}
     </div>
   {% endif %}
+
+  <div id="modal-form-verify-password" class="modal-form">
+    <!-- Verify Password Form -->
+    <div class="form-group">
+      <label for="id_password1">Verify Password*</label>
+      <input type="password" name="verify_password" class="form-control" required id="id_verify_password">
+      <div id="modal-verify-password-feedback" class="modal-feedback invalid-feedback ui-error"></div>
+    </div>
+  </div>
 </div>

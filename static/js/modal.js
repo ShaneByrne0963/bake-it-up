@@ -44,6 +44,11 @@ function triggerModal(context) {
         modalForm.attr('action', $(form).data('url'));
     }
 
+    // Copying inputs from a different form to be used in the modal form
+    if ('hiddenInputs' in context) {
+        addHiddenInputs(context.hiddenInputs);
+    }
+
     // Allows for extra code to be run before the form submits
     if ('onSubmit' in context) {
         $('#modal-content-inner').on('submit', function(event) {

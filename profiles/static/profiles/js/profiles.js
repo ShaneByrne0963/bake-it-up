@@ -13,10 +13,12 @@ $(document).ready(() => {
                 title: 'Verify Password',
                 body: `
                 <p>You are about to change your email address. To make sure it is
-                you, please verify your password</p>
-                <p>After verification, this account will become locked, and an email
-                will be sent to your new email address to reactivate this account</p>`,
+                you, please verify your password.</p>
+                <p class="ui-error">After verification, this account will become locked, and an email
+                will be sent to your new email address to reactivate this account.</p>`,
                 button: 'Verify',
+                form: 'verify-password',
+                hiddenInputs: '#contact-form',
                 url: ''
             }
             triggerModal(modalContext);
