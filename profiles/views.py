@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.views import View
+from home.views import CustomLogin
+from allauth.account.admin import EmailAddress
+from allauth.account.utils import send_email_confirmation
 
 from core.contexts import get_base_context
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
@@ -128,6 +131,8 @@ class AccountSettings(View):
         form_type = request.POST.get('form_type', '')
         update_success = False
         form_invalid = False
+        email_changed = None
+        verified_user = None
 
         # The contact details form
         if form_type == 'contact':
@@ -138,8 +143,9 @@ class AccountSettings(View):
 
             # Password verification for changing emails
             new_email = request.POST.get('email', '')
-            if new_email != request.user.email:
-                if 'verify_password' not in request.POST:
+            old_email = request.user.email
+            if new_email != old_email:
+                if 'password' not in request.POST:
                     messages.error(
                         request,
                         """Access denied. No password was given for
@@ -149,7 +155,7 @@ class AccountSettings(View):
 
                 verified_user = authenticate(
                     email=request.user.email,
-                    password=request.POST['verify_password']
+                    password=request.POST['password']
                 )
                 if verified_user is None:
                     update_success = False
@@ -179,6 +185,8 @@ class AccountSettings(View):
                     profile.saved_phone_number = new_phone
                     update_success = True
                     request.user.save()
+                    if old_email != new_email:
+                        email_changed = new_email
                 else:
                     form_invalid = True
 
@@ -233,4 +241,17 @@ class AccountSettings(View):
                 Please check your details"""
             )
 
+        # New email authentication
+        if email_changed:
+            try:
+                email_address = EmailAddress.objects.get(
+                    user=request.user
+                )
+                email_address.delete()
+            except EmailAddress.DoesNotExist:
+                pass
+            send_email_confirmation(request, request.user,
+                                    email_changed)
+            logout(request)
+            return redirect('/accounts/confirm-email/')
         return redirect('account_settings')

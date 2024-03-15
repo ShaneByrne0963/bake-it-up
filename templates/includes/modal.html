@@ -35,64 +35,75 @@
 
 <!-- Forms to be copied into the modal when necessary -->
 <div id="modal-forms" class="d-none" aria-hidden="true">
-  <div id="modal-form-login" class="modal-form{% if modal_show == 'login' %} modal-form-load{% endif %}" data-url="{% url 'login' %}">
-    <!-- Login form -->
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <div class="form-group">
-      <label for="id_login">E-mail</label>
-
-      <input type="email" class="form-control" id="id_login" name="login"
-        maxlength="320"{% if val_login %} value="{{ val_login }}"{% endif %} required>
-
-      <div id="modal-login-feedback" class="modal-feedback invalid-feedback ui-error"></div>
-    </div>
-    <div class="form-group">
-      <label for="id_password">Password</label>
-      <input type="password" class="form-control" id="id_password" name="password" required>
-    </div>
-    <div class="form-group">
-      <div class="form-check pl-0">
-        <input type="checkbox" name="remember" class="form-check-iniput" id="id_remember"{% if val_remember %} checked{% endif %}>
-        <label for="id_remember"> Remember Me</label>
+  {% if user.is_authenticated %}
+    <div id="modal-form-verify-password" class="modal-form {% if modal_show == 'verify-password' %} modal-form-load{% endif %}">
+      <!-- Verify Password Form -->
+      <div class="form-group">
+        <label for="id_password1">Verify Password*</label>
+        <input type="password" name="password" class="form-control" required id="id_verify_password">
+        <div id="modal-verify-password-feedback" class="modal-feedback invalid-feedback ui-error"></div>
       </div>
     </div>
-    <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
-  </div>
+  {% else %}
+    <div id="modal-form-login" class="modal-form{% if modal_show == 'login' %} modal-form-load{% endif %}" data-url="{% url 'login' %}">
+      <!-- Login form -->
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <div class="form-group">
+        <label for="id_login">E-mail</label>
 
-  <div id="modal-form-signup" class="modal-form{% if modal_show == 'signup' %} modal-form-load{% endif %}" data-url="{% url 'signup' %}">
-    <!-- Signup form -->
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <div id="form-signup-name">
-      <div class="form-group mr-1">
-        <label for="id_first_name">First Name</label>
-        <input type="text" id="id_first_name" class="form-control" name="first_name"
-          {% if val_first_name %} value="{{ val_first_name }}"{% endif %} maxlength="30">
+        <input type="email" class="form-control" id="id_login" name="login"
+          maxlength="320"{% if val_login %} value="{{ val_login }}"{% endif %} required>
+
+        <div id="modal-login-feedback" class="modal-feedback invalid-feedback ui-error"></div>
       </div>
-      <div class="form-group ml-1">
-        <label for="id_last_name">Last Name</label>
-        <input type="text" id="id_last_name" class="form-control" name="last_name"
-          {% if val_last_name %} value="{{ val_last_name }}"{% endif %} maxlength="30">
+      <div class="form-group">
+        <label for="id_password">Password</label>
+        <input type="password" class="form-control" id="id_password" name="password" required>
+      </div>
+      <div class="form-group">
+        <div class="form-check pl-0">
+          <input type="checkbox" name="remember" class="form-check-iniput" id="id_remember"{% if val_remember %} checked{% endif %}>
+          <label for="id_remember"> Remember Me</label>
+        </div>
+      </div>
+      <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
+    </div>
+
+    <div id="modal-form-signup" class="modal-form{% if modal_show == 'signup' %} modal-form-load{% endif %}" data-url="{% url 'signup' %}">
+      <!-- Signup form -->
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <div id="form-signup-name">
+        <div class="form-group mr-1">
+          <label for="id_first_name">First Name</label>
+          <input type="text" id="id_first_name" class="form-control" name="first_name"
+            {% if val_first_name %} value="{{ val_first_name }}"{% endif %} maxlength="30">
+        </div>
+        <div class="form-group ml-1">
+          <label for="id_last_name">Last Name</label>
+          <input type="text" id="id_last_name" class="form-control" name="last_name"
+            {% if val_last_name %} value="{{ val_last_name }}"{% endif %} maxlength="30">
+        </div>
+      </div>
+      <div class="form-group">
+
+        <label for="id_signup_email">E-mail*</label>
+        <input type="email" id="id_signup_email" name="email" maxlength="320" class="form-control"
+          {% if val_email %} value="{{ val_email }}"{% endif %} required>
+
+        <div id="modal-email-feedback" class="modal-feedback invalid-feedback ui-error"></div>
+      </div>
+      <div class="form-group">
+        <label for="id_password1">Password*</label>
+        <input type="password" name="password1" class="form-control" required id="id_password1">
+        <div id="modal-password1-feedback" class="modal-feedback invalid-feedback ui-error"></div>
+      </div>
+      <div class="form-group">
+        <label for="id_password2">Password (again)*</label>
+        <input type="password" name="password2" class="form-control" required id="id_password2">
+        <div id="modal-password2-feedback" class=" modal-feedback invalid-feedback ui-error"></div>
       </div>
     </div>
-    <div class="form-group">
-
-      <label for="id_signup_email">E-mail*</label>
-      <input type="email" id="id_signup_email" name="email" maxlength="320" class="form-control"
-        {% if val_email %} value="{{ val_email }}"{% endif %} required>
-
-      <div id="modal-email-feedback" class="modal-feedback invalid-feedback ui-error"></div>
-    </div>
-    <div class="form-group">
-      <label for="id_password1">Password*</label>
-      <input type="password" name="password1" class="form-control" required id="id_password1">
-      <div id="modal-password1-feedback" class="modal-feedback invalid-feedback ui-error"></div>
-    </div>
-    <div class="form-group">
-      <label for="id_password2">Password (again)*</label>
-      <input type="password" name="password2" class="form-control" required id="id_password2">
-      <div id="modal-password2-feedback" class=" modal-feedback invalid-feedback ui-error"></div>
-    </div>
-  </div>
+  {% endif %}
 
   <div id="modal-form-payment" class="modal-form">
     <!-- Payment Form -->
@@ -121,13 +132,4 @@
       {{ modal_form_errors }}
     </div>
   {% endif %}
-
-  <div id="modal-form-verify-password" class="modal-form {% if modal_show == 'verify-password' %} modal-form-load{% endif %}">
-    <!-- Verify Password Form -->
-    <div class="form-group">
-      <label for="id_password1">Verify Password*</label>
-      <input type="password" name="verify_password" class="form-control" required id="id_verify_password">
-      <div id="modal-verify-password-feedback" class="modal-feedback invalid-feedback ui-error"></div>
-    </div>
-  </div>
 </div>

@@ -30,7 +30,7 @@ class CustomLogin(LoginView):
     """
     def post(self, request):
         url_next = request.POST['next']
-        username = request.POST['login']
+        email = request.POST['login']
         login_form = LoginForm(request.POST)
 
         if login_form.is_valid():
@@ -44,7 +44,7 @@ class CustomLogin(LoginView):
 
         request.session['global_context'] = {
             'modal_show': 'login',
-            'val_login': username,
+            'val_login': email,
             'modal_form_errors': login_form.errors.as_json(),
         }
         if 'remember' in request.POST:
