@@ -42,9 +42,47 @@ class Checkout(View):
             currency=settings.CURRENCY
         )
 
+        contact_details = {}
+        billing_details = {}
+        if request.user.is_authenticated:
+            try:
+                profile = UserProfile.objects.get(
+                    user=request.user
+                )
+                first_name = request.user.first_name
+                last_name = request.user.last_name
+                full_name = ''
+                if first_name:
+                    full_name = first_name
+                    if last_name:
+                        full_name += ' '
+                full_name += last_name
+
+                contact_details = {
+                    'name': full_name,
+                    'email': request.user.email,
+                    'phone': profile.saved_phone_number
+                }
+                billing_details = {
+                    'street_address1': profile.saved_street_address1,
+                    'street_address2': profile.saved_street_address2,
+                    'town_or_city': profile.saved_town_or_city,
+                    'county': profile.saved_county,
+                    'postcode': profile.saved_postcode
+                }
+            except UserProfile.DoesNotExist:
+                UserProfile.objects.create(user=request.user)
+                messages.warning(
+                    request,
+                    """Your profile information was missing.
+                    Any data previously saved has been cleared."""
+                )
+        contact_form = ContactDetailsForm(contact_details)
+        billing_form = BillingDetailsForm(billing_details)
+
         context = get_base_context(request)
-        context['contact_form'] = ContactDetailsForm()
-        context['billing_form'] = BillingDetailsForm()
+        context['contact_form'] = contact_form
+        context['billing_form'] = billing_form
         context['stripe_public_key'] = stripe_public_key
         context['client_secret'] = intent.client_secret
         context['grand_total'] = price_as_float(grand_total)
