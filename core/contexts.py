@@ -39,6 +39,23 @@ from itertools import chain
     val_note {String}: The prefilled value for the user's note in
         the cart
     
+    invalid_contact_details {Truthy Expression}: Shows the profile contact
+        details form instead of the list on page load
+    
+    invalid_billing_details {Truthy Expression}: Shows the profile billing
+        details form instead of the list on page load
+    
+    The following are prefilled values for the profile {String}
+    val_profile_fname
+    val_profile_lname
+    val_profile_email
+    val_profile_phone
+    val_profile_line1
+    val_profile_line2
+    val_profile_city
+    val_profile_county
+    val_profile_country 
+    
     cutoff_reached {Truthy Expression}: If true, displays an error
         message in the cart that the user has reached the cutoff
         time for next day bake date

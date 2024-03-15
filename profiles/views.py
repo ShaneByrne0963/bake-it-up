@@ -37,15 +37,8 @@ class AccountSettings(View):
             'profile_fname': request.user.first_name,
             'profile_lname': request.user.last_name,
             'email': request.user.email,
-            'phone': '',
         }
-        billing_details = {
-            'street_address1': '',
-            'street_address2': '',
-            'town_or_city': '',
-            'county': '',
-            'postcode': '',
-        }
+        billing_details = {}
 
         # Getting the user profile, or creating one if none exists
         try:
@@ -75,7 +68,6 @@ class AccountSettings(View):
             return redirect('home')
 
         # Checking if any details exist for each form
-        contact_form = None
         has_contact_details = False
         for key in contact_details:
             if contact_details[key]:
@@ -86,10 +78,8 @@ class AccountSettings(View):
                         'value': value
                     } for key, value in contact_details.items()
                 }
-                contact_form = ProfileContactForm(contact_details)
                 break
     
-        billing_form = None
         has_billing_details = False
         for key in billing_details:
             if billing_details[key]:
@@ -100,16 +90,30 @@ class AccountSettings(View):
                         'value': value
                     } for key, value in billing_details.items()
                 }
-                billing_form = ProfileBillingForm(billing_details)
                 break
         
         context['has_contact_details'] = has_contact_details
         context['has_billing_details'] = has_billing_details
 
-        if contact_form is None:
-            contact_form = ProfileContactForm()
-        if billing_form is None:
-            billing_form = ProfileBillingForm()
+        # Retrieving any previously entered information
+        if 'invalid_contact_details' in context:
+            contact_details.update({
+                'profile_fname': context['val_profile_fname'],
+                'profile_lname': context['val_profile_lname'],
+                'email': context['val_profile_email'],
+                'phone': context['val_profile_phone']
+            })
+        if 'invalid_billing_details' in context:
+            contact_details.update({
+                'street_address1': context['val_profile_line1'],
+                'street_address2': context['val_profile_line2'],
+                'town_or_city': context['val_profile_city'],
+                'county': context['val_profile_county'],
+                'postcode': context['val_profile_postcode']
+            })
+
+        contact_form = ProfileContactForm(contact_details)
+        billing_form = ProfileBillingForm(billing_details)
         context['contact_form'] = contact_form
         context['billing_form'] = billing_form
 
@@ -123,9 +127,15 @@ class AccountSettings(View):
         form = None
         form_type = request.POST.get('form_type', '')
         update_success = False
+        form_invalid = False
 
         # The contact details form
         if form_type == 'contact':
+            update_success = True
+            new_fname = request.POST.get('profile_fname', '')
+            new_lname = request.POST.get('profile_lname', '')
+            new_phone = request.POST.get('phone', '')
+
             # Password verification for changing emails
             new_email = request.POST.get('email', '')
             if new_email != request.user.email:
@@ -136,12 +146,14 @@ class AccountSettings(View):
                         email update"""
                     )
                     return redirect('account_settings')
+
                 verified_user = authenticate(
                     email=request.user.email,
                     password=request.POST['verify_password']
                 )
                 if verified_user is None:
-                    # Creating an error message
+                    update_success = False
+                    # Creating an error message in the modal
                     form_error = {
                         'verify-password': [{
                             'message': "The password you have entered is \
@@ -149,47 +161,62 @@ class AccountSettings(View):
                             'code': ''
                         }]
                     }
+                    # Setting up the modal to display on the next page
                     request.session['global_context'] = {
                         'modal_show': 'verify-password',
                         'modal_form_type': 'update_email',
-                        'modal_form_errors': json.dumps(form_error)
+                        'modal_form_errors': json.dumps(form_error),
                     }
-                    return redirect('account_settings')
-
             # Form Validation
-            form = ProfileContactForm(request.POST)
-            if form.is_valid():
-                request.user.first_name = request.POST.get(
-                    'profile_fname', ''
-                )
-                request.user.last_name = request.POST.get(
-                    'profile_lname', ''
-                )
-                request.user.email = request.POST.get(
-                    'email', ''
-                )
-                profile.saved_phone_number = request.POST.get('phone', '')
-                update_success = True
-                request.user.save()
+            if update_success:
+                update_success = False
+                request.session['global_context'] = {}
+                form = ProfileContactForm(request.POST)
+                if form.is_valid():
+                    request.user.first_name = new_fname
+                    request.user.last_name = new_lname
+                    request.user.email = new_email
+                    profile.saved_phone_number = new_phone
+                    update_success = True
+                    request.user.save()
+                else:
+                    form_invalid = True
+
+            if not update_success:
+                request.session['global_context'].update({
+                    'invalid_contact_details': True,
+                    'val_profile_fname': new_fname,
+                    'val_profile_lname': new_lname,
+                    'val_profile_email': new_email,
+                    'val_profile_phone': new_phone
+                })
     
         # The billing details form
         elif form_type == 'billing':
+            new_line1 = request.POST.get('street_address1', '')
+            new_line2 = request.POST.get('street_address2', '')
+            new_city = request.POST.get('town_or_city', '')
+            new_county = request.POST.get('county', '')
+            new_postcode = request.POST.get('postcode', '')
+
             form = ProfileBillingForm(request.POST)
-            if form.is_valid:
-                profile.saved_street_address1 = request.POST.get(
-                    'street_address1', ''
-                )
-                profile.saved_street_address2 = request.POST.get(
-                    'street_address2', ''
-                )
-                profile.saved_town_or_city = request.POST.get(
-                    'town_or_city', ''
-                )
-                profile.saved_county = request.POST.get('county', '')
-                profile.saved_postcode = request.POST.get(
-                    'postcode', ''
-                )
+            if form.is_valid():
+                profile.saved_street_address1 = new_line1
+                profile.saved_street_address2 = new_line2
+                profile.saved_town_or_city = new_city
+                profile.saved_county = new_county
+                profile.saved_postcode = new_postcode
                 update_success = True
+            else:
+                form_invalid = True
+                request.session['global_context'] = {
+                    'invalid_billing_details': True,
+                    'val_profile_line1': new_line1,
+                    'val_profile_line2': new_line2,
+                    'val_profile_city': new_city,
+                    'val_profile_county': new_county,
+                    'val_profile_postcode': new_postcode
+                }
         else:
             messages.error(request, 'Unknown form received')
 
@@ -199,10 +226,11 @@ class AccountSettings(View):
                 request,
                 "Your profile has been updated!"
             )
-        else:
+        elif form_invalid:
             messages.error(
                 request,
-                """Your information was invalid. Please double 
-                check your details"""
+                """Your information was invalid. 
+                Please check your details"""
             )
+
         return redirect('account_settings')
