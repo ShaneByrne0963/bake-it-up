@@ -1,11 +1,13 @@
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.views import generic, View
 
 from core.contexts import get_base_context, get_products, \
     get_product_by_name
 from .models import BreadProduct, PastryProduct
 from .forms import create_properties_form
+from profiles.models import UserProfile
 
 # Create your views here.
 
@@ -106,3 +108,23 @@ class ProductDetail(View):
         context['product'] = get_product_by_name(product_name)
         context['prop_form'] = create_properties_form(product_name)
         return render(request, self.template, context)
+
+
+class AddToFavorites(View):
+
+    def get(self, request, product_name):
+        try:
+            product = get_product_by_name(product_name)
+            profile = UserProfile.objects.get(user=request.user)
+            if product.favorites.filter(id=profile.id).exists():
+                product.favorites.remove(profile)
+            else:
+                product.favorites.add(profile)
+        except Exception as e:
+            messages.error(
+                request,
+                f"An error occurred. {e}"
+            )
+
+        return HttpResponseRedirect(reverse('product_detail', args=[product_name]))
+

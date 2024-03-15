@@ -1,4 +1,5 @@
 from django.db import models
+from profiles.models import UserProfile
 
 
 class Category(models.Model):
@@ -23,6 +24,9 @@ class BreadProduct(models.Model):
     ingredients = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
+    favorites = models.ManyToManyField(UserProfile,
+                                       related_name="favorite_breads",
+                                       blank=True)
 
     # Optional customizeable properties 
     prop_shape = models.JSONField(blank=True, null=True)
@@ -44,6 +48,9 @@ class PastryProduct(models.Model):
     ingredients = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
+    favorites = models.ManyToManyField(UserProfile,
+                                       related_name="favorite_pastries",
+                                       blank=True)
 
     # Optional customizeable properties 
     prop_type = models.JSONField(blank=True, null=True)

@@ -6,4 +6,7 @@ urlpatterns = [
     path('', views.ProductList.as_view(), name='product_list'),
     path('<str:product_name>', views.ProductDetail.as_view(),
          name='product_detail'),
+    path('favorite/<str:product_name>',
+         views.AddToFavorites.as_view(),
+         name='add_to_favorites'),
 ]
