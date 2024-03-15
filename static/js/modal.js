@@ -63,14 +63,17 @@ function triggerModal(context) {
 
 /**
  * Triggers the modal with a form
- * @param {String} formType The type of form to be included in the modal ['login', 'signup']
+ * @param {String} formId The id of the form to be included in the modal
+ *  ['login', 'signup', 'payment', 'verify-password']
+ * @param {String} formType The specific purpose of the form, if the form has
+ *  multiple uses
  */
-function modalFormInit(formType) {
+function modalFormInit(formId, formType="") {
     let context = {
-        form: formType,
+        form: formId
     };
     
-    switch (formType) {
+    switch (formId) {
         case 'login':
             context.title = 'Log In';
             break;
@@ -81,6 +84,19 @@ function modalFormInit(formType) {
             context.title = 'Card Details';
             context.button = 'Pay';
             context.onSubmit = paymentSubmit;
+            break;
+        case 'verify-password':
+            context.title = 'Verify Password';
+            context.button = 'Verify';
+            if (formType == 'update_email') {
+                context.body = `
+                <p>You are about to change your email address. To make sure it is
+                you, please verify your password.</p>
+                <p class="ui-error">After verification, this account will become locked, and an email
+                will be sent to your new email address to reactivate this account.</p>`;
+                context.url = '';
+                context.hiddenInputs = '#contact-form';
+            }
             break;
     }
     triggerModal(context);
@@ -108,10 +124,8 @@ function addHiddenInputs(form) {
 function handleModalErrors() {
     let errors = JSON.parse($('#modal-errors').text());
     let form = $('#modal-errors').data('form');
-    console.log(errors);
     
     for (let key in errors) {
-        console.log(key);
         for (let error of errors[key]) {
             if (key === '__all__') {
                 $(`#modal-${form}-feedback`).text(error.message).addClass('d-block');
@@ -215,8 +229,13 @@ $(document).ready(() => {
     if ($('#modal-action').hasClass('show-on-load')) {
         // Prefilling the modal with the form specified if one exists
         if ($('.modal-form-load').length > 0) {
+            // Getting the specific type of form
+            let formType = $('#modal-action').data('form-type');
+            if (!formType) {
+                formType = "";
+            }
             let modalForm = $('.modal-form-load').attr('id').replace('modal-form-', '');
-            modalFormInit(modalForm);
+            modalFormInit(modalForm, formType);
 
             // Sorting any errors into their respective place
             if ($('#modal-errors').length > 0) {

@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.contrib.auth import authenticate
 from django.views import View
 
 from core.contexts import get_base_context
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
+
+import json
 
 
 class AccountSettings(View):
@@ -123,6 +126,37 @@ class AccountSettings(View):
 
         # The contact details form
         if form_type == 'contact':
+            # Password verification for changing emails
+            new_email = request.POST.get('email', '')
+            if new_email != request.user.email:
+                if 'verify_password' not in request.POST:
+                    messages.error(
+                        request,
+                        """Access denied. No password was given for
+                        email update"""
+                    )
+                    return redirect('account_settings')
+                verified_user = authenticate(
+                    email=request.user.email,
+                    password=request.POST['verify_password']
+                )
+                if verified_user is None:
+                    # Creating an error message
+                    form_error = {
+                        'verify-password': [{
+                            'message': "The password you have entered is \
+                                    incorrect",
+                            'code': ''
+                        }]
+                    }
+                    request.session['global_context'] = {
+                        'modal_show': 'verify-password',
+                        'modal_form_type': 'update_email',
+                        'modal_form_errors': json.dumps(form_error)
+                    }
+                    return redirect('account_settings')
+
+            # Form Validation
             form = ProfileContactForm(request.POST)
             if form.is_valid():
                 request.user.first_name = request.POST.get(

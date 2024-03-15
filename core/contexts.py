@@ -20,6 +20,9 @@ from itertools import chain
     modal_form_errors {JSON}: A list of errors to be
         displayed in a modal form
     
+    modal_form_type {String}: Describes the on-load form's specific
+        purpose if a form is used in multiple instances
+    
     login_custom_redirect {String}: A redirect string which will
         take the user to a custom url on login (Is cleared
         when the modal is closed)

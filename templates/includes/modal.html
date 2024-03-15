@@ -1,7 +1,8 @@
 {% load crispy_forms_tags %}
 
 <div class="modal{% if modal_show %} show-on-load{% if modal_load_fade %} fade{% endif %}{% else %} fade{% endif %}"
-  id="modal-action" tabindex="-1" aria-labelledby="modal-heading" aria-hidden="true">
+  id="modal-action" tabindex="-1" aria-labelledby="modal-heading" aria-hidden="true"
+  {% if modal_form_type %} data-form-type="{{ modal_form_type }}"{% endif %}>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content overflow-hidden position-relative">
       <form id="modal-content-inner" method="POST">
@@ -121,7 +122,7 @@
     </div>
   {% endif %}
 
-  <div id="modal-form-verify-password" class="modal-form">
+  <div id="modal-form-verify-password" class="modal-form {% if modal_show == 'verify-password' %} modal-form-load{% endif %}">
     <!-- Verify Password Form -->
     <div class="form-group">
       <label for="id_password1">Verify Password*</label>
