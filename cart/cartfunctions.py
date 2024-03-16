@@ -63,6 +63,16 @@ def get_properties_from_dict(product, properties):
         label = ''
         answer = value
 
+        if name == 'text':
+            prop_dict = {
+                'name': 'text',
+                'label': 'Text',
+                'value': value,
+                'answer': answer
+            }
+            list_of_properties.append(prop_dict)
+            continue
+
         # Specifying the label to be shown in the cart
         if 'label' in prop_details:
             label = prop_details['label']

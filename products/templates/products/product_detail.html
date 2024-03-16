@@ -52,6 +52,12 @@
                     <!-- Custom properties -->
                     <div class="mb-5">
                         {{ prop_form|safe }}
+                        {% if product.prop_text %}
+                            <div class="form-group">
+                                <label for="prop-text" class="mb-0">Text</label>
+                                <textarea name="prop_text" id="prop-text" class="form-control" rows="2" maxlength="40"></textarea>
+                            </div>
+                        {% endif %}
                     </div>
                     <!-- Form footer -->
                     <div>

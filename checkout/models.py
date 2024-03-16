@@ -134,6 +134,14 @@ class OrderLineItem(models.Model):
             prop_name = prop['name']
             prop_answer = getattr(self, f'prop_{prop_name}')
             if prop_answer is not None:
+                if prop_name == 'text':
+                    prop_dict = {
+                        'name': 'text',
+                        'label': 'Text',
+                        'answer': prop_answer
+                    }
+                    prop_items.append(prop_dict)
+                    continue
                 product_prop = getattr(product, f'prop_{prop_name}')
                 answers = product_prop['answers']
 
