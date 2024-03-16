@@ -14,7 +14,7 @@ from profiles.models import UserProfile
 class ProductList(generic.ListView):
     template_name = 'products/product_list.html'
     context_object_name = 'products'
-    paginate_by = 12
+    paginate_by = 1
 
     def get_queryset(self):
         category = 'all'
@@ -29,11 +29,15 @@ class ProductList(generic.ListView):
         
         if 'q' in self.request.GET:
             q = self.request.GET['q']
+        
+        favorites = 'favourites' in self.request.GET
 
         products = get_products(
+            self.request,
             category=category,
             sort=sort,
-            q=q
+            q=q,
+            favorites=favorites
         )
         return products
 
@@ -44,6 +48,7 @@ class ProductList(generic.ListView):
 
         category = 'all'
         sort = '-favourites'
+        q = ''
         get_url = ''
         if 'category' in self.request.GET:
             category = self.request.GET['category']
@@ -53,15 +58,33 @@ class ProductList(generic.ListView):
             if get_url != '':
                 get_url += '&'
             get_url += f'sort={sort}'
+        
+        url_favourites_toggle = f'?{get_url}'
+        if 'favourites' in self.request.GET:
+            if get_url != '':
+                get_url += '&'
+            get_url += 'favourites=on'
+            context['favourites'] = 'on'
+        else:
+            if url_favourites_toggle != '?':
+                url_favourites_toggle += '&'
+            url_favourites_toggle += 'favourites=on'
+
+        if 'q' in self.request.GET:
+            q = self.request.GET['q']
+            if get_url != '':
+                get_url += '&'
+            if url_favourites_toggle != '?':
+                url_favourites_toggle += '&'
+            get_url += f'q={q}'
+            url_favourites_toggle += f'q={q}'
+            q = self.request.GET['q']
+            context['q'] = q
     
         context['category'] = category
         context['sort'] = sort
         context['get_url'] = get_url
-
-        q = None
-        if 'q' in self.request.GET:
-            q = self.request.GET['q']
-            context['q'] = q
+        context['url_favourites_toggle'] = url_favourites_toggle
         
         # Building the title
         product_title = ''

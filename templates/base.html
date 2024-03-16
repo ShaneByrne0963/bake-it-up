@@ -65,6 +65,9 @@
                     {% if sort %}
                         <input type="hidden" name="sort" value="{{ sort }}" aria-hidden="true">
                     {% endif %}
+                    {% if favourites %}
+                        <input type="hidden" name="favourites" value="on" aria-hidden="true">
+                    {% endif %}
                     <div id="search-bar-container">
                         <div id="search-bar">
                             <i class="fa-solid fa-magnifying-glass px-2"></i>

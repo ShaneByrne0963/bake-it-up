@@ -17,9 +17,6 @@
 {% block content %}
     <div class="container-fluid">
         <form action="{% url 'product_list' %}" method="GET" class="row mt-3">
-            {% if q %}
-                <input type="hidden" name="q" value="{{ q }}" aria-hidden="true">
-            {% endif %}
             <div class="col-10 col-md-4 col-xl-3 form-group">
                 <label for="product-category" class="mb-1">Category</label>
                 <select id="product-category" name="category" class="form-control" onchange="$(this).closest('form').submit();">
@@ -40,6 +37,19 @@
                     <option value="-name" {% if sort == '-name' %} selected{% endif %}>Z-A</option>
                 </select>
             </div>
+            {% if favourites %}
+                <input type="hidden" name="favourites" value="on" aria-hidden="true">
+            {% endif %}
+            {% if q %}
+                <input type="hidden" name="q" value="{{ q }}" aria-hidden="true">
+            {% endif %}
+            {% if user.is_authenticated %}
+                <div class="col d-flex align-items-end pb-3">
+                    <a href="{% url 'product_list' %}{{ url_favourites_toggle }}" class="text-dark">
+                        <i class="h2 fa-{% if favourites %}solid{% else %}regular{% endif %} fa-heart mb-1"></i>
+                    </a>
+                </div>
+            {% endif %}
         </form>
         <hr class="my-4">
         <div class="row">

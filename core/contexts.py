@@ -113,7 +113,7 @@ def get_cart_context(request):
     return context
 
 
-def get_products(**kwargs):
+def get_products(request, **kwargs):
     """
     Gets a list of all products, with the option to
     filter by category, and sort
@@ -121,23 +121,28 @@ def get_products(**kwargs):
     category = kwargs['category'] if 'category' in kwargs else 'all'
     sort = kwargs['sort'] if 'sort' in kwargs else 'favourites'
     q = kwargs['q'] if 'q' in kwargs else None
+    favorites = kwargs['favorites'] if 'favorites' in kwargs else False
 
     products = None
     breads = None
     pastries = None
 
-    if q:
-        breads = BreadProduct.objects.filter(
-            Q(display_name__icontains=q) | \
-            Q(description__icontains=q)
-        )
-        pastries = PastryProduct.objects.filter(
-            Q(display_name__icontains=q) | \
-            Q(description__icontains=q)
-        )
+    if favorites:
+        profile = request.user.profile
+        breads = profile.favorite_breads.all()
+        pastries = profile.favorite_pastries.all()
     else:
         breads = BreadProduct.objects.all()
         pastries = PastryProduct.objects.all()
+    if q:
+        breads = breads.filter(
+            Q(display_name__icontains=q) | \
+            Q(description__icontains=q)
+        )
+        pastries = pastries.filter(
+            Q(display_name__icontains=q) | \
+            Q(description__icontains=q)
+        )
 
     # Product filtering
     if category == 'all':
