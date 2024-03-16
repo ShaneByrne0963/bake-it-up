@@ -5,6 +5,7 @@ from products.models import BreadProduct, PastryProduct
 from .shortcuts import price_as_float
 
 from itertools import chain
+import json
 
 
 # region List of Available Context Keys for global_context
@@ -202,3 +203,18 @@ def get_product_by_name(name):
         return bread[0]
     else:
         return get_object_or_404(PastryProduct, name=name)
+
+
+def add_field_error(field, message, parse=True):
+    """
+    Creates a form error attached to a field
+    """
+    form_error = {
+        field: [{
+            'message': message,
+            'code': ''
+        }]
+    }
+    if parse:
+        return json.dumps(form_error)
+    return form_error

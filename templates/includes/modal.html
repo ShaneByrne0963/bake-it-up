@@ -8,7 +8,7 @@
       <form id="modal-content-inner" method="POST">
         {% csrf_token %}
         {% if login_custom_redirect %}
-          <input type="hidden" name="login_custom_redirect" value="{{ login_custom_redirect }}" aria-hidden="true">
+          <input type="hidden" id="login-custom-redirect" name="login_custom_redirect" value="{{ login_custom_redirect }}" aria-hidden="true">
         {% endif %}
         <div class="modal-header">
           <h5 class="modal-title" id="modal-heading">Modal title</h5>

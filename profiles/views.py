@@ -7,11 +7,9 @@ from home.views import CustomLogin
 from allauth.account.admin import EmailAddress
 from allauth.account.utils import send_email_confirmation
 
-from core.contexts import get_base_context
+from core.contexts import get_base_context, add_field_error
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
-
-import json
 
 
 class AccountSettings(View):
@@ -160,18 +158,15 @@ class AccountSettings(View):
                 if verified_user is None:
                     update_success = False
                     # Creating an error message in the modal
-                    form_error = {
-                        'verify-password': [{
-                            'message': "The password you have entered is \
-                                    incorrect",
-                            'code': ''
-                        }]
-                    }
+                    form_error = add_field_error(
+                        'verify-password',
+                        "The password you have entered is incorrect"
+                    )
                     # Setting up the modal to display on the next page
                     request.session['global_context'] = {
                         'modal_show': 'verify-password',
                         'modal_form_type': 'update_email',
-                        'modal_form_errors': json.dumps(form_error),
+                        'modal_form_errors': form_error,
                     }
             # Form Validation
             if update_success:
@@ -255,3 +250,40 @@ class AccountSettings(View):
             logout(request)
             return redirect('/accounts/confirm-email/')
         return redirect('account_settings')
+
+
+class DeleteAccount(View):
+
+    def post(self, request):
+        if 'password' not in request.POST:
+            messages.error(
+                request,
+                """Access denied. No password was given for
+                account deletion"""
+            )
+            return redirect('account_settings')
+
+        verified_user = authenticate(
+            email=request.user.email,
+            password=request.POST['password']
+        )
+        if verified_user is None:
+            # Creating an error message in the modal
+            form_error = add_field_error(
+                'verify-password',
+                "The password you have entered is incorrect"
+            )
+            # Setting up the modal to display on the next page
+            request.session['global_context'] = {
+                'modal_show': 'verify-password',
+                'modal_form_type': 'delete_account',
+                'modal_form_errors': form_error,
+            }
+            return redirect('account_settings')
+        else:
+            verified_user.delete()
+            messages.success(
+                request,
+                "Your account has been successfully deleted"
+            )
+            return redirect('home')

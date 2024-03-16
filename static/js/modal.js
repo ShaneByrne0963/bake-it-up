@@ -97,6 +97,13 @@ function modalFormInit(formId, formType="") {
                 context.url = '';
                 context.hiddenInputs = '#contact-form';
             }
+            else if (formType = 'delete_account') {
+                context.body = `
+                <p>Are you sure you want to delete your account?</p>
+                <p class="ui-error">This action is irreversible, and you will lose all of your saved information!</p>
+                <p>Please verify it is you by entering your password.</p>`;
+                context.url = '/userprofile/delete_account/';
+            }
             break;
     }
     triggerModal(context);
@@ -200,6 +207,9 @@ $(document).ready(() => {
     $('.modal-trigger-payment').click(() => {
         modalFormInit('payment');
     });
+    $('.modal-trigger-delete-account').click(() => {
+        modalFormInit('verify-password', 'delete_account');
+    });
 
     //Resetting the modal form when hidden
     $('#modal-action').on('hidden.bs.modal', function() {
@@ -211,6 +221,9 @@ $(document).ready(() => {
 
         // Removing any hidden inputs
         $('#modal-hidden-inputs').empty();
+
+        // Removing any custom redirect on login
+        $('#login-custom-redirect').remove();
 
         // Detaching the form
         let modalFormList = $('#modal-forms').get(0);
