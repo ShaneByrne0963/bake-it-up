@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Count
 
 from products.models import BreadProduct, PastryProduct
 from .shortcuts import price_as_float
@@ -165,7 +165,19 @@ def sort_queryset(queryset, sort):
     Sorts a model queryset, with support for sets of multiple models
     """
     if 'favourites' in sort:
-        return queryset
+        if isinstance(queryset, list):
+            reverse = '-' in sort
+            sort = 'favorites'
+            new_query = sorted(
+                queryset,
+                key=lambda obj: getattr(obj, sort).count(),
+                reverse=reverse
+            )
+            return new_query
+        else:
+            reverse = '-' if '-' in sort else ''
+            return queryset.annotate(num_favorites=Count('favorites')) \
+                    .order_by(f'{reverse}num_favorites')
     else:
         if isinstance(queryset, list):
             reverse = '-' in sort

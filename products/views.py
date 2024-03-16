@@ -14,11 +14,11 @@ from profiles.models import UserProfile
 class ProductList(generic.ListView):
     template_name = 'products/product_list.html'
     context_object_name = 'products'
-    paginate_by = 1
+    paginate_by = 12
 
     def get_queryset(self):
         category = 'all'
-        sort = 'favourites'
+        sort = '-favourites'
         q = None
 
         if 'category' in self.request.GET:
