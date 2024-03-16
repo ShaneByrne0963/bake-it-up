@@ -103,7 +103,7 @@
                         {% if user.is_superuser %}
                             <a class="dropdown-item" href="/admin/">Admin Panel</a>
                         {% endif %}
-                        <a class="dropdown-item" href="#">Favourites</a>
+                        <a class="dropdown-item" href="{% url 'product_list' %}?favourites=on">Favourites</a>
                         <a class="dropdown-item" href="{% url 'account_settings' %}">Account Settings</a>
                         <button class="dropdown-item btn-link modal-trigger-logout" data-url="{% url 'account_logout' %}">Logout</button>
                     </div>
