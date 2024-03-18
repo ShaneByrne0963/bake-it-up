@@ -182,53 +182,6 @@ function colorScroll(direction) {
 }
 
 
-/**
- * Inserts the correct product properties form in the Add Product form
- */
-function updateProductPropertyInputs() {
-    let oldProperties = $('#product-properties').children().detach();
-    if (oldProperties.length > 0) {
-        $('#property-inputs').append(oldProperties);
-    }
-    let selectedVal = $('#id_category').val();
-    let newProperties;
-    let propertyId = '';
-    switch (selectedVal) {
-        case '':
-            propertyId = '#empty-properties';
-            break;
-        case '1':
-            propertyId = '#bread-properties';
-            break;
-        default:
-            propertyId = '#pastry-properties';
-            break;
-    }
-    newProperties = $(propertyId).detach();
-    if (newProperties && newProperties.length > 0) {
-        $('#product-properties').append(newProperties);
-    }
-}
-
-
-/**
- * Enables/Disables the label input depending on if the "Use Default"
- * checkbox is checked
- */
-function checkDefaultLabel() {
-    let textInput = $(this).closest('.product-property-group').find('.product-label');
-    let isChecked = Boolean($(this).prop('checked'));
-
-    textInput.prop('disabled', isChecked);
-    if (isChecked) {
-        let currentVal = textInput.val();
-        if (!currentVal) {
-            textInput.val(textInput.data('default-label'));
-        }
-    }
-}
-
-
 $(document).ready(() => {
 
     highlightAllergens();
@@ -270,12 +223,4 @@ $(document).ready(() => {
     $('.scroll-left').click(() => {
         colorScroll(-1);
     });
-
-    // Showing the correct product properties for the "Add Product" page
-    if ($('#id_category').length > 0) {
-        $('#id_category').on('change', updateProductPropertyInputs);
-        updateProductPropertyInputs();
-
-        $('.product-label-check').on('change', checkDefaultLabel);
-    }
 });

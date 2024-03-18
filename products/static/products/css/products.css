@@ -160,6 +160,16 @@
     height: 100%;
 }
 
+.color-scroll.scroll-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.color-scroll.scroll-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
 /* --------------------------------------------------------Quantity Selector Input */
 
 #qty-selector,
