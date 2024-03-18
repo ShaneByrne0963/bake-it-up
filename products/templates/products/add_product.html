@@ -4,6 +4,10 @@
 
 {% block extra_title %} - Add a Product{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
 {% block content_heading %}
     <h1>Add a Product</h1>
 {% endblock %}
@@ -13,11 +17,13 @@
         {% csrf_token %}
         <div class="row">
             <div class="col-12 col-md-10 col-xl-5 offset-md-1">
-                <h3>Product Details</h3>
+                <h2>Product Details</h2>
                 <div class="mb-5">
                     {{ product_form|crispy }}
                 </div>
-                <h3>Product Properties</h3>
+            </div>
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1 offset-xl-0">
+                <h2>Product Properties</h2>
                 <div id="product-properties"></div>
             </div>
         </div>
@@ -30,14 +36,30 @@
         <div id="bread-properties">
             {% for bread in bread_properties %}
                 {% with bread.value as value %}
-                <div class="form-group mb-4">
-                    <textarea id="bread-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
-                    <label for="bread-{{ value }}">Bread {{ bread.label }}</label>
-                    <div class="d-flex">
-                        <input type="text" id="bread-{{ value }}" class="form-control">
-                        <button type="button" id="add-bread-{{ value }}" class="btn btn-primary ml-2">Add</button>
+                <div class="product-property-group">
+                    <h3>Bread {{ bread.label }}</h3>
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between">
+                            <label for="bread-label-{{ value }}">Label</label>
+                            <div>
+                                <label for="bread-default-label-{{ value }}" class="small">Use Default</label>
+                                <input type="checkbox" id="bread-default-label-{{ value }}" name="bread_default_label_{{ value }}"
+                                    class="product-label-check" checked>
+                            </div>
+                        </div>
+                        <input type="text" id="bread-label-{{ value }}" name="bread_label_{{ value }}"
+                            value="{{ bread.default_label }}" data-default-label="{{ bread.default_label }}" class="form-control product-label" disabled>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="bread-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
+                        <label for="bread-{{ value }}">Options</label>
+                        <div class="d-flex">
+                            <input type="text" id="bread-{{ value }}" class="form-control">
+                            <button type="button" id="add-bread-{{ value }}" class="btn btn-primary ml-2">Add</button>
+                        </div>
                     </div>
                 </div>
+                <hr class="my-5">
                 {% endwith %}
             {% endfor %}
         </div>
@@ -45,17 +67,33 @@
         <div id="pastry-properties">
             {% for pastry in pastry_properties %}
                 {% with pastry.value as value %}
-                <div class="form-group mb-4">
-                    <textarea id="pastry-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
-                    <label for="pastry-{{ value }}">Pastry {{ pastry.label }}</label>
-                    <div class="d-flex">
-                        <input type="text" id="pastry-{{ value }}" class="form-control">
-                        <button type="button" id="add-pastry-{{ value }}" class="btn btn-primary ml-2">Add</button>
+                <div class="product-property-group">
+                    <h3>Pastry {{ pastry.label }}</h3>
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between">
+                            <label for="pastry-label-{{ value }}">Label</label>
+                            <div>
+                                <label for="pastry-default-label-{{ value }}" class="small">Use Default</label>
+                                <input type="checkbox" id="pastry-default-label-{{ value }}" name="pastry_default_label_{{ value }}"
+                                    class="product-label-check" checked>
+                            </div>
+                        </div>
+                        <input type="text" id="pastry-label-{{ value }}" name="pastry_label_{{ value }}"
+                            value="{{ pastry.default_label }}" data-default-label="{{ pastry.default_label }}" class="form-control product-label" disabled>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="pastry-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
+                        <label for="pastry-{{ value }}">Options</label>
+                        <div class="d-flex">
+                            <input type="text" id="pastry-{{ value }}" class="form-control">
+                            <button type="button" id="add-pastry-{{ value }}" class="btn btn-primary ml-2">Add</button>
+                        </div>
                     </div>
                 </div>
+                <hr class="my-5">
                 {% endwith %}
             {% endfor %}
-            <div class="form-group form-check mb-4">
+            <div class="form-group form-check">
                 <input type="checkbox" id="pastry-text" name="prop_text" class="form-check-input">
                 <label for="pastry-text" class="form-check-label">Allow Custom Text</label>
             </div>

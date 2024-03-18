@@ -211,6 +211,24 @@ function updateProductPropertyInputs() {
 }
 
 
+/**
+ * Enables/Disables the label input depending on if the "Use Default"
+ * checkbox is checked
+ */
+function checkDefaultLabel() {
+    let textInput = $(this).closest('.product-property-group').find('.product-label');
+    let isChecked = Boolean($(this).prop('checked'));
+
+    textInput.prop('disabled', isChecked);
+    if (isChecked) {
+        let currentVal = textInput.val();
+        if (!currentVal) {
+            textInput.val(textInput.data('default-label'));
+        }
+    }
+}
+
+
 $(document).ready(() => {
 
     highlightAllergens();
@@ -257,5 +275,7 @@ $(document).ready(() => {
     if ($('#id_category').length > 0) {
         $('#id_category').on('change', updateProductPropertyInputs);
         updateProductPropertyInputs();
+
+        $('.product-label-check').on('change', checkDefaultLabel);
     }
 });

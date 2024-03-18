@@ -5,6 +5,8 @@ from django.views import generic, View
 
 from core.contexts import get_base_context, get_products, \
     get_product_by_name
+from core.shortcuts import find_dict_in_list
+from core.constants import PRODUCT_PROPERTIES
 from .models import BreadProduct, PastryProduct
 from .forms import create_properties_form, AddProductForm
 from profiles.models import UserProfile
@@ -177,12 +179,27 @@ class AddProduct(View):
         pastry_properties = [
             {'label': 'Types', 'value': 'type'},
             {'label': 'Contents', 'value': 'contents'},
-            {'label': 'Types', 'value': 'type'},
             {'label': 'Colours', 'value': 'color'},
             {'label': 'Icing', 'value': 'icing'},
-            {'label': 'Types', 'value': 'type'},
             {'label': 'Decoration', 'value': 'decoration'},
         ]
+        # Getting the default labels for each property
+        for bread in bread_properties:
+            default_label = find_dict_in_list(
+                PRODUCT_PROPERTIES,
+                'name',
+                bread['value']
+            )['default_label']
+            bread['default_label'] = default_label
+
+        for pastry in pastry_properties:
+            default_label = find_dict_in_list(
+                PRODUCT_PROPERTIES,
+                'name',
+                pastry['value']
+            )['default_label']
+            pastry['default_label'] = default_label
+
         context['bread_properties'] = bread_properties
         context['pastry_properties'] = pastry_properties
 
