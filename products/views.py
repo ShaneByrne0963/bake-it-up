@@ -159,3 +159,10 @@ class AddToFavorites(View):
 
         return HttpResponseRedirect(reverse('product_detail', args=[product_name]))
 
+
+class AddProduct(View):
+    template = 'products/add_product.html'
+
+    def get(self, request):
+        context = get_base_context(request)
+        return render(request, self.template, context)
