@@ -6,7 +6,7 @@ from django.views import generic, View
 from core.contexts import get_base_context, get_products, \
     get_product_by_name
 from .models import BreadProduct, PastryProduct
-from .forms import create_properties_form
+from .forms import create_properties_form, AddProductForm
 from profiles.models import UserProfile
 
 # Create your views here.
@@ -165,4 +165,6 @@ class AddProduct(View):
 
     def get(self, request):
         context = get_base_context(request)
+        product_form = AddProductForm()
+        context['product_form'] = product_form
         return render(request, self.template, context)

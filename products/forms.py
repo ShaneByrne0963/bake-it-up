@@ -1,3 +1,4 @@
+from django import forms
 from .models import BreadProduct, PastryProduct
 
 from core.contexts import get_product_by_name
@@ -13,9 +14,43 @@ COLOR_INPUT_GAP = 6
 COLOR_BORDER_VALUE = 0.8
 
 
+class AddProductForm(forms.ModelForm):
+    """
+    A form containing the fields shared by both the BreadProduct
+    and the PastryProduct models
+    """
+    class Meta:
+        model = BreadProduct
+        fields = ['category', 'display_name', 'name', 'price',
+                  'description', 'ingredients', 'batch_size',
+                  'image']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            if field.label == 'Name':
+                field.label = 'URL Name'
+            elif field.label == 'Batch size':
+                field.label = 'Batch Size'
+                field.widget.attrs.update({
+                    'value': 1,
+                    'min': 1,
+                    'max': 20
+                })
+            elif field.label == 'Ingredients':
+                field.widget.attrs.update({
+                    'rows': 4,
+                })
+            elif field.label == 'Price':
+                field.widget.attrs.update({
+                    'max': 9999.99
+                })
+
+
 def get_default_label(name):
     """
-    Finds the default label of a property
+    Finds the default label of a product property
     """
     for prop in PRODUCT_PROPERTIES:
         if prop['name'] == name:

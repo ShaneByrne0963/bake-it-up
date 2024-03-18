@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block extra_title %} - Add a Product{% endblock %}
 
@@ -7,4 +8,13 @@
 {% endblock %}
 
 {% block content %}
+    <form method="POST" class="container-fluid">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
+                <h3>Product Details</h3>
+                {{ product_form|crispy }}
+            </div>
+        </div>
+    </form>
 {% endblock %}
