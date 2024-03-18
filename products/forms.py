@@ -148,7 +148,7 @@ def create_checkbox(name, label, answer, value):
     return f"""
     {label_html}
     <div class="form-group form-check mb-4">
-        <input type="checkbox" id="prop-{name}" name=prop_{name}
+        <input type="checkbox" id="prop-{name}" name="prop_{name}"
             class="form-check-input"{checked}>
         <label for="prop-{name}" class="form-check-label">
             {answer}

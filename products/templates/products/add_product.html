@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block extra_title %} - Add a Product{% endblock %}
@@ -13,8 +14,56 @@
         <div class="row">
             <div class="col-12 col-md-10 col-xl-5 offset-md-1">
                 <h3>Product Details</h3>
-                {{ product_form|crispy }}
+                <div class="mb-5">
+                    {{ product_form|crispy }}
+                </div>
+                <h3>Product Properties</h3>
+                <div id="product-properties"></div>
             </div>
         </div>
     </form>
+    <div id="property-inputs" class="d-none">
+        <div id="empty-properties">
+            <p class="small text-danger font-weight-bold">Please select a category to customize your product's properties</p>
+        </div>
+        <!-- Bread Property Inputs -->
+        <div id="bread-properties">
+            {% for bread in bread_properties %}
+                {% with bread.value as value %}
+                <div class="form-group mb-4">
+                    <textarea id="bread-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
+                    <label for="bread-{{ value }}">Bread {{ bread.label }}</label>
+                    <div class="d-flex">
+                        <input type="text" id="bread-{{ value }}" class="form-control">
+                        <button type="button" id="add-bread-{{ value }}" class="btn btn-primary ml-2">Add</button>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
+        <!-- Pastry/Cake Property Inputs -->
+        <div id="pastry-properties">
+            {% for pastry in pastry_properties %}
+                {% with pastry.value as value %}
+                <div class="form-group mb-4">
+                    <textarea id="pastry-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
+                    <label for="pastry-{{ value }}">Pastry {{ pastry.label }}</label>
+                    <div class="d-flex">
+                        <input type="text" id="pastry-{{ value }}" class="form-control">
+                        <button type="button" id="add-pastry-{{ value }}" class="btn btn-primary ml-2">Add</button>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endfor %}
+            <div class="form-group form-check mb-4">
+                <input type="checkbox" id="pastry-text" name="prop_text" class="form-check-input">
+                <label for="pastry-text" class="form-check-label">Allow Custom Text</label>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    <script src="{% static 'products/js/products.js' %}" type="text/javascript"></script>
+    {{ block.super }}
 {% endblock %}

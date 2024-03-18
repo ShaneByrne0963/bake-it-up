@@ -182,6 +182,35 @@ function colorScroll(direction) {
 }
 
 
+/**
+ * Inserts the correct product properties form in the Add Product form
+ */
+function updateProductPropertyInputs() {
+    let oldProperties = $('#product-properties').children().detach();
+    if (oldProperties.length > 0) {
+        $('#property-inputs').append(oldProperties);
+    }
+    let selectedVal = $('#id_category').val();
+    let newProperties;
+    let propertyId = '';
+    switch (selectedVal) {
+        case '':
+            propertyId = '#empty-properties';
+            break;
+        case '1':
+            propertyId = '#bread-properties';
+            break;
+        default:
+            propertyId = '#pastry-properties';
+            break;
+    }
+    newProperties = $(propertyId).detach();
+    if (newProperties && newProperties.length > 0) {
+        $('#product-properties').append(newProperties);
+    }
+}
+
+
 $(document).ready(() => {
 
     highlightAllergens();
@@ -223,4 +252,10 @@ $(document).ready(() => {
     $('.scroll-left').click(() => {
         colorScroll(-1);
     });
+
+    // Showing the correct product properties for the "Add Product" page
+    if ($('#id_category').length > 0) {
+        $('#id_category').on('change', updateProductPropertyInputs);
+        updateProductPropertyInputs();
+    }
 });

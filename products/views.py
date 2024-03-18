@@ -167,4 +167,23 @@ class AddProduct(View):
         context = get_base_context(request)
         product_form = AddProductForm()
         context['product_form'] = product_form
+
+        # Making the forms for the product properties
+        bread_properties = [
+            {'label': 'Shapes', 'value': 'shape'},
+            {'label': 'Sizes', 'value': 'size'},
+            {'label': 'Contents', 'value': 'contents'},
+        ]
+        pastry_properties = [
+            {'label': 'Types', 'value': 'type'},
+            {'label': 'Contents', 'value': 'contents'},
+            {'label': 'Types', 'value': 'type'},
+            {'label': 'Colours', 'value': 'color'},
+            {'label': 'Icing', 'value': 'icing'},
+            {'label': 'Types', 'value': 'type'},
+            {'label': 'Decoration', 'value': 'decoration'},
+        ]
+        context['bread_properties'] = bread_properties
+        context['pastry_properties'] = pastry_properties
+
         return render(request, self.template, context)
