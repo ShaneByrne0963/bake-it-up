@@ -143,7 +143,7 @@ function updateColorScrollButtons() {
 const scrollMargin = 10;
 /**
  * Scrolls the color input in a given direction
- * @param {Integer} direciton The direction of the scroll movement. Must
+ * @param {Integer} direction The direction of the scroll movement. Must
  * be 1 (right) or -1 (left)
  */
 function colorScroll(direction) {
@@ -162,6 +162,7 @@ function colorScroll(direction) {
     isRight = (direction > 0);
     let colorIteration = (isRight) ? 0 : global.colorListWidth;
     let iterationStart = (isRight) ? 0 : colorInputs.length - 1;
+    console.clear();
 
     for (let i = iterationStart; i >= 0 && i < colorInputs.length; i += direction) {
         let color = colorInputs[i];
@@ -173,12 +174,37 @@ function colorScroll(direction) {
             || (!isRight && colorIteration < -listPosition - scrollMargin)) {
             break;
         }
+        console.log(i);
     }
     if (direction > 0) {
         colorIteration -= global.containerWidth;
     }
     let finalPosition = Math.round(-colorIteration);
     colorList.css('left', `${finalPosition}px`).addClass('animated');
+}
+
+
+const colorListExtraWidth = 50;
+/**
+ * Finds the actual width of the color list. This is different
+ * from the div's width as we want the color inputs to have sufficient space
+ */
+function getColorListWidth() {
+    global.colorListWidth = 0;
+    $('.color-input').each(function() {
+        global.colorListWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
+    });
+    $('.color-list').css('width', `${global.colorListWidth + colorListExtraWidth}px`);
+}
+
+
+/**
+ * Selects a color input, deselecting all other inputs
+ */
+function selectColorInput() {
+    $('.color-input').removeClass('selected');
+    $(this).addClass('selected');
+    $('#prop-color').val($(this).data('val'));
 }
 
 
@@ -203,18 +229,10 @@ $(document).ready(() => {
         $(this).removeClass('animated');
     });
 
-    // Finding the actual width of the color list. This is different
-    // from the div's width as we want the color inputs to have sufficient space
-    $('.color-input').each(function() {
-        global.colorListWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
-    });
+    getColorListWidth();
 
     // Adding functionality to the color radio input
-    $('.color-input').addClass('animated').click(function() {
-        $('.color-input').removeClass('selected');
-        $(this).addClass('selected');
-        $('#prop-color').val($(this).data('val'));
-    });
+    $('.color-input').addClass('animated').click(selectColorInput);
 
     // Functionality for the scroll buttons
     $('.scroll-right').click(() => {

@@ -81,6 +81,46 @@ function removeProductProperty() {
 }
 
 
+/**
+ * Converts a hex value to RGB
+ * Source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+ * @param {String} hex A hex color ("#ffffff")
+ * @returns {Object} {r, g, b}
+ */
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+    ] : null;
+}
+
+
+const borderShade = 0.8;
+/**
+ * Adds a product color to the properties list
+ */
+function addProductColor() {
+    let textInput = $(this).closest('.property-input').find('input');
+    let inputValue = textInput.val();
+    let colorList = $(this).closest('.product-property-group').find('.color-list');
+
+    // Creating the color input
+    let colorRgb = hexToRgb(inputValue).map((component) => {
+        return (component * borderShade);
+    });
+    let colorInput = $('<div></div>').addClass('color-input').css('background-color', inputValue);
+    colorInput.css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
+    let colorOverlay = $('<div></div>').addClass('color-overlay');
+
+    colorInput.append(colorOverlay);
+    colorList.append(colorInput);
+    getColorListWidth();
+    updateColorScrollButtons();
+}
+
+
 $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
@@ -88,4 +128,5 @@ $(document).ready(() => {
     $('.product-label-check').on('change', checkDefaultLabel);
 
     $('.add-product-property').click(addProductProperty);
+    $('.add-product-color').click(addProductColor);
 });

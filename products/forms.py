@@ -6,10 +6,7 @@ from core.shortcuts import find_dict_in_list
 from core.templatetags.custom_tags import shade_color
 from core.constants import PRODUCT_PROPERTIES
 
-# The height of the color option, plus its border
-COLOR_INPUT_HEIGHT = 72
-# The gap between each color option
-COLOR_INPUT_GAP = 6
+
 # The brightness of the border, in relation to the color
 COLOR_BORDER_VALUE = 0.8
 
@@ -227,8 +224,6 @@ def create_color_input(prop, product_attrs, value):
     if 'label' in product_attrs:
         label = product_attrs['label']
     answers = product_attrs['answers']
-    picker_width = len(answers) * \
-        (COLOR_INPUT_HEIGHT + COLOR_INPUT_GAP)
 
     # Default to the first option
     if value is None:
@@ -249,8 +244,7 @@ def create_color_input(prop, product_attrs, value):
                 <span class="sr-only">Previous</span>
             </button>
             <div class="color-container overflow-hidden">
-                <div class="color-list"
-                    style="width: {picker_width}px;">
+                <div class="color-list" style="width: 1000vw">
     """
 
     # Each color
