@@ -97,11 +97,30 @@ function hexToRgb(hex) {
 }
 
 
+/**
+ * Converts an RGB value to Hex
+ * Source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+ * @param {Integer} r The color's red component
+ * @param {Integer} g The color's green component
+ * @param {Integer} b The color's blue component
+ * @returns {String} "#rrggbb"
+ */
+function rgbToHex(r, g, b) {
+    return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
+  }
+
+
 const borderShade = 0.8;
 /**
  * Adds a product color to the properties list
  */
 function addProductColor() {
+    // Deselects all color inputs if the text is set to "Deselect"
+    if ($(this).text() === 'Deselect') {
+        $(this).text('Add').closest('.form-group').find('.color-input').removeClass('selected');
+        return;
+    }
+
     let textInput = $(this).closest('.property-input').find('input');
     let inputValue = textInput.val();
     let colorList = $(this).closest('.product-property-group').find('.color-list');
@@ -110,17 +129,45 @@ function addProductColor() {
     let colorRgb = hexToRgb(inputValue).map((component) => {
         return (component * borderShade);
     });
-    let colorInput = $('<div></div>').addClass('color-input').css('background-color', inputValue);
+    let colorInput = $('<div></div>').addClass('color-input animated').css('background-color', inputValue).click(colorSelectAddProduct);
     colorInput.css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
     let colorOverlay = $('<div></div>').addClass('color-overlay');
 
-    colorInput.append(colorOverlay);
+    colorInput.on('transitionend webkitTransitionEnd oTransitionEnd', getColorListWidth).append(colorOverlay);
     colorList.append(colorInput);
     // Get the width of the color list immediately so the colors don't appear squashed for a frame
     getColorListWidth();
     // Then get the width of the color list again once the CSS has had time to adjust to it's environment
     setTimeout(getColorListWidth, 2);
     updateColorScrollButtons();
+}
+
+
+/**
+ * Selects/Deselects a color input in the Add/Edit product page
+ */
+function colorSelectAddProduct() {
+    let isSelected = $(this).hasClass('selected');
+    $('.color-input').removeClass('selected');
+    if (isSelected) {
+        let inputParent = $(this).closest('.form-group');
+        inputParent.find('.add-product-color').text('Add');
+        inputParent.find('.remove-product-color').prop('disabled', true);
+    }
+    else {
+        let inputParent = $(this).closest('.form-group');
+        inputParent.find('.add-product-color').text('Deselect');
+        inputParent.find('.remove-product-color').prop('disabled', false);
+        
+        // Filling the color input's value with the current selected color
+        let colorRgb = $(this).css('background-color').replace('rgb(', '').replace(')', '').split(', ').map((c) => {
+            return parseInt(c);
+        });
+        let colorHex = rgbToHex(colorRgb[0], colorRgb[1], colorRgb[2]);
+        inputParent.find('input[type="color"]').val(colorHex);
+
+        $(this).addClass('selected');
+    }
 }
 
 
