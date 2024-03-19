@@ -186,12 +186,13 @@ const colorListExtraWidth = 50;
  * Finds the actual width of the color list. This is different
  * from the div's width as we want the color inputs to have sufficient space
  */
-function getColorListWidth() {
+function updateColorListWidth() {
     global.colorListWidth = 0;
     $('.color-input').each(function() {
         global.colorListWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
     });
     $('.color-list').css('width', `${global.colorListWidth + colorListExtraWidth}px`);
+    updateColorScrollButtons();
 }
 
 
@@ -226,7 +227,7 @@ $(document).ready(() => {
         $(this).removeClass('animated');
     });
 
-    getColorListWidth();
+    updateColorListWidth();
 
     // Adding functionality to the color radio input
     $('.color-input').addClass('animated').click(selectColorInput);

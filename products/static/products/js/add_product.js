@@ -135,13 +135,12 @@ function addProductColor() {
     colorInput.css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
     let colorOverlay = $('<div></div>').addClass('color-overlay');
 
-    colorInput.on('transitionend webkitTransitionEnd oTransitionEnd', getColorListWidth).append(colorOverlay);
+    colorInput.on('transitionend webkitTransitionEnd oTransitionEnd', updateColorListWidth).append(colorOverlay);
     colorList.append(colorInput);
     // Get the width of the color list immediately so the colors don't appear squashed for a frame
-    getColorListWidth();
+    updateColorListWidth();
     // Then get the width of the color list again once the CSS has had time to adjust to it's environment
-    setTimeout(getColorListWidth, 2);
-    updateColorScrollButtons();
+    setTimeout(updateColorListWidth, 2);
 }
 
 
@@ -188,7 +187,7 @@ function updateSelectedColor(colorInput) {
         });
         selectedColor.css('background-color', inputValue).css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
 
-        // Allow the color input to be updated in real time
+        // Allow the selected color input to be updated in real time
         if ($(colorInput).is(':focus')) {
             setTimeout(() => {
                 updateSelectedColor(colorInput);
@@ -207,7 +206,16 @@ $(document).ready(() => {
     $('.add-product-property').click(addProductProperty);
     $('.add-product-color').click(addProductColor);
 
+    // Updates a selected color input
     $('input[type="color"]').on('focus', function() {
         updateSelectedColor(this);
+    });
+
+    // Removes a selected color input
+    $('.remove-product-color').click(function() {
+        let inputParent = $(this).prop('disabled', true).closest('.form-group');
+        inputParent.find('.color-input.selected').remove();
+        inputParent.find('.add-product-color').text('Add');
+        updateColorListWidth();
     });
 });
