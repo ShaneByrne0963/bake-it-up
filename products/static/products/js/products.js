@@ -162,8 +162,6 @@ function colorScroll(direction) {
     isRight = (direction > 0);
     let colorIteration = (isRight) ? 0 : global.colorListWidth;
     let iterationStart = (isRight) ? 0 : colorInputs.length - 1;
-    console.clear();
-
     for (let i = iterationStart; i >= 0 && i < colorInputs.length; i += direction) {
         let color = colorInputs[i];
         let colorWidth = $(color).width() + (colorMargin * 2) + (colorBorder * 2);
@@ -174,7 +172,6 @@ function colorScroll(direction) {
             || (!isRight && colorIteration < -listPosition - scrollMargin)) {
             break;
         }
-        console.log(i);
     }
     if (direction > 0) {
         colorIteration -= global.containerWidth;

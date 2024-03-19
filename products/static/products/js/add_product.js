@@ -116,7 +116,10 @@ function addProductColor() {
 
     colorInput.append(colorOverlay);
     colorList.append(colorInput);
+    // Get the width of the color list immediately so the colors don't appear squashed for a frame
     getColorListWidth();
+    // Then get the width of the color list again once the CSS has had time to adjust to it's environment
+    setTimeout(getColorListWidth, 2);
     updateColorScrollButtons();
 }
 
