@@ -189,7 +189,7 @@ const colorListExtraWidth = 50;
 function updateColorListWidth() {
     global.colorListWidth = 0;
     $('.color-input').each(function() {
-        global.colorListWidth += $(this).width() + (colorMargin * 2) + (colorBorder * 2);
+        global.colorListWidth += $(this).height() + (colorMargin * 2) + (colorBorder * 2);
     });
     $('.color-list').css('width', `${global.colorListWidth + colorListExtraWidth}px`);
     updateColorScrollButtons();

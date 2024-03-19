@@ -296,6 +296,23 @@ $(document).ready(() => {
         addColorToList(colorValue, colorList);
     });
 
+    // Updating the property collapses
+    $('#pastry-collapse-color').on('show.bs.collapse', function() {
+        setTimeout(updateColorListWidth, 2);
+    });
+    // Prevents double-clicking to async the checkbox and the collapse
+    $('.property-group-collapse').on('shown.bs.collapse', function() {
+        let isChecked = Boolean($(this).closest('.product-property-group').find('.allow-prop').prop('checked'));
+        if (!isChecked) {
+            $(this).collapse('hide');
+        }
+    }).on('hidden.bs.collapse', function() {
+        let isChecked = Boolean($(this).closest('.product-property-group').find('.allow-prop').prop('checked'));
+        if (isChecked) {
+            $(this).collapse('show');
+        }
+    })
+
     // Enables/Disables the label input depending on if "Use Default Label" is checked
     $('.product-label-check').on('change', checkDefaultLabel);
 
