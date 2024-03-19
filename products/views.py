@@ -7,6 +7,7 @@ from core.contexts import get_base_context, get_products, \
     get_product_by_name
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
+from home.models import SiteData
 from .models import BreadProduct, PastryProduct
 from .forms import create_properties_form, AddProductForm
 from profiles.models import UserProfile
@@ -170,6 +171,15 @@ class AddProduct(View):
         product_form = AddProductForm()
         context['product_form'] = product_form
 
+        site_data = None
+        try:
+            site_data = SiteData.objects.all()[0]
+        except:
+            messages.error(
+                request,
+                "Site data couldn't be found"
+            )
+
         # Making the forms for the product properties
         bread_properties = [
             {'label': 'Shapes', 'value': 'shape'},
@@ -183,7 +193,7 @@ class AddProduct(View):
             {'label': 'Icing', 'value': 'icing'},
             {'label': 'Decoration', 'value': 'decoration'},
         ]
-        # Getting the default labels for each property
+        # Getting the default labels and answers for each property
         for bread in bread_properties:
             default_label = find_dict_in_list(
                 PRODUCT_PROPERTIES,
@@ -192,6 +202,16 @@ class AddProduct(View):
             )['default_label']
             bread['default_label'] = default_label
 
+            if site_data:
+                key = f'bread_prop_{bread['value']}s'
+                # To stop contents being "contentss"
+                if key[-2:] == 'ss':
+                    key = key[:-1]
+                default_answers = getattr(site_data, key)
+                if default_answers:
+                    answer_list = default_answers.split('|')
+                    bread['answers'] = answer_list
+
         for pastry in pastry_properties:
             default_label = find_dict_in_list(
                 PRODUCT_PROPERTIES,
@@ -199,6 +219,16 @@ class AddProduct(View):
                 pastry['value']
             )['default_label']
             pastry['default_label'] = default_label
+
+            if site_data:
+                value = pastry['value']
+                key = f'pastry_prop_{value}'
+                if not (value == 'contents' or value == 'icing'):
+                    key += 's'
+                default_answers = getattr(site_data, key)
+                if default_answers:
+                    answer_list = default_answers.split('|')
+                    pastry['answers'] = answer_list
 
         context['bread_properties'] = bread_properties
         context['pastry_properties'] = pastry_properties

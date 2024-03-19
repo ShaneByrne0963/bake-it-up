@@ -2,7 +2,7 @@
  * Inserts the correct product properties form in the Add Product form
  */
 function updateProductPropertyInputs() {
-    let oldProperties = $('#product-properties').children().detach();
+    let oldProperties = $('#add-product-properties').children().detach();
     if (oldProperties.length > 0) {
         $('#property-inputs').append(oldProperties);
     }
@@ -22,8 +22,13 @@ function updateProductPropertyInputs() {
     }
     newProperties = $(propertyId).detach();
     if (newProperties && newProperties.length > 0) {
-        $('#product-properties').append(newProperties);
+        $('#add-product-properties').append(newProperties);
     }
+    // Updating the container width after the CSS elements have been arranged
+    setTimeout(() => {
+        global.containerWidth = $('.color-container').width();
+        updateColorScrollButtons();
+    }, 2);
 }
 
 
@@ -44,27 +49,35 @@ function checkDefaultLabel() {
 
 
 /**
- * Adds a property to the current property list
+ * Is called when the user clicks the "Add" button for normal product properties
  */
 function addProductProperty() {
     let textInput = $(this).closest('.property-input').find('input');
     let inputValue = textInput.val();
     if (inputValue) {
         let propertyList = $(this).closest('.product-property-group').find('.property-answer-list');
-
-        // Creating the elements for the new list item
-        let newListItem = $('<li></li>');
-        let listItemInner = $('<div></div>').addClass('d-flex justify-content-between');
-        let listItemText = $('<span></span>').addClass('product-property-value').text(inputValue);
-        let listItemClose = $('<button></button>').attr('type', 'button').addClass('close mr-2').text('×').click(removeProductProperty);
-
-        newListItem.append(listItemInner.append(listItemText).append(listItemClose));
-
-        propertyList.append(newListItem).removeClass('d-none');
+        addPropertyToList(inputValue, propertyList);
         textInput.val('');
     }
+}
+
+
+/**
+ * Adds a property to the current property list
+ * @param {String} value The text value of the property
+ * @param {Element} propertyList The element of the list to add the property to
+ */
+function addPropertyToList(value, propertyList) {
+    // Creating the elements for the new list item
+    let newListItem = $('<li></li>');
+    let listItemInner = $('<div></div>').addClass('d-flex justify-content-between');
+    let listItemText = $('<span></span>').addClass('product-property-value').text(value);
+    let listItemClose = $('<button></button>').attr('type', 'button').addClass('close mr-2').text('×').click(removeProductProperty);
+    newListItem.append(listItemInner.append(listItemText).append(listItemClose));
+
+    $(propertyList).append(newListItem).removeClass('d-none');
     // Getting the JSON value to be used in the model
-    updatePropertyJSON($(this).closest('.product-property-group'));
+    updatePropertyJSON($(propertyList).closest('.product-property-group'));
 }
 
 
@@ -130,7 +143,21 @@ function convertCssToHex(cssValue) {
 
 const borderShade = 0.8;
 /**
- * Adds a product color to the properties list
+ * 
+ * @param {String} color The hex value "#rrggbb" of the color
+ * @param {Float} value The shade of the color, with 1 being full brightness and 0 being black
+ * @returns {String} the hex value of the shaded component "#rrggbb"
+ */
+function shadeColor(color, value=borderShade) {
+    let colorRgb = hexToRgb(color).map((component) => {
+        return (component * value);
+    });
+    return rgbToHex(colorRgb[0], colorRgb[1], colorRgb[2]);
+}
+
+
+/**
+ * is called when the user clicks the "Add" button for the color properties
  */
 function addProductColor() {
     // Deselects all color inputs if the text is set to "Deselect"
@@ -145,12 +172,20 @@ function addProductColor() {
     let inputValue = textInput.val();
     let colorList = $(this).closest('.product-property-group').find('.color-list');
 
+    addColorToList(inputValue, colorList);
+}
+
+
+/**
+ * Adds a product color to the properties list
+ * @param {String} color The hex value of the color "#rrggbb"
+ * @param {Element} colorList the color list to add the product to
+ */
+function addColorToList(color, colorList) {
     // Creating the color input
-    let colorRgb = hexToRgb(inputValue).map((component) => {
-        return (component * borderShade);
-    });
-    let colorInput = $('<div></div>').addClass('color-input animated').css('background-color', inputValue).click(colorSelectAddProduct);
-    colorInput.css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
+    let colorShade = shadeColor(color);
+    let colorInput = $('<div></div>').addClass('color-input animated').css('background-color', color).click(colorSelectAddProduct);
+    colorInput.css('border-color', colorShade);
     let colorOverlay = $('<div></div>').addClass('color-overlay');
 
     colorInput.on('transitionend webkitTransitionEnd oTransitionEnd', updateColorListWidth).append(colorOverlay);
@@ -160,7 +195,7 @@ function addProductColor() {
     // Then get the width of the color list again once the CSS has had time to adjust to it's environment
     setTimeout(updateColorListWidth, 2);
 
-    updatePropertyJSON($(this).closest('.product-property-group'));
+    updatePropertyJSON($(colorList).closest('.product-property-group'));
 }
 
 
@@ -198,10 +233,8 @@ function updateSelectedColor(colorInput) {
     if (selectedColor.length > 0) {
         let inputValue = $(colorInput).val();
         // Creating the color input
-        let colorRgb = hexToRgb(inputValue).map((component) => {
-            return (component * borderShade);
-        });
-        selectedColor.css('background-color', inputValue).css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
+        let colorShade = shadeColor(inputValue);
+        selectedColor.css('background-color', inputValue).css('border-color', colorShade);
 
         // Allow the selected color input to be updated in real time
         if ($(colorInput).is(':focus')) {
@@ -248,6 +281,20 @@ function updatePropertyJSON(propertyGroup) {
 $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
+
+    // Initializing any default property answers
+    $('.default-answer').each(function() {
+        let propertyValue = $(this).text();
+        let propertyList = $(this).closest('.product-property-group').find('.property-answer-list');
+        $(this).remove();
+        addPropertyToList(propertyValue, propertyList);
+    });
+    $('.default-color-input').each(function() {
+        let colorValue = $(this).text();
+        let colorList = $(this).closest('.product-property-group').find('.color-list');
+        $(this).remove();
+        addColorToList(colorValue, colorList);
+    });
 
     // Enables/Disables the label input depending on if "Use Default Label" is checked
     $('.product-label-check').on('change', checkDefaultLabel);

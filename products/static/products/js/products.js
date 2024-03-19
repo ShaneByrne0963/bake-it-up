@@ -208,6 +208,12 @@ function selectColorInput() {
 
 $(document).ready(() => {
 
+    // Only for the product detail page
+    if ($().length > 0) {
+        // Adding functionality to the color radio input
+        $('.color-input').addClass('animated').click(selectColorInput);
+    }
+
     highlightAllergens();
     checkAllDisableButtons();
 
@@ -228,9 +234,6 @@ $(document).ready(() => {
     });
 
     updateColorListWidth();
-
-    // Adding functionality to the color radio input
-    $('.color-input').addClass('animated').click(selectColorInput);
 
     // Functionality for the scroll buttons
     $('.scroll-right').click(() => {
