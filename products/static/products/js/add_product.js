@@ -117,7 +117,9 @@ const borderShade = 0.8;
 function addProductColor() {
     // Deselects all color inputs if the text is set to "Deselect"
     if ($(this).text() === 'Deselect') {
-        $(this).text('Add').closest('.form-group').find('.color-input').removeClass('selected');
+        let inputParent = $(this).text('Add').closest('.form-group');
+        inputParent.find('.color-input').removeClass('selected');
+        inputParent.find('.remove-product-color').prop('disabled', true);
         return;
     }
 
@@ -171,6 +173,31 @@ function colorSelectAddProduct() {
 }
 
 
+/**
+ * Updates a selected color input
+ * @param {Element} colorInput The input whose color is being changed
+ */
+function updateSelectedColor(colorInput) {
+    let selectedColor = $(colorInput).closest('.form-group').find('.color-input.selected');
+
+    if (selectedColor.length > 0) {
+        let inputValue = $(colorInput).val();
+        // Creating the color input
+        let colorRgb = hexToRgb(inputValue).map((component) => {
+            return (component * borderShade);
+        });
+        selectedColor.css('background-color', inputValue).css('border-color', `rgb(${colorRgb[0]}, ${colorRgb[1]}, ${colorRgb[2]})`);
+
+        // Allow the color input to be updated in real time
+        if ($(colorInput).is(':focus')) {
+            setTimeout(() => {
+                updateSelectedColor(colorInput);
+            }, 1);
+        }
+    }
+}
+
+
 $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
@@ -179,4 +206,8 @@ $(document).ready(() => {
 
     $('.add-product-property').click(addProductProperty);
     $('.add-product-color').click(addProductColor);
+
+    $('input[type="color"]').on('focus', function() {
+        updateSelectedColor(this);
+    });
 });
