@@ -39,6 +39,7 @@ function checkDefaultLabel() {
     if (isChecked) {
         textInput.val(textInput.data('default-label'));
     }
+    updatePropertyJSON($(this).closest('.product-property-group'));
 }
 
 
@@ -54,7 +55,7 @@ function addProductProperty() {
         // Creating the elements for the new list item
         let newListItem = $('<li></li>');
         let listItemInner = $('<div></div>').addClass('d-flex justify-content-between');
-        let listItemText = $('<span></span>').text(inputValue);
+        let listItemText = $('<span></span>').addClass('product-property-value').text(inputValue);
         let listItemClose = $('<button></button>').attr('type', 'button').addClass('close mr-2').text('×').click(removeProductProperty);
 
         newListItem.append(listItemInner.append(listItemText).append(listItemClose));
@@ -62,6 +63,8 @@ function addProductProperty() {
         propertyList.append(newListItem).removeClass('d-none');
         textInput.val('');
     }
+    // Getting the JSON value to be used in the model
+    updatePropertyJSON($(this).closest('.product-property-group'));
 }
 
 
@@ -71,6 +74,7 @@ function addProductProperty() {
 function removeProductProperty() {
     let listElement = $(this).closest('ul');
     let listItemElement = $(this).closest('li');
+    let productPropertyGroup = $(this).closest('.product-property-group');
     listItemElement.remove();
 
     // Hiding the list if there are no list items
@@ -78,6 +82,7 @@ function removeProductProperty() {
     if (currentListItems.length === 0) {
         listElement.addClass('d-none');
     }
+    updatePropertyJSON(productPropertyGroup);
 }
 
 
@@ -107,7 +112,20 @@ function hexToRgb(hex) {
  */
 function rgbToHex(r, g, b) {
     return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
-  }
+}
+
+
+/**
+ * Converts a CSS rgb color to hex format
+ * @param {String} cssValue Should be in the format "rgb(r, g, b)"
+ * @returns {String} #rrggbb
+ */
+function convertCssToHex(cssValue) {
+    let colorRgb = cssValue.replace('rgb(', '').replace(')', '').split(', ').map((c) => {
+        return parseInt(c);
+    });
+    return rgbToHex(colorRgb[0], colorRgb[1], colorRgb[2]);
+}
 
 
 const borderShade = 0.8;
@@ -141,6 +159,8 @@ function addProductColor() {
     updateColorListWidth();
     // Then get the width of the color list again once the CSS has had time to adjust to it's environment
     setTimeout(updateColorListWidth, 2);
+
+    updatePropertyJSON($(this).closest('.product-property-group'));
 }
 
 
@@ -161,11 +181,7 @@ function colorSelectAddProduct() {
         inputParent.find('.remove-product-color').prop('disabled', false);
         
         // Filling the color input's value with the current selected color
-        let colorRgb = $(this).css('background-color').replace('rgb(', '').replace(')', '').split(', ').map((c) => {
-            return parseInt(c);
-        });
-        let colorHex = rgbToHex(colorRgb[0], colorRgb[1], colorRgb[2]);
-        inputParent.find('input[type="color"]').val(colorHex);
+        inputParent.find('input[type="color"]').val(convertCssToHex($(this).css('background-color')));
 
         $(this).addClass('selected');
     }
@@ -192,8 +208,40 @@ function updateSelectedColor(colorInput) {
             setTimeout(() => {
                 updateSelectedColor(colorInput);
             }, 1);
+            // Preventing the JSON from updating every frame
+            return;
         }
     }
+    updatePropertyJSON($(colorInput).closest('.product-property-group'));
+}
+
+
+/**
+ * Updates the hidden JSON input when a property changes
+ * @param {Element} propertyGroup The parent element containing all the property inputs
+ */
+function updatePropertyJSON(propertyGroup) {
+    let properties = {};
+    let jsonInput = $(propertyGroup).find('textarea');
+
+    // Getting the label for the property
+    let useDefaultLabel = Boolean($(propertyGroup).find('.product-label-check').prop('checked'));
+    if (!useDefaultLabel) {
+        properties.label = $(propertyGroup).find('.product-label').val();
+    }
+
+    //Getting the answers
+    properties.answers = [];
+    $(propertyGroup).find('.product-property-value').each(function() {
+        properties.answers.push($(this).text());
+    });
+    $(propertyGroup).find('.color-input').each(function() {
+        let hexValue = convertCssToHex($(this).css('background-color'));
+        properties.answers.push(hexValue);
+    });
+
+    let jsonValue = JSON.stringify(properties);
+    jsonInput.text(jsonValue);
 }
 
 
@@ -201,7 +249,13 @@ $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
 
+    // Enables/Disables the label input depending on if "Use Default Label" is checked
     $('.product-label-check').on('change', checkDefaultLabel);
+
+    // Updates the JSON when the label is changed
+    $('.product-label').on('change', function() {
+        updatePropertyJSON($(this).closest('.product-property-group'));
+    });
 
     $('.add-product-property').click(addProductProperty);
     $('.add-product-color').click(addProductColor);
@@ -217,5 +271,6 @@ $(document).ready(() => {
         inputParent.find('.color-input.selected').remove();
         inputParent.find('.add-product-color').text('Add');
         updateColorListWidth();
+        updatePropertyJSON($(this).closest('.product-property-group'));
     });
 });
