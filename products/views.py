@@ -13,7 +13,8 @@ from .models import BreadProduct, PastryProduct, Category
 from .forms import create_properties_form, AddProductForm, AddPastryProductForm
 from profiles.models import UserProfile
 
-# Create your views here.
+import json
+
 
 class ProductList(generic.ListView):
     template_name = 'products/product_list.html'
@@ -247,15 +248,42 @@ class AddProduct(View):
         return redirect('home')
 
 
-def validate_product_form(request):
+def validate_product(request):
     """
     Validates the form before submitting it, so the page
     doesn't have to be refreshed and all data can be kept
     """
     try:
+        # Make sure the name doesn't exist in either model
+        product_name = request.POST['name']
+        product_in = ''
+
+        # We want exceptions for these try blocks
+        try:
+            BreadProduct.objects.get(name=product_name)
+            product_in = 'bread'
+        except:
+            pass
+        try:
+            PastryProduct.objects.get(name=product_name)
+            product_in = 'pastry'
+        except:
+            pass
+        
+        if product_in:
+            error_message = {
+                'name': [{
+                    'message': f'"{product_name}" already exists in \
+                    the {product_in} model. Please pick another name',
+                    'code': ''
+                }]
+            }
+            return HttpResponse(content=json.dumps(error_message),
+                                status=400)
+
+        # Validating the form
         product_form = None
         category = int(request.POST['category'])
-        product_name = request.POST['name']
         if category == 1:
             product_form = AddProductForm(request.POST, request.FILES)
         else:
