@@ -349,6 +349,16 @@ $(document).ready(() => {
         updatePropertyJSON($(this).closest('.product-property-group'));
     });
 
+    // Removes any invalid input properties when the input changes
+    $('#add-product-form').find('input, select, textarea').change(function() {
+        if ($(this).hasClass('is-invalid')) {
+            let sibling = $(this).removeClass('is-invalid').next();
+            if (sibling.length > 0) {
+                sibling.remove();
+            }
+        }
+    });
+
     // Validates the form on the same page, to prevent loss of data for invalid forms
     $('#add-product-form').on('submit', function(event) {
         event.preventDefault();
@@ -357,7 +367,7 @@ $(document).ready(() => {
         
         let formData = new FormData();
 
-        $(this).find('input, select').each(function() {
+        $(this).find('input, select, textarea').each(function() {
             let key = $(this).attr('name');
             if ($(this).attr('type') === 'file') {
                 let file = $(this).get(0).files[0];
@@ -379,6 +389,9 @@ $(document).ready(() => {
                 window.location = '/products/' + result;
             },
             error: (result) => {
+                // Remove the error message from the console
+                console.clear();
+
                 $(this).find('button[type="submit"]').prop('disabled', false);
                 $(this).find('.spinner-border').addClass('d-none');
 
@@ -388,12 +401,20 @@ $(document).ready(() => {
                 // Invalid fields produce a JSON error
                 if (errorMessage[0] === '{') {
                     let errorJSON = JSON.parse(errorMessage);
+                    let scrolled = false;
+
                     for (let [key, value] of Object.entries(errorJSON)) {
-                        let invalidInput = $('#add-product-form').find(`*[name="${key}"]`);
+                        let invalidInput = $('#add-product-form').find(`*[name="${key}"]`).addClass('is-invalid');
 
                         let content = value[0].message;
                         let errorElement = $('<small></small>').addClass('product-feedback text-danger font-weight-bold').text(content);
                         errorElement.insertAfter(invalidInput);
+
+                        // Scrolling to the first element with an error
+                        if (!scrolled) {
+                            location.href = '#' + invalidInput.attr('id');
+                            scrolled = true;
+                        }
                     }
                 }
             }
