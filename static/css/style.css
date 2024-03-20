@@ -114,17 +114,6 @@ h3, .product-card-title {
     width: 0;
 }
 
-/* A form of display: none, but can be used if element sizing is needed */
-.render-off-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    visibility: hidden;
-    overflow: hidden;
-    pointer-events: none;
-}
-
 /* --------------------------------------------------------Overriding Bootstrap elements */
 
 /* Buttons */

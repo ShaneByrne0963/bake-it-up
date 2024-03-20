@@ -290,7 +290,18 @@ def validate_product(request):
             product_form = AddPastryProductForm(request.POST, request.FILES)
 
         if product_form.is_valid():
-            product_form.save()
+            product = product_form.save()
+
+            # Adding custom properties
+            for prop in PRODUCT_PROPERTIES:
+                prop_name = prop['name']
+                checkbox = f'allow_{prop_name}'
+                prop_val = f'prop_{prop_name}'
+                if checkbox in request.POST:
+                    val_formatted = json.loads(request.POST[prop_val])
+                    setattr(product, prop_val, val_formatted)
+            product.save()
+
             return HttpResponse(content=product_name, status=200)
         else:
             return HttpResponse(product_form.errors.as_json(), status=400)

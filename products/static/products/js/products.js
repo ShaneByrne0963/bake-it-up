@@ -209,7 +209,7 @@ function selectColorInput() {
 $(document).ready(() => {
 
     // Only for the product detail page
-    if ($().length > 0) {
+    if ($('#product-detail-price').length > 0) {
         // Adding functionality to the color radio input
         $('.color-input').addClass('animated').click(selectColorInput);
     }

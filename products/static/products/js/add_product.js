@@ -369,13 +369,22 @@ $(document).ready(() => {
 
         $(this).find('input, select, textarea').each(function() {
             let key = $(this).attr('name');
-            if ($(this).attr('type') === 'file') {
-                let file = $(this).get(0).files[0];
-                formData.append(key, file);
-            }
-            else {
-                let value = $(this).val();
-                formData.append(key, value);
+            let inputType = $(this).attr('type')
+
+            switch (inputType) {
+                case 'file':
+                    let file = $(this).get(0).files[0];
+                    formData.append(key, file);
+                    break;
+                case 'checkbox':
+                    if ($(this).prop('checked')) {
+                        formData.append(key, 'on');
+                    }
+                    break;
+                default:
+                    let value = $(this).val();
+                    formData.append(key, value);
+                    break;
             }
         });
 
@@ -416,6 +425,9 @@ $(document).ready(() => {
                             scrolled = true;
                         }
                     }
+                }
+                else {
+                    console.log(errorMessage);
                 }
             }
         });
