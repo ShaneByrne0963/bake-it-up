@@ -349,12 +349,15 @@ $(document).ready(() => {
         updatePropertyJSON($(this).closest('.product-property-group'));
     });
 
-    // Validates the form before submitting it
+    // Validates the form on the same page, to prevent loss of data for invalid forms
     $('#add-product-form').on('submit', function(event) {
         event.preventDefault();
+        $(this).find('button[type="submit"]').prop('disabled', true);
+        $(this).find('.spinner-border').removeClass('d-none');
+        
         let formData = new FormData();
 
-        $(this).find('input, select, textarea').each(function() {
+        $(this).find('input, select').each(function() {
             let key = $(this).attr('name');
             if ($(this).attr('type') === 'file') {
                 let file = $(this).get(0).files[0];
@@ -376,7 +379,23 @@ $(document).ready(() => {
                 window.location = '/products/' + result;
             },
             error: (result) => {
-                console.log(result);
+                $(this).find('button[type="submit"]').prop('disabled', false);
+                $(this).find('.spinner-border').addClass('d-none');
+
+                // Manually entering the form errors under each form input
+                let errorMessage = result.responseText;
+
+                // Invalid fields produce a JSON error
+                if (errorMessage[0] === '{') {
+                    let errorJSON = JSON.parse(errorMessage);
+                    for (let [key, value] of Object.entries(errorJSON)) {
+                        let invalidInput = $('#add-product-form').find(`*[name="${key}"]`);
+
+                        let content = value[0].message;
+                        let errorElement = $('<small></small>').addClass('product-feedback text-danger font-weight-bold').text(content);
+                        errorElement.insertAfter(invalidInput);
+                    }
+                }
             }
         });
     });

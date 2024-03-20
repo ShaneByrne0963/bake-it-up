@@ -264,9 +264,10 @@ def validate_product_form(request):
         if product_form.is_valid():
             product_form.save()
             return HttpResponse(content=product_name, status=200)
-
+        else:
+            return HttpResponse(product_form.errors.as_json(), status=400)
     except Exception as e:
         return HttpResponse(
-            content=f"Invalid Form. {e}",
+            content=e,
             status=400
         )
