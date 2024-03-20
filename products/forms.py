@@ -45,6 +45,15 @@ class AddProductForm(forms.ModelForm):
                 })
 
 
+class AddPastryProductForm(AddProductForm):
+
+    class Meta():
+        model = PastryProduct
+        fields = ['category', 'display_name', 'name', 'price',
+                  'description', 'ingredients', 'batch_size',
+                  'image']
+
+
 def get_default_label(name):
     """
     Finds the default label of a product property

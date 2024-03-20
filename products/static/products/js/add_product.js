@@ -10,14 +10,25 @@ function updateProductPropertyInputs() {
     let newProperties;
     let propertyId = '';
     switch (selectedVal) {
-        case '':
-            propertyId = '#empty-properties';
-            break;
         case '1':
             propertyId = '#bread-properties';
             break;
-        default:
+        case '2':
             propertyId = '#pastry-properties';
+            // Changing the checkbox labels from "Cake" to "Pastry"
+            $('.pastry-label').each(function() {
+                $(this).text($(this).text().replace('Cake', 'Pastry'));
+            });
+            break;
+        case '3':
+            propertyId = '#pastry-properties';
+            // Changing the checkbox labels from "Pastry" to "Cake"
+            $('.pastry-label').each(function() {
+                $(this).text($(this).text().replace('Pastry', 'Cake'));
+            });
+            break;
+        default:
+            propertyId = '#empty-properties';
             break;
     }
     newProperties = $(propertyId).detach();
@@ -336,5 +347,37 @@ $(document).ready(() => {
         inputParent.find('.add-product-color').text('Add');
         updateColorListWidth();
         updatePropertyJSON($(this).closest('.product-property-group'));
+    });
+
+    // Validates the form before submitting it
+    $('#add-product-form').on('submit', function(event) {
+        event.preventDefault();
+        let formData = new FormData();
+
+        $(this).find('input, select, textarea').each(function() {
+            let key = $(this).attr('name');
+            if ($(this).attr('type') === 'file') {
+                let file = $(this).get(0).files[0];
+                formData.append(key, file);
+            }
+            else {
+                let value = $(this).val();
+                formData.append(key, value);
+            }
+        });
+
+        $.post({
+            url: '/products/validate_product/',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                // Redirecting to the new product's detail page
+                window.location = '/products/' + result;
+            },
+            error: (result) => {
+                console.log(result);
+            }
+        });
     });
 });

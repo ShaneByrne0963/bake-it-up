@@ -1,15 +1,16 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect, HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import generic, View
+from django.views.decorators.http import require_POST
 
 from core.contexts import get_base_context, get_products, \
     get_product_by_name
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
 from home.models import SiteData
-from .models import BreadProduct, PastryProduct
-from .forms import create_properties_form, AddProductForm
+from .models import BreadProduct, PastryProduct, Category
+from .forms import create_properties_form, AddProductForm, AddPastryProductForm
 from profiles.models import UserProfile
 
 # Create your views here.
@@ -234,3 +235,38 @@ class AddProduct(View):
         context['pastry_properties'] = pastry_properties
 
         return render(request, self.template, context)
+    
+    def post(self, request):
+        """
+        Creating the product
+        """
+        product_form = AddProductForm(request.POST)
+
+        if not product_form.is_valid():
+            return redirect('')
+        return redirect('home')
+
+
+def validate_product_form(request):
+    """
+    Validates the form before submitting it, so the page
+    doesn't have to be refreshed and all data can be kept
+    """
+    try:
+        product_form = None
+        category = int(request.POST['category'])
+        product_name = request.POST['name']
+        if category == 1:
+            product_form = AddProductForm(request.POST, request.FILES)
+        else:
+            product_form = AddPastryProductForm(request.POST, request.FILES)
+
+        if product_form.is_valid():
+            product_form.save()
+            return HttpResponse(content=product_name, status=200)
+
+    except Exception as e:
+        return HttpResponse(
+            content=f"Invalid Form. {e}",
+            status=400
+        )
