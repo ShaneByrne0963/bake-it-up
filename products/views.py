@@ -258,7 +258,7 @@ def validate_product(request):
         product_name = request.POST['name']
         product_in = ''
 
-        # We want exceptions for these try blocks
+        # We want these try blocks to fail to proceed
         try:
             BreadProduct.objects.get(name=product_name)
             product_in = 'bread'

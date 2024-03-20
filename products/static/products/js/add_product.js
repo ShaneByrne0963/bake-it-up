@@ -364,6 +364,8 @@ $(document).ready(() => {
         event.preventDefault();
         $(this).find('button[type="submit"]').prop('disabled', true);
         $(this).find('.spinner-border').removeClass('d-none');
+        // Removing any previous errors
+        $('#general-errors').children().remove();
         
         let formData = new FormData();
 
@@ -427,7 +429,9 @@ $(document).ready(() => {
                     }
                 }
                 else {
-                    console.log(errorMessage);
+                    // Adding the error message under the submit button if the error does not belong to an input field
+                    let errorElement = $('<small></small>').addClass('product-feedback text-danger font-weight-bold').text('ERROR: ' + errorMessage);
+                    $('#general-errors').append(errorElement);
                 }
             }
         });
