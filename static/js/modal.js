@@ -196,19 +196,28 @@ $(document).ready(() => {
         triggerModal(context);
     });
     $('.modal-trigger-remove-item').click(function() {
-        let context = {
+        triggerModal({
             title: "Remove Item",
             body: `<p>Are you sure you want to remove this item from your cart?</p>`,
             button: 'Remove',
             url: $(this).data('url'),
-        };
-        triggerModal(context);
+        });
     });
     $('.modal-trigger-payment').click(() => {
         modalFormInit('payment');
     });
     $('.modal-trigger-delete-account').click(() => {
         modalFormInit('verify-password', 'delete_account');
+    });
+    $('.modal-trigger-delete-product').click(function() {
+        triggerModal({
+            title: "Delete Product",
+            body: `<p>Are you sure you want to remove this product from the site?</p>
+            <p class="ui-error">This action is irreversible and all data associated with this
+            product will be lost</p>`,
+            button: 'Delete',
+            url: $(this).data('url'),
+        });
     });
 
     //Resetting the modal form when hidden

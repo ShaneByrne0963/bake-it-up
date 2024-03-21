@@ -325,6 +325,19 @@ def validate_add_product(request):
         )
 
 
+class DeleteProduct(View):
+
+    def post(self, request, product_name):
+        product = get_product_by_name(product_name)
+        message_name = product.display_name
+        product.delete()
+        messages.success(
+            request,
+            f'{message_name} was deleted successfully'
+        )
+        return redirect('home')
+
+
 @require_POST
 def validate_edit_product(request, product_name):
     """
