@@ -15,6 +15,7 @@ from .forms import create_properties_form, AddProductForm, \
 from profiles.models import UserProfile
 
 import json
+import os
 
 
 class ProductList(generic.ListView):
@@ -380,20 +381,36 @@ def validate_edit_product(request, product_name):
         category = int(request.POST['category'])
         form = AddProductForm if category == 1 else AddPastryProductForm
         model = BreadProduct if category == 1 else PastryProduct
+        old_image_path = product.image.path
 
         # Is True if the user selects a different model than the original
         different_form = (category == 1) != (product.category.id == 1)
 
         product_form = form(request.POST, request.FILES, instance=product)
-
         if product_form.is_valid():
             new_product = None
 
+            # Getting rid of the old image if a new one exists
+            if 'image' in request.FILES:
+                os.remove(old_image_path)
+
             if different_form:
+                # Setting the default values to the products original values
                 model_data = {
                     key: value for key, value in product_form.cleaned_data.items()
                 }
+                # Updating the old model data with the form
+                for key in model_data:
+                    if key in request.POST:
+                        model_data[key] = request.POST[key]
+                
+                # Getting the category
+                model_data['category'] = Category.objects.get(
+                    id=model_data['category']
+                )
+
                 new_product = model(**model_data)
+                new_product.image = product.image
                 # Remove the old object from the database
                 product.delete()
             else:
