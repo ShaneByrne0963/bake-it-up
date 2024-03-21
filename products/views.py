@@ -5,12 +5,13 @@ from django.views import generic, View
 from django.views.decorators.http import require_POST
 
 from core.contexts import get_base_context, get_products, \
-    get_product_by_name, get_add_product_context
+    get_product_by_name, get_add_product_context, delete_product
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
 from home.models import SiteData
 from .models import BreadProduct, PastryProduct, Category
-from .forms import create_properties_form, AddProductForm, AddPastryProductForm
+from .forms import create_properties_form, AddProductForm, \
+    AddPastryProductForm
 from profiles.models import UserProfile
 
 import json
@@ -330,7 +331,7 @@ class DeleteProduct(View):
     def post(self, request, product_name):
         product = get_product_by_name(product_name)
         message_name = product.display_name
-        product.delete()
+        delete_product(product)
         messages.success(
             request,
             f'{message_name} was deleted successfully'

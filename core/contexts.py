@@ -7,6 +7,7 @@ from .constants import PRODUCT_PROPERTIES
 
 from itertools import chain
 import json
+import os
 
 
 # region List of Available Context Keys for global_context
@@ -260,3 +261,11 @@ def add_field_error(field, message, parse=True):
     if parse:
         return json.dumps(form_error)
     return form_error
+
+
+def delete_product(product):
+    """
+    Removes a product, and its image, from the database
+    """
+    os.remove(product.image.path)
+    product.delete()
