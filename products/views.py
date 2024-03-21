@@ -300,8 +300,13 @@ def validate_product(request):
                 if checkbox in request.POST:
                     val_formatted = json.loads(request.POST[prop_val])
                     setattr(product, prop_val, val_formatted)
+            
             product.save()
-
+            messages.success(
+                request,
+                f'Product "{request.POST['display_name']}" \
+                    was created successfully!'
+            )
             return HttpResponse(content=product_name, status=200)
         else:
             return HttpResponse(product_form.errors.as_json(), status=400)

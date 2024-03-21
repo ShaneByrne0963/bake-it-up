@@ -51,7 +51,7 @@ function checkDefaultLabel() {
     let textInput = $(this).closest('.product-property-group').find('.product-label');
     let isChecked = Boolean($(this).prop('checked'));
 
-    textInput.prop('disabled', isChecked);
+    textInput.prop('disabled', isChecked).prop('required', !isChecked);
     if (isChecked) {
         textInput.val(textInput.data('default-label'));
     }
@@ -267,6 +267,8 @@ function updateSelectedColor(colorInput) {
 function updatePropertyJSON(propertyGroup) {
     let properties = {};
     let jsonInput = $(propertyGroup).find('textarea');
+    let userInputField = $(propertyGroup).find('.option-input').get(0);
+    userInputField.setCustomValidity('');
 
     // Getting the label for the property
     let useDefaultLabel = Boolean($(propertyGroup).find('.product-label-check').prop('checked'));
@@ -283,6 +285,11 @@ function updatePropertyJSON(propertyGroup) {
         let hexValue = convertCssToHex($(this).css('background-color'));
         properties.answers.push(hexValue);
     });
+
+    //Preventing the form from submitting if no answers are entered
+    if (properties.answers.length === 0) {
+        userInputField.setCustomValidity('At least one option is required.');
+    }
 
     let jsonValue = JSON.stringify(properties);
     jsonInput.text(jsonValue);
@@ -318,11 +325,21 @@ $(document).ready(() => {
             $(this).collapse('hide');
         }
     }).on('hidden.bs.collapse', function() {
-        let isChecked = Boolean($(this).closest('.product-property-group').find('.allow-prop').prop('checked'));
+        let propertyGroup = $(this).closest('.product-property-group');
+        let isChecked = Boolean(propertyGroup.find('.allow-prop').prop('checked'));
         if (isChecked) {
             $(this).collapse('show');
         }
-    })
+        else {
+            // Deactivates any required inputs when they are hidden
+            propertyGroup.find('input').prop('required', false).each(function() {
+                this.setCustomValidity('');
+            });
+        }
+    }).on('show.bs.collapse', function() {
+        // Makes all the required inputs required once they are visible
+        checkDefaultLabel.call($(this).closest('.product-property-group').find('.product-label-check').get(0));
+    });
 
     // Enables/Disables the label input depending on if "Use Default Label" is checked
     $('.product-label-check').on('change', checkDefaultLabel);
