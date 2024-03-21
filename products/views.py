@@ -365,10 +365,25 @@ def validate_edit_product(request, product_name):
         # Validating the form
         category = int(request.POST['category'])
         form = AddProductForm if category == 1 else AddPastryProductForm
+        model = BreadProduct if category == 1 else PastryProduct
+
+        # Is True if the user selects a different model than the original
+        different_form = (category == 1) != (product.category.id == 1)
+
         product_form = form(request.POST, request.FILES, instance=product)
 
         if product_form.is_valid():
-            product = product_form.save()
+            new_product = None
+
+            if different_form:
+                model_data = {
+                    key: value for key, value in product_form.cleaned_data.items()
+                }
+                new_product = model(**model_data)
+                # Remove the old object from the database
+                product.delete()
+            else:
+                new_product = product_form.save()
 
             # Adding custom properties
             for prop in PRODUCT_PROPERTIES:
@@ -379,13 +394,13 @@ def validate_edit_product(request, product_name):
                 prop_val = f'prop_{prop_name}'
                 if checkbox in request.POST:
                     val_formatted = json.loads(request.POST[prop_val])
-                    setattr(product, prop_val, val_formatted)
+                    setattr(new_product, prop_val, val_formatted)
                 else:
-                    setattr(product, prop_val, None)
+                    setattr(new_product, prop_val, None)
             if category != 1:
-                product.prop_text = 'prop_text' in request.POST
+                new_product.prop_text = 'prop_text' in request.POST
             
-            product.save()
+            new_product.save()
             messages.success(
                 request,
                 f'Product "{request.POST['display_name']}" \
