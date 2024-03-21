@@ -248,7 +248,8 @@ class AddProduct(View):
         return redirect('home')
 
 
-def validate_product(request):
+@require_POST
+def validate_add_product(request):
     """
     Validates the form before submitting it, so the page
     doesn't have to be refreshed and all data can be kept
