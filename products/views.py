@@ -299,11 +299,15 @@ def validate_add_product(request):
             # Adding custom properties
             for prop in PRODUCT_PROPERTIES:
                 prop_name = prop['name']
+                if prop_name == 'text':
+                    continue
                 checkbox = f'allow_{prop_name}'
                 prop_val = f'prop_{prop_name}'
                 if checkbox in request.POST:
                     val_formatted = json.loads(request.POST[prop_val])
                     setattr(product, prop_val, val_formatted)
+            if category != 1:
+                product.prop_text = 'prop_text' in request.POST
             
             product.save()
             messages.success(
