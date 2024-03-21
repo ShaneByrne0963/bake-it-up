@@ -5,7 +5,7 @@ from django.views import generic, View
 from django.views.decorators.http import require_POST
 
 from core.contexts import get_base_context, get_products, \
-    get_product_by_name
+    get_product_by_name, get_add_product_context
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
 from home.models import SiteData
@@ -169,10 +169,11 @@ class AddProduct(View):
     template = 'products/add_product.html'
 
     def get(self, request):
-        context = get_base_context(request)
+        context = get_add_product_context(request)
         product_form = AddProductForm()
         context['product_form'] = product_form
 
+        # Getting any pre-filled values
         site_data = None
         try:
             site_data = SiteData.objects.all()[0]
@@ -182,29 +183,8 @@ class AddProduct(View):
                 "Site data couldn't be found"
             )
 
-        # Making the forms for the product properties
-        bread_properties = [
-            {'label': 'Shapes', 'value': 'shape'},
-            {'label': 'Sizes', 'value': 'size'},
-            {'label': 'Contents', 'value': 'contents'},
-        ]
-        pastry_properties = [
-            {'label': 'Types', 'value': 'type'},
-            {'label': 'Contents', 'value': 'contents'},
-            {'label': 'Colours', 'value': 'color'},
-            {'label': 'Icing', 'value': 'icing'},
-            {'label': 'Decoration', 'value': 'decoration'},
-        ]
-        # Getting the default labels and answers for each property
-        for bread in bread_properties:
-            default_label = find_dict_in_list(
-                PRODUCT_PROPERTIES,
-                'name',
-                bread['value']
-            )['default_label']
-            bread['default_label'] = default_label
-
-            if site_data:
+        if site_data:
+            for bread in context['bread_properties']:
                 key = f'bread_prop_{bread['value']}s'
                 # To stop contents being "contentss"
                 if key[-2:] == 'ss':
@@ -214,15 +194,7 @@ class AddProduct(View):
                     answer_list = default_answers.split('|')
                     bread['answers'] = answer_list
 
-        for pastry in pastry_properties:
-            default_label = find_dict_in_list(
-                PRODUCT_PROPERTIES,
-                'name',
-                pastry['value']
-            )['default_label']
-            pastry['default_label'] = default_label
-
-            if site_data:
+            for pastry in context['pastry_properties']:
                 value = pastry['value']
                 key = f'pastry_prop_{value}'
                 if not (value == 'contents' or value == 'icing'):
@@ -231,9 +203,6 @@ class AddProduct(View):
                 if default_answers:
                     answer_list = default_answers.split('|')
                     pastry['answers'] = answer_list
-
-        context['bread_properties'] = bread_properties
-        context['pastry_properties'] = pastry_properties
 
         return render(request, self.template, context)
     
@@ -246,6 +215,43 @@ class AddProduct(View):
         if not product_form.is_valid():
             return redirect('')
         return redirect('home')
+
+
+class EditProduct(View):
+    template = 'products/edit_product.html'
+
+    def get(self, request, product_name):
+        context = get_add_product_context(request)
+        product = get_product_by_name(product_name)
+
+        product_type = 'bread' if type(product) == BreadProduct \
+            else 'pastry'
+        form = AddProductForm if product_type == 'bread' \
+            else AddPastryProductForm
+        
+        product_form = form(instance=product)
+        context['product_form'] = product_form
+
+        # Getting the product's original properties
+        prop_context = context[f'{product_type}_properties']
+        for prop in PRODUCT_PROPERTIES:
+            prop_name = prop['name']
+            try:
+                product_prop = getattr(product, f'prop_{prop_name}')
+
+                if product_prop:
+                    # Finding the dict to insert the data to
+                    prop_checking = find_dict_in_list(
+                        prop_context,
+                        'value',
+                        prop_name
+                    )
+                    prop_checking['data'] = product_prop
+            except Exception as e:
+                print(e)
+                continue
+
+        return render(request, self.template, context)
 
 
 @require_POST

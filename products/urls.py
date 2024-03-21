@@ -10,6 +10,8 @@ urlpatterns = [
           views.AddToFavorites.as_view(),
           name='add_to_favorites'),
      path('add/', views.AddProduct.as_view(), name='add_product'),
+     path('edit/<str:product_name>', views.EditProduct.as_view(),
+          name='edit_product'),
      path('validate_product/', views.validate_add_product,
           name='validate_product'),
 ]

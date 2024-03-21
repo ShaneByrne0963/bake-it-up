@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_title %} - Edit Product{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
+{% block content_heading %}
+    <h1>Edit Product</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" id="add-product-form" class="container-fluid">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
+                <h3>Product Details</h3>
+                <div class="mb-5">
+                    {{ product_form|crispy }}
+                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    <div class="spinner-border align-middle d-none" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div id="general-errors" class="mt-2"></div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1 offset-xl-0">
+                <h3>Product Properties</h3>
+                <div id="add-product-properties" class="pt-3"></div>
+            </div>
+        </div>
+    </form>
+    <div id="property-inputs" class="d-none">
+        <div id="empty-properties">
+            <p class="small text-danger font-weight-bold">Please select a category to customize your product's properties</p>
+        </div>
+        <!-- Bread Property Inputs -->
+        <div id="bread-properties">
+            {% for bread in bread_properties %}
+                {% with bread.value as value %}
+                <div class="product-property-group">
+                    <!-- Checkbox to allow the particular property -->
+                    <div class="form-group form-check mb-1">
+                        <input type="checkbox" id="allow-bread-{{ value }}" name="allow_{{ value }}"
+                            class="form-check-input allow-prop" data-toggle="collapse"{% if bread.data %} checked{% endif %}
+                            data-target="#bread-collapse-{{ value }}" aria-expanded="false" aria-controls="bread-collapse-{{ value }}">
+                        <label for="allow-bread-{{ value }}" class="mb-0">Add Bread {{ bread.label }}</label>
+                    </div>
+
+                    <div id="bread-collapse-{{ value }}" class="collapse property-group-collapse{% if bread.data %} show{% endif %}">
+                        <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                                <label for="bread-label-{{ value }}">Label</label>
+                                <div>
+                                    <label for="bread-default-label-{{ value }}" class="small">Use Default</label>
+                                    <input type="checkbox" id="bread-default-label-{{ value }}" name="bread_default_label_{{ value }}"
+                                        class="product-label-check"{% if not bread.data.label %} checked{% endif %}>
+                                </div>
+                            </div>
+                            <input type="text" id="bread-label-{{ value }}" name="bread_label_{{ value }}"
+                                value="{% if bread.data.label %}{{ bread.data.label }}{% else %}{{ bread.default_label }}{% endif %}"
+                                data-default-label="{{ bread.default_label }}" class="form-control product-label"
+                                {% if not bread.data.label %}disabled{% endif %}>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="bread-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true">{{ bread.data }}</textarea>
+                            <label for="bread-{{ value }}">Options</label>
+                            <ul class="property-answer-list d-none">
+                                {% for answer in bread.data.answers %}
+                                    <div class="default-answer">{{ answer }}</div>
+                                {% endfor %}
+                            </ul>
+                            <div class="property-input d-flex">
+                                <input type="text" id="bread-{{ value }}" class="form-control option-input">
+                                <button type="button" id="add-bread-{{ value }}" class="btn btn-primary ml-2 add-product-property">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if not forloop.last %}
+                    <hr class="my-4">
+                {% endif %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+        <!-- Pastry/Cake Property Inputs -->
+        <div id="pastry-properties">
+            {% for pastry in pastry_properties %}
+                {% with pastry.value as value %}
+                <div class="product-property-group">
+
+                    <!-- Checkbox to allow the particular property -->
+                    <div class="form-group form-check mb-1">
+                        <input type="checkbox" id="allow-pastry-{{ value }}" name="allow_{{ value }}"
+                            class="form-check-input allow-prop" data-toggle="collapse"{% if pastry.data %} checked{% endif %}
+                            data-target="#pastry-collapse-{{ value }}" aria-expanded="false" aria-controls="pastry-collapse-{{ value }}">
+                        <label for="allow-pastry-{{ value }}" class="mb-0 pastry-label">Add Pastry {{ pastry.label }}</label>
+                    </div>
+
+                    <div id="pastry-collapse-{{ value }}" class="collapse property-group-collapse{% if pastry.data %} show{% endif %}">
+                        <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                                <label for="pastry-label-{{ value }}">Label</label>
+                                <div>
+                                    <label for="pastry-default-label-{{ value }}" class="small">Use Default</label>
+                                    <input type="checkbox" id="pastry-default-label-{{ value }}" name="pastry_default_label_{{ value }}"
+                                        class="product-label-check"{% if not pastry.data.label %} checked{% endif %}>
+                                </div>
+                            </div>
+                            <input type="text" id="pastry-label-{{ value }}" name="pastry_label_{{ value }}"
+                                value="{% if pastry.data.label %}{{ pastry.data.label }}{% else %}{{ pastry.default_label }}{% endif %}"
+                                data-default-label="{{ pastry.default_label }}" class="form-control product-label"
+                                {% if not pastry.data.label %}disabled{% endif %}>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="pastry-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true">{{ pastry.data }}</textarea>
+                            <label for="pastry-{{ value }}">Options</label>
+    
+                            {% if value == 'color' %}
+                                <!-- Color input -->
+                                <div class="color-picker mb-3">
+                                    <button type="button" class="d-flex align-items-center
+                                        color-scroll scroll-left btn btn-dark px-2 disabled"
+                                        disabled>
+                                        <span class="carousel-control-prev-icon"
+                                            aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </button>
+                                    <div class="color-container overflow-hidden">
+                                        <div class="color-list" style="width: 1000vw;">
+                                            {% for answer in pastry.data.answers %}
+                                                <div class="default-color-input d-none">{{ answer }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <button type="button" class="d-flex align-items-center
+                                        color-scroll scroll-right btn btn-dark px-2 disabled"
+                                        disabled>
+                                        <span class="carousel-control-next-icon"
+                                            aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </button>
+                                </div>
+                            {% else %}
+                                <ul class="property-answer-list d-none">
+                                    {% for answer in pastry.data.answers %}
+                                        <div class="default-answer">{{ answer }}</div>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+    
+                            <div class="property-input d-flex">
+                                {% if value == 'color' %}
+                                    <input type="color" id="pastry-color" class="form-control option-input p-1">
+                                    <button type="button" id="add-pastry-color" class="btn btn-primary ml-2 add-product-color">Add</button>
+                                    <button type="button" id="remove-pastry-color" class="btn btn-secondary ml-2 remove-product-color" disabled>Remove</button>
+                                {% else %}
+                                    <input type="text" id="pastry-{{ value }}" class="form-control option-input">
+                                    <button type="button" id="add-pastry-{{ value }}" class="btn btn-primary ml-2 add-product-property">Add</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                {% endwith %}
+            {% endfor %}
+            <div class="form-group form-check">
+                <input type="checkbox" id="pastry-text" name="prop_text" class="form-check-input">
+                <label for="pastry-text" class="form-check-label">Allow Custom Text</label>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    <script src="{% static 'products/js/products.js' %}" type="text/javascript"></script>
+    <script src="{% static 'products/js/add_product.js' %}" type="text/javascript"></script>
+    {{ block.super }}
+{% endblock %}

@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q, Count
 
 from products.models import BreadProduct, PastryProduct
-from .shortcuts import price_as_float
+from .shortcuts import price_as_float, find_dict_in_list
+from .constants import PRODUCT_PROPERTIES
 
 from itertools import chain
 import json
@@ -111,6 +112,47 @@ def get_cart_context(request):
     if len(cart_products) > 0:
         context['cart_products'] = cart_products
 
+    return context
+
+
+def get_add_product_context(request):
+    """
+    Returns the base context, with 2 objects used to
+    build the properties forms for the Add/Edit Product
+    pages
+    """
+    context = get_base_context(request)
+    bread_properties = [
+        {'label': 'Shapes', 'value': 'shape'},
+        {'label': 'Sizes', 'value': 'size'},
+        {'label': 'Contents', 'value': 'contents'},
+    ]
+    pastry_properties = [
+        {'label': 'Types', 'value': 'type'},
+        {'label': 'Contents', 'value': 'contents'},
+        {'label': 'Colours', 'value': 'color'},
+        {'label': 'Icing', 'value': 'icing'},
+        {'label': 'Decoration', 'value': 'decoration'},
+    ]
+    # Getting the default labels and answers for each property
+    for bread in bread_properties:
+        default_label = find_dict_in_list(
+            PRODUCT_PROPERTIES,
+            'name',
+            bread['value']
+        )['default_label']
+        bread['default_label'] = default_label
+
+    for pastry in pastry_properties:
+        default_label = find_dict_in_list(
+            PRODUCT_PROPERTIES,
+            'name',
+            pastry['value']
+        )['default_label']
+        pastry['default_label'] = default_label
+
+    context['bread_properties'] = bread_properties
+    context['pastry_properties'] = pastry_properties
     return context
 
 
