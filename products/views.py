@@ -408,11 +408,16 @@ def validate_edit_product(request, product_name):
                 model_data['category'] = Category.objects.get(
                     id=model_data['category']
                 )
-
                 new_product = model(**model_data)
                 new_product.image = product.image
+                old_favorites = list(product.favorites.all())
+
                 # Remove the old object from the database
                 product.delete()
+                new_product.save()
+                print(old_favorites)
+                for favorite in old_favorites:
+                    new_product.favorites.add(favorite)
             else:
                 new_product = product_form.save()
 

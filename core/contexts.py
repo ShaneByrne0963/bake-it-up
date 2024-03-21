@@ -267,5 +267,6 @@ def delete_product(product):
     """
     Removes a product, and its image, from the database
     """
-    os.remove(product.image.path)
+    if os.path.exists(product.image.path):
+        os.remove(product.image.path)
     product.delete()
