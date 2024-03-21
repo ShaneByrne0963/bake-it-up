@@ -2,7 +2,7 @@
 
 <ul class="pl-3 pl-md-4 mb-0">
     {% for prop in item.prop_list %}
-        {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' %}
+        {% if prop.answer and prop.answer != 'None' and prop.answer != 'Plain' and prop.answer != '#000000' %}
             <li>
                 <span class="property-item">{% if prop.label %}{{ prop.label }}: {% endif %}
                     {% if prop.name == 'color' %}

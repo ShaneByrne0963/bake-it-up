@@ -194,10 +194,18 @@ function addProductColor() {
  */
 function addColorToList(color, colorList) {
     // Creating the color input
-    let colorShade = shadeColor(color);
-    let colorInput = $('<div></div>').addClass('color-input animated').css('background-color', color).click(colorSelectAddProduct);
-    colorInput.css('border-color', colorShade);
-    let colorOverlay = $('<div></div>').addClass('color-overlay');
+    let colorInput = $('<div></div>').addClass('color-input animated').click(colorSelectAddProduct);
+    let colorOverlay = $('<div></div>')
+
+    // Black means no color selected
+    if (color === '#000000') {
+       colorOverlay.addClass('color-input-none').text('×');
+    }
+    else {
+        let colorShade = shadeColor(color);
+        colorInput.css('background-color', color).css('border-color', colorShade);
+        colorOverlay.addClass('color-overlay');
+    }
 
     colorInput.on('transitionend webkitTransitionEnd oTransitionEnd', updateColorListWidth).append(colorOverlay);
     colorList.append(colorInput);
@@ -242,10 +250,24 @@ function updateSelectedColor(colorInput) {
     let selectedColor = $(colorInput).closest('.form-group').find('.color-input.selected');
 
     if (selectedColor.length > 0) {
+        let originalColor = convertCssToHex(selectedColor.css('background-color'));
         let inputValue = $(colorInput).val();
-        // Creating the color input
-        let colorShade = shadeColor(inputValue);
-        selectedColor.css('background-color', inputValue).css('border-color', colorShade);
+
+        if (originalColor !== inputValue) {
+            selectedColor.css('background-color', '').css('border-color', '');
+            let colorOverlay = selectedColor.children().removeClass('color-overlay color-input-none').text('');
+
+            // "No Color" selector
+            if (inputValue === '#000000') {
+                colorOverlay.addClass('color-input-none').text('×');
+            }
+            else {
+                // Creating the color input
+                let colorShade = shadeColor(inputValue);
+                selectedColor.css('background-color', inputValue).css('border-color', colorShade);
+                colorOverlay.addClass('color-overlay');
+            }
+        }
 
         // Allow the selected color input to be updated in real time
         if ($(colorInput).is(':focus')) {

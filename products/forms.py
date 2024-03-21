@@ -260,14 +260,24 @@ def create_color_input(prop, product_attrs, value):
     for count, answer in enumerate(answers):
         border = shade_color(answer, COLOR_BORDER_VALUE)
         selected = " selected" if count == value else ""
+        overlay_class = 'color-input-none' if answer == '#000000' \
+            else 'color-overlay'
 
-        input_html += f"""
-        <div class="color-input{selected}" data-val={count}
-            style="background-color: {answer};
-            border-color: {border};">
-            <div class="color-overlay"></div>
-        </div>
-        """
+        # The "No color" input option
+        if answer == '#000000':
+            input_html += f"""
+            <div class="color-input{selected}" data-val={count}>
+                <div class="color-input-none">×</div>
+            </div>
+            """
+        else:
+            input_html += f"""
+            <div class="color-input{selected}" data-val={count}
+                style="background-color: {answer};
+                border-color: {border};">
+                <div class="color-overlay"></div>
+            </div>
+            """
 
     # Ending HTML
     input_html += """
