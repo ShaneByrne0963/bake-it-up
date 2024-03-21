@@ -14,4 +14,6 @@ urlpatterns = [
           name='edit_product'),
      path('validate_product/', views.validate_add_product,
           name='validate_product'),
+     path('update_product/<str:product_name>', views.validate_edit_product,
+          name='update_product')
 ]

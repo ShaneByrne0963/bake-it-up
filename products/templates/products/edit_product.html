@@ -170,7 +170,7 @@
             {% endfor %}
             <div class="form-group form-check">
                 <input type="checkbox" id="pastry-text" name="prop_text" class="form-check-input">
-                <label for="pastry-text" class="form-check-label">Allow Custom Text</label>
+                <label for="pastry-text" class="form-check-label"{% if product.prop_text %} checked{% endif %}>Allow Custom Text</label>
             </div>
         </div>
     </div>

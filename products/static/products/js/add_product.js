@@ -318,6 +318,7 @@ function updatePropertyJSON(propertyGroup) {
 }
 
 
+const productName = $('#id_name').val();
 $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
@@ -405,7 +406,15 @@ $(document).ready(() => {
         $(this).find('.spinner-border').removeClass('d-none');
         // Removing any previous errors
         $('#general-errors').children().remove();
-        
+
+        // Getting the correct URL
+        let url;
+        if (productName) {
+            url = `/products/update_product/${productName}`;
+        }
+        else {
+            url = '/products/validate_product/';
+        }
         let formData = new FormData();
 
         $(this).find('input, select, textarea').each(function() {
@@ -430,7 +439,7 @@ $(document).ready(() => {
         });
 
         $.post({
-            url: '/products/validate_product/',
+            url: url,
             data: formData,
             processData: false,
             contentType: false,

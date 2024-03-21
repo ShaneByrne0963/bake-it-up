@@ -223,6 +223,7 @@ class EditProduct(View):
     def get(self, request, product_name):
         context = get_add_product_context(request)
         product = get_product_by_name(product_name)
+        context['product'] = product
 
         product_type = 'bread' if type(product) == BreadProduct \
             else 'pastry'
@@ -247,8 +248,7 @@ class EditProduct(View):
                         prop_name
                     )
                     prop_checking['data'] = product_prop
-            except Exception as e:
-                print(e)
+            except:
                 continue
 
         return render(request, self.template, context)
@@ -289,12 +289,9 @@ def validate_add_product(request):
                                 status=400)
 
         # Validating the form
-        product_form = None
         category = int(request.POST['category'])
-        if category == 1:
-            product_form = AddProductForm(request.POST, request.FILES)
-        else:
-            product_form = AddPastryProductForm(request.POST, request.FILES)
+        form = AddProductForm if category == 1 else AddPastryProductForm
+        product_form = form(request.POST, request.FILES)
 
         if product_form.is_valid():
             product = product_form.save()
@@ -315,6 +312,82 @@ def validate_add_product(request):
                     was created successfully!'
             )
             return HttpResponse(content=product_name, status=200)
+        else:
+            return HttpResponse(product_form.errors.as_json(), status=400)
+    except Exception as e:
+        return HttpResponse(
+            content=e,
+            status=400
+        )
+
+
+@require_POST
+def validate_edit_product(request, product_name):
+    """
+    Validates the form before submitting it, so the page
+    doesn't have to be refreshed and all data can be kept
+    """
+    try:
+        product = get_product_by_name(product_name)
+        # Make sure the name doesn't exist in either model
+        new_name = request.POST['name']
+        product_in = ''
+
+        # Only check the other products if the name has changed
+        if product_name != new_name:
+            # We want these try blocks to fail to proceed
+            try:
+                BreadProduct.objects.get(name=new_name)
+                product_in = 'bread'
+            except:
+                pass
+            try:
+                PastryProduct.objects.get(name=new_name)
+                product_in = 'pastry'
+            except:
+                pass
+        
+        if product_in:
+            error_message = {
+                'name': [{
+                    'message': f'"{new_name}" already exists in \
+                    the {product_in} model. Please pick another name',
+                    'code': ''
+                }]
+            }
+            return HttpResponse(content=json.dumps(error_message),
+                                status=400)
+
+        # Validating the form
+        category = int(request.POST['category'])
+        form = AddProductForm if category == 1 else AddPastryProductForm
+        product_form = form(request.POST, request.FILES, instance=product)
+
+        if product_form.is_valid():
+            product = product_form.save()
+
+            # Adding custom properties
+            for prop in PRODUCT_PROPERTIES:
+                prop_name = prop['name']
+                if prop_name == 'text':
+                    continue
+                checkbox = f'allow_{prop_name}'
+                prop_val = f'prop_{prop_name}'
+                if checkbox in request.POST:
+                    val_formatted = json.loads(request.POST[prop_val])
+                    setattr(product, prop_val, val_formatted)
+                else:
+                    setattr(product, prop_val, None)
+            if category != 1:
+                product.prop_text = 'prop_text' in request.POST
+            
+            product.save()
+            messages.success(
+                request,
+                f'Product "{request.POST['display_name']}" \
+                    has been updated!'
+            )
+            return HttpResponse(content=new_name, status=200)
         else:
             return HttpResponse(product_form.errors.as_json(), status=400)
     except Exception as e:
