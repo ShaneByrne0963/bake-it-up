@@ -66,6 +66,18 @@ class ViewMessages(View):
         return render(request, self.template, context)
 
 
+class DeleteMessage(View):
+
+    def post(self, request, message_id):
+        message = CustomerMessage.objects.get(id=message_id)
+        message.delete()
+        messages.success(
+            request,
+            'Message successfully deleted'
+        )
+        return redirect('view_messages')
+
+
 @require_POST
 def open_message(request, message_id):
     """

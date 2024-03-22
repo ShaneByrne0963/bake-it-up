@@ -21,18 +21,34 @@
         data-parent="#message-list" data-message-id="{{ message.id }}">
 
         <div class="card-body">
-            {% if message.full_name %}
+            <div class="d-flex justify-content-between">
+                {% if message.full_name %}
                 <div class="mb-3">
                     <strong>Sender Name:</strong>
                     <br>
                     {{ message.full_name }}
                 </div>
-            {% endif %}
-            <div class="mb-3">
-                <strong>Email:</strong>
-                <br>
-                {{ message.email }}
+                {% else %}
+                    <div class="mb-3">
+                        <strong>Email:</strong>
+                        <br>
+                        {{ message.email }}
+                    </div>
+                {% endif %}
+                {% if message_type == 'open' %}
+                    <div class="text-right">
+                        <a class="modal-trigger-delete-message text-danger" role="button"
+                            data-url="{% url 'delete_message' message.id %}">Delete</a>
+                    </div>
+                {% endif %}
             </div>
+            {% if message.full_name %}
+                <div class="mb-3">
+                    <strong>Email:</strong>
+                    <br>
+                    {{ message.email }}
+                </div>
+            {% endif %}
             <hr>
             {{ message.message }}
         </div>

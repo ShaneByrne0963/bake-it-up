@@ -219,6 +219,14 @@ $(document).ready(() => {
             url: $(this).data('url'),
         });
     });
+    $('.modal-trigger-delete-message').click(function() {
+        triggerModal({
+            title: "Delete Message",
+            body: '<p>Are you sure you want to delete this message?</p>',
+            button: 'Delete',
+            url: $(this).data('url'),
+        });
+    });
 
     //Resetting the modal form when hidden
     $('#modal-action').on('hidden.bs.modal', function() {
