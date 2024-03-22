@@ -104,7 +104,7 @@
                         </div>
                         <div class="dropdown-divider"></div>
                         {% if user.is_superuser %}
-                            <a class="dropdown-item d-flex" href="">Messages
+                            <a class="dropdown-item d-flex" href="{% url 'view_messages' %}">Messages
                                 {% if num_messages %}
                                     <span class="badge badge-danger d-flex align-items-center mb-2 ml-1">{{ num_messages }}</span>
                                 {% endif %}

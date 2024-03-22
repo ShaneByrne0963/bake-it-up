@@ -18,8 +18,6 @@
                             <a href="{% url 'add_to_favorites' product.name %}" class="text-dark">
                                 <i id="add-to-favourites" class="fa-{% if user.profile in product.favorites.all %}solid{% else %}regular{% endif %} fa-heart mt-4"></i>
                             </a>
-                        {% else %}
-                            <i id="add-to-favourites" class="fa-regular fa-heart mt-4"></i>
                         {% endif %}
                     </div>
                     <div id="product-detail-category" class="d-flex align-items-center justify-content-between">

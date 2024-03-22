@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from core.contexts import get_base_context
 from .forms import CustomerMessageForm
+from .models import CustomerMessage
 
 
 class StoreContact(View):
@@ -43,3 +44,22 @@ class StoreContact(View):
             context = get_base_context(request)
             context['contact_form'] = contact_form
             return render(request, self.template, context)
+
+
+class ViewMessages(View):
+    template = 'contact/view_messages.html'
+
+    def get(self, request):
+        context = get_base_context(request)
+        unopen_messages = CustomerMessage.objects.filter(
+            opened=False
+        ).order_by('-date_created')
+
+        open_messages = CustomerMessage.objects.filter(
+            opened=True
+        ).order_by('-date_created')
+
+        context['unopen_messages'] = unopen_messages
+        context['open_messages'] = open_messages
+
+        return render(request, self.template, context)

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block extra_title %} - Messages
+    {% if num_messages %}({{ num_messages }}){% endif %}
+{% endblock %}
+
+{% block content_heading %}
+    <h1>Customer Messages</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div id="message-list" class="col-12 col-md-10 offset-md-1">
+                {% if unopen_messages %}
+                    <h3>New Messages</h3>
+                    {% for message in unopen_messages %}
+                        {% with 'unopen' as message_type %}
+                        {% include 'contact/includes/message_collapse.html' %}
+                        {% endwith %}
+                    {% endfor %}
+                    {% if open_messages %}
+                        <hr class="my-4">
+                    {% endif %}
+                {% endif %}
+                {% if open_messages %}
+                    <h3>Opened Messages</h3>
+                    {% for message in open_messages %}
+                        {% with 'open' as message_type %}
+                        {% include 'contact/includes/message_collapse.html' %}
+                        {% endwith %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
