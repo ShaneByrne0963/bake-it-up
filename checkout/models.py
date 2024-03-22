@@ -15,7 +15,7 @@ class Order(models.Model):
     delivery = models.BooleanField(default=False)
     customer_note = models.CharField(max_length=200, blank=True, null=True)
     full_name = models.CharField(max_length=70)
-    email = models.CharField(max_length=320)
+    email = models.EmailField(max_length=320)
     phone_number = models.CharField(max_length=20)
     street_address1 = models.CharField(max_length=60)
     street_address2 = models.CharField(max_length=60, blank=True, null=True)
