@@ -7,19 +7,19 @@
                         <div class="footer-heading">Explore</div>
                         <ul class="list-unstyled footer-list">
                             <li>
-                                <a href="">Home</a>
+                                <a href="{% url 'home' %}">Home</a>
                             </li>
                             <li>
-                                <a href="">All Bakery Products</a>
+                                <a href="{% url 'product_list' %}">All Bakery Products</a>
                             </li>
                             <li>
-                                <a href="">Freshly Baked Bread</a>
+                                <a href="{% url 'product_list' %}?category=bread">Freshly Baked Bread</a>
                             </li>
                             <li>
-                                <a href="">Sweets & Treats</a>
+                                <a href="{% url 'product_list' %}?category=pastries">Sweets & Treats</a>
                             </li>
                             <li>
-                                <a href="">Wedding/Party Cakes</a>
+                                <a href="{% url 'product_list' %}?category=cakes">Wedding/Party Cakes</a>
                             </li>
                         </ul>
                     </div>
