@@ -391,7 +391,7 @@ def validate_edit_product(request, product_name):
             new_product = None
 
             # Getting rid of the old image if a new one exists
-            if 'image' in request.FILES:
+            if 'image' in request.FILES and os.path.exists(old_image_path):
                 os.remove(old_image_path)
 
             if different_form:
