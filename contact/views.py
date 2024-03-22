@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 
 from core.contexts import get_base_context
@@ -63,3 +64,23 @@ class ViewMessages(View):
         context['open_messages'] = open_messages
 
         return render(request, self.template, context)
+
+
+@require_POST
+def open_message(request, message_id):
+    """
+    Tells the server that an admin has opened a message
+    """
+    try:
+        message = CustomerMessage.objects.get(id=message_id)
+        message.opened = True
+        message.save()
+
+        # Getting how many unread messages are left
+        num_messages = CustomerMessage.objects.filter(
+            opened=False
+        ).count()
+    
+        return HttpResponse(content=num_messages, status=200)
+    except Exception as e:
+        return HttpResponse(content=e, status=400)

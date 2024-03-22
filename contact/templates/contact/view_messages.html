@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block extra_title %} - Messages
@@ -15,17 +16,20 @@
             <div id="message-list" class="col-12 col-md-10 offset-md-1">
                 {% if unopen_messages %}
                     <h3>New Messages</h3>
-                    {% for message in unopen_messages %}
-                        {% with 'unopen' as message_type %}
-                        {% include 'contact/includes/message_collapse.html' %}
-                        {% endwith %}
-                    {% endfor %}
+                    <form id="unopen-messages" method="POST">
+                        {% csrf_token %}
+                        {% for message in unopen_messages %}
+                            {% with 'unopen' as message_type %}
+                            {% include 'contact/includes/message_collapse.html' %}
+                            {% endwith %}
+                        {% endfor %}
+                    </form>
                     {% if open_messages %}
                         <hr class="my-4">
                     {% endif %}
                 {% endif %}
                 {% if open_messages %}
-                    <h3>Opened Messages</h3>
+                    <h3>Past Messages</h3>
                     {% for message in open_messages %}
                         {% with 'open' as message_type %}
                         {% include 'contact/includes/message_collapse.html' %}
@@ -35,4 +39,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'contact/js/contact.js' %}"></script>
 {% endblock %}

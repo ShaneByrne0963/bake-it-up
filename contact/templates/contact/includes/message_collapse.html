@@ -1,9 +1,8 @@
-{% with forloop.counter as i %}
 <div class="card">
-    <div class="card-header px-2 px-md-3" id="message-heading-{{ message_type }}-{{ i }}">
+    <div class="card-header px-2 px-md-3" id="message-heading-{{ message_type }}-{{ message.id }}">
         <div class="mb-0">
-            <button class="btn-no-style btn-block text-left position-relative message-{{ message_type }}" type="button" data-toggle="collapse"
-                data-target="#message-collapse-{{ message_type }}-{{ i }}" aria-expanded="true" aria-controls="message-collapse-{{ message_type }}-{{ i }}">
+            <button class="btn-no-style btn-block text-left position-relative" type="button" data-toggle="collapse"
+                data-target="#message-collapse-{{ message_type }}-{{ message.id }}" aria-expanded="true" aria-controls="message-collapse-{{ message_type }}-{{ message.id }}">
                 <div class="d-flex justify-content-between">
                     <span>
                         <i class="fa-solid fa-caret-down mr-3"></i>
@@ -17,8 +16,10 @@
             </button>
         </div>
     </div>
-    <div id="message-collapse-{{ message_type }}-{{ i }}" class="collapse" aria-labelledby="message-heading-{{ message_type }}-{{ i }}"
-        data-parent="#message-list">
+    <div id="message-collapse-{{ message_type }}-{{ message.id }}"
+        class="collapse collapse-{{ message_type }}" aria-labelledby="message-heading-{{ message_type }}-{{ message.id }}"
+        data-parent="#message-list" data-message-id="{{ message.id }}">
+
         <div class="card-body">
             {% if message.full_name %}
                 <div class="mb-3">
@@ -37,4 +38,3 @@
         </div>
     </div>
 </div>
-{% endwith %}
