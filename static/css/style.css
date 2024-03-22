@@ -534,6 +534,21 @@ input::-webkit-inner-spin-button {
     background-color: #784812;
 }
 
+/* --------------------------------------------------------Page errors */
+
+#page-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+}
+
+#page-error>i {
+    font-size: 4rem;
+    margin-bottom: 16px;
+}
+
 
 /* --------------------------------------------------------Using a more formal font for forms */
 form input,

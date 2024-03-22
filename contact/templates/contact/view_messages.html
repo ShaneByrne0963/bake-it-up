@@ -35,6 +35,12 @@
                         {% include 'contact/includes/message_collapse.html' %}
                         {% endwith %}
                     {% endfor %}
+                {% elif not unopen_messages %}
+                    <div id="page-error" class="col-12 text-sm-center">
+                        <i class="fa-solid fa-face-sad-tear"></i>
+                        <h2>No messages here!</h2>
+                        <p>Looks like nobody wants to talk to us... :(</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
