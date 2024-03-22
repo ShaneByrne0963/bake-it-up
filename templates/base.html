@@ -101,6 +101,7 @@
                         </div>
                         <div class="dropdown-divider"></div>
                         {% if user.is_superuser %}
+                            <a class="dropdown-item" href="">Messages</a>
                             <a class="dropdown-item" href="/admin/">Admin Panel</a>
                             <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
                         {% endif %}
