@@ -76,18 +76,6 @@ h3, .product-card-title {
     color: #e2a08d;
 }
 
-/* Overlay to add color to a color input */
-
-.color-overlay {
-    position: absolute;
-    bottom: 0;
-    left: -30%;
-    width: 160%;
-    height: 150%;
-    background: radial-gradient(circle, rgba(255,255,255,0.64) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.6) 90%);
-    border-radius: 50%;
-}
-
 /* Highlights search results */
 
 .found-query {
@@ -245,9 +233,21 @@ input::-webkit-inner-spin-button {
 
 #account-nav {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 12px;
+    right: 12px;
     z-index: 10;
+}
+
+#account-nav .btn-nav {
+    border: 2px solid whitesmoke;
+    border-radius: 8px;
+}
+
+.btn>.badge.badge-danger {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    font-size: 1rem;
 }
 
 /* --------------------------------------------------------Search Bar */
@@ -556,6 +556,18 @@ form select,
     border-radius: 50%;
     position: relative;
     overflow: hidden;
+}
+
+/* Overlay to add color to a color input */
+
+.color-overlay {
+    position: absolute;
+    bottom: 0;
+    left: -30%;
+    width: 160%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.64) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.6) 90%);
+    border-radius: 50%;
 }
 
 /* -----------------------------------------------------------------------MEDIA QUERIES

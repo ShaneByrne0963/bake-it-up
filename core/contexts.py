@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q, Count
 
 from products.models import BreadProduct, PastryProduct
+from contact.models import CustomerMessage
+
 from .shortcuts import price_as_float, find_dict_in_list
 from .constants import PRODUCT_PROPERTIES
 
@@ -80,6 +82,11 @@ def get_base_context(request):
 
         parsed_total = price_as_float(cart_total)
         context['cart_total'] = parsed_total
+    
+    # Getting the number of messages, if the user is an admin
+    if request.user.is_superuser:
+        new_messages = CustomerMessage.objects.filter(opened=False)
+        context['num_messages'] = new_messages.count()
 
     return context
 
