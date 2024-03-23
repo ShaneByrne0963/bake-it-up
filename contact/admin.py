@@ -10,5 +10,5 @@ class CustomerMessageAdmin(admin.ModelAdmin):
     fields = ('title', 'full_name', 'email', 'date_created',
               'message', 'opened')
     list_filter = ('opened',)
-    ordering = ('-date_created',)
+    ordering = ('opened', '-date_created',)
     search_fields = ('title', 'message')

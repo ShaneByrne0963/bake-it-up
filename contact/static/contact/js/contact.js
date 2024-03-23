@@ -23,7 +23,7 @@ function openMessage(counter=0) {
         let title = $('title').text();
 
         if (remainingMessages > 0) {
-            $('title').text(title.replace(/[0-9]/, remainingMessages));
+            $('title').text(title.replace(/[0-9]/g, '').replace('()', `(${remainingMessages})`));
             // Updating the badges found in the profile icon
             $('#account-nav').find('.badge').text(remainingMessages);
         }
