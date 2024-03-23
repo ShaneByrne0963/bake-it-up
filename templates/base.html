@@ -104,6 +104,7 @@
                         </div>
                         <div class="dropdown-divider"></div>
                         {% if user.is_superuser %}
+                            <a class="dropdown-item" href="{% url 'view_orders' %}">Today's Orders</a>
                             <a class="dropdown-item d-flex" href="{% url 'view_messages' %}">Messages
                                 {% if num_messages %}
                                     <span class="badge badge-danger d-flex align-items-center mb-2 ml-1">{{ num_messages }}</span>
@@ -111,6 +112,7 @@
                             </a>
                             <a class="dropdown-item" href="/admin/">Admin Panel</a>
                             <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
+                            <div class="dropdown-divider"></div>
                         {% endif %}
                         <a class="dropdown-item" href="{% url 'product_list' %}?favourites=on">Favourites</a>
                         <a class="dropdown-item" href="{% url 'account_settings' %}">Account Settings</a>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block extra_title %} - Orders{% endblock %}
+
+{% block content_heading %}
+    <h1>Orders for {{ date|date:"d/m/y" }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
+                {% for order in order_list %}
+                    {{ order }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
