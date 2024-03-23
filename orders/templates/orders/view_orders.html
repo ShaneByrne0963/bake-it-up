@@ -1,20 +1,39 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load static %}
 
 {% block extra_title %} - Orders{% endblock %}
 
 {% block content_heading %}
-    <h1>Orders for {{ date|date:"d/m/y" }}</h1>
+    <h1>Orders for <span id="selected-date">{{ date|date:"d/m/y" }}</span></h1>
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-10 col-xl-5 offset-md-1">
-                {% for order in order_list %}
-                    {{ order }}
-                {% endfor %}
+                <form id="select-date" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-0">
+                        <label for="date-input">Select a Date</label>
+                        <input type="date" id="date-input" name="selected_date" class="form-control" value="{{ date|date:'Y-m-d' }}">
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-md-10 offset-md-1">
+                <hr class="my-4">
+            </div>
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
+                <div id="order-list">
+                    {% for order in order_list %}
+                        {{ order }}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'orders/js/orders.js' %}"></script>
 {% endblock %}
