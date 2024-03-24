@@ -21,12 +21,17 @@
             </div>
             <div class="col-12 col-md-10 offset-md-1">
                 <hr class="my-4">
-            </div>
-            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
                 <div id="order-list">
-                    {% for order in order_list %}
-                        {{ order }}
-                    {% endfor %}
+                    {% if order_list %}
+                        {% for order in order_list %}
+                            {{ order }}
+                        {% endfor %}
+                    {% else %}
+                        <div id="page-error" class="col-12 text-sm-center">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <h2>No orders for today!</h2>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
