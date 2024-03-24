@@ -23,9 +23,28 @@
                 <hr class="my-4">
                 <div id="order-list">
                     {% if order_list %}
-                        {% for order in order_list %}
-                            {{ order }}
-                        {% endfor %}
+                        <h3>Daily Summary</h3>
+                        <div class="container-fluid mb-4">
+                            <div class="row">
+                                <div class="col-12 col-xl-6 px-0">
+                                    <ul class="mb-0">
+                                        {% for key, lineitem in total_lineitems.items %}
+                                            <li>
+                                                <div class="d-flex justify-content-between">
+                                                    <strong>{{ lineitem.name }}:</strong>
+                                                    <span>&times;{{ lineitem.qty }}</span>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <hr class="mt-1">
+                                    <div class="h4 d-flex justify-content-between">
+                                        <span>Total Products:</span>
+                                        <span>{{ total_products }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% else %}
                         <div id="page-error" class="col-12 text-sm-center">
                             <i class="fa-solid fa-circle-xmark"></i>

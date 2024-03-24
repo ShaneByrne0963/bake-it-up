@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
 
-from core.contexts import get_base_context
+from core.contexts import get_base_context, get_product_by_name
 from checkout.models import Order
 
 from datetime import date
@@ -48,4 +48,23 @@ class ViewOrders(View):
         order_list = Order.objects.filter(bake_date=selected_date)
         context['order_list'] = order_list
         context['date'] = selected_date
+
+        # Getting the total quanties of each product
+        total_lineitems = {}
+        total_products = 0
+        for order in order_list.all():
+            for lineitem in order.line_items.all():
+                name = lineitem.product_name
+                product = get_product_by_name(name)
+                if name in total_lineitems:
+                    total_lineitems[name]['qty'] += lineitem.quantity
+                else:
+                    total_lineitems[name] = {
+                        'name': product.display_name,
+                        'qty': lineitem.quantity
+                    }
+                total_products += lineitem.quantity
+        context['total_lineitems'] = total_lineitems
+        context['total_products'] = total_products
+
         return render(request, self.template, context)
