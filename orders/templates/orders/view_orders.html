@@ -45,6 +45,87 @@
                                 </div>
                             </div>
                         </div>
+                        <h3>Order Details</h3>
+                        <div id="orders">
+                            {% for order in order_list %}
+                                {% with forloop.counter as i %}
+                                <div class="card">
+                                    <div class="card-header px-2 px-md-3" id="order-heading-{{ i }}">
+                                        <div class="mb-0">
+                                            <button class="btn-no-style btn-block text-left position-relative" type="button" data-toggle="collapse"
+                                                data-target="#order-collapse-{{ i }}" aria-expanded="true"
+                                                aria-controls="order-collapse-{{ i }}">
+                                                <div>
+                                                    <i class="fa-solid fa-caret-down mr-1 mr-md-3"></i>
+                                                    <span class="text-break">{{ order }}</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="order-collapse-{{ i }}" class="collapse"
+                                        aria-labelledby="order-heading-{{ i }}" data-parent="#orders">
+
+                                        <div class="card-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-12 col-xl-6 px-0">
+                                                        <div class="font-weight-bold">Products:</div>
+                                                        <ul>
+                                                            {% for item in order.line_items.all %}
+                                                                <li>
+                                                                    <span class="font-weight-bold">
+                                                                        {{ item.get_product.display_name }}
+                                                                        &times;{{ item.quantity }}
+                                                                    </span>
+                                                                    {% include 'includes/property_list.html' %}
+                                                                </li>
+                                                                {% if not forloop.last %}
+                                                                    <hr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-12 col-xl-6 px-0">
+                                                        <div class="font-weight-bold">Delivery Method:</div>
+                                                        {% if order.delivery %}
+                                                            <span>Deliver to:</span>
+                                                            <ul>
+                                                                {% if order.delivery_line1 %}
+                                                                    <li>{{ order.delivery_line1 }}</li>
+                                                                    {% if order.delivery_line2 %}
+                                                                        <li>{{ order.delivery_line2 }}</li>
+                                                                    {% endif %}
+                                                                    <li>{{ order.delivery_city }}</li>
+                                                                    <li>Co. {{ order.delivery_county }}</li>
+                                                                    <li>{{ order.delivery_postcode }}</li>
+                                                                {% else %}
+                                                                    <li>{{ order.street_address1 }}</li>
+                                                                    {% if order.street_address2 %}
+                                                                        <li>{{ order.street_address2 }}</li>
+                                                                    {% endif %}
+                                                                    <li>{{ order.town_or_city }}</li>
+                                                                    <li>Co. {{ order.county }}</li>
+                                                                    {% if order.postcode %}
+                                                                        <li>{{ order.postcode }}</li>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </ul>
+                                                        {% else %}
+                                                            <span>Customer will pick up at store</span>
+                                                        {% endif %}
+                                                        {% if order.customer_note %}
+                                                            <div class="font-weight-bold">Customer Note:</div>
+                                                            <span>{{ order.customer_note }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
                     {% else %}
                         <div id="page-error" class="col-12 text-sm-center">
                             <i class="fa-solid fa-circle-xmark"></i>
