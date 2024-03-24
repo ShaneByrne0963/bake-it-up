@@ -48,6 +48,7 @@ class ViewOrders(View):
         order_list = Order.objects.filter(bake_date=selected_date)
         context['order_list'] = order_list
         context['date'] = selected_date
+        context['is_today'] = (selected_date == date.today())
 
         # Getting the total quanties of each product
         total_lineitems = {}

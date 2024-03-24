@@ -129,7 +129,7 @@
                     {% else %}
                         <div id="page-error" class="col-12 text-sm-center">
                             <i class="fa-solid fa-circle-xmark"></i>
-                            <h2>No orders for today!</h2>
+                            <h2>No orders for {% if is_today %}today{% else %}this date{% endif %}!</h2>
                         </div>
                     {% endif %}
                 </div>
