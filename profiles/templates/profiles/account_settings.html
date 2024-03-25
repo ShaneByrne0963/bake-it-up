@@ -84,7 +84,7 @@
                         {% for order in orders %}
                             <div class="list-group-item p-0">
                                 <div class="card-header border-0 text-break">
-                                    <a href="" class="d-block text-dark">{{ order }}</a>
+                                    <a href="{% url 'order_details' order.order_number %}" class="d-block text-dark">{{ order }}</a>
                                     <small>Placed on: {{ order.order_date }}</small>
                                 </div>
                             </div>

@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_title %} - Order Details{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block content_heading %}
+    <a href="{% url 'account_settings' %}">
+        <i class="fa-solid fa-caret-left mr-2"></i>Back to account settings
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div id="order-container" class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2 px-3 px-md-0 shown">
+                <div>Order Information</div>
+                <hr class="mt-1">
+                <div class="order-details">
+                    <div class="detail-key">Order Number<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.order_number }}</div>
+                    <div class="detail-key">Ordered On<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.order_date }}</div>
+                    <div class="detail-key">Will Be Baked On<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.bake_date }}</div>
+                    {% if order.customer_note %}
+                        <div class="detail-key mt-3">Added Message<span class="d-md-none">:</span></div>
+                        <div class="detail-value mt-md-3">{{ order.customer_note }}</div>
+                    {% endif %}
+                </div>
+                {% if order.delivery %}
+                    <p id="delivery-other-notice" class="small text-info font-weight-bold">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="delivery-other-content">This order will be delivered to the given address</span>
+                    </p>
+                {% endif %}
+                {% with order.line_items.count as num_items %}
+                <div class="mt-5">Your Products ({{ num_items }} Item{% if num_items != 1 %}s{% endif %})</div>
+                {% endwith %}
+                <hr class="mt-1">
+                <div class="accordion mb-2" id="order-products">
+                    {% for item in order.line_items.all %}
+                        {% with forloop.counter as i %}
+                        {% with item.get_product as product %}
+                        <div class="card order-product-info">
+                            <div class="card-header px-2 px-md-3" id="product-heading-{{ i }}">
+                                <div class="mb-0">
+                                    <button class="btn-no-style btn-block text-left" type="button" data-toggle="collapse"
+                                        data-target="#product-collapse-{{ i }}" aria-expanded="true" aria-controls="product-collapse-{{ i }}">
+                                        <div class="d-flex justify-content-between">
+                                            <span>
+                                                <i class="fa-solid fa-caret-down mr-3"></i>
+                                                {{ product.display_name }} &times; {{ item.quantity }}
+                                            </span>
+                                            <span class="ml-2">&euro;{{ item.get_total|floatformat:2 }}</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="product-collapse-{{ i }}" class="collapse" aria-labelledby="product-heading-{{ i }}"
+                                data-parent="#order-products">
+                                <div class="card-body">
+                                    {% include 'includes/property_list.html' %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endwith %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+                <div class="order-price mb-5 px-md-4">
+                    <div>Cart Total:</div>
+                    <div class="text-right">&euro;{{ order.get_cart_total|floatformat:2 }}</div>
+                    {% with order.get_delivery_cost as delivery %}
+                    {% if delivery > 0 %}
+                        <div>Delivery Charges:</div>
+                        <div class="text-right">&euro;{{ delivery|floatformat:2 }}</div>
+                    {% endif %}
+                    {% endwith %}
+                    <div class="h3 mt-2">Total:</div>
+                    <div class="h3 text-right mt-2">&euro;{{ order.get_grand_total|floatformat:2 }}</div>
+                </div>
+                <div>Billing Information</div>
+                <hr class="mt-1">
+                <div class="order-details mb-5">
+                    <div class="detail-key">Name/Company Name<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.full_name }}</div>
+
+                    <div class="detail-key">Email<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.email }}</div>
+
+                    <div class="detail-key">Phone Number<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.phone_number }}</div>
+
+                    <div class="detail-key">Street Address{% if order.street_address2 %} (Line 1){% endif %}
+                        <span class="d-md-none">:</span>
+                    </div>
+                    <div class="detail-value">{{ order.street_address1 }}</div>
+
+                    {% if order.street_address2 %}
+                        <div class="detail-key">Street Address (Line 2)<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.street_address2 }}</div>
+                    {% endif %}
+
+                    <div class="detail-key">Town/City<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.town_or_city }}</div>
+
+                    <div class="detail-key">County<span class="d-md-none">:</span></div>
+                    <div class="detail-value">{{ order.county }}</div>
+
+                    {% if order.postcode %}
+                        <div class="detail-key">Postcode<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.postcode }}</div>
+                    {% endif %}
+                </div>
+                {% if order.delivery_line1 %}
+                    <div>Delivery Information</div>
+                    <hr class="mt-1">
+
+                    <div class="order-details mb-5">
+                        <div class="detail-key">Delivery Address{% if order.delivery_line2 %} (Line 1){% endif %}
+                            <span class="d-md-none">:</span>
+                        </div>
+                        <div class="detail-value">{{ order.delivery_line1 }}</div>
+    
+                        {% if order.delivery_line2 %}
+                            <div class="detail-key">Delivery Address (Line 2)<span class="d-md-none">:</span></div>
+                            <div class="detail-value">{{ order.delivery_line2 }}</div>
+                        {% endif %}
+    
+                        <div class="detail-key">Town/City<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.delivery_city }}</div>
+    
+                        <div class="detail-key">County<span class="d-md-none">:</span></div>
+                        <div class="detail-value">{{ order.delivery_county }}</div>
+    
+                        {% if order.delivery_postcode %}
+                            <div class="detail-key">Postcode<span class="d-md-none">:</span></div>
+                            <div class="detail-value">{{ order.delivery_postcode }}</div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="text-center">
+                    <a href="{% url 'account_settings' %}">
+                        <i class="fa-solid fa-caret-left mr-2"></i>Back to account settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

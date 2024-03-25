@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
@@ -11,6 +11,8 @@ from core.contexts import get_base_context, add_field_error
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
 from checkout.models import Order
+
+from datetime import datetime
 
 
 class AccountSettings(View):
@@ -258,6 +260,17 @@ class AccountSettings(View):
             logout(request)
             return redirect('/accounts/confirm-email/')
         return redirect('account_settings')
+
+
+class OrderDetails(View):
+    template = 'profiles/order_details.html'
+
+    def get(self, request, order_no):
+        context = get_base_context(request)
+        order = get_object_or_404(Order, order_number=order_no)
+        context['order'] = order
+
+        return render(request, self.template, context)
 
 
 class DeleteAccount(View):
