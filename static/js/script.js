@@ -58,7 +58,7 @@ function resizeWindow() {
  * @returns {Object} { width, height }
  */
 function viewport() {
-    var e = window, a = 'inner';
+    let e = window, a = 'inner';
     if (!('innerWidth' in window )) {
         a = 'client';
         e = document.documentElement || document.body;
