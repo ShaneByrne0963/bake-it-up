@@ -80,8 +80,16 @@
             <div class="col-12 col-md-10 col-xl-5 offset-md-1 offset-xl-0">
                 <div id="order-history">
                     <h3>Order History</h3>
-                    {% for order in order_items %}
-                    {% endfor %}
+                    <div class="list-group">
+                        {% for order in orders %}
+                            <div class="list-group-item p-0">
+                                <div class="card-header border-0 text-break">
+                                    <a href="" class="d-block text-dark">{{ order }}</a>
+                                    <small>Placed on: {{ order.order_date }}</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

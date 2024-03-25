@@ -10,6 +10,7 @@ from allauth.account.utils import send_email_confirmation
 from core.contexts import get_base_context, add_field_error
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
+from checkout.models import Order
 
 
 class AccountSettings(View):
@@ -32,6 +33,7 @@ class AccountSettings(View):
             }
             return redirect('home')
         context = get_base_context(request)
+        profile = None
 
         # The default profile details
         contact_details = {
@@ -117,6 +119,12 @@ class AccountSettings(View):
         billing_form = ProfileBillingForm(billing_details)
         context['contact_form'] = contact_form
         context['billing_form'] = billing_form
+
+        # Getting the user's list of previous orders
+        orders = Order.objects.filter(
+            profile=profile
+        ).order_by('-order_date')
+        context['orders'] = orders
 
         return render(request, self.template, context)
 
