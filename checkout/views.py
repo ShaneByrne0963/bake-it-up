@@ -242,7 +242,8 @@ def cache_checkout_data(request):
         return HttpResponse(status=200)
     except Exception as e:
         messages.error(request, f"""
-        Sorry, but your payment cannot be processed.
-        Please try again. {e}
-        """)
+            Sorry, but your payment cannot be processed.
+            Please try again. {e}
+            """
+        )
         return HttpResponse(content=e, status=400)

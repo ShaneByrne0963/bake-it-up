@@ -59,6 +59,7 @@ def create_order(checkout_data, cart, save_info=False, user=None):
     if 'delivery' not in new_data:
         new_data['delivery'] = False
     new_data['bake_date'] = bake_date
+    new_data['profile'] = UserProfile.objects.get(user=user)
 
     # Calculating the delivery cost
     if new_data['delivery']:

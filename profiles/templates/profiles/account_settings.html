@@ -77,6 +77,13 @@
                 <hr>
                 <button type="button" class="btn btn-danger modal-trigger-delete-account">Delete Account</button>
             </div>
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1 offset-xl-0">
+                <div id="order-history">
+                    <h3>Order History</h3>
+                    {% for order in order_items %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

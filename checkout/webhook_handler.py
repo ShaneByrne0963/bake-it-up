@@ -23,7 +23,21 @@ class StripeWH_Handler():
         """
         intent = event.data.object
         pid = intent.id
-
+        
+        attempt = 1
+        while attempt < 5:
+            try:
+                order = Order.objects.get(stripe_pid=pid)
+            
+                return HttpResponse(
+                    content=f'Webhook received: {event['type']}. \
+                    Order already exists in database',
+                    status=200
+                )
+            except Order.DoesNotExist:
+                attempt += 1
+                time.sleep(1)
+        
         # Extracting the metadata from the payment intent
         save_info = (intent.metadata.save_info == 'on')
         bake_date = intent.metadata.bake_date
@@ -54,20 +68,7 @@ class StripeWH_Handler():
         for key, value in shipping_details.address.items():
             if value == '':
                 shipping_details.address[key] = None
-        
-        attempt = 1
-        while attempt < 5:
-            try:
-                order = Order.objects.get(stripe_pid=pid)
-            
-                return HttpResponse(
-                    content=f'Webhook received: {event['type']}. \
-                    Order already exists in database',
-                    status=200
-                )
-            except Order.DoesNotExist:
-                attempt += 1
-                time.sleep(1)
+
         order = None
         try:
             # Extracting the cart from the payment intent metadata

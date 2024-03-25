@@ -5,6 +5,8 @@ from core.contexts import get_product_by_name
 from core.shortcuts import price_as_int, price_as_float
 from core.constants import PRODUCT_PROPERTIES
 
+from profiles.models import UserProfile
+
 import uuid
 
 
@@ -12,6 +14,8 @@ class Order(models.Model):
     order_number = models.CharField(max_length=32, null=False, editable=False)
     order_date = models.DateTimeField(auto_now_add=True)
     bake_date = models.DateField()
+    profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
+                                blank=True, null=True)
     delivery = models.BooleanField(default=False)
     customer_note = models.CharField(max_length=200, blank=True, null=True)
     full_name = models.CharField(max_length=70)
