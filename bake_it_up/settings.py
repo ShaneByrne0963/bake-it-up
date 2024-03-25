@@ -227,6 +227,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Amazon Web Services
 
 if 'USE_AWS' in os.environ:
+    # Cache Control
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=94608000'
+    }
+
     # AWS Bucket Configuration
     AWS_STORAGE_BUCKET_NAME = "bake-it-up-e014260e4351"
     AWS_S3_REGION_NAME = 'eu-west-1'
