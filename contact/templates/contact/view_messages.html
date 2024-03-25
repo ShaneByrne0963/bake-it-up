@@ -16,7 +16,7 @@
             <div id="message-list" class="col-12 col-md-10 offset-md-1">
                 {% if unopen_messages %}
                     <h3>New Messages</h3>
-                    <form id="unopen-messages" method="POST">
+                    <form id="unopen-messages" method="POST" class="accordion">
                         {% csrf_token %}
                         {% for message in unopen_messages %}
                             {% with 'unopen' as message_type %}
@@ -30,11 +30,13 @@
                 {% endif %}
                 {% if open_messages %}
                     <h3>Past Messages</h3>
-                    {% for message in open_messages %}
-                        {% with 'open' as message_type %}
-                        {% include 'contact/includes/message_collapse.html' %}
-                        {% endwith %}
-                    {% endfor %}
+                    <div class="accordion">
+                        {% for message in open_messages %}
+                            {% with 'open' as message_type %}
+                            {% include 'contact/includes/message_collapse.html' %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
                 {% elif not unopen_messages %}
                     <div id="page-error" class="col-12 text-sm-center">
                         <i class="fa-solid fa-face-sad-tear"></i>
