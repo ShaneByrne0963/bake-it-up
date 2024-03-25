@@ -3,7 +3,7 @@
  * right container
  */
 function resizeProfileScreen() {
-    let width = $(window).width();
+    let width = viewport().width;
     let expectedParent = (width < 1200) ? 'order-history-medium' : 'order-history-large';
     let actualParent = $('#order-history').parent().attr('id');
     if (expectedParent !== actualParent) {

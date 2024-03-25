@@ -16,7 +16,7 @@ function scrollScreen() {
  * Adjusts elements whose properties depend on the screen width
  */
 function resizeWindow() {
-    let width = $(document).width();
+    let width = viewport().width;
 
     // Creates sufficient spacing between the brand logo and main page body to avoid overlap
     let logoHeight = $('#logo-brand').height();
@@ -49,6 +49,21 @@ function resizeWindow() {
     if ($('.color-container').length > 0) {
         updateColorScrollButtons();
     }
+}
+
+
+/**
+ * Returns the width of the viewport, excluding the scrollbar
+ * Source: https://stackoverflow.com/questions/11309859/css-media-queries-and-jquery-window-width-do-not-match
+ * @returns {Object} { width, height }
+ */
+function viewport() {
+    var e = window, a = 'inner';
+    if (!('innerWidth' in window )) {
+        a = 'client';
+        e = document.documentElement || document.body;
+    }
+    return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
 }
 
 
