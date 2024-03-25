@@ -162,3 +162,19 @@ class OrderLineItem(models.Model):
                 }
                 prop_items.append(prop_dict)
         return prop_items
+    
+    def has_properties(self):
+        """
+        Returns true if the product contains any custom properties
+        """
+        product = self.get_product()
+        for prop in PRODUCT_PROPERTIES:
+            prop_name = prop['name']
+            prop_answer = getattr(self, f'prop_{prop_name}')
+            if prop_answer is None:
+                continue
+            if (prop_answer and prop_answer != 'None'
+                    and prop_answer != 'Plain'
+                    and prop_answer != '#000000'):
+                return True
+        return False

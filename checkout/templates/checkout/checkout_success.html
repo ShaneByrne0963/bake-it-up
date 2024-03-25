@@ -43,37 +43,45 @@
                     {% for item in order.line_items.all %}
                         {% with forloop.counter as i %}
                         {% with item.get_product as product %}
+                        {% with item.has_properties as has_properties %}
                         <div class="card order-product-info">
                             <div class="card-header px-2 px-md-3" id="product-heading-{{ i }}">
                                 <div class="mb-0">
+                                    {% if has_properties %}
                                     <button class="btn-no-style btn-block text-left" type="button" data-toggle="collapse"
-                                        data-target="#product-collapse-{{ i }}" aria-expanded="true" aria-controls="product-collapse-{{ i }}">
+                                            data-target="#product-collapse-{{ i }}" aria-expanded="true" aria-controls="product-collapse-{{ i }}">
+                                    {% endif %}
                                         <div class="d-flex justify-content-between">
                                             <span>
-                                                <i class="fa-solid fa-caret-down mr-3"></i>
+                                                <i class="fa-solid fa-caret-down mr-3{% if not has_properties %} invisible{% endif %}"></i>
                                                 {{ product.display_name }} &times; {{ item.quantity }}
                                             </span>
                                             <span class="ml-2">&euro;{{ item.get_total|floatformat:2 }}</span>
                                         </div>
-                                    </button>
+                                    {% if has_properties %}
+                                        </button>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div id="product-collapse-{{ i }}" class="collapse" aria-labelledby="product-heading-{{ i }}"
-                                data-parent="#order-products">
-                                <div class="card-body">
-                                    {% include 'includes/property_list.html' %}
+                            {% if has_properties %}
+                                <div id="product-collapse-{{ i }}" class="collapse" aria-labelledby="product-heading-{{ i }}"
+                                    data-parent="#order-products">
+                                    <div class="card-body">
+                                        {% include 'includes/property_list.html' %}
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
+                        {% endwith %}
                         {% endwith %}
                         {% endwith %}
                     {% endfor %}
                 </div>
                 <div class="order-price mb-5 px-md-4">
-                    <div>Cart Total:</div>
-                    <div class="text-right">&euro;{{ order.get_cart_total|floatformat:2 }}</div>
                     {% with order.get_delivery_cost as delivery %}
                     {% if delivery > 0 %}
+                        <div>Cart Total:</div>
+                        <div class="text-right">&euro;{{ order.get_cart_total|floatformat:2 }}</div>
                         <div>Delivery Charges:</div>
                         <div class="text-right">&euro;{{ delivery|floatformat:2 }}</div>
                     {% endif %}
@@ -144,6 +152,9 @@
                 <div class="text-center">
                     <h2>Thank you for your purchase!</h2>
                     <p>You'll be enjoying some delicious, freshly-baked treats in no time!</p>
+                    <a href="{% url 'home' %}">
+                        <i class="fa-solid fa-caret-left mr-2"></i>Back to Home Page
+                    </a>
                 </div>
             </div>
         </div>
