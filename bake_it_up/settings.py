@@ -226,7 +226,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Amazon Web Services
 
-if USE_AWS in os.environ:
+if 'USE_AWS' in os.environ:
     # AWS Bucket Configuration
     AWS_STORAGE_BUCKET_NAME = "bake-it-up-e014260e4351"
     AWS_S3_REGION_NAME = 'eu-west-1'
