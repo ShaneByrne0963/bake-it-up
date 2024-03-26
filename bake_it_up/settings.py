@@ -28,7 +28,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
-DEBUG = False
 
 ALLOWED_HOSTS = [
     '8000-shanebyrne0963-bakeitup-lde3yz7pdl4.ws-eu110.gitpod.io',
@@ -251,7 +250,7 @@ if 'USE_AWS' in os.environ:
 
 
 # Setting up real emails for the deployed site
-if DEBUG:
+if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEFAULT_FROM_EMAIL = 'bakeitup.com'
 else:
@@ -261,7 +260,7 @@ else:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
     EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
-    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+    DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 
 # Default primary key field type
