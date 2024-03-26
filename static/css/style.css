@@ -357,6 +357,10 @@ input::-webkit-inner-spin-button {
     margin-bottom: 6px;
 }
 
+#newsletter-signup .asteriskField {
+    display: none;
+}
+
 /* --------------------------------------------------------"Back To Top" button */
 
 #to-top {

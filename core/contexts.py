@@ -3,6 +3,7 @@ from django.db.models import Q, Count
 
 from products.models import BreadProduct, PastryProduct
 from contact.models import CustomerMessage
+from contact.forms import NewsletterForm
 
 from .shortcuts import price_as_float, find_dict_in_list
 from .constants import PRODUCT_PROPERTIES
@@ -87,6 +88,10 @@ def get_base_context(request):
     if request.user.is_superuser:
         new_messages = CustomerMessage.objects.filter(opened=False)
         context['num_messages'] = new_messages.count()
+    
+    # Getting the newsletter signup form in the footer
+    newsletter_form = NewsletterForm()
+    context['newsletter_form'] = newsletter_form
 
     return context
 

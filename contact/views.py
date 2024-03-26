@@ -78,6 +78,12 @@ class DeleteMessage(View):
         return redirect('view_messages')
 
 
+class NewsletterSignup(View):
+
+    def post(self, request):
+        pass
+
+
 @require_POST
 def open_message(request, message_id):
     """

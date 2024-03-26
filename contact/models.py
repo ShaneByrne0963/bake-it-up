@@ -19,3 +19,13 @@ class CustomerMessage(models.Model):
         sender = self.full_name if self.full_name \
             else self.email
         return f'Message from {sender}'
+
+
+class NewsletterEmails(models.Model):
+    email = models.EmailField(max_length=320, unique=True)
+    is_active = models.BooleanField(default=True)
+    received_codes = models.TextField(blank=True, null=True)
+    used_codes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.email
