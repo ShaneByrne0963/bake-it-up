@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
+from django.contrib import messages
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -29,28 +30,32 @@ class CustomLogin(LoginView):
     the modal
     """
     def post(self, request):
-        url_next = request.POST['next']
-        email = request.POST['login']
-        login_form = LoginForm(request.POST)
+        try:
+            url_next = request.POST['next']
+            email = request.POST['login']
+            login_form = LoginForm(request.POST)
 
-        if login_form.is_valid():
-            login_next = super().post(request)
+            if login_form.is_valid():
+                login_next = super().post(request)
 
-            # Allowing a different URL to be redirected to
-            if 'login_custom_redirect' in request.POST:
-                return redirect(request.POST['login_custom_redirect'])
-            
-            return login_next
+                # Allowing a different URL to be redirected to
+                if 'login_custom_redirect' in request.POST:
+                    return redirect(request.POST['login_custom_redirect'])
+                
+                return login_next
 
-        request.session['global_context'] = {
-            'modal_show': 'login',
-            'val_login': email,
-            'modal_form_errors': login_form.errors.as_json(),
-        }
-        if 'remember' in request.POST:
-            request.session['global_context']['val_remember'] = True
+            request.session['global_context'] = {
+                'modal_show': 'login',
+                'val_login': email,
+                'modal_form_errors': login_form.errors.as_json(),
+            }
+            if 'remember' in request.POST:
+                request.session['global_context']['val_remember'] = True
 
-        return redirect(url_next)
+            return redirect(url_next)
+        except Exception as e:
+            messages.error(request, e)
+            return redirect('home')
 
 
 class CustomSignup(SignupView):
