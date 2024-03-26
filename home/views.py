@@ -105,3 +105,17 @@ class EmailConfirmed(View):
             'modal_load_fade': 'True',
         }
         return redirect('home')
+
+
+# Error pages
+
+def handler404(request):
+    """404 page"""
+    context = get_base_context(request)
+    return render(request, '404.html', context)
+
+
+def handler500(request):
+    """500 page"""
+    context = get_base_context(request)
+    return render(request, '404.html', context)

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block extra_title %}- Server Error{% endblock %}
+
+{% block content_heading %}
+    <h1>Server Error!</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="page-error" class="col-12 text-sm-center">
+        <i class="fa-solid fa-circle-question"></i>
+        <h2>Oops! Looks like something went wrong!</h2>
+        <p>Technical difficulties! Please stand by! If this problem persists, please
+            <a href="{% url 'store_contact' %}">contact us</a> and report the issue.
+        </p>
+        <a href="{% url 'home' %}">Back to the home page.</a>
+    </div>
+{% endblock %}

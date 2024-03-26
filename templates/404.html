@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block extra_title %}- Page Not Found{% endblock %}
+
+{% block content_heading %}
+    <h1>Page Not Found!</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="page-error" class="col-12 text-sm-center">
+        <i class="fa-solid fa-circle-question"></i>
+        <h2>Sorry, but we couldn't find what you were looking for.</h2>
+        <p>Looks like the page you requested doesn't exist, or has been deleted.</p>
+        <a href="{% url 'home' %}">Back to the home page.</a>
+    </div>
+{% endblock %}
