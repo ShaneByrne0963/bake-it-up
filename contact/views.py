@@ -4,8 +4,8 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 
 from core.contexts import get_base_context
-from .forms import CustomerMessageForm
-from .models import CustomerMessage
+from .forms import CustomerMessageForm, NewsletterForm
+from .models import CustomerMessage, NewsletterEmails
 
 
 class StoreContact(View):
@@ -81,7 +81,58 @@ class DeleteMessage(View):
 class NewsletterSignup(View):
 
     def post(self, request):
-        pass
+        url_next = request.POST.get('next', '')
+        # Allows the page to focus on the input on page reload
+        focus = '#newsletter-email'
+        if 'email' not in request.POST:
+            request.session['global_context'] = {
+                'newsletter_error': 'Please enter an email address'
+            }
+            return redirect(f'{url_next}{focus}')
+        email = request.POST['email']
+
+        # Checking if the email already exists in the database
+        try:
+            newsletter = NewsletterEmails.objects.get(email=email)
+            if newsletter.is_active:
+                request.session['global_context'] = {
+                    'newsletter_error': """
+                        This email is already subscribed to the
+                        newsletter."""
+                }
+                return redirect(f'{url_next}{focus}')
+            else:
+                newsletter.is_active = True
+                newsletter.save()
+
+                messages.success(
+                    request,
+                    'Your newsletter subscription has been reactivated!'
+                )
+                return redirect(url_next)
+        except NewsletterEmails.DoesNotExist:
+            # Creating a new subscription
+            newsletter_form = NewsletterForm(request.POST)
+            if newsletter_form.is_valid():
+                newsletter_form.save()
+                messages.success(
+                    request,
+                    'You have signed up for our newsletter!'
+                )
+                return redirect(url_next)
+            else:
+                form_error = newsletter_form.errors['email'][0]
+                request.session['global_context'] = {
+                    'newsletter_error': form_error
+                }
+                return redirect(f'{url_next}{focus}')
+
+        except Exception as e:
+            messages.error(
+                request,
+                f"An unexpected error occurred. {e}"
+            )
+            return redirect(url_next)
 
 
 @require_POST

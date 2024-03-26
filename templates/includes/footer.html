@@ -44,9 +44,16 @@
                         <div class="footer-heading">Sign Up for our Newsletter!</div>
                         <p class="small">You'll receive emails about new products, events
                             hosted by us and even get discounts on our products!</p>
-                        <form method="POST" action="" id="newsletter-signup">
+                        <form method="POST" action="{% url 'newsletter_signup' %}" id="newsletter-signup">
                             {% csrf_token %}
-                            {{ newsletter_form|crispy }}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <div class="form-group">
+                                <label for="newsletter-email">Email</label>
+                                <input type="email" id="newsletter-email" name="email" class="form-control" maxlength="320" required>
+                                {% if newsletter_error %}
+                                    <div class="ui-error">{{ newsletter_error }}</div>
+                                {% endif %}
+                            </div>
                             <button type="submit" class="btn btn-primary shadow-none">Sign Up!</button>
                         </form>
                     </div>
