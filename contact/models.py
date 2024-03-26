@@ -27,5 +27,8 @@ class NewsletterEmails(models.Model):
     received_codes = models.TextField(blank=True, null=True)
     used_codes = models.TextField(blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = 'Newsletter emails'
+
     def __str__(self):
         return self.email

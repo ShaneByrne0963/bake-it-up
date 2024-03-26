@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomerMessage
+from .models import CustomerMessage, NewsletterEmails
 
 
 @admin.register(CustomerMessage)
@@ -12,3 +12,8 @@ class CustomerMessageAdmin(admin.ModelAdmin):
     list_filter = ('opened',)
     ordering = ('opened', '-date_created',)
     search_fields = ('title', 'message')
+
+
+@admin.register(NewsletterEmails)
+class NewsletterEmailAdmin(admin.ModelAdmin):
+    list_display = ('email', 'is_active')
