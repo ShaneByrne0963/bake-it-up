@@ -7,7 +7,7 @@ from django.conf import settings
 from .cartfunctions import add_to_cart, get_properties_from_dict, \
                            has_reached_cutoff_time
 from core.contexts import get_base_context, get_product_by_name, \
-                          get_cart_context
+                          get_cart_context, handle_server_errors
 from core.shortcuts import price_as_int, convert_24_hour_to_12, \
                            get_datetime_as_date_input, \
                            is_tomorrows_date
@@ -19,6 +19,7 @@ from datetime import datetime
 class ViewCart(View):
     template = 'cart/view_cart.html'
 
+    @handle_server_errors
     def get(self, request):
         context = get_cart_context(request)
 
@@ -54,6 +55,7 @@ class ViewCart(View):
 
         return render(request, self.template, context)
     
+    @handle_server_errors
     def post(self, request):
         # The user's attached message
         note = ''
@@ -83,6 +85,7 @@ class ViewCart(View):
 
 class AddToCart(View):
 
+    @handle_server_errors
     def post(self, request, product_name):
         product = get_product_by_name(product_name)
         cart = request.session.get('cart', [])
@@ -119,6 +122,7 @@ class AddToCart(View):
 class EditCartItem(View):
     template = 'cart/edit_cart_item.html'
 
+    @handle_server_errors
     def get(self, request, item_index):
         context = get_base_context(request)
         context['item_index'] = item_index
@@ -136,7 +140,8 @@ class EditCartItem(View):
         context['prop_form'] = prop_form
 
         return render(request, self.template, context)
-    
+
+    @handle_server_errors
     def post(self, request, item_index):
         cart = request.session['cart']
         order_item = cart[item_index]
@@ -180,6 +185,7 @@ class EditCartItem(View):
 
 class RemoveCartItem(View):
 
+    @handle_server_errors
     def post(self, request, item_id):
         cart = request.session['cart']
         cart_total = request.session['cart_total']

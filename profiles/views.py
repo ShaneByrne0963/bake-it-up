@@ -7,7 +7,8 @@ from home.views import CustomLogin
 from allauth.account.admin import EmailAddress
 from allauth.account.utils import send_email_confirmation
 
-from core.contexts import get_base_context, add_field_error
+from core.contexts import get_base_context, add_field_error, \
+                          handle_server_errors
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
 from checkout.models import Order
@@ -21,6 +22,7 @@ class AccountSettings(View):
     """
     template = 'profiles/account_settings.html'
 
+    @handle_server_errors
     def get(self, request):
         # Making the login modal appear if the user isn't logged in
         if not request.user.is_authenticated:
@@ -130,6 +132,7 @@ class AccountSettings(View):
 
         return render(request, self.template, context)
 
+    @handle_server_errors
     def post(self, request):
         """
         Updates the user's information
@@ -265,6 +268,7 @@ class AccountSettings(View):
 class OrderDetails(View):
     template = 'profiles/order_details.html'
 
+    @handle_server_errors
     def get(self, request, order_no):
         context = get_base_context(request)
         order = get_object_or_404(Order, order_number=order_no)
@@ -275,6 +279,7 @@ class OrderDetails(View):
 
 class DeleteAccount(View):
 
+    @handle_server_errors
     def post(self, request):
         if 'password' not in request.POST:
             messages.error(

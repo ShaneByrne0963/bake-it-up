@@ -5,7 +5,9 @@ from django.views import generic, View
 from django.views.decorators.http import require_POST
 
 from core.contexts import get_base_context, get_products, \
-    get_product_by_name, get_add_product_context, delete_product
+                          get_product_by_name, \
+                          get_add_product_context, delete_product, \
+                          handle_server_errors
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
 from home.models import SiteData
@@ -133,6 +135,7 @@ class ProductList(generic.ListView):
 class ProductDetail(View):
     template = 'products/product_detail.html'
 
+    @handle_server_errors
     def get(self, request, product_name):
         context = get_base_context(request)
         context['product'] = get_product_by_name(product_name)
@@ -142,6 +145,7 @@ class ProductDetail(View):
 
 class AddToFavorites(View):
 
+    @handle_server_errors
     def get(self, request, product_name):
         try:
             product = get_product_by_name(product_name)
@@ -170,6 +174,7 @@ class AddToFavorites(View):
 class AddProduct(View):
     template = 'products/add_product.html'
 
+    @handle_server_errors
     def get(self, request):
         context = get_add_product_context(request)
         product_form = AddProductForm()
@@ -207,7 +212,8 @@ class AddProduct(View):
                     pastry['answers'] = answer_list
 
         return render(request, self.template, context)
-    
+
+    @handle_server_errors
     def post(self, request):
         """
         Creating the product
@@ -222,6 +228,7 @@ class AddProduct(View):
 class EditProduct(View):
     template = 'products/edit_product.html'
 
+    @handle_server_errors
     def get(self, request, product_name):
         context = get_add_product_context(request)
         product = get_product_by_name(product_name)
@@ -329,6 +336,7 @@ def validate_add_product(request):
 
 class DeleteProduct(View):
 
+    @handle_server_errors
     def post(self, request, product_name):
         product = get_product_by_name(product_name)
         message_name = product.display_name

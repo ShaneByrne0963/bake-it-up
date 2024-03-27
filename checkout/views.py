@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, reverse, \
+                             get_object_or_404, HttpResponse
 from django.views import View
 from django.views.decorators.http import require_POST
 from django.conf import settings
@@ -7,7 +8,8 @@ from django.contrib import messages
 from .models import Order, OrderLineItem
 from .forms import ContactDetailsForm, BillingDetailsForm
 from .order import create_order
-from core.contexts import get_base_context, get_product_by_name
+from core.contexts import get_base_context, get_product_by_name, \
+                          handle_server_errors
 from core.shortcuts import price_as_float, is_tomorrows_date
 from cart.cartfunctions import has_reached_cutoff_time
 from profiles.models import UserProfile
@@ -20,6 +22,7 @@ from datetime import datetime
 class Checkout(View):
     template = 'checkout/checkout.html'
 
+    @handle_server_errors
     def get(self, request):
         cart = request.session['cart']
         if not cart:
@@ -102,7 +105,8 @@ class Checkout(View):
         context['county_options'] = county_options
 
         return render(request, self.template, context)
-    
+
+    @handle_server_errors
     def post(self, request):
         """
         Submits an order on payment
@@ -156,6 +160,7 @@ class Checkout(View):
 class CheckoutSuccess(View):
     template = 'checkout/checkout_success.html'
 
+    @handle_server_errors
     def get(self, request, order_no):
         context = get_base_context(request)
         order = get_object_or_404(Order, order_number=order_no)

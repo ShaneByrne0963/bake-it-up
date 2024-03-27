@@ -22,7 +22,6 @@ class Home(View):
     @handle_server_errors
     def get(self, request):
         context = get_base_context(request)
-        context['hello'] = hello.world()
         return render(request, self.template, context)
 
 
@@ -59,6 +58,7 @@ class CustomLogin(LoginView):
 
 class CustomSignup(SignupView):
 
+    @handle_server_errors
     def post(self, request):
         email = request.POST['email']
         signup_form = SignupForm(request.POST)
@@ -103,6 +103,7 @@ class EmailConfirmed(View):
     Redirects the user to the home page after the user verifies
     their email, and causes the login modal to appear
     """
+    @handle_server_errors
     def get(self, request):
         request.session['global_context'] = {
             'modal_show': 'login',

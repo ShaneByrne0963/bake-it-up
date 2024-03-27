@@ -292,6 +292,11 @@ def handle_server_errors(func):
     messages for immediate action
     """
     def wrapper(*args, **kwargs):
+        # Continue as normal if in debug mode, as errors are
+        # already handled there
+        if settings.DEBUG:
+            return func(*args, **kwargs)
+
         template = '500.html'
         try:
             url_next = func(*args, **kwargs)

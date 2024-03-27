@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
 
-from core.contexts import get_base_context, get_product_by_name
+from core.contexts import get_base_context, get_product_by_name, \
+                          handle_server_errors
 from checkout.models import Order
 
 from datetime import date
@@ -11,12 +12,14 @@ from datetime import date
 class ViewOrders(View):
     template = 'orders/view_orders.html'
 
+    @handle_server_errors
     def get(self, request):
         """
         Gets the orders for todays date
         """
         return self.get_list_of_orders(request, date.today())
-    
+
+    @handle_server_errors
     def post(self, request):
         """
         Gets a the orders for a specified date
@@ -31,7 +34,7 @@ class ViewOrders(View):
             int(x) for x in request.POST['selected_date'].split('-')
         ]
         return self.get_list_of_orders(request, date(*selected_date))
-    
+
     def get_list_of_orders(self, request, selected_date):
         """
         Returns a render of the page, 

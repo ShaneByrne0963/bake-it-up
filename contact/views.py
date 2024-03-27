@@ -3,7 +3,7 @@ from django.views import View
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
-from core.contexts import get_base_context
+from core.contexts import get_base_context, handle_server_errors
 from .forms import CustomerMessageForm, NewsletterForm
 from .models import CustomerMessage, NewsletterEmails
 
@@ -11,6 +11,7 @@ from .models import CustomerMessage, NewsletterEmails
 class StoreContact(View):
     template = 'contact/store_contact.html'
 
+    @handle_server_errors
     def get(self, request):
         context = get_base_context(request)
 
@@ -28,7 +29,8 @@ class StoreContact(View):
         context['contact_form'] = contact_form
 
         return render(request, self.template, context)
-    
+
+    @handle_server_errors
     def post(self, request):
         """
         Sends the customer message
@@ -50,6 +52,7 @@ class StoreContact(View):
 class ViewMessages(View):
     template = 'contact/view_messages.html'
 
+    @handle_server_errors
     def get(self, request):
         context = get_base_context(request)
         unopen_messages = CustomerMessage.objects.filter(
@@ -68,6 +71,7 @@ class ViewMessages(View):
 
 class DeleteMessage(View):
 
+    @handle_server_errors
     def post(self, request, message_id):
         message = CustomerMessage.objects.get(id=message_id)
         message.delete()
@@ -80,6 +84,7 @@ class DeleteMessage(View):
 
 class NewsletterSignup(View):
 
+    @handle_server_errors
     def post(self, request):
         url_next = request.POST.get('next', '')
         # Allows the page to focus on the input on page reload
