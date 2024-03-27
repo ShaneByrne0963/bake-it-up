@@ -292,6 +292,8 @@ def handle_server_errors(func):
     messages for immediate action
     """
     def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+        
         # Continue as normal if in debug mode, as errors are
         # already handled there
         if settings.DEBUG:
