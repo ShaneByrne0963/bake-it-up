@@ -30,8 +30,8 @@ class StripeWH_Handler():
                 order = Order.objects.get(stripe_pid=pid)
             
                 return HttpResponse(
-                    content=f'Webhook received: {event['type']}. \
-                    Order already exists in database',
+                    content=f"""Webhook received: {event['type']}.
+                    Order already exists in database""",
                     status=200
                 )
             except Order.DoesNotExist:
@@ -118,8 +118,8 @@ class StripeWH_Handler():
             order = create_order(checkout_data, cart, save_info, user)
 
             return HttpResponse(
-                content=f'Webhook received: {event['type']}. \
-                Order created in webhook',
+                content=f"""Webhook received: {event['type']}.
+                Order created in webhook""",
                 status=200
             )
         except Exception as e:
@@ -127,8 +127,8 @@ class StripeWH_Handler():
                 order.delete()
 
             return HttpResponse(
-                content=f'Webhook received: {event['type']}. \
-                | ERROR: {e}',
+                content=f"""Webhook received: {event['type']}.
+                | ERROR: {e}""",
                 status=500
             )
 
@@ -137,7 +137,7 @@ class StripeWH_Handler():
         Handles the payment_intent.payment_failed webhook
         """
         return HttpResponse(
-            content=f'Failed webhook received: {event['type']}',
+            content=f"Failed webhook received: {event['type']}",
             status=200
         )
 
@@ -146,6 +146,6 @@ class StripeWH_Handler():
         Handles a Stripe webhook event
         """
         return HttpResponse(
-            content=f'Unhandled webhook received: {event['type']}',
+            content=f"Unhandled webhook received: {event['type']}",
             status=200
         )
