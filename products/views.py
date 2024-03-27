@@ -192,7 +192,8 @@ class AddProduct(View):
 
         if site_data:
             for bread in context['bread_properties']:
-                key = f'bread_prop_{bread['value']}s'
+                value = bread['value']
+                key = f'bread_prop_{value}s'
                 # To stop contents being "contentss"
                 if key[-2:] == 'ss':
                     key = key[:-1]
