@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
-from django.contrib import messages
 from django.conf import settings
 
 from products.models import BreadProduct, PastryProduct
@@ -308,7 +307,6 @@ def handle_server_errors(func):
             view = args[0]
             request = args[1]
             context = get_base_context(request)
-            messages.error(request, e)
 
             # Creating the report
             view_name = view.__class__.__name__
