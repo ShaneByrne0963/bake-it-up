@@ -292,8 +292,6 @@ def handle_server_errors(func):
     messages for immediate action
     """
     def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-        
         # Continue as normal if in debug mode, as errors are
         # already handled there
         if settings.DEBUG:
@@ -309,6 +307,7 @@ def handle_server_errors(func):
             view = args[0]
             request = args[1]
             context = get_base_context(request)
+            messages.error(request, e)
 
             # Creating the report
             view_name = view.__class__.__name__
