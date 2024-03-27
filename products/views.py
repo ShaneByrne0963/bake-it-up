@@ -322,8 +322,8 @@ def validate_add_product(request):
             product.save()
             messages.success(
                 request,
-                f'Product "{request.POST['display_name']}" \
-                    was created successfully!'
+                f"""Product "{request.POST['display_name']}" \
+                    was created successfully!"""
             )
             return HttpResponse(content=product_name, status=200)
         else:
@@ -448,8 +448,8 @@ def validate_edit_product(request, product_name):
             new_product.save()
             messages.success(
                 request,
-                f'Product "{request.POST['display_name']}" \
-                    has been updated!'
+                f"""Product "{request.POST['display_name']}" \
+                    has been updated!"""
             )
             return HttpResponse(content=new_name, status=200)
         else:
