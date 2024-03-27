@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
+from django.conf import settings
 
 from products.models import BreadProduct, PastryProduct
 from contact.models import CustomerMessage
@@ -282,3 +283,49 @@ def delete_product(product):
     if os.path.exists(product.image.path):
         os.remove(product.image.path)
     product.delete()
+
+
+def handle_server_errors(func):
+    """
+    Class method decorator. Handles 500 errors more
+    gracefully, sending an error report to the store
+    messages for immediate action
+    """
+    def wrapper(*args, **kwargs):
+        template = '500.html'
+        try:
+            url_next = func(*args, **kwargs)
+            return url_next
+        except Exception as e:
+            # Taking the user to a 500 error page if any
+            # uncaught error happens
+            view = args[0]
+            request = args[1]
+            context = get_base_context(request)
+
+            # Creating the report
+            view_name = view.__class__.__name__
+            message_details = f"""A fatal error has occurred in \
+                the "{view_name}" page:\n
+                **{e}** \n
+                Please report this issue to the developer."""
+
+            # Prevent the same error sending multiple times
+            try:
+                CustomerMessage.objects.get(message=message_details)
+                context['error_status'] = 'received'
+
+            except CustomerMessage.DoesNotExist:
+                message = CustomerMessage(
+                    email='bugs@bakeitup.ie',
+                    title=f'FATAL ERROR @ "{view_name}" PAGE',
+                    message=message_details
+                )
+                message.save()
+                context['error_status'] = 'sent'
+            except:
+                pass
+
+            finally:
+                return render(request, template, context)
+    return wrapper

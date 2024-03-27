@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from allauth.account.views import LoginView, SignupView
 from allauth.account.forms import LoginForm, SignupForm
 
-from core.contexts import get_base_context
+from core.contexts import get_base_context, handle_server_errors
 from profiles.models import UserProfile
 
 
@@ -19,8 +19,10 @@ class Home(View):
     """
     template = 'home/index.html'
 
+    @handle_server_errors
     def get(self, request):
         context = get_base_context(request)
+        context['hello'] = hello.world()
         return render(request, self.template, context)
 
 
@@ -29,33 +31,30 @@ class CustomLogin(LoginView):
     Allows the allauth login to be performed on all pages within
     the modal
     """
+    @handle_server_errors
     def post(self, request):
-        try:
-            url_next = request.POST['next']
-            email = request.POST['login']
-            login_form = LoginForm(request.POST)
+        url_next = request.POST['next']
+        email = request.POST['login']
+        login_form = LoginForm(request.POST)
 
-            if login_form.is_valid():
-                login_next = super().post(request)
+        if login_form.is_valid():
+            login_next = super().post(request)
 
-                # Allowing a different URL to be redirected to
-                if 'login_custom_redirect' in request.POST:
-                    return redirect(request.POST['login_custom_redirect'])
-                
-                return login_next
+            # Allowing a different URL to be redirected to
+            if 'login_custom_redirect' in request.POST:
+                return redirect(request.POST['login_custom_redirect'])
+            
+            return login_next
 
-            request.session['global_context'] = {
-                'modal_show': 'login',
-                'val_login': email,
-                'modal_form_errors': login_form.errors.as_json(),
-            }
-            if 'remember' in request.POST:
-                request.session['global_context']['val_remember'] = True
+        request.session['global_context'] = {
+            'modal_show': 'login',
+            'val_login': email,
+            'modal_form_errors': login_form.errors.as_json(),
+        }
+        if 'remember' in request.POST:
+            request.session['global_context']['val_remember'] = True
 
-            return redirect(url_next)
-        except Exception as e:
-            messages.error(request, e)
-            return redirect('home')
+        return redirect(url_next)
 
 
 class CustomSignup(SignupView):

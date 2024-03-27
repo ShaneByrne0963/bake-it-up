@@ -12,6 +12,7 @@
         <h2>Oops! Looks like something went wrong!</h2>
         <p>Technical difficulties! Please stand by! If this problem persists, please
             <a href="{% url 'store_contact' %}">contact us</a> and report the issue.
+            ERROR STATUS: [ {{ error_status }} ]
         </p>
         <a href="{% url 'home' %}">Back to the home page.</a>
     </div>
