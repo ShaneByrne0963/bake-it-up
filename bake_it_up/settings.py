@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'orders',
 
     'crispy_forms',
-    # 'storages'
+    'storages'
 ]
 
 
