@@ -73,7 +73,7 @@ def create_properties_form(product_name, pre_fill=None):
     form_html = ''
 
     for prop in PRODUCT_PROPERTIES:
-        prop_name = f'prop_{prop['name']}'
+        prop_name = f"prop_{prop['name']}"
         value = None
 
         # Getting the pre-filled value, if any
