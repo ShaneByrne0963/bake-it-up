@@ -231,14 +231,16 @@ input::-webkit-inner-spin-button {
     color: #DDDDDD;
 }
 
-#account-nav {
+#nav-buttons {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
     z-index: 10;
 }
 
-#account-nav .btn-nav {
+#nav-buttons .btn-nav {
     border: 2px solid whitesmoke;
     border-radius: 8px;
 }
@@ -248,6 +250,30 @@ input::-webkit-inner-spin-button {
     top: -4px;
     right: -4px;
     font-size: 1rem;
+}
+
+#mobile-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    pointer-events: none;
+}
+
+#mobile-nav-collapse {
+    position: relative;
+    top: -288px;
+    left: 0;
+    width: 100%;
+    min-height: 288px;
+    background: url('/media/images/ui-back.webp');
+    transition: top 0.5s ease-in-out;
+    pointer-events: all;
+}
+
+#mobile-nav-collapse.shown {
+    top: 0;
 }
 
 /* --------------------------------------------------------Search Bar */
@@ -602,7 +628,7 @@ form select,
 /* --------------------------------------------------------Bootstrap's small breakpoint */
 @media (max-width: 576px) {
     #logo-brand {
-        width: 30vw;
+        width: calc(32px + 20vw);
         top: calc(-50% - 15vw);
         right: 0;
     }

@@ -252,6 +252,11 @@ $(document).ready(() => {
         $(this).parent().find('.invalid-date').remove();
     });
 
+    // The mobile navigation collapse
+    $('#btn-mobile-collapse').click(() => {
+        $('#mobile-nav-collapse').toggleClass('shown');
+    });
+
     scrollScreen();
     resizeWindow();
     highlightQueries();

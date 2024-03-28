@@ -56,6 +56,7 @@
                 </button>
             </div>
         </nav>
+        <!-- Search Bar -->
         <div class="position-relative">
             <div id="search-collapse" class="invisible d-none d-md-block">
                 <form action="{% url 'product_list' %}" method="GET" class="d-flex justify-content-center">
@@ -79,50 +80,63 @@
                 </form>
             </div>
         </div>
+        <!-- Navigation for mobile -->
+        <div id="mobile-nav">
+            <div id="mobile-nav-collapse">
+    
+            </div>
+        </div>
         <!-- Account navigation at top right corner of screen -->
-        <div id="account-nav">
-            {% if cart_total %}
-                <a href="{% url 'cart' %}" class="btn btn-nav shadow-none">
-                    <i class="fa-solid fa-cart-shopping mr-2"></i>
-                    <span>&euro;{{ cart_total }}</span>
-                </a>
-            {% endif %}
-            {% if user.is_authenticated %}
-                <div class="dropdown d-inline-block">
-                    <button class="btn btn-nav dropdown-toggle position-relative" type="button" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-regular fa-lg fa-user"></i>
-                        {% if num_messages %}
-                            <span class="badge badge-danger">{{ num_messages }}</span>
-                        {% endif %}
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-item disabled text-default">
-                            {% if user.first_name %}
-                                {{ user.first_name }}{% if user.last_name %} {{ user.last_name }}{% endif %}
-                            {% else %}{{ user.email }}
+        <div id="nav-buttons" class="d-flex justify-content-between">
+            <div>
+                <button type="button" id="btn-mobile-collapse" class="btn btn-nav d-md-none">
+                    <i class="fa-solid fa-bars align-middle"></i>
+                </button>
+            </div>
+            <div id="account-nav">
+                {% if cart_total %}
+                    <a href="{% url 'cart' %}" class="btn btn-nav shadow-none">
+                        <i class="fa-solid fa-cart-shopping mr-2"></i>
+                        <span>&euro;{{ cart_total }}</span>
+                    </a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <div class="dropdown d-inline-block">
+                        <button class="btn btn-nav dropdown-toggle position-relative" type="button" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-lg fa-user"></i>
+                            {% if num_messages %}
+                                <span class="badge badge-danger">{{ num_messages }}</span>
                             {% endif %}
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        {% if user.is_superuser %}
-                            <a class="dropdown-item" href="{% url 'view_orders' %}">Today's Orders</a>
-                            <a class="dropdown-item d-flex" href="{% url 'view_messages' %}">Messages
-                                {% if num_messages %}
-                                    <span class="badge badge-danger d-flex align-items-center mb-2 ml-1">{{ num_messages }}</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-item disabled text-default">
+                                {% if user.first_name %}
+                                    {{ user.first_name }}{% if user.last_name %} {{ user.last_name }}{% endif %}
+                                {% else %}{{ user.email }}
                                 {% endif %}
-                            </a>
-                            <a class="dropdown-item" href="/admin/">Admin Panel</a>
-                            <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
+                            </div>
                             <div class="dropdown-divider"></div>
-                        {% endif %}
-                        <a class="dropdown-item" href="{% url 'product_list' %}?favourites=on">Favourites</a>
-                        <a class="dropdown-item" href="{% url 'account_settings' %}">Account Settings</a>
-                        <button class="dropdown-item btn-link modal-trigger-logout" data-url="{% url 'account_logout' %}">Logout</button>
+                            {% if user.is_superuser %}
+                                <a class="dropdown-item" href="{% url 'view_orders' %}">Today's Orders</a>
+                                <a class="dropdown-item d-flex" href="{% url 'view_messages' %}">Messages
+                                    {% if num_messages %}
+                                        <span class="badge badge-danger d-flex align-items-center mb-2 ml-1">{{ num_messages }}</span>
+                                    {% endif %}
+                                </a>
+                                <a class="dropdown-item" href="/admin/">Admin Panel</a>
+                                <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
+                                <div class="dropdown-divider"></div>
+                            {% endif %}
+                            <a class="dropdown-item" href="{% url 'product_list' %}?favourites=on">Favourites</a>
+                            <a class="dropdown-item" href="{% url 'account_settings' %}">Account Settings</a>
+                            <button class="dropdown-item btn-link modal-trigger-logout" data-url="{% url 'account_logout' %}">Logout</button>
+                        </div>
                     </div>
-                </div>
-            {% else %}
-                <button type="button" class="btn btn-nav shadow-none modal-trigger-login">Login</button>
-                <button type="button" class="btn btn-nav shadow-none modal-trigger-signup">Signup</button>
-            {% endif %}
+                {% else %}
+                    <button type="button" class="btn btn-nav shadow-none modal-trigger-login">Login</button>
+                    <button type="button" class="btn btn-nav shadow-none modal-trigger-signup">Signup</button>
+                {% endif %}
+            </div>
         </div>
     </header>
     <section id="main-body">
