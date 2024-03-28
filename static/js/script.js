@@ -30,6 +30,14 @@ function resizeWindow() {
         $('#content-header').css('min-height', `${headingGap}px`);
     }
 
+    // Inserting the search bar into the right section
+    let searchBar = $('#search-form');
+    let expectedSearch = (width < 768) ? 'search-mobile' : 'search-collapse';
+    let actualSearch = searchBar.parent().attr('id');
+    if (expectedSearch !== actualSearch) {
+        $(`#${expectedSearch}`).append(searchBar.detach());
+    }
+
     // Making the pagination bar small for smaller screens
     $('.pagination').removeClass('pagination-sm');
     if (width < 576) {

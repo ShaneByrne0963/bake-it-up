@@ -59,7 +59,7 @@
         <!-- Search Bar -->
         <div class="position-relative">
             <div id="search-collapse" class="invisible d-none d-md-block">
-                <form action="{% url 'product_list' %}" method="GET" class="d-flex justify-content-center">
+                <form id="search-form" action="{% url 'product_list' %}" method="GET" class="d-flex justify-content-center">
                     {% if category %}
                         <input type="hidden" name="category" value="{{ category }}" aria-hidden="true">
                     {% endif %}
@@ -82,8 +82,8 @@
         </div>
         <!-- Navigation for mobile -->
         <div id="mobile-nav">
-            <div id="mobile-nav-collapse">
-    
+            <div id="mobile-nav-collapse" class="d-md-none">
+                <div id="search-mobile"></div>
             </div>
         </div>
         <!-- Account navigation at top right corner of screen -->

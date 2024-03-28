@@ -264,6 +264,7 @@ input::-webkit-inner-spin-button {
 #mobile-nav-collapse {
     position: relative;
     top: -288px;
+    padding: 64px 12px 0 12px;
     left: 0;
     width: 100%;
     min-height: 288px;
@@ -274,6 +275,10 @@ input::-webkit-inner-spin-button {
 
 #mobile-nav-collapse.shown {
     top: 0;
+}
+
+#mobile-nav-collapse #search-bar-container {
+    width: 100%;
 }
 
 /* --------------------------------------------------------Search Bar */
