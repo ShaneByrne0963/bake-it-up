@@ -32,12 +32,22 @@ class CustomLogin(LoginView):
     """
     @handle_server_errors
     def post(self, request):
-        url_next = request.POST['next']
+        url_next = '/'
+        if 'next' in request.POST:
+            url_next = request.POST['next']
         email = request.POST['login']
         login_form = LoginForm(request.POST)
 
         if login_form.is_valid():
             login_next = super().post(request)
+
+            login_message = ''
+            user_fname = request.user.first_name
+            if user_fname:
+                login_message = f'Welcome back, {user_fname}!'
+            else:
+                login_message = f'Signed in as {email}'
+            messages.success(request, login_message)
 
             # Allowing a different URL to be redirected to
             if 'login_custom_redirect' in request.POST:

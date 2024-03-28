@@ -214,7 +214,7 @@ input::-webkit-inner-spin-button {
     font-family: "Delicious Handrawn", cursive;
 }
 
-.navbar .nav-link>a {
+#navbar .nav-link>a {
     font-size: 1.6rem;
 }
 
