@@ -41,13 +41,15 @@ class CustomLogin(LoginView):
         if login_form.is_valid():
             login_next = super().post(request)
 
-            login_message = ''
-            user_fname = request.user.first_name
-            if user_fname:
-                login_message = f'Welcome back, {user_fname}!'
-            else:
-                login_message = f'Signed in as {email}'
-            messages.success(request, login_message)
+            # Custom login message
+            if request.user.is_authenticated:
+                login_message = ''
+                user_fname = request.user.first_name
+                if user_fname:
+                    login_message = f'Welcome back, {user_fname}!'
+                else:
+                    login_message = f'Signed in as {email}'
+                messages.success(request, login_message)
 
             # Allowing a different URL to be redirected to
             if 'login_custom_redirect' in request.POST:
