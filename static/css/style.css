@@ -214,8 +214,12 @@ input::-webkit-inner-spin-button {
     font-family: "Delicious Handrawn", cursive;
 }
 
-.nav-link>a {
+.navbar .nav-link>a {
     font-size: 1.6rem;
+}
+
+#mobile-nav .nav-link>a {
+    font-size: 1.3rem;
 }
 
 .nav-link>button {
@@ -264,7 +268,7 @@ input::-webkit-inner-spin-button {
 #mobile-nav-collapse {
     position: relative;
     top: -288px;
-    padding: 64px 12px 0 12px;
+    padding: 64px 24px 0 24px;
     left: 0;
     width: 100%;
     min-height: 288px;

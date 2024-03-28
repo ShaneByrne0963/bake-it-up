@@ -84,6 +84,21 @@
         <div id="mobile-nav">
             <div id="mobile-nav-collapse" class="d-md-none">
                 <div id="search-mobile"></div>
+                <div class="nav-link p-0">
+                    <a href="{% url 'home' %}">Home</a>
+                </div>
+                <div class="nav-link p-0">
+                    <a href="{% url 'product_list' %}">All Products</a>
+                </div>
+                <div class="nav-link p-0">
+                    <a href="{% url 'product_list' %}?category=bread">Breads</a>
+                </div>
+                <div class="nav-link p-0">
+                    <a href="{% url 'product_list' %}?category=pastries">Sweets &amp; Treats</a>
+                </div>
+                <div class="nav-link p-0">
+                    <a href="{% url 'product_list' %}?category=cakes">Cakes</a>
+                </div>
             </div>
         </div>
         <!-- Account navigation at top right corner of screen -->
