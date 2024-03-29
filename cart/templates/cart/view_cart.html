@@ -41,7 +41,7 @@
                         {% endif %}
                     </div>
                     <div class="cart-quantity text-right"><span class="d-md-none">Qty: </span>{{ item.quantity }}</div>
-                    <div class="cart-subtotal text-right"><span class="d-md-none">Total: </span>&euro;{{ item.subtotal }}</div>
+                    <div class="cart-subtotal text-right"><span class="d-md-none">Total: </span>&euro;{{ item.subtotal|floatformat:2 }}</div>
                     <div class="cart-product-options">
                         <a href="{% url 'edit_cart_item' forloop.counter0 %}" class="mr-4" aria-label="Edit this product">Edit</a>
                         <span class="pseudo-anchor text-danger modal-trigger-remove-item"
@@ -63,7 +63,7 @@
                 <div id="cart-footer" class="px-md-3 mt-4 mt-md-2">
                     <div id="cart-total">
                         <div class="h3 font-weight-bold">Cart Total:</div>
-                        <div class="h3 text-right font-weight-bold">&euro;{{ cart_total }}</div>
+                        <div class="h3 text-right font-weight-bold">&euro;{{ cart_total|floatformat:2 }}</div>
                     </div>
                     <hr class="mt-0">
                     <div class="form-group py-2">

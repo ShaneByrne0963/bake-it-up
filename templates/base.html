@@ -112,7 +112,7 @@
                 {% if cart_total %}
                     <a href="{% url 'cart' %}" class="btn btn-nav shadow-none">
                         <i class="fa-solid fa-cart-shopping mr-2"></i>
-                        <span>&euro;{{ cart_total }}</span>
+                        <span>&euro;{{ cart_total|floatformat:2 }}</span>
                     </a>
                 {% endif %}
                 {% if user.is_authenticated %}

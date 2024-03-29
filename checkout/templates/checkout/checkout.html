@@ -104,11 +104,11 @@
                 </div>
                 <div class="text-xl-right">
                     <div class="mb-3">
-                        <div>Cart Total: &euro;<span id="cart-total">{{ grand_total }}</span></div>
+                        <div>Cart Total: &euro;<span id="cart-total">{{ grand_total|floatformat:2 }}</span></div>
                         <div>Delivery Charge: <span id="delivery-charge">N/A</span></div>
                     </div>
                     <div class="h3 mb-md-0 font-weight-bold">
-                        You'll Pay: &euro;<span id="checkout-total">{{ grand_total }}</span>
+                        You'll Pay: &euro;<span id="checkout-total">{{ grand_total|floatformat:2 }}</span>
                     </div>
                     <hr>
                     <a href="{% url 'cart' %}" class="btn btn-lg btn-nav">Back to cart</a>
