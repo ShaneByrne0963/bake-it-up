@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block extra_title %} - Contact Us{% endblock %}
 
@@ -28,19 +29,23 @@
             <!-- Newsletter Preview -->
             <div class="col-12 col-md-10 col-xl-5 offset-md-1 offset-xl-0">
                 <h3>Preview:</h3>
-                <strong id="preview-subject"></strong>
+                <strong id="preview-subject">**Newsletter Subject**</strong>
                 <hr>
                 <p id="preview-label">Bake It Up Newsletter, {{ today|date:'jS F Y' }}</p>
-                <p id="preview-body"></p>
+                <p id="preview-body">**Your text goes here**</p>
                 <p id="preview-discount-code"></p>
                 <div id="preview-signature">
                     <p class="mb-0">Until next time,</p>
                     <p>Bake It Up</p>
                 </div>
                 <br>
-                <br>
                 <a role="button" class="small">Unsubscribe from newsletter</a>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'contact/js/contact.js' %}"></script>
 {% endblock %}

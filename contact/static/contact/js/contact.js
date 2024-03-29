@@ -40,10 +40,28 @@ function openMessage(counter=0) {
 }
 
 
+/**
+ * Updates the preview with the value of the input
+ * @param {String} elementQuery A string to query the preview element
+ * @param {String} defaultText The default text for the preview if the text is empty
+ */
+function updatePreview(elementQuery, defaultText) {
+    let elementBody = ($(this).val()) ? $(this).val() : defaultText;
+    $(elementQuery).html(elementBody.replaceAll('\n', '<br>'));
+}
+
+
 $(document).ready(() => {
     $('.collapse-unopen').on('show.bs.collapse', function() {
         openMessage.call(this);
         // Prevents the function being called multiple times
         $(this).off('show.bs.collapse');
+    });
+
+    $('#newsletter-subject').change(function() {
+        updatePreview.call(this, '#preview-subject', '**Newsletter Subject**');
+    });
+    $('#newsletter-body').change(function() {
+        updatePreview.call(this, '#preview-body', '**Your text goes here**');
     });
 });
