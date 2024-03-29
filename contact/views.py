@@ -70,6 +70,26 @@ class ViewMessages(View):
         return render(request, self.template, context)
 
 
+@require_POST
+def open_message(request, message_id):
+    """
+    Tells the server that an admin has opened a message
+    """
+    try:
+        message = CustomerMessage.objects.get(id=message_id)
+        message.opened = True
+        message.save()
+
+        # Getting how many unread messages are left
+        num_messages = CustomerMessage.objects.filter(
+            opened=False
+        ).count()
+    
+        return HttpResponse(content=num_messages, status=200)
+    except Exception as e:
+        return HttpResponse(content=e, status=400)
+
+
 class DeleteMessage(View):
 
     @handle_server_errors
@@ -142,21 +162,38 @@ class NewsletterSignup(View):
             return redirect(url_next)
 
 
-@require_POST
-def open_message(request, message_id):
-    """
-    Tells the server that an admin has opened a message
-    """
-    try:
-        message = CustomerMessage.objects.get(id=message_id)
-        message.opened = True
-        message.save()
+class NewsletterUnsubscribe(View):
+    template = 'contact/newsletter_unsubscribe.html'
 
-        # Getting how many unread messages are left
-        num_messages = CustomerMessage.objects.filter(
-            opened=False
-        ).count()
+    @handle_server_errors
+    def get(self, request, email):
+        context = get_base_context(request)
+        context['unsubscribe_email'] = email
+
+        return render(request, self.template, context)
     
-        return HttpResponse(content=num_messages, status=200)
-    except Exception as e:
-        return HttpResponse(content=e, status=400)
+    @handle_server_errors
+    def post(self, request, email):
+        newsletter_email = None
+        try:
+            newsletter_email = NewsletterEmails.objects.get(
+                email=email
+            )
+        except NewsletterEmails.DoesNotExist:
+            # It doesn't matter if the email doesn't exist in the
+            # database, as we want to stop the newsletters anyway
+            pass
+        else:
+            # Keep the info of the email if codes have been used,
+            # to prevent duplicating codes when resubscribing
+            if newsletter_email.used_codes:
+                newsletter_email.is_active = False
+                newsletter_email.save()
+            else:
+                newsletter_email.delete()
+        finally:
+            messages.success(
+                request,
+                "You have unsubscribed from our newsletter"
+            )
+            return redirect('home')

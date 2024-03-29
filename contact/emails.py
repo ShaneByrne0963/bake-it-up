@@ -5,6 +5,12 @@ from django.conf import settings
 import os
 
 
+# Used to supply links within emails
+SITE_DOMAIN = f"https://{settings.DOMAINS[
+    'development' if 'DEVELOPMENT' in os.environ else 'deployed'
+]}"
+
+
 def send_template_email(template_name, email_to, **kwargs):
     """
     Sends an email based on a template found in
@@ -15,8 +21,11 @@ def send_template_email(template_name, email_to, **kwargs):
         { **kwargs }
     )
     body = render_to_string(
-        f'contact/emails/body/{template_name}.txt',
-        { **kwargs }
+        f'contact/emails/body/{template_name}.txt', {
+            'site_domain': SITE_DOMAIN,
+            'email_to': email_to,
+            **kwargs
+        }
     )
     send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
               [email_to])

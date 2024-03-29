@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block extra_title %} - Unsubscribe{% endblock %}
+
+{% block content_heading %}
+    <h1>Unsubscribe</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1">
+                <hr>
+                <h3>We're Gonna Miss You!</h3>
+                <p>Are you sure you want to unsubscribe from our newsletters? You'll be missing out on everything going on, and you will
+                    stop receiving discount codes.
+                </p>
+                <p>Don't worry, though. You can always subscribe again at a later time.</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg btn-primary">Unsubscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
