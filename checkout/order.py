@@ -1,6 +1,10 @@
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
 from .models import Order, OrderLineItem
 from profiles.models import UserProfile
+
 from datetime import datetime
 
 
@@ -107,6 +111,18 @@ def create_order(checkout_data, cart, save_info=False, user=None):
     # Saving the user's profile information
     if save_info and user:
         update_user_profile(new_data, user)
+    
+    # Sending a confirmation email
+    from_email = settings.DEFAULT_FROM_EMAIL
+    subject = render_to_string(
+        'checkout/confirmation_emails/email_subject.txt',
+        { 'order': order }
+    )
+    body = render_to_string(
+        'checkout/confirmation_emails/email_body.txt',
+        { 'order': order, 'contact_email': from_email }
+    )
+    send_mail(subject, body, from_email, [checkout_data['email']])
 
     return order
 
