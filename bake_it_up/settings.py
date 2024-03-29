@@ -29,9 +29,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
+DOMAINS = {
+    'development': '8000-shanebyrne0963-bakeitup-7ywqw0ioohn.ws-eu110.gitpod.io',
+    'deployed': 'bake-it-up-e014260e4351.herokuapp.com',
+}
+
 ALLOWED_HOSTS = [
-    '8000-shanebyrne0963-bakeitup-7ywqw0ioohn.ws-eu110.gitpod.io',
-    'bake-it-up-e014260e4351.herokuapp.com'
+    DOMAINS[value] for value in DOMAINS
 ]
 
 

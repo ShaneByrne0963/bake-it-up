@@ -6,6 +6,7 @@ from django.contrib import messages
 from core.contexts import get_base_context, handle_server_errors
 from .forms import CustomerMessageForm, NewsletterForm
 from .models import CustomerMessage, NewsletterEmails
+from .emails import send_template_email
 
 
 class StoreContact(View):
@@ -124,6 +125,7 @@ class NewsletterSignup(View):
                     request,
                     'You have signed up for our newsletter!'
                 )
+                send_template_email('subscribe', email)
                 return redirect(url_next)
             else:
                 form_error = newsletter_form.errors['email'][0]
