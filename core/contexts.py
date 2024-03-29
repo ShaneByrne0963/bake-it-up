@@ -89,10 +89,6 @@ def get_base_context(request):
     if request.user.is_superuser:
         new_messages = CustomerMessage.objects.filter(opened=False)
         context['num_messages'] = new_messages.count()
-    
-    # Getting the newsletter signup form in the footer
-    newsletter_form = NewsletterForm()
-    context['newsletter_form'] = newsletter_form
 
     return context
 

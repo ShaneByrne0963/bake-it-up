@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account %}
+
+{% block extra_title %} - Confirm Email{% endblock %}
+
+{% block content_heading %}
+    <h1>Confirm Email</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1">
+                <hr>
+            </div>
+            <div class="col-12 col-md-10 offset-md-1">
+                {% if confirmation %}
+                    {% with confirmation.email_address.email as email %}
+                    <p>Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an email address.</p>
+                    {% endwith %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-lg btn-primary">Confirm Email</button>
+                    </form>
+                {% else %}
+                    {% url 'account_email' as email_url %}
+                    <p>
+                        This email confirmation link expired or is invalid. Please
+                        <a href="{{ email_url }}">issue a new email confirmation request</a>.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}
