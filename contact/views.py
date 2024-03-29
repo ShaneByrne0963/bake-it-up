@@ -8,6 +8,8 @@ from .forms import CustomerMessageForm, NewsletterSignupForm
 from .models import CustomerMessage, NewsletterEmails
 from .emails import send_template_email
 
+from datetime import date
+
 
 class StoreContact(View):
     template = 'contact/store_contact.html'
@@ -173,6 +175,8 @@ class SendNewsletter(View):
             )
             return redirect('home')
         context = get_base_context(request)
+        context['today'] = date.today()
+        
         return render(request, self.template, context)
 
 

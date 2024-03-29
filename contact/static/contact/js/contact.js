@@ -1,4 +1,3 @@
-const csrfToken = $('#unopen-messages').find('input').val();
 const url = '/contact/open_message/'
 const maxAttempts = 5;
 const attemptDelay = 1000;
@@ -8,6 +7,7 @@ const attemptDelay = 1000;
  * connected to with an error. Stops trying after maxAttempts
  */
 function openMessage(counter=0) {
+    const csrfToken = $('#unopen-messages').find('input').val();
     let formData = {
         'csrfmiddlewaretoken': csrfToken
     }
