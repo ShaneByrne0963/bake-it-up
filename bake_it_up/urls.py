@@ -19,8 +19,15 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from home.views import CustomLogin, CustomSignup
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Override Allauth's login/signup urls
+    path('accounts/login', CustomLogin.as_view(), name='account_login'),
+    path('accounts/signup', CustomSignup.as_view(), name='account_signup'),
+
     path('accounts/', include('allauth.urls')),
     path('', include('home.urls')),
     path('products/', include('products.urls')),

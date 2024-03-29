@@ -31,6 +31,18 @@ class CustomLogin(LoginView):
     the modal
     """
     @handle_server_errors
+    def get(self, request):
+        """
+        Redirects the user to the home page, with the login modal
+        appearing on page load
+        """
+        request.session['global_context'] = {
+            'modal_show': 'login',
+            'modal_load_fade': True
+        }
+        return redirect('home')
+
+    @handle_server_errors
     def post(self, request):
         url_next = '/'
         if 'next' in request.POST:
@@ -69,6 +81,18 @@ class CustomLogin(LoginView):
 
 
 class CustomSignup(SignupView):
+
+    @handle_server_errors
+    def get(self, request):
+        """
+        Redirects the user to the home page, with the signup modal
+        appearing on page load
+        """
+        request.session['global_context'] = {
+            'modal_show': 'signup',
+            'modal_load_fade': True
+        }
+        return redirect('home')
 
     @handle_server_errors
     def post(self, request):
