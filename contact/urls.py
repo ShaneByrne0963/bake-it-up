@@ -9,6 +9,8 @@ urlpatterns = [
           name='open_message'),
      path('delete_message/<int:message_id>', views.DeleteMessage.as_view(),
           name='delete_message'),
+     path('send_newsletter', views.SendNewsletter.as_view(),
+          name='send_newsletter'),
      path('newsletter_signup', views.NewsletterSignup.as_view(),
           name='newsletter_signup'),
      path('newsletter_unsubscribe/<str:email>',

@@ -4,7 +4,6 @@ from django.conf import settings
 
 from products.models import BreadProduct, PastryProduct
 from contact.models import CustomerMessage
-from contact.forms import NewsletterForm
 
 from .shortcuts import price_as_float, find_dict_in_list
 from .constants import PRODUCT_PROPERTIES

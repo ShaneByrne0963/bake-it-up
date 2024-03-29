@@ -9,7 +9,7 @@ class CustomerMessageForm(forms.ModelForm):
         fields = ('full_name', 'email', 'title', 'message')
 
 
-class NewsletterForm(forms.ModelForm):
+class NewsletterSignupForm(forms.ModelForm):
 
     class Meta:
         model = NewsletterEmails

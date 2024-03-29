@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 
 from core.contexts import get_base_context, handle_server_errors
-from .forms import CustomerMessageForm, NewsletterForm
+from .forms import CustomerMessageForm, NewsletterSignupForm
 from .models import CustomerMessage, NewsletterEmails
 from .emails import send_template_email
 
@@ -138,7 +138,7 @@ class NewsletterSignup(View):
                 return redirect(url_next)
         except NewsletterEmails.DoesNotExist:
             # Creating a new subscription
-            newsletter_form = NewsletterForm(request.POST)
+            newsletter_form = NewsletterSignupForm(request.POST)
             if newsletter_form.is_valid():
                 newsletter_form.save()
                 messages.success(
@@ -160,6 +160,20 @@ class NewsletterSignup(View):
                 f"An unexpected error occurred. {e}"
             )
             return redirect(url_next)
+
+
+class SendNewsletter(View):
+    template = 'contact/send_newsletter.html'
+
+    def get(self, request):
+        if not request.user.is_superuser:
+            messages.error(
+                request,
+                "You do not have permission to perform that action"
+            )
+            return redirect('home')
+        context = get_base_context(request)
+        return render(request, self.template, context)
 
 
 class NewsletterUnsubscribe(View):
