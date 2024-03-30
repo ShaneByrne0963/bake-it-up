@@ -106,8 +106,53 @@ function validateCodeName() {
 }
 
 
+/**
+ * Validates the discount code, which, if a fixed discount is applied, requires
+ * a minimum spending value that is higher than the discount
+ * @returns {String} Any errors found with the validation of the inputs
+ */
+function validateDiscountType() {
+    let isPercentage = ($('#discount-is-percentage').val() === 'true');
+    let customValidity = '';
+    let minSpendCheck = $('#has-minimum-spend').get(0);
+    let minSpending = $('#min-spending').get(0);
+
+    minSpendCheck.setCustomValidity('');
+    minSpending.setCustomValidity('');
+    
+    if (!isPercentage) {
+        let discountValue = parseInt($('#discount-value').val());
+        let minSpendValue = parseInt($(minSpending).val());
+
+        if (!$(minSpendCheck).prop('checked')) {
+            customValidity = 'Fixed discounts require a minimum spending value.';
+            minSpendCheck.setCustomValidity(customValidity);
+        }
+        else if (discountValue && minSpendValue && discountValue >= minSpendValue) {
+            customValidity = 'Discount value must be less than the minimum spending value.';
+            minSpending.setCustomValidity(customValidity);
+        }
+    }
+    return customValidity;
+}
+
+
+/**
+ * Sets the discount code message in the preview, displaying any errors
+ */
 function setDiscountPreview() {
-    let codeNameErrors = validateCodeName();
+    // Validating all inputs and storing the results in an array to scan for errors
+    let discountValidation = [
+        validateCodeName(),
+        validateDiscountType(),
+    ]
+    let discountError = '';
+    for (let value of discountValidation) {
+        if (value) {
+            discountError = value;
+            break
+        }
+    }
 
     // Creating the text for the preview
     $('#preview-discount-code').html('**Please complete the discount code to view the display**');
@@ -115,15 +160,15 @@ function setDiscountPreview() {
     let discountValue = $('#discount-value').val();
     let minSpending = ($('#has-minimum-spend').prop('checked')) ? $('#min-spending').val() : 'valid';
 
-    if (codeName && discountValue && minSpending) {
-        let previewHtml;
-        // Adding the appropriate symbol to the discount value
-        discountValue = ($('#discount-is-percentage').val() === 'true') ? `${discountValue}%` : `€${discountValue}`;
-
-        if (codeNameErrors) {
-            previewHtml = `<span class="text-danger">**${codeNameErrors}**</span>`;
-        }
-        else {
+    if (discountError) {
+        $('#preview-discount-code').html(`<span class="text-danger">**${discountError}**</span>`);
+    }
+    else {
+        if (codeName && discountValue && minSpending) {
+            let previewHtml;
+            // Adding the appropriate symbol to the discount value
+            discountValue = ($('#discount-is-percentage').val() === 'true') ? `${discountValue}%` : `€${discountValue}`;
+    
             previewHtml = `
                 Your discount code is: ${codeName}
                 <br>
@@ -132,8 +177,8 @@ function setDiscountPreview() {
                 previewHtml += `, when you spend €${minSpending} or more`;
             }
             previewHtml += '!';
+            $('#preview-discount-code').html(previewHtml);
         }
-        $('#preview-discount-code').html(previewHtml);
     }
 }
 
