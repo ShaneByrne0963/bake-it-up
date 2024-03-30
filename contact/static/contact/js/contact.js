@@ -65,9 +65,11 @@ function updateDiscountCodeCheck() {
     
     if (isChecked) {
         updateMinSpendingCheck();
+        setDiscountPreview();
     }
     else {
         $('.discount-label').addClass('text-muted');
+        $('#preview-discount-code').html('');
     }
 }
 
@@ -79,23 +81,59 @@ function updateDiscountCodeCheck() {
 function updateMinSpendingCheck() {
     let isChecked = $('#has-minimum-spend').prop('checked');
     $('#min-spending').prop('disabled', !isChecked).prop('required', isChecked);
+    setDiscountPreview();
 }
 
 
 /**
  * Validates the code name input, ensuring there are no spaces or special characters
  * other than "-"
+ * @returns {String} The custom validity of the input, if any errors were found
  */
 function validateCodeName() {
     let codeName = $('#code-name').get(0);
-    codeName.setCustomValidity('');
-
+    let customValidity = '';
+    
     let value = $('#code-name').val().replaceAll(' ', '');
     $('#code-name').val(value);
-
+    
     let valueSymbols = value.replaceAll(/[a-zA-Z0-9-]/g, '');
     if (valueSymbols) {
-        codeName.setCustomValidity('Code name can only contain letters, numbers and "-".');
+        customValidity = 'Code name can only contain letters, numbers and "-".';
+    }
+    codeName.setCustomValidity(customValidity);
+    return customValidity;
+}
+
+
+function setDiscountPreview() {
+    let codeNameErrors = validateCodeName();
+
+    // Creating the text for the preview
+    $('#preview-discount-code').html('**Please complete the discount code to view the display**');
+    let codeName = $('#code-name').val();
+    let discountValue = $('#discount-value').val();
+    let minSpending = ($('#has-minimum-spend').prop('checked')) ? $('#min-spending').val() : 'valid';
+
+    if (codeName && discountValue && minSpending) {
+        let previewHtml;
+        // Adding the appropriate symbol to the discount value
+        discountValue = ($('#discount-is-percentage').val() === 'true') ? `${discountValue}%` : `€${discountValue}`;
+
+        if (codeNameErrors) {
+            previewHtml = `<span class="text-danger">**${codeNameErrors}**</span>`;
+        }
+        else {
+            previewHtml = `
+                Your discount code is: ${codeName}
+                <br>
+                Use this code to get ${discountValue} off your next order`;
+            if (minSpending !== 'valid') {
+                previewHtml += `, when you spend €${minSpending} or more`;
+            }
+            previewHtml += '!';
+        }
+        $('#preview-discount-code').html(previewHtml);
     }
 }
 
@@ -118,5 +156,5 @@ $(document).ready(() => {
     // Discount code inputs
     $('#discount-code').on('change', updateDiscountCodeCheck);
     $('#has-minimum-spend').on('change', updateMinSpendingCheck);
-    $('#code-name').on('change', validateCodeName);
+    $('#code-name, #discount-value, #discount-is-percentage, #min-spending').on('change', setDiscountPreview);
 });
