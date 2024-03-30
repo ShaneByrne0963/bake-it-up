@@ -51,9 +51,15 @@ function updatePreview(elementQuery, defaultText) {
 }
 
 
+/**
+ * Enables/Disables the discount code inputs, depending on if the
+ * checkbox is checked
+ */
 function updateDiscountCodeCheck() {
     let isChecked = $(this).prop('checked');
-    $('#discount-properties').find('input, select').prop('disabled', !isChecked);
+    $('#discount-properties').find('input, select').prop('disabled', !isChecked).each(function() {
+        this.setCustomValidity('');
+    });
     $('#discount-properties').find('input:not(#min-spending):not([type="checkbox"]), select').prop('required', isChecked);
     $('.discount-label').removeClass('text-muted');
     
@@ -66,9 +72,31 @@ function updateDiscountCodeCheck() {
 }
 
 
+/**
+ * Enables/Disables the minimum spending input, depending on if the
+ * checkbox is checked
+ */
 function updateMinSpendingCheck() {
     let isChecked = $('#has-minimum-spend').prop('checked');
     $('#min-spending').prop('disabled', !isChecked).prop('required', isChecked);
+}
+
+
+/**
+ * Validates the code name input, ensuring there are no spaces or special characters
+ * other than "-"
+ */
+function validateCodeName() {
+    let codeName = $('#code-name').get(0);
+    codeName.setCustomValidity('');
+
+    let value = $('#code-name').val().replaceAll(' ', '');
+    $('#code-name').val(value);
+
+    let valueSymbols = value.replaceAll(/[a-zA-Z0-9-]/g, '');
+    if (valueSymbols) {
+        codeName.setCustomValidity('Code name can only contain letters, numbers and "-".');
+    }
 }
 
 
@@ -90,4 +118,5 @@ $(document).ready(() => {
     // Discount code inputs
     $('#discount-code').on('change', updateDiscountCodeCheck);
     $('#has-minimum-spend').on('change', updateMinSpendingCheck);
+    $('#code-name').on('change', validateCodeName);
 });
