@@ -624,6 +624,25 @@ form select,
     border-radius: 50%;
 }
 
+/* --------------------------------------------------------Add newsletter page */
+
+
+#discount-value {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 96px;
+}
+
+#discount-is-percentage {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+}
+
+#min-spending {
+    width: 80px;
+}
+
 /* -----------------------------------------------------------------------MEDIA QUERIES
 
 /* --------------------------------------------------------Bootstrap's medium breakpoint */
