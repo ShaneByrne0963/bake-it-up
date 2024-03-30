@@ -51,6 +51,27 @@ function updatePreview(elementQuery, defaultText) {
 }
 
 
+function updateDiscountCodeCheck() {
+    let isChecked = $(this).prop('checked');
+    $('#discount-properties').find('input, select').prop('disabled', !isChecked);
+    $('#discount-properties').find('input:not(#min-spending):not([type="checkbox"]), select').prop('required', isChecked);
+    $('.discount-label').removeClass('text-muted');
+    
+    if (isChecked) {
+        updateMinSpendingCheck();
+    }
+    else {
+        $('.discount-label').addClass('text-muted');
+    }
+}
+
+
+function updateMinSpendingCheck() {
+    let isChecked = $('#has-minimum-spend').prop('checked');
+    $('#min-spending').prop('disabled', !isChecked).prop('required', isChecked);
+}
+
+
 $(document).ready(() => {
     $('.collapse-unopen').on('show.bs.collapse', function() {
         openMessage.call(this);
@@ -58,10 +79,15 @@ $(document).ready(() => {
         $(this).off('show.bs.collapse');
     });
 
+    // Updating the newsletter preview
     $('#newsletter-subject').change(function() {
         updatePreview.call(this, '#preview-subject', '**Newsletter Subject**');
     });
     $('#newsletter-body').change(function() {
         updatePreview.call(this, '#preview-body', '**Your text goes here**');
     });
+
+    // Discount code inputs
+    $('#discount-code').on('change', updateDiscountCodeCheck);
+    $('#has-minimum-spend').on('change', updateMinSpendingCheck);
 });
