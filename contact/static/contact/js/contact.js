@@ -129,7 +129,7 @@ function validateDiscountType() {
             minSpendCheck.setCustomValidity(customValidity);
         }
         else if (discountValue && minSpendValue && discountValue >= minSpendValue) {
-            customValidity = 'Discount value must be less than the minimum spending value.';
+            customValidity = 'Minimum spending value must be greater than the discount value.';
             minSpending.setCustomValidity(customValidity);
         }
     }

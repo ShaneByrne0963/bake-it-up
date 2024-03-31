@@ -21,11 +21,22 @@ class CustomerMessage(models.Model):
         return f'Message from {sender}'
 
 
+class DiscountCode(models.Model):
+    code_name = models.CharField(max_length=20, unique=True,
+                                 blank=True, null=True)
+    discount_value = models.IntegerField()
+    is_percentage = models.BooleanField()
+    min_spending = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.code_name 
+
+
 class NewsletterEmails(models.Model):
     email = models.EmailField(max_length=320, unique=True)
     is_active = models.BooleanField(default=True)
-    received_codes = models.TextField(blank=True, null=True)
-    used_codes = models.TextField(blank=True, null=True)
+    received_codes = models.ManyToManyField(DiscountCode, blank=True, related_name='pending_subscribers')
+    used_codes = models.ManyToManyField(DiscountCode, blank=True, related_name='subscribers_used')
 
     class Meta:
         verbose_name_plural = 'Newsletter emails'

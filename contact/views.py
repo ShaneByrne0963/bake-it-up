@@ -167,6 +167,7 @@ class NewsletterSignup(View):
 class SendNewsletter(View):
     template = 'contact/send_newsletter.html'
 
+    @handle_server_errors
     def get(self, request):
         if not request.user.is_superuser:
             messages.error(
@@ -178,6 +179,10 @@ class SendNewsletter(View):
         context['today'] = date.today()
         
         return render(request, self.template, context)
+    
+    @handle_server_errors
+    def post(self, request):
+        pass
 
 
 class NewsletterUnsubscribe(View):

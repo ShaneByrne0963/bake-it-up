@@ -2,6 +2,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from .models import NewsletterEmails
+
 import os
 
 
@@ -29,3 +31,15 @@ def send_template_email(template_name, email_to, **kwargs):
     )
     send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
               [email_to])
+
+
+def send_newsletter(subject, body, discount_code=None):
+    """
+    Sends a newsletter to all active subscribers
+    """
+    body_rendered = render_to_string(body, {
+        'site_domain': SITE_DOMAIN
+    })
+    subscribers = list(NewsletterEmails.objects.filter(
+        is_active=True
+    ))
