@@ -13,5 +13,4 @@ Until next time,
 Bake It Up
 
 
-
 <a href="{{ site_domain }}{% url 'newsletter_unsubscribe' email_to %}"><small>Unsubscribe from newsletter</small></a>

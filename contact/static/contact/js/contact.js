@@ -232,9 +232,33 @@ $(document).ready(() => {
     $('#code-name').on('change', checkCodeNameIsUnique);
     $('#discount-value, #discount-is-percentage, #min-spending').on('change', setDiscountPreview);
 
-    $('#newsletter-form').on('reset', function() {
+    $('#newsletter-form').on('submit', function(event) {
+        event.preventDefault();
+        
+        // Building the complete email from the preview and adding it to the form to be used in the POST method
+        let newsletterFormat = $('<input type="hidden" name="newsletter_format">');
+        let completeText = `${$('#preview-label').text()}\n\n${$('#newsletter-body').val()}\n\n`;
+
+        // The discount code
+        let discountText = $('#preview-discount-code').html().split('<br>');
+        for (let line of discountText) {
+            completeText += line.trim() + '\n';
+        }
+        // The signature at the end
+        completeText += '\n';
+        $('#preview-signature').children().each(function() {
+            completeText += $(this).text() + '\n';
+        });
+        // The unsubscribe link. Will be replaced in the POST method
+        completeText += '\n\n<a></a>';
+
+        newsletterFormat.val(completeText);
+        $('#newsletter-form').append(newsletterFormat);
+        $(this).off('submit').submit();
+
+    }).on('reset', function() {
         updateDiscountCodeCheck();
         updateMinSpendingCheck();
         $('#code-name-feedback').removeClass('d-none').addClass('d-none');
-    })
+    });
 });
