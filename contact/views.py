@@ -142,12 +142,20 @@ class NewsletterSignup(View):
             # Creating a new subscription
             newsletter_form = NewsletterSignupForm(request.POST)
             if newsletter_form.is_valid():
-                newsletter_form.save()
+                newsletter_email = newsletter_form.save()
                 messages.success(
                     request,
                     'You have signed up for our newsletter!'
                 )
                 send_template_email('subscribe', email)
+
+                # Applying the BAKEITUPNEWS10 code for new subscribers
+                discount_code = DiscountCode.objects.get(
+                    code_name='BAKEITUPNEWS10'
+                )
+                newsletter_email.received_codes.add(discount_code)
+                newsletter_email.save()
+
                 return redirect(url_next)
             else:
                 form_error = newsletter_form.errors['email'][0]

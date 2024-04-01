@@ -87,9 +87,9 @@
                                 <li>{{ code|safe }}</li>
                             {% endfor %}
                         </ul>
-                        {% if newsletter_active %}
-                            <a href="{% url 'newsletter_unsubscribe' user.email %}">Unsubscribe from newsletter</a>
-                        {% endif %}
+                    {% endif %}
+                    {% if newsletter_active %}
+                        <a href="{% url 'newsletter_unsubscribe' user.email %}">Unsubscribe from newsletter</a>
                     {% endif %}
                 {% endif %}
                 <hr class="my-5">

@@ -138,7 +138,6 @@ class AccountSettings(View):
             user_newsletter = NewsletterEmails.objects.get(
                 email=request.user.email
             )
-            include_newsletter = True
             context['newsletter_active'] = user_newsletter.is_active
 
             # Getting all the user's discount codes
@@ -151,6 +150,9 @@ class AccountSettings(View):
                 )
                 discount_codes.append(code_desc)
             context['discount_codes'] = discount_codes
+
+            include_newsletter = (len(discount_codes) > 0
+                                  or user_newsletter.is_active)
         except:
             pass
         context['include_newsletter'] = include_newsletter
