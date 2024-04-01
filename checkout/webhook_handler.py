@@ -41,6 +41,7 @@ class StripeWH_Handler():
         # Extracting the metadata from the payment intent
         save_info = (intent.metadata.save_info == 'on')
         bake_date = intent.metadata.bake_date
+        discount = int(intent.metadata.discount)
         delivery = (intent.metadata.delivery == 'True')
         delivery_other_address = (intent.metadata.delivery_other_address == 'True')
         customer_note = getattr(
@@ -90,6 +91,7 @@ class StripeWH_Handler():
             checkout_data = {
                 'bake_date': bake_date,
                 'customer_note': customer_note,
+                'discount': discount,
                 'delivery': delivery,
                 'name': billing_details.name,
                 'email': billing_details.email,

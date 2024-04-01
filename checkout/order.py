@@ -13,6 +13,7 @@ EXPECTED_FIELDS = [
     'bake_date',
     'customer_note',
     'delivery',
+    'discount',
     'full_name',
     'email',
     'phone_number',

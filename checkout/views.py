@@ -127,6 +127,7 @@ class Checkout(View):
 
         pid = request.POST.get('client_secret').split('_secret')[0]
         checkout_data['stripe_pid'] = pid
+        checkout_data['discount'] = request.session.pop('discount', 0)
 
         # Overriding any unwanted inputs
         if is_delivery and 'delivery_other_address' not in request.POST:
@@ -220,9 +221,9 @@ def cache_checkout_data(request):
                     code_name=request.POST['code_name']
                 )
                 discount = discount_code.get_discount(cart_total)
-                print(discount)
                 newsletter.received_codes.remove(discount_code)
                 newsletter.save()
+                request.session['discount'] = discount
             except:
                 # Because we already validated the discount code, this
                 # can only happen if the user uses the code in another
@@ -250,6 +251,7 @@ def cache_checkout_data(request):
             'bake_date': bake_date,
             'customer_note': customer_note,
             'save_info': request.POST.get('save_info'),
+            'discount': discount,
             'delivery': delivery,
             'delivery_other_address': delivery_other_address
         }

@@ -79,11 +79,17 @@
                 </div>
                 <div class="order-price mb-5 px-md-4">
                     {% with order.get_delivery_cost as delivery %}
-                    {% if delivery > 0 %}
+                    {% if delivery > 0 or order.discount > 0 %}
                         <div>Cart Total:</div>
                         <div class="text-right">&euro;{{ order.get_cart_total|floatformat:2 }}</div>
-                        <div>Delivery Charges:</div>
-                        <div class="text-right">&euro;{{ delivery|floatformat:2 }}</div>
+                        {% if order.discount > 0 %}
+                            <div class="text-info">Discount:</div>
+                            <div class="text-info text-right">-&euro;{{ order.get_discount|floatformat:2 }}</div>
+                        {% endif %}
+                        {% if delivery > 0 %}
+                            <div>Delivery Charges:</div>
+                            <div class="text-right">&euro;{{ delivery|floatformat:2 }}</div>
+                        {% endif %}
                     {% endif %}
                     {% endwith %}
                     <div class="h3 mt-2">Total:</div>

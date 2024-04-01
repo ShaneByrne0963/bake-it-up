@@ -27,6 +27,7 @@ class Order(models.Model):
     county = models.CharField(max_length=10)
     postcode = models.CharField(max_length=10, blank=True, null=True)
     cart_total = models.IntegerField(default=0)
+    discount = models.IntegerField(default=0)
     delivery_cost = models.IntegerField(default=0)
     grand_total = models.IntegerField(default=0)
     stripe_pid = models.CharField(max_length=254)
@@ -61,6 +62,12 @@ class Order(models.Model):
         """
         return price_as_float(self.cart_total)
     
+    def get_discount(self):
+        """
+        Converts the discount to a float
+        """
+        return price_as_float(self.discount)
+    
     def get_delivery_cost(self):
         """
         Converts the delivery cost to a float
@@ -83,7 +90,8 @@ class Order(models.Model):
 
         if lineitems_total is not None:
             self.cart_total = lineitems_total
-            self.grand_total = self.delivery_cost + lineitems_total
+            self.grand_total = self.delivery_cost \
+                - self.discount + lineitems_total
             self.save()
 
 
