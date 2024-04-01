@@ -37,9 +37,18 @@ def send_newsletter(subject, body, discount_code=None):
     """
     Sends a newsletter to all active subscribers
     """
-    body_rendered = render_to_string(body, {
-        'site_domain': SITE_DOMAIN
-    })
     subscribers = list(NewsletterEmails.objects.filter(
         is_active=True
     ))
+    for subscriber in subscribers:
+        email = subscriber.email
+        body_with_link = body.replace(
+            '<a></a>',
+            f'<a href="{SITE_DOMAIN}/contact/newsletter_unsubscribe/{email}"> \
+                Unsubscribe from newsletter</a>'
+        )
+        send_mail(subject, body_with_link,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [email])
+        if discount_code:
+            subscriber.received_codes.add(discount_code)

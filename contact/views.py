@@ -6,7 +6,7 @@ from django.contrib import messages
 from core.contexts import get_base_context, handle_server_errors
 from .forms import CustomerMessageForm, NewsletterSignupForm
 from .models import CustomerMessage, NewsletterEmails, DiscountCode
-from .emails import send_template_email
+from .emails import send_template_email, send_newsletter
 
 from datetime import date
 
@@ -183,7 +183,26 @@ class SendNewsletter(View):
     @handle_server_errors
     def post(self, request):
         subject = request.POST['subject']
-        body = request.POST['body']
+        body = request.POST['newsletter_format']
+        new_discount = None
+
+        # Creating the discount code
+        if 'has_discount' in request.POST:
+            is_percentage = (request.POST['is_percentage'] == 'true')
+            min_spending = 0
+            if 'has_minimum_spend' in request.POST:
+                min_spending = request.POST['min_spending']
+
+            new_discount = DiscountCode(
+                code_name=request.POST['code_name'],
+                discount_value=request.POST['discount_value'],
+                is_percentage=is_percentage,
+                min_spending=min_spending
+            )
+            new_discount.save()
+        send_newsletter(subject, body, new_discount)
+        messages.success(request, "Your newsletter has been sent!")
+        return redirect('send_newsletter')
 
 
 @require_POST

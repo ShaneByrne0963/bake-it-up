@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomerMessage, NewsletterEmails
+from .models import CustomerMessage, NewsletterEmails, DiscountCode
 
 
 @admin.register(CustomerMessage)
@@ -17,3 +17,9 @@ class CustomerMessageAdmin(admin.ModelAdmin):
 @admin.register(NewsletterEmails)
 class NewsletterEmailAdmin(admin.ModelAdmin):
     list_display = ('email', 'is_active')
+
+
+@admin.register(DiscountCode)
+class DiscountCodeAdmin(admin.ModelAdmin):
+    list_display = ('code_name', 'discount_value', 'is_percentage',
+                    'min_spending')
