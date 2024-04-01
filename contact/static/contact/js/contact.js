@@ -231,4 +231,10 @@ $(document).ready(() => {
     $('#has-minimum-spend').on('change', updateMinSpendingCheck);
     $('#code-name').on('change', checkCodeNameIsUnique);
     $('#discount-value, #discount-is-percentage, #min-spending').on('change', setDiscountPreview);
+
+    $('#newsletter-form').on('reset', function() {
+        updateDiscountCodeCheck();
+        updateMinSpendingCheck();
+        $('#code-name-feedback').removeClass('d-none').addClass('d-none');
+    })
 });
