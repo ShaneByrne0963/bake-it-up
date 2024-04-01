@@ -96,18 +96,21 @@ const cartTotal = parseFloat($('#cart-total').text());
  * Updates the checkout total on the checkout page
  */
 function updateCheckoutTotal() {
+    let discount = 0;
+    let deliveryCost = 0;
+
+    let discountText = $('#discount-value').text();
+    if (discountText) {
+        discount = 0.0 + parseFloat(discountText);
+    }
+
     let deliveryCostText = $('#delivery-charge').text();
     if (deliveryCostText !== 'N/A') {
         // Removes the euro sign from the text
-        let deliveryCost = 0.0 + parseFloat(deliveryCostText.slice(1));
-
-        let checkoutTotal = cartTotal + deliveryCost;
-        checkoutTotal = checkoutTotal;
-        $('#checkout-total').text(checkoutTotal.toFixed(2));
+        deliveryCost = 0.0 + parseFloat(deliveryCostText.slice(1));
     }
-    else {
-        $('#checkout-total').text(cartTotal.toFixed(2));
-    }
+    let checkoutTotal = cartTotal - discount + deliveryCost;
+    $('#checkout-total').text(checkoutTotal.toFixed(2));
 }
 
 
@@ -256,6 +259,47 @@ function paymentSubmit() {
     });
 }
 
+
+/**
+ * Checks the database for a discount code entered by the user, and applies
+ * it if one is found
+ */
+function applyDiscountCode() {
+    // Prevents the user from applying another code
+    $(this).prop('disabled', true);
+    $('#apply-discount').off('change');
+
+    let csrfToken = $('#checkout-form').find('input[name="csrfmiddlewaretoken"]').val();
+    let codeName = $('#discount-code').val();
+    let email = $('#id_email').val();
+    console.clear();
+
+    let postData = {
+        csrfmiddlewaretoken: csrfToken,
+        code_name: codeName,
+        email: email
+    }
+    let url = '/checkout/get_discount/';
+    $.post(url, postData).done(function(result) {
+        let resultData = JSON.parse(result);
+        $('#applied-discount').removeClass('d-none');
+        $('#discount-value').text(resultData.discount);
+        updateCheckoutTotal();
+        
+    }).fail(function(result) {
+        console.log('ERROR', result.responseText);
+    });
+}
+
+
+/**
+ * Enables the "Apply" button if a discount code is present
+ */
+function updateDiscountCodeText() {
+    $('#apply-discount').prop('disabled', !Boolean($('#discount-code').val()));
+}
+
+
 $(document).ready(() => {
     $('#delivery').click(updateDeliveryDetails);
     $('#id_county').change(updateDeliveryDetails);
@@ -264,4 +308,7 @@ $(document).ready(() => {
     // Allows the delivery form checkbox to show/hide the collapse
     $('#delivery-other-address').click(updateDeliveryDetails);
     $('#delivery-form').on('shown.bs.collapse', updateDeliveryDetails).on('hidden.bs.collapse', updateDeliveryDetails);
+
+    $('#apply-discount').click(applyDiscountCode);
+    $('#discount-code').on('change', updateDiscountCodeText);
 });

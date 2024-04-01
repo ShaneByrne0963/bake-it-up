@@ -13,6 +13,7 @@ from core.contexts import get_base_context, get_product_by_name, \
 from core.shortcuts import price_as_float, is_tomorrows_date
 from cart.cartfunctions import has_reached_cutoff_time
 from profiles.models import UserProfile
+from contact.models import NewsletterEmails, DiscountCode
 
 import stripe
 import json
@@ -251,4 +252,57 @@ def cache_checkout_data(request):
             Please try again. {e}
             """
         )
+        return HttpResponse(content=e, status=400)
+
+
+@require_POST
+def get_discount_code(request):
+    """
+    Gets the discount code entered by the user at checkout
+    """
+    try:
+        newsletter_email = NewsletterEmails.objects.get(
+            email=request.POST['email']
+        )
+        discount_code = newsletter_email.received_codes.get(
+            code_name=request.POST['code_name']
+        )
+        # Calculating the discount
+        cart_total = request.session['cart_total']
+        discount = None
+
+        if discount_code.min_spending > cart_total:
+            return HttpResponse(
+                content=f"Your cart needs to be at least €\
+                    {discount_code.min_spending} for this code \
+                    to be applied",
+                status=400
+            )
+        if discount_code.is_percentage:
+            discount = float(
+                cart_total * discount_code.discount_value / 100
+            )
+        else:
+            discount = discount_code.discount_value
+        
+        response_data = json.dumps({
+            'discount': price_as_float(discount),
+            'new_total': price_as_float(cart_total - discount)
+        })
+        return HttpResponse(
+            content=response_data,
+            status=200
+        )
+        
+    except NewsletterEmails.DoesNotExist:
+        return HttpResponse(
+            content='Your email has no discount codes available',
+            status=400
+        )
+    except DiscountCode.DoesNotExist:
+        return HttpResponse(
+            content='You do not have that discount code',
+            status=400
+        )
+    except Exception as e:
         return HttpResponse(content=e, status=400)

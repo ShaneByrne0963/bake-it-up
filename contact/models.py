@@ -26,7 +26,7 @@ class DiscountCode(models.Model):
                                  blank=True, null=True)
     discount_value = models.IntegerField()
     is_percentage = models.BooleanField()
-    min_spending = models.IntegerField(blank=True, null=True)
+    min_spending = models.IntegerField(default=0)
 
     def __str__(self):
         """
@@ -45,7 +45,6 @@ class NewsletterEmails(models.Model):
     email = models.EmailField(max_length=320, unique=True)
     is_active = models.BooleanField(default=True)
     received_codes = models.ManyToManyField(DiscountCode, blank=True, related_name='pending_subscribers')
-    used_codes = models.ManyToManyField(DiscountCode, blank=True, related_name='subscribers_used')
 
     class Meta:
         verbose_name_plural = 'Newsletter emails'
