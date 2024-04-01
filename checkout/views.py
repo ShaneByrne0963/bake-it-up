@@ -210,6 +210,28 @@ def cache_checkout_data(request):
 
         # Updating the payment amount to include the delivery
         cart_total = request.session['cart_total']
+        discount = 0
+        if 'code_name' in request.POST:
+            try:
+                newsletter = NewsletterEmails.objects.get(
+                    email=request.POST['email']
+                )
+                discount_code = newsletter.received_codes.get(
+                    code_name=request.POST['code_name']
+                )
+                discount = discount_code.get_discount(cart_total)
+                newsletter.received_codes.remove(discount_code)
+                newsletter.save()
+            except:
+                # Because we already validated the discount code, this
+                # can only happen if the user uses the code in another
+                # tab
+                messages.error(
+                    request,
+                    "Your discount code is no longer available"
+                )
+                return HttpResponse(content='Invalid code', status=400)
+
         delivery = 'delivery' in request.POST
         delivery_other_address = 'delivery_other_address' in request.POST
         delivery_cost = 0
@@ -220,7 +242,7 @@ def cache_checkout_data(request):
             delivery_cost = settings.COUNTY_DELIVERY_COSTS[
                 delivery_county
             ]
-        grand_total = cart_total + delivery_cost
+        grand_total = cart_total - discount + delivery_cost
 
         metadata = {
             'user': request.user.id,
@@ -278,12 +300,7 @@ def get_discount_code(request):
                     to be applied",
                 status=400
             )
-        if discount_code.is_percentage:
-            discount = float(
-                cart_total * discount_code.discount_value / 100
-            )
-        else:
-            discount = discount_code.discount_value
+        discount = discount_code.get_discount(cart_total)
         
         response_data = json.dumps({
             'discount': price_as_float(discount),

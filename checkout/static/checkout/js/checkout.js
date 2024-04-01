@@ -213,17 +213,19 @@ function paymentSubmit() {
     $('#checkout-form').find('input, select').each(function() {
         let inputType = $(this).attr('type');
         let inputName = $(this).attr('name');
-        switch(inputType) {
-            case 'checkbox':
-                if ($(this).prop('checked')) {
-                    postData[inputName] = 'on';
-                }
-                break;
-            default:
-                if ($(this).val()) {
-                    postData[inputName] = $(this).val();
-                }
-                break;
+        if (inputName) {
+            switch(inputType) {
+                case 'checkbox':
+                    if ($(this).prop('checked')) {
+                        postData[inputName] = 'on';
+                    }
+                    break;
+                default:
+                    if ($(this).val()) {
+                        postData[inputName] = $(this).val();
+                    }
+                    break;
+            }
         }
     });
     if (!('save_info' in postData)) {
@@ -283,7 +285,7 @@ function applyDiscountCode() {
     }
     let url = '/checkout/get_discount/';
     $.post(url, postData).done(function(result) {
-        $('#discount-code').prop('disabled', true);
+        $('#discount-code').attr('name', 'discount_code').prop('disabled', true);
         $('#apply-discount').off('click');
 
         let resultData = JSON.parse(result);

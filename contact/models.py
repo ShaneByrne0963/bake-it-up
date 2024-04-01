@@ -39,6 +39,18 @@ class DiscountCode(models.Model):
         if self.min_spending:
             code_str += f' on orders over €{self.min_spending}'
         return code_str
+    
+    def get_discount(self, price_int):
+        """
+        Gets the discount that would be applied to a price.
+        Returns the discount in terms of cents
+        """
+        if self.is_percentage:
+            return int(
+                price_int * self.discount_value / 100
+            )
+        else:
+            return self.discount_value * 100
 
 
 class NewsletterEmails(models.Model):
