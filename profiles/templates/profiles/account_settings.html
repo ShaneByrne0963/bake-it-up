@@ -77,6 +77,21 @@
                     </form>
                 </div>
                 <div id="order-history-medium"></div>
+                {% if include_newsletter %}
+                    <!-- Newsletter -->
+                    <h3>Newsletter</h3>
+                    {% if discount_codes %}
+                        <p class="mb-0">Pending Discount Codes:</p>
+                        <ul>
+                            {% for code in discount_codes %}
+                                <li>{{ code|safe }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% if newsletter_active %}
+                            <a href="{% url 'newsletter_unsubscribe' user.email %}">Unsubscribe from newsletter</a>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
                 <hr class="my-5">
                 <button type="button" class="btn btn-danger modal-trigger-delete-account">Delete Account</button>
             </div>

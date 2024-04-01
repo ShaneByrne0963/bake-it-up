@@ -29,7 +29,16 @@ class DiscountCode(models.Model):
     min_spending = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.code_name 
+        """
+        Returns the code name, along with the details of the discount
+        """
+        code_str = f'"{self.code_name}": '
+        code_str += f'{self.discount_value}%' if self.is_percentage \
+            else f'€{self.discount_value}'
+        code_str += ' off'
+        if self.min_spending:
+            code_str += f' on orders over €{self.min_spending}'
+        return code_str
 
 
 class NewsletterEmails(models.Model):

@@ -19,7 +19,4 @@ class NewsletterEmailAdmin(admin.ModelAdmin):
     list_display = ('email', 'is_active')
 
 
-@admin.register(DiscountCode)
-class DiscountCodeAdmin(admin.ModelAdmin):
-    list_display = ('code_name', 'discount_value', 'is_percentage',
-                    'min_spending')
+admin.site.register(DiscountCode)

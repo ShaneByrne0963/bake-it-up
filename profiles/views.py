@@ -11,7 +11,9 @@ from core.contexts import get_base_context, add_field_error, \
                           handle_server_errors
 from .forms import ProfileContactForm, ProfileBillingForm, PROFILE_FORM_LABELS
 from .models import UserProfile
+
 from checkout.models import Order
+from contact.models import NewsletterEmails
 
 from datetime import datetime
 
@@ -74,7 +76,7 @@ class AccountSettings(View):
             )
             return redirect('home')
 
-        # Checking if any details exist for each form
+        # Checking if any details already exist for each form
         has_contact_details = False
         for key in contact_details:
             if contact_details[key]:
@@ -102,7 +104,7 @@ class AccountSettings(View):
         context['has_contact_details'] = has_contact_details
         context['has_billing_details'] = has_billing_details
 
-        # Retrieving any previously entered information
+        # Retrieving any previously entered information on page error
         if 'invalid_contact_details' in context:
             contact_details.update({
                 'profile_fname': context['val_profile_fname'],
@@ -129,6 +131,29 @@ class AccountSettings(View):
             profile=profile
         ).order_by('-order_date')
         context['orders'] = orders
+
+        # Newsletter details
+        include_newsletter = False
+        try:
+            user_newsletter = NewsletterEmails.objects.get(
+                email=request.user.email
+            )
+            include_newsletter = True
+            context['newsletter_active'] = user_newsletter.is_active
+
+            # Getting all the user's discount codes
+            discount_codes = []
+            for code in user_newsletter.received_codes.all():
+                # Make the code name bold to stand out
+                code_desc = code.__str__().replace(
+                    code.code_name,
+                    f'<strong>{code.code_name}</strong>'
+                )
+                discount_codes.append(code_desc)
+            context['discount_codes'] = discount_codes
+        except:
+            pass
+        context['include_newsletter'] = include_newsletter
 
         return render(request, self.template, context)
 
