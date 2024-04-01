@@ -101,8 +101,36 @@ function validateCodeName() {
     if (valueSymbols) {
         customValidity = 'Code name can only contain letters, numbers and "-".';
     }
+    if (customValidity) {
+        $('#code-name-feedback').removeClass('d-none').text(customValidity);
+    }
     codeName.setCustomValidity(customValidity);
     return customValidity;
+}
+
+
+/**
+ * Checks the database to ensure the code name is unique
+ */
+function checkCodeNameIsUnique() {
+    $('#code-name-feedback').addClass('d-none');
+    let codeName = $('#code-name').get(0);
+    codeName.setCustomValidity('Please wait while we validate the code name.');
+    let csrfToken = $('#newsletter-form').find('input[name="csrfmiddlewaretoken"]').val();
+
+    let postData = {
+        'csrfmiddlewaretoken': csrfToken,
+        'code_name': $('#code-name').val(),
+    }
+    let url = '/contact/check_code_name';
+    $.post(url, postData).done(function() {
+        codeName.setCustomValidity('');
+        setDiscountPreview();
+
+    }).fail(function(result) {
+        $('#code-name-feedback').removeClass('d-none').text(result.responseText);
+        codeName.setCustomValidity(result.responseText);
+    });
 }
 
 
@@ -201,5 +229,6 @@ $(document).ready(() => {
     // Discount code inputs
     $('#discount-code').on('change', updateDiscountCodeCheck);
     $('#has-minimum-spend').on('change', updateMinSpendingCheck);
-    $('#code-name, #discount-value, #discount-is-percentage, #min-spending').on('change', setDiscountPreview);
+    $('#code-name').on('change', checkCodeNameIsUnique);
+    $('#discount-value, #discount-is-percentage, #min-spending').on('change', setDiscountPreview);
 });

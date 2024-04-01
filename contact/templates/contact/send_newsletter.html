@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-10 col-xl-5 offset-md-1">
-                <form method="POST">
+                <form method="POST" id="newsletter-form">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="newsletter-subject">Subject*</label>
@@ -33,6 +33,7 @@
                         <div class="form-group">
                             <label for="code-name" class="discount-label text-muted">Code Name</label>
                             <input type="text" id="code-name" name="code_name" class="form-control" maxlength="20" disabled>
+                            <p id="code-name-feedback" class="d-none text-danger small font-weight-bold"></p>
                         </div>
                         <label for="discount-value" class="discount-label text-muted">Discount</label>
                         <div id="discount-inputs" class="form-group form-inline mb-5">
@@ -56,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" id="send-newsletter" class="btn btn-primary">Send</button>
                     <input type="reset" class="btn btn-secondary" value="Clear">
                 </form>
             </div>

@@ -5,7 +5,7 @@ from django.contrib import messages
 
 from core.contexts import get_base_context, handle_server_errors
 from .forms import CustomerMessageForm, NewsletterSignupForm
-from .models import CustomerMessage, NewsletterEmails
+from .models import CustomerMessage, NewsletterEmails, DiscountCode
 from .emails import send_template_email
 
 from datetime import date
@@ -182,7 +182,28 @@ class SendNewsletter(View):
     
     @handle_server_errors
     def post(self, request):
-        pass
+        subject = request.POST['subject']
+        body = request.POST['body']
+
+
+@require_POST
+def check_code_name(request):
+    """
+    Checks if the code name already exists, as each name must
+    be unique
+    """
+    try:
+        DiscountCode.objects.get(
+            code_name=request.POST['code_name']
+        )
+        return HttpResponse(
+            content='That code name already exists.',
+            status=400
+        )
+    except DiscountCode.DoesNotExist:
+        return HttpResponse(content='Success', status=200)
+    except Exception as e:
+        return HttpResponse(content=e, status=400)
 
 
 class NewsletterUnsubscribe(View):
