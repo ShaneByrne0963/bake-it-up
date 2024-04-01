@@ -285,7 +285,7 @@ function applyDiscountCode() {
     }
     let url = '/checkout/get_discount/';
     $.post(url, postData).done(function(result) {
-        $('#discount-code').attr('name', 'discount_code').prop('disabled', true);
+        $('#discount-code').attr('name', 'code_name').prop('disabled', true);
         $('#apply-discount').off('click');
 
         let resultData = JSON.parse(result);

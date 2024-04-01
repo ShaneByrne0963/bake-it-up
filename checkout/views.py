@@ -220,6 +220,7 @@ def cache_checkout_data(request):
                     code_name=request.POST['code_name']
                 )
                 discount = discount_code.get_discount(cart_total)
+                print(discount)
                 newsletter.received_codes.remove(discount_code)
                 newsletter.save()
             except:
