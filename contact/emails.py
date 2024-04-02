@@ -50,12 +50,16 @@ def send_html_email(subject, body, email_to):
     tag with an anchor
     """
     unsubscribe = f'{SITE_DOMAIN}/contact/newsletter_unsubscribe/{email_to}'
+    # The regular text body
     body_text = body.replace('@UNSUBSCRIBE', f'Unsubscribe: {unsubscribe}')
+
+    # The HTML body
     body_anchor = body.replace(
         '@UNSUBSCRIBE',
         f"""<a href="{SITE_DOMAIN}/contact/newsletter_unsubscribe/{email_to}">
                 <small>Unsubscribe from newsletter</small></a>"""
-    )
+    ).replace('\n', '<br>')
+
     body_html = f"""
     <html>
         <head></head>
