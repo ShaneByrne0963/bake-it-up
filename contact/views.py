@@ -256,13 +256,8 @@ class NewsletterUnsubscribe(View):
             # database, as we want to stop the newsletters anyway
             pass
         else:
-            # Keep the info of the email if codes have been used,
-            # to prevent duplicating codes when resubscribing
-            if newsletter_email.used_codes:
-                newsletter_email.is_active = False
-                newsletter_email.save()
-            else:
-                newsletter_email.delete()
+            newsletter_email.is_active = False
+            newsletter_email.save()
         finally:
             messages.success(
                 request,
