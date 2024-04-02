@@ -28,8 +28,7 @@ def send_template_email(template_name, email_to, **kwargs):
             **kwargs
         }
     )
-    send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
-              [email_to])
+    send_html_email(subject, body, email_to)
 
 
 def send_newsletter(subject, body, discount_code=None):
@@ -40,14 +39,30 @@ def send_newsletter(subject, body, discount_code=None):
         is_active=True
     ))
     for subscriber in subscribers:
-        email = subscriber.email
-        body_with_link = body.replace(
-            '<a></a>',
-            f'<a href="{SITE_DOMAIN}/contact/newsletter_unsubscribe/{email}"> \
-                Unsubscribe from newsletter</a>'
-        )
-        send_mail(subject, body_with_link,
-                  settings.DEFAULT_FROM_EMAIL,
-                  [email])
+        send_html_email(subject, body, subscriber.email)
         if discount_code:
             subscriber.received_codes.add(discount_code)
+
+
+def send_html_email(subject, body, email_to):
+    """
+    Sends an HTML version of the email, replacing the unsubscribe
+    tag with an anchor
+    """
+    unsubscribe = f'{SITE_DOMAIN}/contact/newsletter_unsubscribe/{email_to}'
+    body_text = body.replace('@UNSUBSCRIBE', f'Unsubscribe: {unsubscribe}')
+    body_anchor = body.replace(
+        '@UNSUBSCRIBE',
+        f"""<a href="{SITE_DOMAIN}/contact/newsletter_unsubscribe/{email_to}">
+                <small>Unsubscribe from newsletter</small></a>"""
+    )
+    body_html = f"""
+    <html>
+        <head></head>
+        <body>
+            {body_anchor}
+        </body
+    </html>
+    """
+    send_mail(subject, body_text, settings.DEFAULT_FROM_EMAIL,
+              [email_to], html_message=body_html)

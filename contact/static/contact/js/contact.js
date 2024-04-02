@@ -250,7 +250,7 @@ $(document).ready(() => {
             completeText += $(this).text() + '\n';
         });
         // The unsubscribe link. Will be replaced in the POST method
-        completeText += '\n\n<a></a>';
+        completeText += '\n\n@UNSUBSCRIBE';
 
         newsletterFormat.val(completeText);
         $('#newsletter-form').append(newsletterFormat);
