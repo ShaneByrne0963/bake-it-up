@@ -8,8 +8,8 @@ import os
 
 
 # Used to supply links within emails
-SITE_DOMAIN = f"https://{settings.DOMAINS[
-    'development' if 'DEVELOPMENT' in os.environ else 'deployed'
+SITE_DOMAIN = f"https://{settings.DOMAINS[ \
+    'development' if 'DEVELOPMENT' in os.environ else 'deployed' \
 ]}"
 
 
