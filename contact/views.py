@@ -132,6 +132,7 @@ class NewsletterSignup(View):
             else:
                 newsletter.is_active = True
                 newsletter.save()
+                send_template_email('resubscribe', email)
 
                 messages.success(
                     request,
