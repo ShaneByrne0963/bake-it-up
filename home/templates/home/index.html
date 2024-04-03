@@ -19,15 +19,39 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="/media/images/home/wedding-cake.webp" class="d-block w-100" alt="A custom-made wedding cake">
+                            <div class="carousel-text left">
+                                <p>Get a custom-made wedding cake for your special day</p>
+                                <span>
+                                    <a href="{% url 'store_contact' %}" class="btn btn-nav">Order Yours</a>
+                                </span>
+                            </div>
                         </div>
                         <div class="carousel-item">
                             <img src="/media/images/home/cinnamon-rolls-tray.webp" class="d-block w-100" alt="Tray of freshly baked cinnamon rolls">
+                            <div class="carousel-text right">
+                                <p>Try some of our delicious cinnamon rolls!</p>
+                                <span>
+                                    <a href="{% url 'product_detail' 'cinnamon-swirl' %}" class="btn btn-nav">Try It!</a>
+                                </span>
+                            </div>
                         </div>
                         <div class="carousel-item">
                             <img src="/media/images/home/cookie-stand.webp" class="d-block w-100" alt="A wide range of cookies on display">
+                            <div class="carousel-text right lower">
+                                <p>We offer a wide range of cookies for you to enjoy</p>
+                                <span>
+                                    <a href="{% url 'product_detail' 'cookies' %}" class="btn btn-nav">Get Yours</a>
+                                </span>
+                            </div>
                         </div>
                         <div class="carousel-item">
                             <img src="/media/images/home/birthday-cake.webp" class="d-block w-100" alt="A custom-made birthday cake">
+                            <div class="carousel-text left upper">
+                                <p>Have your birthday cake tailored to you</p>
+                                <span>
+                                    <a href="{% url 'product_list' %}?category=cakes" class="btn btn-nav">Order</a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-overlay"></div>
