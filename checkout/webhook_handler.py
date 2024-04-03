@@ -85,11 +85,22 @@ class StripeWH_Handler():
                     continue
                 number_of_products += 1
                 product_number = key.replace('product_', '')
-                unordered_cart[product_number] = json.loads(value)
+                item_data = json.loads(value)
+
+                # Formatting the data from the payment intent
+                old_properties = {**item_data['prop_list']}
+                item_data['prop_list'] = []
+
+                for key, value in old_properties.items():
+                    item_data['prop_list'].append({
+                        'name': key,
+                        'answer': value
+                    })
+                unordered_cart[product_number] = item_data
 
             # Ordering the products the way they are in the user cart
             for i in range(number_of_products):
-                cart.append(unordered_cart[f'{i}'])
+                cart.append(unordered_cart[str(i)])
 
             # Getting the checkout shipping details to fill into the new order
             checkout_data = {

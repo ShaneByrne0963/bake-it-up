@@ -295,7 +295,12 @@ def cache_checkout_data(request):
         # Adding each item as its own key to avoid the 500 character limit
         cart = request.session.get('cart', {})
         for count, item in enumerate(cart):
-            metadata[f'product_{count}'] = json.dumps(item)
+            # Removing the unnecessary information in the product dict
+            item_data = {**item}
+            item_data['prop_list'] = {
+                prop['name']: prop['answer'] for prop in item['prop_list']
+            }
+            metadata[f'product_{count}'] = json.dumps(item_data)
         
         stripe.PaymentIntent.modify(
             pid,
