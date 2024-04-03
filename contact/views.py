@@ -120,34 +120,57 @@ class NewsletterSignup(View):
         email = request.POST['email']
 
         # Checking if the email already exists in the database
+        response = NewsletterSignup.subscribe_email(email)
+        if response == 'Email already active':
+            request.session['global_context'] = {
+                'newsletter_error': """
+                    This email is already subscribed to the
+                    newsletter."""
+            }
+            return redirect(f'{url_next}{focus}')
+        elif response == 'New subscription':
+            messages.success(
+                request,
+                'You have signed up for our newsletter!'
+            )
+        elif response == 'Subscription reactivated':
+            messages.success(
+                request,
+                'Your newsletter subscription has been reactivated!'
+            )
+        else:
+            messages.error(
+                request,
+                f"An unexpected error occurred. {response}"
+            )
+        return redirect(url_next)
+    
+    @staticmethod
+    def subscribe_email(email):
+        """
+        Signs the email up to the newsletter, and returns one of
+        the following responses:
+        - Email already active
+        - New subscription
+        - Subscription reactivated
+        - Any other response is a caught error
+        """
+        # Checking if the email already exists in the database
         try:
             newsletter = NewsletterEmails.objects.get(email=email)
             if newsletter.is_active:
-                request.session['global_context'] = {
-                    'newsletter_error': """
-                        This email is already subscribed to the
-                        newsletter."""
-                }
-                return redirect(f'{url_next}{focus}')
+                return 'Email already active'
             else:
                 newsletter.is_active = True
                 newsletter.save()
                 send_template_email('resubscribe', email)
 
-                messages.success(
-                    request,
-                    'Your newsletter subscription has been reactivated!'
-                )
-                return redirect(url_next)
+                return 'Subscription reactivated'
         except NewsletterEmails.DoesNotExist:
             # Creating a new subscription
-            newsletter_form = NewsletterSignupForm(request.POST)
+            newsletter_form = NewsletterSignupForm({'email': email})
             if newsletter_form.is_valid():
                 newsletter_email = newsletter_form.save()
-                messages.success(
-                    request,
-                    'You have signed up for our newsletter!'
-                )
                 send_template_email('subscribe', email)
 
                 # Applying the BAKEITUPNEWS10 code for new subscribers
@@ -157,20 +180,10 @@ class NewsletterSignup(View):
                 newsletter_email.received_codes.add(discount_code)
                 newsletter_email.save()
 
-                return redirect(url_next)
-            else:
-                form_error = newsletter_form.errors['email'][0]
-                request.session['global_context'] = {
-                    'newsletter_error': form_error
-                }
-                return redirect(f'{url_next}{focus}')
+                return 'New subscription'
 
         except Exception as e:
-            messages.error(
-                request,
-                f"An unexpected error occurred. {e}"
-            )
-            return redirect(url_next)
+            return e
 
 
 class SendNewsletter(View):

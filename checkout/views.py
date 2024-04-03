@@ -14,6 +14,7 @@ from core.shortcuts import price_as_float, is_tomorrows_date
 from cart.cartfunctions import has_reached_cutoff_time
 from profiles.models import UserProfile
 from contact.models import NewsletterEmails, DiscountCode
+from contact.views import NewsletterSignup
 
 import stripe
 import json
@@ -160,15 +161,33 @@ class Checkout(View):
         request.session['cart_total'] = 0
 
         # Confirmation toasts
-        messages.success(request, f'Your payment was successful! A \
-        confirmation email has been sent to {order.email}.')
+        messages.success(request, f"""Your payment was successful! A
+            confirmation email has been sent to {order.email}.""")
         if save_info:
-            messages.success(request, 'Your billing information has \
-                been saved!')
+            messages.success(request, """Your billing information has
+                been saved!""")
         
         # Signing up for the newsletter
+        if 'newsletter_subscribe' in request.POST:
+            response = NewsletterSignup.subscribe_email(
+                request.POST['email'])
 
-        return redirect(reverse('checkout_success', args=[order.order_number]))
+            if response == 'Email already active':
+                messages.info(request, """Your email is already
+                    subscribed to the newsletter.""")
+            elif response == 'New subscription':
+                messages.success(request,
+                    'You have signed up for our newsletter!')
+            elif response == 'Subscription reactivated':
+                messages.success(request, """
+                    'Your newsletter subscription has been
+                    reactivated!""")
+            else:
+                messages.error(request, f"""Failed to sign up
+                    with newsletter. {response}""")
+
+        return redirect(reverse('checkout_success',
+                                args=[order.order_number]))
 
 
 class CheckoutSuccess(View):
@@ -312,9 +331,9 @@ def get_discount_code(request):
 
         if discount_code.min_spending > cart_total:
             return HttpResponse(
-                content=f"Your cart needs to be at least €\
-                    {discount_code.min_spending} for this code \
-                    to be applied",
+                content=f"""Your cart needs to be at least
+                    €{discount_code.min_spending} for this
+                    code to be applied""",
                 status=400
             )
         discount = discount_code.get_discount(cart_total)
@@ -331,12 +350,10 @@ def get_discount_code(request):
     except NewsletterEmails.DoesNotExist:
         return HttpResponse(
             content='Your email has no discount codes available',
-            status=400
-        )
+            status=400)
     except DiscountCode.DoesNotExist:
         return HttpResponse(
             content='You do not have that discount code',
-            status=400
-        )
+            status=400)
     except Exception as e:
         return HttpResponse(content=e, status=400)

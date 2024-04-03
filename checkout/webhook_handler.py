@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .order import create_order
 from .models import Order
 
+from contact.views import NewsletterSignup
+
 import stripe
 import time
 import json
@@ -43,12 +45,10 @@ class StripeWH_Handler():
         bake_date = intent.metadata.bake_date
         discount = int(intent.metadata.discount)
         delivery = (intent.metadata.delivery == 'True')
-        delivery_other_address = (intent.metadata.delivery_other_address == 'True')
-        customer_note = getattr(
-            intent.metadata,
-            'customer_note',
-            ''
-        )
+        delivery_other_address = (
+            intent.metadata.delivery_other_address == 'True')
+        customer_note = getattr(intent.metadata, 'customer_note',
+                                '')
 
         # Getting the user to save their profile information
         user = None
@@ -64,6 +64,10 @@ class StripeWH_Handler():
         billing_details = stripe_charge.billing_details
         shipping_details = intent.shipping
         grand_total = stripe_charge.amount
+
+        # Subscribe to the newsletter
+        if hasattr(intent.metadata, 'newsletter_subscribe'):
+            NewsletterSignup.subscribe_email(billing_details.email)
 
         # Replacing empty strings with None
         for key, value in shipping_details.address.items():
