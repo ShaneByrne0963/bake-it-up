@@ -81,8 +81,8 @@ class Checkout(View):
                     """Your profile information was missing.
                     Any data previously saved has been cleared."""
                 )
-        contact_form = ContactDetailsForm(contact_details)
-        billing_form = BillingDetailsForm(billing_details)
+        contact_form = ContactDetailsForm(initial=contact_details)
+        billing_form = BillingDetailsForm(initial=billing_details)
 
         context = get_base_context(request)
         context['contact_form'] = contact_form

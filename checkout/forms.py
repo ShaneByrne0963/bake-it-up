@@ -3,6 +3,7 @@ from django.conf import settings
 
 from core.constants import COUNTY_CHOICES
 
+
 class ContactDetailsForm(forms.Form):
 
     name = forms.CharField(
