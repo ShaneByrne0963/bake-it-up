@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 
 from .models import Order, OrderLineItem
 from profiles.models import UserProfile
+from contact.models import NewsletterEmails
 
 from datetime import datetime
 
@@ -39,9 +40,9 @@ def create_order(checkout_data, cart, save_info=False, user=None):
         checkout_data['bake_date'],
         '%Y-%m-%d'
     )
+    new_data = dict(checkout_data.copy())
 
     # Deleting any unknown keys in the input
-    new_data = dict(checkout_data.copy())
     for key, value in checkout_data.items():
         if isinstance(value, list):
             value = value[0]

@@ -113,6 +113,13 @@
                         You'll Pay: &euro;<span id="checkout-total">{{ grand_total|floatformat:2 }}</span>
                     </div>
                     <hr>
+                    {% if newsletter_checkbox %}
+                        <div class="form-group form-check text-left">
+                            <input type="checkbox" id="checkout-newsletter" name="newsletter_subscribe" class="form-check-input">
+                            <label for="checkout-newsletter" class="mb-0 small">Subscribe to our newsletter to receive emails
+                                about future events, sales and deals.</label>
+                        </div>
+                    {% endif %}
                     <a href="{% url 'cart' %}" class="btn btn-lg btn-nav">Back to cart</a>
                     <button type="submit" class="btn btn-primary btn-lg px-4">Pay</button>
                 </div>

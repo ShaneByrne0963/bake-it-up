@@ -91,6 +91,16 @@ class Checkout(View):
         context['client_secret'] = intent.client_secret
         context['grand_total'] = price_as_float(grand_total)
 
+        # Adding a checkbox to subscribe to the newsletter
+        try:
+            newsletter_email = NewsletterEmails.objects.get(
+                email=request.user.email
+            )
+            if not newsletter_email.is_active:
+                raise Exception
+        except:
+            context['newsletter_checkbox'] = True
+
         # Get the context to create the select form
         county_options = []
         for county, cost in settings.COUNTY_DELIVERY_COSTS.items():
@@ -155,6 +165,8 @@ class Checkout(View):
         if save_info:
             messages.success(request, 'Your billing information has \
                 been saved!')
+        
+        # Signing up for the newsletter
 
         return redirect(reverse('checkout_success', args=[order.order_number]))
 
@@ -183,7 +195,6 @@ def cache_checkout_data(request):
             Please double check your details")
         return HttpResponse(status=400)
 
-    # The final check to ensure the next day bake date is valid
     bake_date = ''
     customer_note = ''
     if 'order_context' in request.session:
@@ -191,6 +202,7 @@ def cache_checkout_data(request):
         bake_date = order_context['bake_date']
         customer_note = order_context.get('customer_note', '')
 
+        # The final check to ensure the next day bake date is valid
         if is_tomorrows_date(bake_date) \
                 and has_reached_cutoff_time():
             request.session['global_context'] = {
@@ -258,6 +270,8 @@ def cache_checkout_data(request):
         # Saving the original billing postcode as it is overwritten by Stripe
         if delivery_other_address:
             metadata['billing_postcode'] = request.POST['postcode']
+        if 'newsletter_subscribe' in request.POST:
+            metadata['newsletter_subscribe'] = 'true'
 
         # Adding each item as its own key to avoid the 500 character limit
         cart = request.session.get('cart', {})
