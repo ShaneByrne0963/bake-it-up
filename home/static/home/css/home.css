@@ -56,3 +56,11 @@
     font-size: 1.2rem;
     font-weight: normal;
 }
+
+/* --------------------------------------------------------Opening Paragraphs */
+
+.row-back {
+    background: url('/media/images/ui-back.webp');
+    color: white;
+    padding: 32px 0;
+}
