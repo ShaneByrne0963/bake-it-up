@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from django.contrib import messages
+from django.conf import settings
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -146,6 +147,17 @@ class EmailConfirmed(View):
             'modal_load_fade': 'True',
         }
         return redirect('home')
+
+
+class PrivacyPolicy(View):
+    template = 'home/privacy_policy.html'
+
+    def get(self, request):
+        context = get_base_context(request)
+        context['street_address'] = settings.STREET_ADDRESS
+        context['city'] = settings.CITY
+        context['county'] = settings.COUNTY
+        return render(request, self.template, context)
 
 
 # Error pages

@@ -65,6 +65,12 @@ INSTALLED_APPS = [
     'storages'
 ]
 
+# Bake It Up's contact information
+STREET_ADDRESS = 'Wood Quay'
+CITY = 'Dublin City'
+COUNTY = 'Dublin'
+PHONE_NUMBER = '(+353) 84 313 3427'
+
 
 # Bake It Up public config variables
 

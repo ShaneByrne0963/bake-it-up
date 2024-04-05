@@ -8,4 +8,6 @@ urlpatterns = [
     path('signup', views.CustomSignup.as_view(), name='signup'),
     path('email_confirmed', views.EmailConfirmed.as_view(),
          name='email_confirmed'),
+    path('privacy_policy', views.PrivacyPolicy.as_view(),
+         name='privacy_policy'),
 ]
