@@ -73,51 +73,55 @@
                         <span class="sr-only">Next</span>
                     </button>
                 </div>
-                <section class="mb-5 px-3 px-md-0">
-                    <h2 id="about-us">About our Local Dublin Bakery</h2>
-                    <p>Bake It Up is a bakery based in the heart of Dublin city centre. We offer a wide variety
-                        of <strong>personalised bread, pastries and cakes</strong> for you to sink your teeth into.</p>
-                    <p>At Bake It Up, customization is key, where we actively encourage all our patrons to unleash
-                        their creativity. Maybe today you feel like having a red velvet, white chocolate chip cookie,
-                        but tomorrow a buttercream filled cupcake with peanut butter icing could really hit the spot.
-                        Perhaps you have a friend's birthday coming up, and you're thinking of getting them a
-                        <strong>birthday cake with a custom message</strong>, or you are looking to
-                        <strong>order a wedding cake</strong> for your special day.
-                        Here, the power is in your hands
-                        to create something beautiful, and we're happy to bring your creations to life!</p>
-                    <p>With Bake It Up, you now have the option to <strong>order your bread and pastries online</strong>.
-                        We also give the opportunity to <strong>deliver</strong> straight to your doorstep, anywhere
-                        in the Republic of Ireland! That means you can get your hands on our
-                        <strong>fresh treats</strong> without having to leave the comfort of your own home!</p>
-                </section>
+                <div class="container-fluid">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <section class="col-12 col-xl-6 mb-0 mb-xl-5">
+                <h2 id="about-us">About our Local Dublin Bakery</h2>
+                <p>Bake It Up is a bakery based in the heart of Dublin city centre. We offer a wide variety
+                    of <strong>personalised bread, pastries and cakes</strong> for you to sink your teeth into.</p>
+                <p>At Bake It Up, customization is key, where we actively encourage all our patrons to unleash
+                    their creativity. Perhaps you have a friend's birthday coming up, and you're thinking of getting them a
+                    <strong>birthday cake with a custom message</strong>, or you are looking to
+                    <strong>order a wedding cake</strong> for your special day.
+                    Here, the power is in your hands to create something beautiful, and we're happy to bring your creations to life!</p>
+                <p>With Bake It Up, you now have the option to <strong>order your bread and pastries online</strong>.
+                    We also give the opportunity to <strong>deliver</strong> straight to your doorstep, anywhere
+                    in the Republic of Ireland! That means you can get your hands on our
+                    <strong>fresh treats</strong> without having to leave the comfort of your own home!</p>
+            </section>
+            <div class="col-12 col-lg-10 offset-lg-1 col-xl-6 offset-xl-0 mb-5">
+                <div class="img-container">
+                    <img src="/media/images/home/bakery-counter.jpg" alt="Bake It Up's display counter" class="w-100">
+                </div>
             </div>
         </div>
         <div class="row row-back mb-5">
-            <div class="col-12 col-md-10 offset-md-1 px-md-0">
-                <section>
-                    <h2>How We Began</h2>
-                    <p>Bake It Up was founded by friends Liam Dowd and Evan McManus. The pair shared a passion for
-                        experimenting with different kinds of desserts, constantly throwing new ideas at the baking table.
-                        They spent the early part of their baking careers jotting down what worked, and learning from
-                        what didn't.</p>
-                    <p>Dowd and McManus continued to gather experience working in several different bakeries throughout
-                        Dublin, up until 2012, when they decided on opening a small bakery called Bake It Up. In it's
-                        inception, the bakery had a small, but loyal, following. People familiar with the place returned on the
-                        regular, looking for their fill of the <strong>sweet treats</strong> they grew familiar with.
-                        Word of mouth spread, and Bake It Up became a common name in the streets of Dublin.</p>
-                    <p>Bake It Up became so successful that Dowd and McManus had to move to a bigger location, to accomodate
-                        the needs of its growing fan base. The bakery was moved to Wood Quay, where it continues to satisfy
-                        the sugar cravings of its happy pastryholics!</p>
-                </section>
+            <div class="col-12 col-lg-10 col-xl-5 offset-lg-1 pl-xl-0 order-last order-xl-first">
+                <div class="img-container">
+                    <img src="/media/images/home/liam-dowd-evan-mcmanus.jpg" alt="Founders of Bake It Up, Liam Dowd and Evan McManus" class="w-100">
+                    <p class="small mb-0">Pictured above: <strong>Liam Dowd</strong> (left) and <strong>Evan McManus</strong> (right)</p>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-10 offset-md-1 px-md-0">
-                <h2>Our Most Popular Products</h2>
-            </div>
+            <section class="col-12 col-xl-5 pr-xl-0 order-first order-xl-last">
+                <h2>How We Began</h2>
+                <p>Bake It Up was founded by friends <strong>Liam Dowd</strong> and <strong>Evan McManus</strong>. The pair shared a passion for
+                    experimenting with different kinds of desserts, constantly throwing new ideas at the baking table, jotting down what worked,
+                    and learning from what didn't.</p>
+                <p>In 2012, they decided on opening a small bakery called Bake It Up. In it's
+                    inception, the bakery had a small, but loyal, following. People familiar with the place returned on the
+                    regular, word of mouth spread, and Bake It Up became a common name in the streets of Dublin.</p>
+                <p>Bake It Up became so successful that Dowd and McManus had to move to a bigger location, to accomodate
+                    the needs of its growing fan base. The bakery was moved to Wood Quay, where it continues to satisfy
+                    the sugar cravings of its happy pastryholics!</p>
+            </section>
         </div>
         <div class="row">
             <div class="col-12">
+                <h2>Our Most Popular Products</h2>
                 <hr class="mt-0 mb-4">
             </div>
             {% for product in best_products %}

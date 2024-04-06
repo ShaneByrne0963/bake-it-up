@@ -36,10 +36,12 @@
     border-radius: 1.75rem;
 }
 
-.carousel-item>.img-container {
+.img-container {
     overflow: hidden;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 .carousel-text.left {
