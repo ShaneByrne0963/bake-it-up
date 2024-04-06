@@ -88,6 +88,13 @@ def get_base_context(request):
     if request.user.is_superuser:
         new_messages = CustomerMessage.objects.filter(opened=False)
         context['num_messages'] = new_messages.count()
+    
+    # The company address and phone number
+    context['company_street_address'] = settings.STREET_ADDRESS
+    context['company_city'] = settings.CITY
+    context['company_county'] = settings.COUNTY
+    context['company_email'] = settings.DEFAULT_FROM_EMAIL
+    context['company_phone'] = settings.PHONE_NUMBER
 
     return context
 

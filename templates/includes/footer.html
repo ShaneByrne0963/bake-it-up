@@ -5,7 +5,7 @@
         <div id="footer-content" class="col-12 col-md-10 offset-md-1 px-3 px-sm-4 px-lg-5 py-4">
             <div class="container-fluid px-0">
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-lg-4 order-2 order-md-first mb-4 mb-lg-0">
+                    <div class="col-12 col-sm-6 col-lg-4 order-3 order-md-first mb-4 mb-lg-0">
                         <div class="footer-heading">Explore</div>
                         <ul class="list-unstyled footer-list">
                             <li>
@@ -25,8 +25,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 order-3 order-sm-3 order-lg-2 mb-4 mb-lg-0">
-                        <div class="footer-heading">Useful Information</div>
+                    <div class="col-12 col-sm-6 col-lg-4 order-4 order-sm-3 order-lg-2 mb-4 mb-lg-0">
+                        <div class="footer-heading">Other Information</div>
                         <ul class="list-unstyled footer-list">
                             <li>
                                 <a href="{% url 'home' %}#about-us">About Us</a>
@@ -57,7 +57,24 @@
                             <button type="submit" class="btn btn-primary shadow-none">Sign Up!</button>
                         </form>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4 offset-lg-4 order-last mb-4 mb-lg-0">
+                    <div class="col-12 col-sm-6 col-lg-4 mb-4 order-2 order-lg-4">
+                        <div class="footer-heading">Where to Find Us:</div>
+                        <div class="mb-2">
+                            Bake It Up,
+                            <br>
+                            {{ company_street_address }},
+                            <br>
+                            {{ company_city }},
+                            <br>
+                            Co. {{ company_county }}
+                        </div>
+                        <div>
+                            Email: {{ company_email }}
+                            <br>
+                            Phone: {{ company_phone }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4 order-last mb-4 mb-lg-0">
                         <div class="footer-heading">Follow Us On:</div>
                         <ul class="list-unstyled footer-list">
                             <li>

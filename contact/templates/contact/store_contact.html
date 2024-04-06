@@ -10,10 +10,13 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
+            <div class="col-12 col-md-10 offset-md-1">
                 <h2>Your feedback is important to us!</h2>
                 <p>Please fill out the form below and we'll get back to you as soon as possible.</p>
+                <p>Alternatively, you can call us on <em>{{ company_phone }}</em> or send us an email at <em>{{ company_email }}</em></p>
                 <hr>
+            </div>
+            <div class="col-12 col-md-10 col-xl-5 offset-md-1">
                 <form method="POST">
                     {% csrf_token %}
                     {{ contact_form|crispy }}

@@ -157,9 +157,6 @@ class PrivacyPolicy(View):
 
     def get(self, request):
         context = get_base_context(request)
-        context['street_address'] = settings.STREET_ADDRESS
-        context['city'] = settings.CITY
-        context['county'] = settings.COUNTY
         return render(request, self.template, context)
 
 
