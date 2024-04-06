@@ -1,7 +1,7 @@
 /* --------------------------------------------------------Carousel */
 
 #home-carousel>.carousel-inner {
-    height: 578px;
+    aspect-ratio: 2.3/1;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -27,13 +27,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 .carousel-text>div {
     padding: 24px;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 1.75rem;
+}
+
+.carousel-item>.img-container {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .carousel-text.left {
@@ -63,4 +69,67 @@
     background: url('/media/images/ui-back.webp');
     color: white;
     padding: 32px 0;
+}
+
+/* -----------------------------------------------------------------------MEDIA QUERIES
+
+/* --------------------------------------------------------Bootstrap's large breakpoint */
+@media (max-width: 992px) {
+    #home-carousel>.carousel-inner {
+        aspect-ratio: 2/1;
+    }
+
+    .carousel-text {
+        font-size: 1rem;
+    }
+
+    .carousel-text>div {
+        padding: 8px;
+        border-radius: 1.25rem;
+    }
+
+    .carousel-text .btn.btn-primary {
+        font-size: 1rem;
+    }
+}
+
+/* --------------------------------------------------------Bootstrap's medium breakpoint */
+@media (max-width: 768px) {
+    #home-carousel>.carousel-inner {
+        aspect-ratio: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .carousel-text.left,
+    .carousel-text.right {
+        position: relative;
+        top: 0;
+        left: 0;
+        display: block;
+        height: auto;
+        width: 100%;
+        background: url('/media/images/ui-back.webp');
+    }
+
+    .carousel-text>div {
+        border-radius: 0;
+        z-index: 20;
+    }
+
+    .carousel-text.upper {
+        padding-bottom: 0;
+    }
+    
+    .carousel-text.lower {
+        padding-top: 0;
+    }
+
+    .carousel-item>.img-container {
+        aspect-ratio: 2.4/1;
+    }
+
+    .carousel-text p {
+        margin-bottom: 0;
+    }
 }
