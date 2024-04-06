@@ -304,6 +304,10 @@ def handle_server_errors(func):
             url_next = func(*args, **kwargs)
             return url_next
         except Exception as e:
+            # If the error is a 404, let it pass as normal
+            if e.__class__.__name__ == 'Http404':
+                raise e
+
             # Taking the user to a 500 error page if any
             # uncaught error happens
             view = args[0]
