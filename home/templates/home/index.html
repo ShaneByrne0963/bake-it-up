@@ -9,6 +9,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'home/css/home.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}" type="text/css">
 {% endblock %}
 
 {% block content %}
@@ -64,7 +65,7 @@
                         <span class="sr-only">Next</span>
                     </button>
                 </div>
-                <section class="mb-5">
+                <section class="mb-5 px-3 px-md-0">
                     <h2 id="about-us">About our Local Dublin Bakery</h2>
                     <p>Bake It Up is a bakery based in the heart of Dublin city centre. We offer a wide variety
                         of <strong>personalised bread, pastries and cakes</strong> for you to sink your teeth into.</p>
@@ -73,7 +74,8 @@
                         but tomorrow a buttercream filled cupcake with peanut butter icing could really hit the spot.
                         Perhaps you have a friend's birthday coming up, and you're thinking of getting them a
                         <strong>birthday cake with a custom message</strong>, or you are looking to
-                        <strong>order a wedding cake</strong> for your special day. Here, the power is in your hands
+                        <strong>order a wedding cake</strong> for your special day.
+                        Here, the power is in your hands
                         to create something beautiful, and we're happy to bring your creations to life!</p>
                     <p>With Bake It Up, you now have the option to <strong>order your bread and pastries online</strong>.
                         We also give the opportunity to <strong>deliver</strong> straight to your doorstep, anywhere
@@ -82,8 +84,8 @@
                 </section>
             </div>
         </div>
-        <div class="row row-back">
-            <div class="col-12 col-md-10 offset-md-1 px-0">
+        <div class="row row-back mb-5">
+            <div class="col-12 col-md-10 offset-md-1 px-md-0">
                 <section>
                     <h2>How We Began</h2>
                     <p>Bake It Up was founded by friends Liam Dowd and Evan McManus. The pair shared a passion for
@@ -99,6 +101,22 @@
                         the needs of its growing fan base. The bakery was moved to Wood Quay, where it continues to satisfy
                         the sugar cravings of its happy pastryholics!</p>
                 </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1 px-md-0">
+                <h2>Our Most Popular Products</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr class="mt-0 mb-4">
+            </div>
+            {% for product in best_products %}
+                {% include 'products/includes/product_card.html' %}
+            {% endfor %}
+            <div class="col-12 text-center">
+                <a href="{% url 'product_list' %}" class="h4">View All of Our Products</a>
             </div>
         </div>
     </div>

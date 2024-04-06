@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 from allauth.account.views import LoginView, SignupView
 from allauth.account.forms import LoginForm, SignupForm
 
-from core.contexts import get_base_context, handle_server_errors
+from core.contexts import get_base_context, handle_server_errors, \
+                          get_products
 from profiles.models import UserProfile
 
 
@@ -23,6 +24,8 @@ class Home(View):
     @handle_server_errors
     def get(self, request):
         context = get_base_context(request)
+        best_products = get_products(request)[:4]
+        context['best_products'] = best_products
         return render(request, self.template, context)
 
 

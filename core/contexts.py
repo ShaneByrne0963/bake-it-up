@@ -171,7 +171,7 @@ def get_products(request, **kwargs):
     filter by category, and sort
     """
     category = kwargs['category'] if 'category' in kwargs else 'all'
-    sort = kwargs['sort'] if 'sort' in kwargs else 'favourites'
+    sort = kwargs['sort'] if 'sort' in kwargs else '-favourites'
     q = kwargs['q'] if 'q' in kwargs else None
     favorites = kwargs['favorites'] if 'favorites' in kwargs else False
 
