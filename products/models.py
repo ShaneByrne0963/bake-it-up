@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from profiles.models import UserProfile
 
 
@@ -23,7 +24,7 @@ class BreadProduct(models.Model):
     batch_size = models.IntegerField()
     ingredients = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/products/breads/')
     favorites = models.ManyToManyField(UserProfile,
                                        related_name="favorite_breads",
                                        blank=True)
@@ -54,7 +55,7 @@ class PastryProduct(models.Model):
     batch_size = models.IntegerField()
     ingredients = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/products/pastries/')
     favorites = models.ManyToManyField(UserProfile,
                                        related_name="favorite_pastries",
                                        blank=True)
