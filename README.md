@@ -12,21 +12,20 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 > *"Why would a user want to visit our website?"*
 
-- To make an order of bread, pastries and/or cakes online if they are unavailable to go to the physical bakery to order
+- To make an order of bread, pastries and/or cakes online
+- To view more information 
 
 > *"What would make them return?"*
 
 - A user-friendly website that makes the ordering process as simple and pain-free as possible
-- 
+- An assortment of controls and options to change their orders where they see fit
+- An wide variety of high-quality products made to their standards
 
 ### Problem Statement
 
 *"How can we fully transfer the creative freedoms that our in-person patrons have into the online world?"*
 
 ### Solutions
-
-- Throughout the development process, the user experience was kept in mind, with close attention to detail in small quality of life features that make the use of the site even easier, such as:
-  - 
 
 ## Features
 

@@ -5,7 +5,49 @@
         <div id="footer-content" class="col-12 col-md-10 offset-md-1 px-3 px-sm-4 px-lg-5 py-4">
             <div class="container-fluid px-0">
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-lg-4 order-3 order-md-first mb-4 mb-lg-0">
+                    <div class="col-12 col-sm-6 col-lg-4 mb-4 order-first">
+                        <div class="footer-heading">Where to Find Us:</div>
+                        <div class="mb-2">
+                            Bake It Up,
+                            <br>
+                            {{ company_street_address }},
+                            <br>
+                            {{ company_city }},
+                            <br>
+                            Co. {{ company_county }}
+                        </div>
+                        <div>
+                            Email: {{ company_email }}
+                            <br>
+                            Phone: {{ company_phone }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4 mb-4 mb-lg-0 order-2">
+                        <div class="footer-heading">Opening Hours</div>
+                        <ul class="list-unstyled footer-list">
+                            <li>Mon-Fri: 9am - 6pm</li>
+                            <li>Sat: 10am - 6pm</li>
+                            <li>Sun: 12pm - 4pm</li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-lg-4 order-3 mb-4 mb-lg-3">
+                        <div class="footer-heading">Sign Up for our Newsletter!</div>
+                        <p class="small">You'll receive emails about new products, events
+                            hosted by us and even get discounts on our products!</p>
+                        <form method="POST" action="{% url 'newsletter_signup' %}" id="newsletter-signup">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <div class="form-group">
+                                <label for="newsletter-email">Email</label>
+                                <input type="email" id="newsletter-email" name="email" class="form-control" maxlength="320" required>
+                                {% if newsletter_error %}
+                                    <div class="ui-error">{{ newsletter_error }}</div>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="btn btn-primary shadow-none">Sign Up!</button>
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4 order-4 mb-4 mb-lg-0">
                         <div class="footer-heading">Explore</div>
                         <ul class="list-unstyled footer-list">
                             <li>
@@ -25,7 +67,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 order-4 order-sm-3 order-lg-2 mb-4 mb-lg-0">
+                    <div class="col-12 col-sm-6 col-lg-4 order-5 mb-4 mb-lg-0">
                         <div class="footer-heading">Other Information</div>
                         <ul class="list-unstyled footer-list">
                             <li>
@@ -38,58 +80,29 @@
                                 <a href="{% url 'store_contact' %}">Contact Us</a>
                             </li>
                         </ul>
-                        
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 order-first order-sm-1 order-lg-3 mb-4 mb-lg-0">
-                        <div class="footer-heading">Sign Up for our Newsletter!</div>
-                        <p class="small">You'll receive emails about new products, events
-                            hosted by us and even get discounts on our products!</p>
-                        <form method="POST" action="{% url 'newsletter_signup' %}" id="newsletter-signup">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <div class="form-group">
-                                <label for="newsletter-email">Email</label>
-                                <input type="email" id="newsletter-email" name="email" class="form-control" maxlength="320" required>
-                                {% if newsletter_error %}
-                                    <div class="ui-error">{{ newsletter_error }}</div>
-                                {% endif %}
-                            </div>
-                            <button type="submit" class="btn btn-primary shadow-none">Sign Up!</button>
-                        </form>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 mb-4 order-2 order-lg-4">
-                        <div class="footer-heading">Where to Find Us:</div>
-                        <div class="mb-2">
-                            Bake It Up,
-                            <br>
-                            {{ company_street_address }},
-                            <br>
-                            {{ company_city }},
-                            <br>
-                            Co. {{ company_county }}
-                        </div>
-                        <div>
-                            Email: {{ company_email }}
-                            <br>
-                            Phone: {{ company_phone }}
-                        </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 order-last mb-4 mb-lg-0">
                         <div class="footer-heading">Follow Us On:</div>
                         <ul class="list-unstyled footer-list">
                             <li>
                                 <a href="https://www.facebook.com/profile.php?id=61558308985863" target="_blank"
-                                    aria-label="Go yo our Facebook page (Opens in a new tab)">Facebook</a>
+                                    aria-label="Go yo our Facebook page (Opens in a new tab)">
+                                    <i class="fa-brands fa-facebook mr-1"></i>
+                                    Facebook
+                                </a>
                             </li>
                             <li>
                                 <a href="https://www.instagram.com/bakeitup8/" target="_blank"
-                                    aria-label="Go yo our Instagram page (Opens in a new tab)">Instagram</a>
+                                    aria-label="Go yo our Instagram page (Opens in a new tab)">
+                                    <i class="fa-brands fa-instagram mr-1"></i>
+                                    Instagram
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <span>&copy; Bake It Up 2024</span>
+            <div class="text-lg-right">&copy; Bake It Up 2024</div>
         </div>
     </div>
 </footer>
