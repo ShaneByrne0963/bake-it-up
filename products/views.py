@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from core.contexts import get_base_context, get_products, \
                           get_product_by_name, \
                           get_add_product_context, delete_product, \
-                          handle_server_errors
+                          handle_server_errors, admin_action
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
 from home.models import SiteData
@@ -175,6 +175,7 @@ class AddProduct(View):
     template = 'products/add_product.html'
 
     @handle_server_errors
+    @admin_action
     def get(self, request):
         context = get_add_product_context(request)
         product_form = AddProductForm()
@@ -230,6 +231,7 @@ class EditProduct(View):
     template = 'products/edit_product.html'
 
     @handle_server_errors
+    @admin_action
     def get(self, request, product_name):
         context = get_add_product_context(request)
         product = get_product_by_name(product_name)
@@ -290,8 +292,9 @@ def validate_add_product(request):
         if product_in:
             error_message = {
                 'name': [{
-                    'message': f'"{product_name}" already exists in \
-                    the {product_in} model. Please pick another name',
+                    'message': f'''"{product_name}" already exists in
+                        the {product_in} model. Please pick another
+                        name''',
                     'code': ''
                 }]
             }
@@ -338,6 +341,7 @@ def validate_add_product(request):
 class DeleteProduct(View):
 
     @handle_server_errors
+    @admin_action
     def post(self, request, product_name):
         product = get_product_by_name(product_name)
         message_name = product.display_name

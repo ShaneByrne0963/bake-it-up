@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.views import View
 
 from core.contexts import get_base_context, get_product_by_name, \
-                          handle_server_errors
+                          handle_server_errors, admin_action
 from checkout.models import Order
 
 from datetime import date
@@ -13,6 +13,7 @@ class ViewOrders(View):
     template = 'orders/view_orders.html'
 
     @handle_server_errors
+    @admin_action
     def get(self, request):
         """
         Gets the orders for todays date
@@ -20,6 +21,7 @@ class ViewOrders(View):
         return self.get_list_of_orders(request, date.today())
 
     @handle_server_errors
+    @admin_action
     def post(self, request):
         """
         Gets a the orders for a specified date
@@ -37,15 +39,8 @@ class ViewOrders(View):
 
     def get_list_of_orders(self, request, selected_date):
         """
-        Returns a render of the page, 
+        Returns a list of orders for a particular day
         """
-        if not request.user.is_superuser:
-            messages.error(
-                request,
-                'You do not have permission to view orders'
-            )
-            return redirect('home')
-
         context = get_base_context(request)
 
         order_list = Order.objects.filter(bake_date=selected_date)

@@ -3,7 +3,8 @@ from django.views import View
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
-from core.contexts import get_base_context, handle_server_errors
+from core.contexts import get_base_context, handle_server_errors, \
+                          admin_action
 from .forms import CustomerMessageForm, NewsletterSignupForm
 from .models import CustomerMessage, NewsletterEmails, DiscountCode
 from .emails import send_template_email, send_newsletter
@@ -56,6 +57,7 @@ class ViewMessages(View):
     template = 'contact/view_messages.html'
 
     @handle_server_errors
+    @admin_action
     def get(self, request):
         context = get_base_context(request)
         unopen_messages = CustomerMessage.objects.filter(
@@ -95,6 +97,7 @@ def open_message(request, message_id):
 class DeleteMessage(View):
 
     @handle_server_errors
+    @admin_action
     def post(self, request, message_id):
         message = CustomerMessage.objects.get(id=message_id)
         message.delete()
@@ -190,19 +193,15 @@ class SendNewsletter(View):
     template = 'contact/send_newsletter.html'
 
     @handle_server_errors
+    @admin_action
     def get(self, request):
-        if not request.user.is_superuser:
-            messages.error(
-                request,
-                "You do not have permission to perform that action"
-            )
-            return redirect('home')
         context = get_base_context(request)
         context['today'] = date.today()
         
         return render(request, self.template, context)
     
     @handle_server_errors
+    @admin_action
     def post(self, request):
         subject = request.POST['subject']
         body = request.POST['newsletter_format']

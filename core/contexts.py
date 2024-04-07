@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, Count
 from django.conf import settings
+from django.contrib import messages
 
 from products.models import BreadProduct, PastryProduct
 from contact.models import CustomerMessage
@@ -339,4 +340,20 @@ def handle_server_errors(func):
 
             finally:
                 return render(request, template, context)
+    return wrapper
+
+
+def admin_action(func):
+    """
+    Class-based view decorator. Only allows admins to go to the
+    particular page. Displays an error message for
+    non-admin users
+    """
+    def wrapper(*args, **kwargs):
+        request = args[1]
+        if not request.user.is_superuser:
+            messages.error(request, """You do not have permission
+                to perform that action""")
+            return redirect('home')
+        return func(*args, **kwargs)
     return wrapper
