@@ -29,6 +29,11 @@ class StoreContact(View):
                     full_name += f' {request.user.last_name}'
                 user_info['full_name'] = full_name
 
+        # Changing the instructions if there is a reason for contact
+        if 'about' in request.GET:
+            context['about'] = request.GET['about'].replace('-', '_')
+            user_info['title'] = 'Custom Wedding Cake Enquiry'
+
         contact_form = CustomerMessageForm(initial=user_info)
         context['contact_form'] = contact_form
 

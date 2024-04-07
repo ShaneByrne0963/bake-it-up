@@ -4,15 +4,26 @@
 {% block extra_title %} - Contact Us{% endblock %}
 
 {% block content_heading %}
-    <h1>Contact Us</h1>
+    {% if about == 'wedding_cake' %}
+        <h1>Order your Wedding Cake</h1>
+    {% else %}
+        <h1>Contact Us</h1>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-10 offset-md-1">
-                <h2>Your feedback is important to us!</h2>
-                <p>Please fill out the form below and we'll get back to you as soon as possible.</p>
+                {% if about == 'wedding_cake' %}
+                    <h2>Please tell us about your wedding cake!</h2>
+                    <p>Be sure to describe your dream cake in as much detail as possible, including the size, colour,
+                        decorations and custom text</p>
+                    <p>Let us know about the date of the wedding as well, and we'll be back to you as soon as possible!</p>
+                {% else %}
+                    <h2>Your feedback is important to us!</h2>
+                    <p>Please fill out the form below and we'll get back to you as soon as possible.</p>
+                {% endif %}
                 <p>Alternatively, you can call us on <em>{{ company_phone }}</em> or send us an email at <em>{{ company_email }}</em></p>
                 <hr>
             </div>
