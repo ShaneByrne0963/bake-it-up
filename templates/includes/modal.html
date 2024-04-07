@@ -66,7 +66,7 @@
           <label for="id_remember"> Remember Me</label>
         </div>
       </div>
-      <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
+      <a href="{% url 'account_reset_password' %}" class="ui-link">Forgot your password?</a>
     </div>
 
     <div id="modal-form-signup" class="modal-form{% if modal_show == 'signup' %} modal-form-load{% endif %}" data-url="{% url 'signup' %}">

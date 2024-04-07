@@ -76,6 +76,15 @@ h3, .product-card-title {
     color: #e2a08d;
 }
 
+.ui-link {
+    color: #a5d6e4;
+}
+
+.ui-link:hover {
+    color: #cddbdf;
+    font-style: italic;
+}
+
 /* Highlights search results */
 
 .found-query {
