@@ -69,7 +69,7 @@ INSTALLED_APPS = [
 STREET_ADDRESS = 'Wood Quay'
 CITY = 'Dublin City'
 COUNTY = 'Dublin'
-PHONE_NUMBER = '(+353) 84 313 3427'
+PHONE_NUMBER = '(+353) 85 313 3427'
 
 
 # Bake It Up public config variables

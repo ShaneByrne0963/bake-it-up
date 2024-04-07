@@ -2,5 +2,8 @@ User-agent: *
 Disallow: /accounts/
 Disallow: /cart/
 Disallow: /checkout/
-Disallow: 
+Disallow: /profile/
+Disallow: /contact/messages/
+Disallow: /contact/newsletter_signup/
+Disallow: /contact/newsletter_unsubscribe/
 Sitemap: 
