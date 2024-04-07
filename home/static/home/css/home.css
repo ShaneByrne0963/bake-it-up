@@ -33,7 +33,7 @@
 .carousel-text>div {
     padding: 24px;
     background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 1.75rem;
+    border-radius: 1.3rem;
 }
 
 .img-container {
@@ -87,7 +87,7 @@
 
     .carousel-text>div {
         padding: 8px;
-        border-radius: 1.25rem;
+        border-radius: 1.2rem;
     }
 
     .carousel-text .btn.btn-primary {
