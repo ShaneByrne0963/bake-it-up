@@ -10,6 +10,24 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ## Design Thinking Process
 
+> *"Why would a user want to visit our website?"*
+
+- To make an order of bread, pastries and/or cakes online if they are unavailable to go to the physical bakery to order
+
+> *"What would make them return?"*
+
+- A user-friendly website that makes the ordering process as simple and pain-free as possible
+- 
+
+### Problem Statement
+
+*"How can we fully transfer the creative freedoms that our in-person patrons have into the online world?"*
+
+### Solutions
+
+- Throughout the development process, the user experience was kept in mind, with close attention to detail in small quality of life features that make the use of the site even easier, such as:
+  - 
+
 ## Features
 
 ## Design
@@ -50,13 +68,17 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ### Bugs
 
+### Error Handling
+
+#### 404 Page
+
+#### 500 Page
+
 ### Manual Testing
 
 ### Automated Testing
 
 ### Browser Testing
-
-### Known Issues/Unfixed Bugs
 
 ## Validation
 

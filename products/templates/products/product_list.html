@@ -26,7 +26,7 @@
                     <option value="cakes" {% if category == 'cakes' %} selected{% endif %}>Cakes</option>
                 </select>
             </div>
-            <div class="col-10 col-md-4 col-xl-3 form-group">
+            <div class="col-10 col-md-4 col-xl-3 form-group order-last order-md-1">
                 <label for="product-sort" class="mb-1">Sort</label>
                 <select id="product-sort" name="sort" class="form-control" onchange="$(this).closest('form').submit();">
                     <option value="-favourites" {% if sort == '-favourites' %} selected{% endif %}>Most Liked</option>
@@ -44,7 +44,7 @@
                 <input type="hidden" name="q" value="{{ q }}" aria-hidden="true">
             {% endif %}
             {% if user.is_authenticated %}
-                <div class="col d-flex align-items-end pb-3">
+                <div class="col d-flex align-items-end pb-3 order-1 order-md-last px-0">
                     <a href="{% url 'product_list' %}{{ url_favourites_toggle }}" class="text-dark">
                         <i class="h2 fa-{% if favourites %}solid{% else %}regular{% endif %} fa-heart mb-1"></i>
                     </a>
