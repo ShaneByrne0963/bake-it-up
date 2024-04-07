@@ -62,8 +62,13 @@ INSTALLED_APPS = [
     'orders',
 
     'crispy_forms',
-    'storages'
+    'storages',
 ]
+
+# Only installing django-cleanup for deployment as the original
+# method works just fine in development
+if 'DEVELOPMENT' not in os.environ:
+    INSTALLED_APPS.append('django_cleanup.apps.CleanupConfig')
 
 # Bake It Up's contact information
 STREET_ADDRESS = 'Wood Quay'
