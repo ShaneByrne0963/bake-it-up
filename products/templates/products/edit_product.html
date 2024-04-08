@@ -20,9 +20,11 @@
                 <h3>Product Details</h3>
                 <div class="mb-5">
                     {{ product_form|crispy }}
-                    <p>Please upload images in .webp format to maximise performance.
+                    <p class="mb-5 mb-xl-3">Please upload images in .webp format to maximise performance.
                         You can convert your images <a href="https://image.online-convert.com/convert-to-webp" target="_blank">here</a>.</p>
+                    <div id="product-properties-mobile" class="d-xl-none"></div>
                     <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    <a href="{% url 'product_detail' product.name %}" aria-label="Cancel your edit" class="btn btn-lg btn-secondary mr-1">Cancel</a>
                     <div class="spinner-border align-middle d-none" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
@@ -30,8 +32,12 @@
                 </div>
             </div>
             <div class="col-12 col-md-10 col-xl-5 offset-md-1 offset-xl-0">
-                <h3>Product Properties</h3>
-                <div id="add-product-properties" class="pt-3"></div>
+                <div id="product-properties-desktop" class="d-none d-xl-block">
+                    <div id="product-properties-container">
+                        <h3>Product Properties</h3>
+                        <div id="add-product-properties" class="pt-3"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

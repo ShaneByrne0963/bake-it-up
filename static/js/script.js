@@ -48,9 +48,20 @@ function resizeWindow() {
     if ($('#product-image-container').length > 0) {
         let currentScreen = $('#product-image-container').parent().attr('id').replace('product-image-', '');
         let actualScreen = (width < 992) ? 'mobile' : 'desktop';
-        if (currentScreen != actualScreen) {
+        if (currentScreen !== actualScreen) {
             let imageContainer = $('#product-image-container').detach();
             $(`#product-image-${actualScreen}`).append(imageContainer);
+        }
+    }
+
+    // Moving the product properties list above the submit button in the "Add Product" page
+    if ($('#product-properties-container').length > 0) {
+        let currentScreen = $('#product-properties-container').parent().attr('id').replace('product-properties-', '');
+        let actualScreen = (width < 1200) ? 'mobile' : 'desktop';
+        console.log(currentScreen, actualScreen);
+        if (currentScreen !== actualScreen) {
+            let productProperties = $('#product-properties-container').detach();
+            $(`#product-properties-${actualScreen}`).append(productProperties);
         }
     }
 
