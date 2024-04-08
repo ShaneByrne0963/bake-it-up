@@ -93,7 +93,7 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ### Content Layout
 
-### Color Scheme
+### Colour Scheme
 
 ### Typography
 
@@ -290,6 +290,44 @@ Bake It Up was developed using an Agile methodology
 ### PEP8
 
 ### Lighthouse
+
+### WebAIM Colour Contrast
+
+<details><summary>User Interface Contrast</summary>
+
+![User interface contrast](media/images/readme/validation/webaim/nav-text-contrast.JPG)
+
+</details>
+
+<details><summary>Call To Action Button Contrast</summary>
+
+![CTA button contrast](media/images/readme/validation/webaim/button-contrast.JPG)
+
+</details>
+
+<details><summary>UI Success Contrast</summary>
+
+![UI success contrast](media/images/readme/validation/webaim/ui-success-contrast.JPG)
+
+</details>
+
+<details><summary>UI Info Contrast</summary>
+
+![UI info contrast](media/images/readme/validation/webaim/ui-info-contrast.JPG)
+
+</details>
+
+<details><summary>UI Warning Contrast</summary>
+
+![UI warning contrast](media/images/readme/validation/webaim/ui-warning-contrast.JPG)
+
+</details>
+
+<details><summary>UI Error Contrast</summary>
+
+![UI error contrast](media/images/readme/validation/webaim/ui-error-contrast.JPG)
+
+</details>
 
 ## Deployment and Local Development
 
