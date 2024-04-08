@@ -330,6 +330,9 @@ $(document).ready(() => {
         </p>
     `);
 
+    // Allowing dashes in the product urls
+    $('#add-product-form').find('input[name="name"]').addClass('allow-dashes');
+
     // Initializing any default property answers
     $('.default-answer').each(function() {
         let propertyValue = $(this).text();

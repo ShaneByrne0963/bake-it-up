@@ -225,10 +225,22 @@ function validateInput() {
     $(this).val(value);
 
     if ($(this).hasClass('no-special-chars')) {
+        let numExceptions = 0;
         let specCharValidity = 'Cannot contain any special characters'
         if ($(this).hasClass('allow-commas')) {
             value = value.replaceAll(',', '');
-            specCharValidity += ' except for commas';
+            numExceptions++;
+            specCharValidity += ' except for commas (",")';
+        }
+        if ($(this).hasClass('allow-dashes')) {
+            value = value.replaceAll('-', '');
+            if (numExceptions === 0) {
+                specCharValidity += ' except for';
+            }
+            else {
+                specCharValidity += ' and';
+            }
+            specCharValidity += ' dashes ("-")';
         }
         let charsOnly = value.replaceAll(/[a-zA-Z0-9]/g, '').trim();
         if (charsOnly.length > 0) {
