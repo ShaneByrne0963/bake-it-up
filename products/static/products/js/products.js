@@ -38,13 +38,27 @@ function highlightAllergens() {
         ingredient = ingredient.replace(',', '');
         let ingredientLower = ingredient.toLowerCase();
 
-        let isAllergen = false;
-        for (let allergen of allergens) {
-            if (ingredientLower.includes(allergen)) {
-                isAllergen = true;
-                break;
+        let isAllergen;
+        // "!" Indicates the ingredient is not an allergen
+        if (ingredientLower.includes('!')) {
+            isAllergen = false;
+        }
+        // "*" Indicates the ingredient is an allergen
+        else if (ingredientLower.includes('*')) {
+            isAllergen = true;
+        }
+        // If no indication is found, the ingredient will be checked if it is in the allergen list
+        else {
+            for (let allergen of allergens) {
+                if (ingredientLower.includes(allergen)) {
+                    isAllergen = true;
+                    break;
+                }
             }
         }
+        // Removing any indicators from the ingredient
+        ingredient = ingredient.replaceAll('!', '').replaceAll('*', '');
+
         let finalText = (isAllergen) ? `<strong>${ingredient}</strong>` : ingredient;
         finalText += endComma;
         if (i < ingredients.length - 1) {

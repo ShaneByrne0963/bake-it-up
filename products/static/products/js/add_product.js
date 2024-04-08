@@ -323,6 +323,13 @@ $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
 
+    $('#div_id_description').append(`
+        <p class="text-info small font-weight-bold">Allergens are automatically marked,
+            but you can manually override this by using an asterisk ( * ) for products
+            containing allergens and an exclamation mark ( ! ) for products that don't
+        </p>
+    `);
+
     // Initializing any default property answers
     $('.default-answer').each(function() {
         let propertyValue = $(this).text();
