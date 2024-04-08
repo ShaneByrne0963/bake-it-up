@@ -212,9 +212,15 @@ function validateInput() {
     let customValidity = '';
     let value = $(this).val().trim().trim('\n');
 
-    // Removing any gaps of more than one space
-    while (value.includes('  ')) {
-        value = value.replace('  ', ' ');
+    // Remove double spaces, or all spaces if the "no-spaces" class is applied
+    let spaceCheck = ' ';
+    let spaceReplace = '';
+    if (!$(this).hasClass('no-spaces')) {
+        spaceCheck += ' ';
+        spaceReplace += ' ';
+    }
+    while (value.includes(spaceCheck)) {
+        value = value.replace(spaceCheck, spaceReplace);
     }
     $(this).val(value);
 
