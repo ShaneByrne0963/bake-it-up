@@ -236,6 +236,8 @@ Bake It Up was developed using an Agile methodology
 
 ## Data Models
 
+![A list of all models used for Bake It Up](media/images/readme/data-models/model-list.JPG)
+
 ### CRUD Functionality
 
 ## Testing
