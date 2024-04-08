@@ -7,7 +7,7 @@ from django.conf import settings
 
 from core.contexts import get_base_context, get_products, \
                           get_product_by_name, \
-                          get_add_product_context, delete_product, \
+                          get_add_product_context \
                           handle_server_errors, admin_action
 from core.shortcuts import find_dict_in_list
 from core.constants import PRODUCT_PROPERTIES
