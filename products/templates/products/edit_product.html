@@ -20,8 +20,6 @@
                 <h3>Product Details</h3>
                 <div class="mb-5">
                     {{ product_form|crispy }}
-                    <p class="mb-5 mb-xl-3">Please upload images in .webp format to maximise performance.
-                        You can convert your images <a href="https://image.online-convert.com/convert-to-webp" target="_blank">here</a>.</p>
                     <div id="product-properties-mobile" class="d-xl-none"></div>
                     <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                     <a href="{% url 'product_detail' product.name %}" aria-label="Cancel your edit" class="btn btn-lg btn-secondary mr-1">Cancel</a>

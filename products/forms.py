@@ -1,5 +1,6 @@
 from django import forms
 from .models import BreadProduct, PastryProduct
+from .widgets import CustomClearableFileInput
 
 from core.contexts import get_product_by_name
 from core.shortcuts import find_dict_in_list
@@ -21,6 +22,9 @@ class AddProductForm(forms.ModelForm):
         fields = ['category', 'display_name', 'name', 'price',
                   'description', 'ingredients', 'batch_size',
                   'image']
+    
+    image = forms.ImageField(label='Image', required=True,
+                             widget=CustomClearableFileInput)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -58,7 +58,6 @@ function resizeWindow() {
     if ($('#product-properties-container').length > 0) {
         let currentScreen = $('#product-properties-container').parent().attr('id').replace('product-properties-', '');
         let actualScreen = (width < 1200) ? 'mobile' : 'desktop';
-        console.log(currentScreen, actualScreen);
         if (currentScreen !== actualScreen) {
             let productProperties = $('#product-properties-container').detach();
             $(`#product-properties-${actualScreen}`).append(productProperties);

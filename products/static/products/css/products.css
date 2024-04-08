@@ -1,16 +1,16 @@
 /* --------------------------------------------------------Product List */
 
-.card {
+.card-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+.card-container>.card {
     aspect-ratio: 1/1;
     display: grid;
     grid-template-rows: 1fr auto auto;
     transition: width 0.2s ease-in-out;
     width: 100%;
-}
-
-.card-container {
-    width: 100%;
-    aspect-ratio: 1/1;
 }
 
 .card-container:hover>.card {

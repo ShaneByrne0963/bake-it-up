@@ -1,0 +1,16 @@
+<div class="card p-2 mb-5 mb-xl-3">
+    {% if widget.is_initial %}
+        <p class="mb-0">{{ widget.initial_text }}:</p>
+        <img class="w-50" src="{{ widget.value.url }}">
+        <a href="{{ widget.value.url }}">{{ widget.value }}</a>
+        {% if not widget.required %}
+            <input type="checkbox" name="{{ widget.checkbox_name }}"
+                id="{{ widget.checkbox_id }}"{% if widget.attrs.disabled %} disabled{% endif %}
+                {% if widget.attrs.checked %} checked{% endif %}>
+            <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
+        {% endif %}<br>
+    {% endif %}
+    <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}>
+    <p class="mt-3 mb-0">Please upload images in .webp format to maximise performance.
+        You can convert your images <a href="https://image.online-convert.com/convert-to-webp" target="_blank">here</a>.</p>
+</div>
