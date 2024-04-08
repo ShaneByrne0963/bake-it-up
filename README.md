@@ -59,6 +59,36 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 ![]()
 - Users who continue to read into the history are then brought to a short list of their most popular products
 
+### Product Lists
+
+#### Categories
+
+#### Search for a Product
+
+#### Sort Products
+
+### View Products
+
+#### Add to Favourites
+
+### Shopping Cart
+
+### Checkout
+
+### Account Settings
+
+### Store Contact
+
+## Admin Features
+
+### View Daily Orders
+
+### View Messages
+
+### Add/Edit Products
+
+### Send Newsletters
+
 ## Design
 
 ### User Interface
@@ -155,19 +185,42 @@ Bake It Up was developed using an Agile methodology
 
 ## Testing
 
-### Bugs
-
-### Error Handling
-
-#### 404 Page
-
-#### 500 Page
-
 ### Manual Testing
 
 ### Automated Testing
 
 ### Browser Testing
+
+### Error Handling
+
+#### 404 Page
+
+- If a page that has been requested by the user is not found, they are instead redirected to a 404 page, where they are notified that what they are looking for doesn't exist, or has existed before but has been deleted
+- Users are then given a link to return to the home page, so they are not left stuck at an error page and are directed back to the site flow
+
+![The body of the 404 page](media/images/readme/testing/error-handling/404-page.JPG)
+
+#### 500 Page
+
+- 500 errors will result in the user taken to a 500 error page, which takes a similar form to the 404 page
+- However, any errors found in the program will be sent to the admins through the store contact messaging system. This allows for a quick response to any errors found within the site, as the admins can contact the active developer and report the issue
+- To test this, I will type the code snippet `hello.world()` into the home page view. "hello" is not defined anywhere in the program, resulting in an error
+
+![hello.world error code](media/images/readme/testing/error-handling/500-error-code.JPG)
+
+![Viewing the home page after inserting the faulty code](media/images/readme/testing/error-handling/500-error-test.JPG)
+
+- The error successfully results in the user being redirected to the 500 page, with a brief paragraph explaining that the staff have been notified of the issue
+- The paragraph ends with a link to return to the home page, in a similar fashion to the 404 page
+- No details are given about the error in the 500 page. This is done to prevent any private information, such as environment variables in use in the code, becoming exposed the public, as well as preventing the confusion of users who would have no idea how to interpret the error
+
+![A message has appeared for the admin](media/images/readme/testing/error-handling/500-message-received.JPG)
+
+- Meanwhile, on an admin account, a message notification has appeared in the top right of the profile dropdown. This message is about the error we just experienced.
+- Once the admin views the message, the error gives a basic description of the error, giving the receiver the view where it happened and the error message
+- At this point, the site owner can contact the developer and the issue can be solved with haste
+
+![The error message](media/images/readme/testing/error-handling/error-message.JPG)
 
 ## Validation
 
