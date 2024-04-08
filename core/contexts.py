@@ -279,15 +279,6 @@ def add_field_error(field, message, parse=True):
     return form_error
 
 
-def delete_product(product):
-    """
-    Removes a product, and its image, from the database
-    """
-    if settings.DEBUG and os.path.exists(product.image.path):
-        os.remove(product.image.path)
-    product.delete()
-
-
 def handle_server_errors(func):
     """
     Class method decorator. Handles 500 errors more

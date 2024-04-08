@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import generic, View
 from django.views.decorators.http import require_POST
+from django.conf import settings
 
 from core.contexts import get_base_context, get_products, \
                           get_product_by_name, \
@@ -345,7 +346,7 @@ class DeleteProduct(View):
     def post(self, request, product_name):
         product = get_product_by_name(product_name)
         message_name = product.display_name
-        delete_product(product)
+        product.delete()
         messages.success(
             request,
             f'{message_name} was deleted successfully'
@@ -394,7 +395,6 @@ def validate_edit_product(request, product_name):
         category = int(request.POST['category'])
         form = AddProductForm if category == 1 else AddPastryProductForm
         model = BreadProduct if category == 1 else PastryProduct
-        old_image_path = product.image.path
 
         # Is True if the user selects a different model than the original
         different_form = (category == 1) != (product.category.id == 1)
@@ -402,12 +402,6 @@ def validate_edit_product(request, product_name):
         product_form = form(request.POST, request.FILES, instance=product)
         if product_form.is_valid():
             new_product = None
-
-            # Getting rid of the old image if a new one exists in the workspace
-            if (settings.DEBUG
-                    and'image' in request.FILES
-                    and os.path.exists(old_image_path)):
-                os.remove(old_image_path)
 
             if different_form:
                 # Setting the default values to the products original values
@@ -430,7 +424,6 @@ def validate_edit_product(request, product_name):
                 # Remove the old object from the database
                 product.delete()
                 new_product.save()
-                print(old_favorites)
                 for favorite in old_favorites:
                     new_product.favorites.add(favorite)
             else:
