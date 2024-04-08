@@ -87,8 +87,6 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ### Add/Edit Products
 
-### Send Newsletters
-
 ## Design
 
 ### User Interface
@@ -111,7 +109,64 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ## Web Marketing
 
-### Newsletter
+<details><summary><strong>Newsletter</strong></summary>
+
+- Instead of relying on an external program to deliver newsletters, admins can send newsletters within the website itself, accessed through the profile dropdown on any page. This was done as there is extra functionality to Bake It Up's newsletter, which includes automatically applying discount codes to its subscribers.
+- The user can enter:
+  - A subject, which will appear first in the subscriber's inbox
+  - A message body, which is where the bulk of the content will be entered
+  - A discount code, which will give subscribers a sum of money off of their next order
+- A base is provided to give a structure to the newsletter. This includes:
+  - A header, indicating that the email is a Bake It Up newsletter, which is accompanied by the date it was sent.
+  - A format for the discount code, if applicable
+  - A signature
+  - A link to unsubscribe to the newsletter
+
+![The "Send Newsletter" form](media/images/readme/web-marketing/newsletter/newsletter-form.JPG)
+
+- The newsletter includes a preview that shows how the newsletter will look in the email. This is to prevent any mix-ups between the admin's input and the base format, for example, the admin entering a signature at the bottom of the message when a signature already exists in the template
+- This preview updates when the admin changes their message, without the need of any annoying "Generate Preview" buttons 
+
+![A newsletter preview](media/images/readme/web-marketing/newsletter/newsletter-preview.JPG)
+
+- A discount code can be added to the newsletter by checking the checkbox to add the discount code. The code inputs are disabled when this box is unchecked to prevent confusion in admins thinking these inputs always have to be filled out.
+
+![The discount code section](media/images/readme/web-marketing/newsletter/discount-code.JPG)
+
+- Discount codes include a code name, which is what is used to access the code in the checkout page
+- Code names must be unique, and cannot contain spaces or special characters other than "-"
+- Code names are checked for errors when the user updates them, allowing the user to immediately correct any errors
+
+![An error displayed for an invalid code name](media/images/readme/web-marketing/newsletter/discount-error.JPG)
+
+- Invalid code names are displayed in the preview, ensuring the admin will be made aware of the error
+
+![An error displayed in the preview](media/images/readme/web-marketing/newsletter/discount-preview-error.JPG)
+
+- If the structure of the code name is valid, with the use of *Asynchronous JavaScript and XML* (AJAX), the server is checked in real time to see if the name is already present in the database. This allows the user to, again, immediately correct this error, without having to submit the form first
+
+![A name already in use](media/images/readme/web-marketing/newsletter/existing-code.JPG)
+
+- Discount codes have another property, the discount value, which is the amount the discount will take off the cart total
+- The property is comprised of several components:
+  - The discount value, which is how much the discount applied will be
+  - The discount type, which can take the form of a fixed amount of money or a percentage taken off the order, relative to the discount value
+  - An optional minimum spending amount, which the cart total needs to surpass in order for the discount code to take effect
+- This complex structure was made quite simple to understand using an inline form made to resemble a sentence describing the deal.
+
+![The discount value](media/images/readme/web-marketing/newsletter/discount-value.JPG)
+
+- Once a valid discount code has been created, the format that will be displayed in the newsletter appears in the preview
+
+![A valid discount code displayed in the preview](media/images/readme/web-marketing/newsletter/discount-preview.JPG)
+
+- Once a newsletter is sent, the user receives the email, and has the discount code applied to their email address, which can be viewed in the user profile page
+
+![A newsletter in my email](media/images/readme/web-marketing/newsletter/newsletter-received.JPG)
+
+![The discount code applied](media/images/readme/web-marketing/newsletter/discount-applied.JPG)
+
+</details>
 
 ### Facebook Page
 

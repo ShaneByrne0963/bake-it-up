@@ -267,6 +267,28 @@ function validateInput() {
 }
 
 
+/**
+ * Clamps a number input within its min and max values
+ */
+function clampNumberInput() {
+    let value = parseInt($(this).val());
+    if ($(this).attr('min')) {
+        let minVal = parseInt($(this).attr('min'));
+        if (value < minVal) {
+            value = minVal;
+        }
+    }
+
+    if ($(this).attr('max')) {
+        let maxVal = parseInt($(this).attr('max'));
+        if (value > maxVal) {
+            value = maxVal;
+        }
+    }
+    $(this).val(value);
+}
+
+
 $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
@@ -274,6 +296,7 @@ $(document).ready(() => {
     $('input[type="text"]').addClass('no-special-chars');
     $('input[name="phone"]').addClass('only-numbers');
     $('input[type="text"], input[type="email"], textarea').on('change', validateInput);
+    $('input[type="number"]').on('change', clampNumberInput);
 
     // Returns to the top of the screen when the "Back to Top" button is clicked
     $('#to-top').click(function() {
