@@ -31,8 +31,14 @@ class BaseProfileForm(forms.Form):
         super().__init__(*args, **kwargs)
         for key, value in self.fields.items():
             self.fields[key].label = PROFILE_FORM_LABELS[key]
+            classes = ''
+
+            # Allow commas in the street address inputs
+            if 'street_address' in key:
+                self.fields[key].widget.attrs['class'] = 'allow-commas'
+
             if key not in REQUIRED_FIELDS:
-                self.fields[key].required = False
+                self.fields[key].required = False    
 
 
 class ProfileContactForm(BaseProfileForm):

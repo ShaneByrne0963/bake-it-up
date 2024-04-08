@@ -201,8 +201,51 @@ function revealHighlight(delay=highlightTimeBetween) {
 }
 
 
+/**
+ * Validates an input, adding an invalid feedback message for inputs that don't
+ * pass the validation. What is checked depends on the classes the input has, which
+ * can include the following:
+ * - no-special-chars: Adds an error message if any special characters are present in the input
+ * - only-numbers: Adds an error message if anything other than numbers are present
+ */
+function validateInput() {
+    let customValidity = '';
+    let value = $(this).val().trim().trim('\n');
+
+    // Removing any gaps of more than one space
+    while (value.includes('  ')) {
+        value = value.replace('  ', ' ');
+    }
+    $(this).val(value);
+
+    if ($(this).hasClass('no-special-chars')) {
+        let specCharValidity = 'Cannot contain any special characters'
+        if ($(this).hasClass('allow-commas')) {
+            value = value.replaceAll(',', '');
+            specCharValidity += ' except for commas';
+        }
+        let charsOnly = value.replaceAll(/[a-zA-Z0-9]/g, '').trim();
+        if (charsOnly.length > 0) {
+            customValidity = `${specCharValidity}.`;
+        }
+    }
+    if ($(this).hasClass('only-numbers')) {
+        let charsOnly = value.replaceAll(/[0-9]/g, '');
+        if (charsOnly.length > 0) {
+            customValidity = 'Must only contain numbers.';
+        }
+    }
+    this.setCustomValidity(customValidity);
+}
+
+
 $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
+
+    // Adding validation to inputs
+    $('input[type="text"]').addClass('no-special-chars');
+    $('input[name="phone"]').addClass('only-numbers');
+    $('input[type="text"], input[type="email"], textarea').on('change', validateInput);
 
     // Returns to the top of the screen when the "Back to Top" button is clicked
     $('#to-top').click(function() {

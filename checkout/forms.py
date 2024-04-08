@@ -47,3 +47,8 @@ class BillingDetailsForm(forms.Form):
         label="Postal Code",
         max_length=10
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['street_address1'].widget.attrs['class'] = 'allow-commas'
+        self.fields['street_address2'].widget.attrs['class'] = 'allow-commas'
