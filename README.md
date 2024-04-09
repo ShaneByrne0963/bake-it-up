@@ -53,7 +53,47 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ## Features
 
-### Authentication
+<details><summary><strong>Authentication</strong></summary>
+
+- Unauthenticated users have two buttons present in the top-right corner of the screen, used for logging in and signing up
+
+![The login and signup buttons](media/images/readme/features/auth/auth-buttons.JPG)
+
+<details><summary>Login</summary>
+
+- Clicking the login button causes a modal to appear, requesting an email address and a password of a user.
+- Users can request the website to remember their login so they don't have to keep repeatingly log in each time they enter the site
+
+![The login modal](media/images/readme/features/auth/login-modal.JPG)
+
+- Upon entering valid login details, users are logged in, with a toast message confirming the success, and the login and signup buttons being replaced with a profile icon dropdown
+
+![The login message and profile dropdown](media/images/readme/features/auth/login-success.JPG)
+
+- If invalid details are provided, the user is notified through the modal. Giving feedback ensures the user about what went wrong rather than assuming the website had a server error
+
+![Invalid login feedback](media/images/readme/features/auth/invalid-login.JPG)
+
+- If the user forgets their password, they can click the "Forgot your password?" link in the login modal, taking them to a page to enter the email of the account with the lost password
+
+![The Forgot Password page](media/images/readme/features/auth/reset-password.JPG) 
+
+- Upon entering the email, a validation link is sent to the email address, which, when clicked, takes the user to a page to enter a new password
+
+![The email received to change the password](media/images/readme/features/auth/password-reset-email.JPG)
+
+![The page to change your password](media/images/readme/features/auth/change-password.JPG)
+
+</details>
+
+<details><summary>Signup</summary>
+
+- When the user clicks the signup page, the signup modal appears, requesting an email, a password validated by being entered twice, and an optional first and last name
+- 
+
+</details>
+
+</details>
 
 <details><summary><strong>The Home Page</strong></summary>
 
