@@ -210,7 +210,7 @@ def get_products(request, **kwargs):
     elif category == 'bread':
         products = breads
     elif category == 'pastries':
-        products = pastries
+        products = pastries.exclude(category__name='cakes')
     else:
         products = pastries.filter(category__name='cakes')
 
