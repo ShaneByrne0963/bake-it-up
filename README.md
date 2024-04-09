@@ -304,25 +304,74 @@ The lists can be arranged in multiple different ways:
 
 </details>
 
-### Account Settings
+<details><summary><strong>Account Settings</strong></summary>
 
-### Store Contact
+- Authenticated users can navigate to their account settings page within the profile dropdown menu on the top right of the screen
+
+![The profile icon containing the Account Settings link](media/images/readme/features/profile/nav-dropdown.JPG)
+
+- This page consists of the following:
+  - Saved contact/billing details
+  - Order History
+  - Any discounts received from a newsletter
+  - An option to unsubscribe from the newsletter, if their email is subscribed
+  - An option to permanently delete their account
+
+![The information displayed on the account page](media/images/readme/features/profile/profile-details.JPG)
+
+- Users can add, update or remove their contact and billing details if desired by clicking on the "Edit" button under these headings
+- When this button is clicked, the list is replaced with a form and a submit button
+
+![The edit profile form](media/images/readme/features/profile/edit-profile.JPG)
+
+- Users can edit their email address, but as this is the method to log in, a modal appears requesting the user's password in order to continue with the update. This is done to prevent anyone might have gained access to the account from locking the user out of the account
+- The modal warns the user that the account will become locked, and the account will have to be reauthenticated like the user had to on creating the account
+
+![The modal requesting the user's password](media/images/readme/features/profile/edit-email-request.JPG)
+
+- Once authenticated, the user will be logged out, and a verification email will be sent to the new email address to reactivate the account
+
+- The user can also view their order history on this page. A card with the order number and order date labels each order, and can be clicked on to take the user to the summary of that specific order
+
+![The user's order history](media/images/readme/features/profile/order-history.JPG)
+
+- This order summary is an exact copy of the checkout success pages details, with the exception of 2 links, above and below the summary, to return the user to their profile.
+
+![The summary of a previous order](media/images/readme/features/profile/order-summary.JPG)
+
+- If the user' email is subscribed to the newsletter, they can view their available discount codes, as well as unsubscribe from the newsletter.
+
+![The newsletter section of the account settings](media/images/readme/features/profile/newsletter-details.JPG)
+
+- Users can also delete their account if they desire. However, considering this is an irreversible action, in a similar fashion to the the email edit, a modal appears asking the user to confirm the action py providing their password
+- Once a password is provided, the account is successfully deleted
+
+![A modal asking the user for their password to delete the account](media/images/readme/features/profile/delete-profile-request.JPG)
+
+</details>
+
+<details><summary><strong>Store Contact</strong></summary>
+
+- Located in the footer of the website, users can contact the store by navigating to the "Contact Us" page.
+- This page simply is made up of a form, comprised of an email, a message, and an optional name and title for the message. This allows the users to send any feedback or ask any questions in a quick manner
+- The page also gives other methods of contacting them, to give more freedom to the users on how they approach the bakery and to demonstrate the willingness of the bakery to communicate with its customers
+- When the user submits the form, a message is created and stored in the database, where the admins will get notified of it
+
+![The contact form](media/images/readme/features/contact/contact-form.JPG)
+
+- This 
+
+</details>
 
 ### "Back To Top" Button
 
-## Admin Features
-
 ### View Daily Orders
-
-### View Messages
-
-### Add/Edit Products
 
 ## Design
 
 ### User Interface
 
-### Content Layout
+### Layout
 
 ### Colour Scheme
 
@@ -396,6 +445,10 @@ The lists can be arranged in multiple different ways:
 ![A newsletter in my email](media/images/readme/web-marketing/newsletter/newsletter-received.JPG)
 
 ![The discount code applied](media/images/readme/web-marketing/newsletter/discount-applied.JPG)
+
+- At the bottom of each email, there is a link for that user to unsubscribe from the email. It is mandatory that subscribers have the ability to unsubscribe from newsletters.
+
+![The newsletter unsubscribe page](media/images/readme/web-marketing/newsletter/newsletter-unsubscribe.JPG)
 
 </details>
 
