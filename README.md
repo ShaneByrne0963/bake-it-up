@@ -56,8 +56,15 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 ### Home Page
 
 - The home page is the first thing that users see upon entering the site. It gives a short description about the company, what it does and its origins. This gives the users a brief insight into the personality of the bakery, allowing the bakery to display their interest in their craft, further highlighting the quality of their products
-![]()
-- Users who continue to read into the history are then brought to a short list of their most popular products
+
+![The home page](media/images/readme/bake-it-up.JPG)
+
+- Users who continue to read into the history are then brought to a short list of their most popular products once they are finished reading. This is to continue the flow of the website and make the user return to the primary reason to view the site, shopping for products
+- A link is beneath these products to take them 
+
+![A list of the most popular products](media/images/readme/features/home-best-products.JPG)
+
+
 
 ### Product Lists
 
@@ -78,6 +85,8 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 ### Account Settings
 
 ### Store Contact
+
+### "Back To Top" Button
 
 ## Admin Features
 

@@ -7,6 +7,12 @@
 
 {% block extra_title %} - {{ product.display_name }}{% endblock %}
 
+{% block content_heading %}
+    <a href="{% url 'product_list' %}">
+        <i class="fa-solid fa-caret-left mr-2"></i>Back to products
+    </a>
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid">
         <div class="row">
