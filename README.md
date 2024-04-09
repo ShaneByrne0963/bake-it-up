@@ -232,7 +232,59 @@ The steps to create a Facebook page are as follows:
 
 </details>
 
-### Instagram Page
+<details><summary><strong>Instagram Page</strong></summary>
+
+Along with a Facebook page, I also created an Instagram page for Bake It Up. Instagram is a suitable platform for the company as it is centered around visual media, i.e. images and videos. A picture is worth a thousand words, and Bake It Up's products speak for themselves.
+
+The steps to create an Instagram page are as follows:
+
+1. Navigate to [Instagram](https://www.instagram.com/). Here, you will be requested to give your login details, or be allowed to create a new account. We want to create a new account, so click the "Sign Up" button at the bottom of the form.
+
+![The Instagram login page](media/images/readme/web-marketing/instagram/instagram-01.JPG)
+
+2. On the signup form, you can choose to create an account using your Facebook account, or manually enter your details in the form below. You must provide a name, email, username and password. Once the company's details have been provided and are valid, click "Next".
+
+![The Instagram signup page](media/images/readme/web-marketing/instagram/instagram-02.JPG)
+
+3. The next step is to provide a date of birth. Instagram requires this, even if the account is for a business.
+
+![Instagram date of birth](media/images/readme/web-marketing/instagram/instagram-03.JPG)
+
+4. Once this is provided, Instagram will send a confirmation email to the email address that was provided on the signup page. Navigate to your emails and find the email to gain access to the confirmation code included in it. This code can be entered to gain access to the account.
+
+![The confirmation code request](media/images/readme/web-marketing/instagram/instagram-04.JPG)
+
+5. Once you have entered the correct code, the account will be created and you will be redirected to the account's main page. It looks bare at the moment, so it will be more populated in the next few steps
+
+![The new acocunt's page](media/images/readme/web-marketing/instagram/instagram-05.JPG)
+
+6. Beside the username, there is a button to edit the profile. Click that to go to the edit profile page. Here, you can add a profile photo and a bio. There is also an option to add a website, but that is only available on the mobile app. This is a questionable feature, but I implemented the link to the website separately on the app.
+
+![Adding basic information to the page](media/images/readme/web-marketing/instagram/instagram-06.JPG)
+
+7. To add a post, click the "Create" tab in the side navigation on the home page, and a popup will appear allowing you to add photos, videos, or both
+
+![Instagram's side navigation](media/images/readme/web-marketing/instagram/instagram-sidebar.JPG)
+
+![The popup to add media](media/images/readme/web-marketing/instagram/instagram-07.JPG)
+
+8. Once you have added your media, you can move on to the next section, which is to add a filter to the image. I decided to use the no filter the coffee slice looked aesthetically pleasing enough.
+
+![A list of Instagram's filters](media/images/readme/web-marketing/instagram/instagram-08.JPG)
+
+9. When you have chosen your preferred filter, the final step is to add a caption to the post. There is also an accessibility option akin to the "alt" attribute found in image tags. It is vital to include this to allow accessibility for users with visual impairments to interact with your posts
+
+![The post's caption](media/images/readme/web-marketing/instagram/instagram-09.JPG)
+
+10. On completing this step, a popup message will appear indicating the creation of the post
+
+![The post has been created successfully](media/images/readme/web-marketing/instagram/instagram-10.JPG)
+
+The final Instagram page looks like this
+
+![The final Instagram page](media/images/readme/web-marketing/instagram/instagram-page.JPG)
+
+</details>
 
 ## Agile Methodologies
 
