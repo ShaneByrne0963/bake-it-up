@@ -393,7 +393,30 @@ The lists can be arranged in multiple different ways:
 
 </details>
 
-### View Daily Orders
+<details><summary><strong>View Daily Orders</strong></summary>
+
+- This page can only be accessed by admins through the profile dropdown menu
+
+!["Today's Orders" found in the profile dropdown](media/images/readme/features/orders/profile-dropdown.JPG)
+
+- This link takes the admin to the "View Orders" page, where they can view a list of all orders placed for a specific day
+- The list consists of a summary of all orders, followed by a list of each individual order. I included the summary to give a better understanding on the total amount of each product, allowing the bakers to get an idea of the volume of products they need to make before focusing on the specific properties, rather than having to look through each order to calculate it themselves
+
+![A list of orders for a day](media/images/readme/features/orders/todays-orders.JPG)
+
+- Clicking on a single order will reveal each product attached to that order, including their properties, along with the delivery method and the customer note, if one was given. This is as much as the admins need to handle each order, and no extra unnecessary information is given to make this as easy to digest as possible
+
+![The details of a single order](media/images/readme/features/orders/single-order.JPG)
+
+- Admins can also view past and future orders by using the date input above the list, so that they can get a better understanding of what they will be making in the future, or need to reference an order in the past
+
+![The date selector in the view orders page](media/images/readme/features/orders/date-selector.JPG)
+
+- If no orders are present on a particular date, the admin is notified as such, so that they are not wondering if the site has stopped working
+
+![A date with no orders](media/images/readme/features/orders/no-orders.JPG)
+
+</details>
 
 ## Design
 
