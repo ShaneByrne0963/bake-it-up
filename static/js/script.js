@@ -294,7 +294,7 @@ $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
     // Adding validation to inputs
-    $('input[type="text"]').addClass('no-special-chars');
+    $('input[type="text"]:not(.option-input)').addClass('no-special-chars');
     $('input[name="phone"]').addClass('only-numbers');
     $('input[type="text"], input[type="email"], textarea').on('change', validateInput);
     $('input[type="number"]').on('change', clampNumberInput);
