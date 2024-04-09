@@ -188,7 +188,7 @@ def create_button_group(name, label, answers, value):
         checked = " checked" if count == value else ""
 
         input_html += f"""
-        <label class="btn{active}" for="{name}-{count}">
+        <label class="btn{active} text-break" for="{name}-{count}">
             <input type="radio" id="{name}-{count}"
                 name="prop_{name}" value="{count}"{checked}>
                 {answer}
