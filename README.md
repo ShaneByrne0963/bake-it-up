@@ -160,6 +160,7 @@ The lists can be arranged in multiple different ways:
   - A button radio group, when between 2 and 4 properties can be selected from
   - A select dropdown, when 5 or more properties are present
   - A colour picker, for the colour property that can be given to pastries
+  - A textarea field, 
 
   ![The 4 different property inputs](media/images/readme/features/products/property-inputs.JPG)
 
@@ -180,9 +181,13 @@ The lists can be arranged in multiple different ways:
 
 ![A property with a custom label](media/images/readme/features/products/custom-label.JPG)
 
-- All of these properties function the same, except for the colour input. This uses a colour picker, which functions similarly to the button group, except the colour picker does not have a limit on the number of products to add.
+- All of these properties function the same, except for the colour and the text inputs.
+  - The colour picker uses a colour picker, which functions similarly to the button group, except the colour picker does not have a limit on the number of products to add.
+  - The text input allows the user to enter a custom message. This is mainly present on cake products, where the user can have a message written on the cake
 
 ![The colour picker](media/images/readme/features/product-list/colour-picker.JPG)
+
+![The text input](media/images/readme/features/products/text-input.JPG)
 
 - These attributes use a JSON field for both models. I decided to not limit the number of values that can be applied to a property, because the ability to add products is a feature exclusive to members of staff, who will not exploit this ability. Furthermore, I wanted to make sure that there are no limitations to what the website can offer its customers, allowing the same freedoms as if the products were ordered in-store
 
@@ -196,6 +201,45 @@ The lists can be arranged in multiple different ways:
 <details><summary><strong>Shopping Cart</strong></summary>
 
 - When a user selects a product and quantity, this item is added to the user's shopping cart. An icon will appear in the top-right corner of the screen, labelled with a cart icon and the total cost of the cart.
+
+![The shopping cart icon](media/images/readme/features/cart/cart-button.JPG)
+
+- When clicked on, the user is taken to the shopping cart page, where they can see an overview of the products they have ordered
+- For each product, the user can see the same details in the product list (except for the number of favourites), the properties they have selected for that product, the quantity of that specific product and the subtotal cost of it
+
+![The shopping cart page](media/images/readme/features/cart/cart-page.JPG)
+
+- The same product can exist multiple times in the cart if the product properties are different
+- However, if the same product with the exact same properties is added to the cart multiple times, the products will stack together into the one line. This prevents the cart getting cluttered with repeating products
+
+![Brown bread with different properties](media/images/readme/features/cart/different-properties.JPG)
+
+- The user has the option to edit each product in their cart, or remove it entirely. This allows users to make changes to their cart in case they change their mind about something
+- If deleting a product, a modal appears confirming the user meant to perform the action. This kind of defensive action prevents any unwanted mistakes happening from misclicks
+
+![The cart product options](media/images/readme/features/cart/cart-options.JPG)
+
+- When the user has looked through their order, below the list of products, they are presented with the final details of the order, made up of the cart total, an optional customer message and the bake date selector.
+- The cart total reminds the user of the total amount the cart costs as listed in the cart icon at the top of the page.
+
+![The bottom of the cart page](media/images/readme/features/cart/cart-bottom.JPG)
+
+- The customer messgae input allows the user to add any details to the order. This will be visible to the administrators when they are working on the order, giving the user a platform to add any specifics such as dietary requirements or special requests.
+
+![The customer note input](media/images/readme/features/cart/customer-note.JPG)
+
+- Along with the customer message input, a date input indicating the date the goods will be baked on is also present.
+- If the time is before the cutoff time (In this case 4pm), the user has the option to have their products baked on the next day. This gives the bakery time to get their orders ready.
+
+![A next day baking popup appearing under the bake date](media/images/readme/features/cart/next-day-baking.JPG)
+
+- However, if the user were to order their products after this time, they are required to order their products to be made in at least 2 days
+
+![The bake date is 2 days after the current date](media/images/readme/features/cart/date-two-days-later.JPG)
+
+- If a user passes the cutoff point while in the cart/checkout page, they will be brought back to the cart page to confirm the date change. This prevents users from waiting past the point and ordering their products for the next day, long after the time for that to be possible has passed
+
+![An error message for passing the cutoff time](media/images/readme/features/cart/past-cutoff-point.JPG)
 
 </details>
 
