@@ -53,32 +53,151 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ## Features
 
-### Home Page
+<details><summary><strong>The Home Page</strong></summary>
 
 - The home page is the first thing that users see upon entering the site. It gives a short description about the company, what it does and its origins. This gives the users a brief insight into the personality of the bakery, allowing the bakery to display their interest in their craft, further highlighting the quality of their products
 
 ![The home page](media/images/readme/bake-it-up.JPG)
 
 - Users who continue to read into the history are then brought to a short list of their most popular products once they are finished reading. This is to continue the flow of the website and make the user return to the primary reason to view the site, shopping for products
-- A link is beneath these products to take them 
+- A link is beneath these products to take them to the full list of products, guiding the users back into the shopping phase of exploring the site
 
 ![A list of the most popular products](media/images/readme/features/home-best-products.JPG)
 
+- For users already familiar with the site, or who just want to shop without finding out more about the bakery, they can jump straight into the action using the navigation bar
 
+![The navigation bar, bringing the user straight to the products](media/images/readme/features/navigation.JPG)
 
-### Product Lists
+</details>
 
-#### Categories
+<details><summary><strong>Product Lists</strong></summary>
 
-#### Search for a Product
+This is where the user can see on full display everything the bakery has to offer. The products take the shape of a card, containing its name, image, category, batch size (if applicable), number of favourites and the price per unit, displayed in a neat, easy to interpret manner
 
-#### Sort Products
+![A list of products on display](media/images/readme/features/product-list/product-list.JPG)
 
-### View Products
+The lists can be arranged in multiple different ways:
 
-#### Add to Favourites
+<details><summary><strong>Categories</strong></summary>
 
-### Shopping Cart
+- Products can belong to 3 different categories:
+  - Freshly Baked Bread
+  - Sweets & Treats
+  - Custom Cakes
+- These categories can be found in the top navigation, as well as a combination to view all products. Categorising products in this way makes it significantly helpful to users who know the type of bakery product they are looking for, and is the most efficient method to maneuver through the products as applying this filter only takes one click 
+
+![The categories within the navigation](media/images/readme/features/navigation.JPG)
+
+- The categories can also be filtered using the filter inputs above the product list. This filter functions similarly to the navigation categories, but if the user applies any other queries, such as a search or sort, here these queries persist, whereas if the user selects a category from the navigation, all previous queries are cleared. I decided to implement this feature to diversify the way products can be searched for, allowing users to easily get rid of queries they no longer wish to use
+
+![The filter inputs found above the product list](media/images/readme/features/product-list/filter-inputs.JPG)
+
+</details>
+
+<details><summary><strong>Product Search</strong></summary>
+
+- Located at the end of the navigation bar, the search icon can be clicked to reveal a search bar, where the user can enter a specific term to search for within the products
+
+![The search bar](media/images/readme/features/product-list/search-bar.JPG)
+
+- When a user enters something, the database will be searched for any product whose name or description contains that query
+- If the query is present in the product's name, then the query is highlighted, making it easier for the user see the query they entered in the context of the product
+
+![The results for a search of "Coffee"](media/images/readme/features/product-list/search-results.JPG)
+
+</details>
+
+<details><summary><strong>Filter By Favourites</strong></summary>
+
+- For authenticated users, a heart icon will appear beside the filter inputs. When clicked, this icon will toggle, and if solid (on), only the products that the user has added to their favourites will show. This allows the user to easily find the products they are familiar with, without having to wade through the items they are not interested in
+
+![The product list only showing the users favourite products](media/images/readme/features/product-list/favourite-products.JPG)
+
+- For ease of access, this filter can be accessed through the user's profile icon dropdown menu
+
+![The favourites tab in the profile dropdown](media/images/readme/features/product-list/favourites-dropdown.JPG)
+
+</details>
+
+<details><summary><strong>Sort Products</strong></summary>
+
+- Along with filtering products, users can also sort their products in several ways:
+  - Number of favourites
+  - Alphabetically
+  - By price
+- Each sort can be applied in ascending or descending order. This gives the user more power to find products based on their attributes, such as if a user has a budget, they can look for the cheapest products by sorting by price in ascending order
+- These sorts can also be mixed with filters and queries
+- The default sort is by number of favourites in descending order, so the most popular products are displayed first
+
+![A list of sorting options](media/images/readme/features/product-list/product-sort.jpg)
+
+</details>
+
+- If a user enters a specific filter which results in no products found, an error message explaining the fact is presented instead, offering a link to clear the user's criteria so they are able to see products again
+
+![No products found](media/images/readme/features/product-list/no-product-found.JPG)
+
+</details>
+
+<details><summary><strong>Products</strong></summary>
+
+- When the user decides on a product, clicking on the product card will take them to a page describing the product in more detail.
+- Here, the user can see everything they could see in its card form, but its description and ingredients are present on top of that
+
+![The product detail page](media/images/readme/features/products/product-details.JPG)
+
+- Beside the product name, another heart icon is present, that when clicked on, toggles between solid and outline, where solid means the user has this product in their list of favourites, and an outline means it doesn't
+- The heart icon is an exact copy of the heart icon found in the filter inputs in the product list page, which makes it easy for the user to determine that the two are connected
+
+![The favourites icon in the product detail page, enabled](media/images/readme/features/products/add-to-favourites.JPG)
+
+- Below the information about the product, a list of properties can exist, and varies heavily depending on the product. This is where Bake It Up stands out from the crows, as the user can customise the properties of the products they are ordering.
+
+![A product properties form](media/images/readme/features/products/product-properties.JPG)
+
+- The property inputs come in 4 different forms:
+  - A checkbox, when only one property can be chosen from
+  - A button radio group, when between 2 and 4 properties can be selected from
+  - A select dropdown, when 5 or more properties are present
+  - A colour picker, for the colour property that can be given to pastries
+
+  ![The 4 different property inputs](media/images/readme/features/products/property-inputs.JPG)
+
+- Products can take 2 forms: Bread and Pastry. Cake is shared with the Pastry model
+- These use different models as they share different properties
+- The Bread model conatins the following properties:
+  - Shape
+  - Size
+  - Contents
+- The Pastry model contains the following properties:
+  - Type
+  - Contents
+  - Colour
+  - Icing
+  - Decoration
+  - Text
+- These property names are simply there as a guideline. All labels can be customised to suit the property in the product's context
+
+![A property with a custom label](media/images/readme/features/products/custom-label.JPG)
+
+- All of these properties function the same, except for the colour input. This uses a colour picker, which functions similarly to the button group, except the colour picker does not have a limit on the number of products to add.
+
+![The colour picker](media/images/readme/features/product-list/colour-picker.JPG)
+
+- These attributes use a JSON field for both models. I decided to not limit the number of values that can be applied to a property, because the ability to add products is a feature exclusive to members of staff, who will not exploit this ability. Furthermore, I wanted to make sure that there are no limitations to what the website can offer its customers, allowing the same freedoms as if the products were ordered in-store
+
+![Select input with a lot of answers](media/images/readme/features/products/many-values.jpg)
+
+- Below the product property form is a quantity selector. This allows the user to enter the number of this product they are looking for. This reduces the need to enter the properties repeatedly if the user requires more than one of the same product
+- The total price updates when the quantity changes, allowing the user to easily evaluate the cost before adding it to the cart
+
+</details>
+
+<details><summary><strong>Shopping Cart</strong></summary>
+
+- When a user selects a product and quantity, this item is added to the user's shopping cart. An icon will appear in the top-right corner of the screen, labelled with a cart icon and the total cost of the cart.
+
+</details>
 
 ### Checkout
 
