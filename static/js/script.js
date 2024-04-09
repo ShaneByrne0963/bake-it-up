@@ -236,7 +236,7 @@ function validateInput() {
 
     if ($(this).hasClass('no-special-chars')) {
         let numExceptions = 0;
-        let specCharValidity = 'Cannot contain any special characters'
+        let specCharValidity = 'Cannot contain any special characters.'
         if ($(this).hasClass('allow-commas')) {
             value = value.replaceAll(',', '');
             numExceptions++;

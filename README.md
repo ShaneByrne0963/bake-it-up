@@ -168,7 +168,69 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 </details>
 
-### Facebook Page
+<details><summary><strong>Facebook Page</strong></summary>
+
+A Facebook page was created to advertise the business of Bake It Up. This page can be accessed by searching for it on the social network or by clicking on the Facebook link present in the footer
+
+The steps to create a Facebook page are as follows:
+
+1. In your Facebook account, navigate to the "Pages" tab located in the left-hand navigation bar, which takes you to the "Pages" page
+
+![The pages tab in the side navigation](media/images/readme/web-marketing/facebook/facebook-01.JPG)
+
+2. Click "Create New Page" in the top-left navigation bar
+
+![Create a new page](media/images/readme/web-marketing/facebook/facebook-02.JPG)
+
+3. You will be asked to provide a page name, at least one category and an optional bio. Fill in the details that best describes your business
+
+![Facebooks inputs to fill out the company details](media/images/readme/web-marketing/facebook/facebook-03.JPG)
+
+4. A preview will display what the page will look like to the viewer
+
+![Facebook page preview](media/images/readme/web-marketing/facebook/facebook-04.JPG)
+
+5. On the top right of this preview, there is a pair of buttons that allow the creator to switch between desktop and mobile view
+
+![Facebook page preview for mobile](media/images/readme/web-marketing/facebook/facebook-05.JPG)
+
+6. When you are happy with the page, click the "Create Page" button
+
+![The "Create Page" button](media/images/readme/web-marketing/facebook/facebook-06.JPG)
+
+7. Once the page is created, Facebook will request additional information that might be helpful to its viewers, including:
+  - The company website (The deployed website was given)
+  - A phone number
+  - An email address
+  - A physical address of the business' location
+
+![Additonal details for the Facebook page](media/images/readme/web-marketing/facebook/facebook-07.JPG)
+
+8. After these details have been filled out, Facebook will move on to the next step of customising the page. Here, you can add a profile image and a cover photo, which will be positioned similarly to the hero image of the website.
+
+![Page customisation options](media/images/readme/web-marketing/facebook/facebook-08.JPG)
+
+9. When you are finished with the page customisation, the next step is to add a WhatsApp phone number. This makes it easier for viewers to contact a business, but since I didn't want to connect my number to the page, I skipped this step
+
+![Add a WhatsApp phone number](media/images/readme/web-marketing/facebook/facebook-09.JPG)
+
+10. After that, your page is ready to go! You will be taken to the finished page
+
+![The Facebook page, after setting up its details](media/images/readme/web-marketing/facebook/facebook-10.JPG)
+
+11. After reviewing the finished product, I noticed the cover photo was of low quality, and appeared blurry scaled up to fit its dimensions, so I chenaged it to a more fitting image
+
+![The updated cover photo](media/images/readme/web-marketing/facebook/facebook-11.JPG)
+
+12. To add a post, simply click the "What's on your mind" input at the top of the page body, and a popup will appear for you to enter the text content of the post. You also have the option to attach an image, video, location and a lot more. I decided to add an image of the cupcakes that can be found on the website, with a text body promoting these treats, and a link to find them
+
+![Adding a Facebook post](media/images/readme/web-marketing/facebook/facebook-12.JPG)
+
+13. Once you are happy with your post, click the "Post" button and the post will be visible to the public.
+
+![The post, as it would be shown to the viewers](media/images/readme/web-marketing/facebook/facebook-13.JPG)
+
+</details>
 
 ### Instagram Page
 
