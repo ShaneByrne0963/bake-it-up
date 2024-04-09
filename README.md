@@ -359,7 +359,26 @@ The lists can be arranged in multiple different ways:
 
 ![The contact form](media/images/readme/features/contact/contact-form.JPG)
 
-- This 
+- In the carousel, there is an action to order a wedding cake. When the user clicks this action, they are taken to this page, and the context of the page changes to better suit the situation of ordering a wedding cake. This is done to make it more clear what the user need to enter to order their wedding cake
+
+![The contact form, altered for a wedding cake order](media/images/readme/features/contact/wedding-cake-form.JPG)
+
+- For admins, when a user sends a message, a notification icon appears in the top-right corner of the profile dropdown. Clicking the dropdown will reveal a notification beside the messages link
+
+![A message notification](media/images/readme/features/contact/message-notification.JPG)
+
+- This link takes the admin to the messages page, where they can see a list of all messages sent to the bakery
+- Messages are divided between read and unread messages, with unread messages placed first, and all messages ordered by most recent
+
+![A list of messages](media/images/readme/features/contact/messages-page.JPG)
+
+- Clicking on a message reveals the text content, while simultaneously sending a request the server via AJAX to mark the message as read
+
+![An open message](media/images/readme/features/contact/open-message.JPG)
+
+- Old messages can be deleted, with a defensive confirmation modal to reassure the action is intentional
+
+![An old message](media/images/readme/features/contact/old-message.JPG)
 
 </details>
 
