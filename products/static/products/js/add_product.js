@@ -331,7 +331,7 @@ $(document).ready(() => {
     `);
 
     // Allowing dashes in the product urls
-    $('#add-product-form').find('input[name="name"]').addClass('allow-dashes');
+    $('#add-product-form').find('input[name="name"], input[name="display_name"]').addClass('allow-dashes');
 
     // Initializing any default property answers
     $('.default-answer').each(function() {

@@ -271,7 +271,8 @@ function validateInput() {
  * Clamps a number input within its min and max values
  */
 function clampNumberInput() {
-    let value = parseInt($(this).val());
+    let parseValue = Boolean($(this).attr('step')) ? parseFloat : parseInt;
+    let value = parseValue($(this).val());
     if ($(this).attr('min')) {
         let minVal = parseInt($(this).attr('min'));
         if (value < minVal) {
@@ -280,12 +281,12 @@ function clampNumberInput() {
     }
 
     if ($(this).attr('max')) {
-        let maxVal = parseInt($(this).attr('max'));
+        let maxVal = parseValue($(this).attr('max'));
         if (value > maxVal) {
             value = maxVal;
         }
     }
-    $(this).val(value);
+    $(this).val((parseValue === parseFloat) ? value.toFixed(2) : value);
 }
 
 
