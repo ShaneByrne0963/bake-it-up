@@ -177,7 +177,7 @@ The lists can be arranged in multiple different ways:
   - Icing
   - Decoration
   - Text
-- These property names are simply there as a guideline. All labels can be customised to suit the property in the product's context
+- These property names are simply there as a guideline. All labels can be customised to suit the property in the product's context, giving full control to the admins on how to describe their products
 
 ![A property with a custom label](media/images/readme/features/products/custom-label.JPG)
 
@@ -243,7 +243,66 @@ The lists can be arranged in multiple different ways:
 
 </details>
 
-### Checkout
+<details><summary><strong>Checkout</strong></summary>
+
+- Upon adding products to their cart, and selecting a baking date, the user is taken to the checkout page. Here, they enter their information which is used to process their order, which is as follows:
+  - Full name
+  - Email address
+  - Phone number
+  - Address
+  - Postcode
+
+![The billing section in the checkout page](media/images/readme/features/checkout/billing-details.JPG)
+
+- Authenticated users can choose to have their information saved to their profile, so that they don't have enter their details again when placing another order
+
+![The save info checkbox](media/images/readme/features/checkout/save-info-check.JPG)
+
+- Users have the option to deliver their goods to their address. By default, the billing details entered above are used, ensuring the user doesn't have to enter the same information twice
+- The delivery cost added to the total depends on the county the user has selected. The further from Dublin (The home of Bake It Up) the more expensive the delivery charge is
+
+![The delivery checkbox, showing the delivery cost](media/images/readme/features/checkout/delivery-check.JPG)
+
+- If the user's delivery address is different to their billing address, they can select a checkbox to deliver to another address, where another section of the form appears, requiring the same address inputs as in the billing details
+
+![The form to deliver to another address](media/images/readme/features/checkout/delivery-other-address.JPG)
+
+- To the right of the screen, the order summary is shown, giving the cart total, the delivery cost (if applicable), and the order total. Underneath this summary is the button to proceed to the payment
+- This section follows the user as they scroll down the page, so that the user doesn't have to scroll back up when they have completed their order
+
+![The summary of the order](media/images/readme/features/checkout/order-summary.JPG)
+
+- Above this summary, the user has the option to enter a discount code they may have received from a newsletter
+- If the code is valid, a discount will be applied to the cart total, and will appear beneath the cart total in the order summary
+
+![An applied discount code](media/images/readme/features/checkout/discount-applied.JPG)
+
+- When the user has filled out all their details, they can proceed to the payment section, which takes the form of a modal appearing in front of the screen.
+- This modal contains four Stripe elements:
+  - **Card Number**: The 16 digit number on a person's card
+  - **Expiration Date**: The date of expiry on the card
+  - **CVC**: The 3 digit number found on the back of a card
+  - **Postcode**: A 5 digit postcode
+- When filled out, the details are posted to Stripes payment intent using *Asynchronous JavaScript and XML* (AJAX) and, if valid, completes the payment and submits the order to the database
+- If a problem occurs on the user's end, such as closing the page during the payment or timing out, the order is processed anyway by using Stripe's payment intent's webhooks to create an order if one is not found
+
+![The payment modal](media/images/readme/features/checkout/payment-modal.JPG)
+
+- On a successful payment, the user is taken to the checkout success page, where they can view a summary of the order, including:
+  - The order number to reference the order
+  - The bake date and customer message
+  - The list of products and their properties
+  - The billing information
+  - The shipping information, if any
+- Below the summary, there is a link to return to the home page, so that the user is given a direction on where to go next
+
+![The order summary on successful payment](media/images/readme/features/checkout/payment-success.JPG)
+
+- Simultaneously, a confirmation email is sent to the email address specified in the checkout page, giving unauthenticated users access to the order history for reference
+
+![A confirmation email sent to the user](media/images/readme/features/checkout/confirmation-email.JPG)
+
+</details>
 
 ### Account Settings
 

@@ -7,7 +7,7 @@ from core.constants import COUNTY_CHOICES
 class ContactDetailsForm(forms.Form):
 
     name = forms.CharField(
-        label="Name/Company Name",
+        label="Full Name",
         max_length=70,
         required=True
     )
