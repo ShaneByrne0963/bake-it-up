@@ -53,6 +53,8 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 
 ## Features
 
+### Authentication
+
 <details><summary><strong>The Home Page</strong></summary>
 
 - The home page is the first thing that users see upon entering the site. It gives a short description about the company, what it does and its origins. This gives the users a brief insight into the personality of the bakery, allowing the bakery to display their interest in their craft, further highlighting the quality of their products
@@ -382,7 +384,14 @@ The lists can be arranged in multiple different ways:
 
 </details>
 
-### "Back To Top" Button
+<details><summary><strong>"Back To Top" Button</strong></summary>
+
+- When the user scrolls down the page, a "Back To Top" button reveals itself that, when clicked, brings the user back to the top of the page, where it returns out of view
+- This is helpful to bring the user back to the navigation rather than manually scrolling to the top of the screen
+
+![The "Back To Top" button](media/images/readme/features/back-to-top.JPG)
+
+</details>
 
 ### View Daily Orders
 
