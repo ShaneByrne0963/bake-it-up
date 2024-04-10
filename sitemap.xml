@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=all</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=pastries</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=cakes</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/contact/?about=wedding-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/cinnamon-swirl</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/cookies</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/banana-bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/spelt</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/gingerbread-men</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/cupcakes</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/privacy_policy</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/contact/</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/accounts/password/reset/</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/white-bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/brown-bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/brioche</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/soda-bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/sourdough</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/gluten-free-bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/poppy-seed-bread</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/baguettes</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=all&amp;page=1</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=all&amp;page=2</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?category=all&amp;page=3</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/protein-balls</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/brownies</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/croissants</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/doughnuts</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/fruit-tart</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/coffee-slices</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/cream-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/oreo-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/carrot-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/coffee-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/chocolate-pound-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/berry-cake</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?page=1</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?page=2</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bake-it-up-e014260e4351.herokuapp.com/products/?page=3</loc>
+  <lastmod>2024-04-10T15:38:37+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>

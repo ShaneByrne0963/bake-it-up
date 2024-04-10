@@ -6,4 +6,4 @@ Disallow: /profile/
 Disallow: /contact/messages/
 Disallow: /contact/newsletter_signup/
 Disallow: /contact/newsletter_unsubscribe/
-Sitemap: 
+Sitemap: https://bake-it-up-e014260e4351.herokuapp.com/sitemap.xml
