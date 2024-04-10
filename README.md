@@ -1288,18 +1288,41 @@ Bake It Up was developed using an Agile methodology
 
 ### Deployment to Heroku
 
+This website was deployed to Heroku. The steps to deploy are as follows:
+
+1. Navigate to [Heroku](https://heroku.com/) and log in.
+2. Once logged in, click "New" and then "Create new app"
+
+![New app in Heroku](media/images/readme/deployment/new-app.JPG)
+
+3. Enter a name for your app, and your region. Note that names must be unique
+
+![Option to select an app name](media/images/readme/deployment/app-name-and-location.JPG)
+
+4. Once that is entered, navigate to the "Settings" tab and scroll down to "Config Vars". Click "Reveal Config Vars" and enter all of your environment variables here. **Don't forget to move all environment variables out of the project's code and into your env.py file before pushing to GitHub!**
+
+![Config variables in Heroku](media/images/readme/deployment/config-vars.JPG)
+
+5. Once that is done, navigate to the "Deploy" tab, scroll to "Connect to GitHub". Assuming you are logged in with your GitHub account, search for the repository name of your project and select it.
+
+6. To deploy the project click "Deploy Branch" and wait for Heroku to set the project up. Keep an eye out for error logs
+
+![Deploy the project to Heroku](media/images/readme/deployment/deploy-manual.JPG)
+
+- To set the project up to deploy automatically every time changes are pushed to GitHub, you can click "Enable Automatic Deploys" situated above the "Deploy Branch" section. I decided against using this, as the site is connected to Amazon Web Services, and constantly deploying results in a greater usage of credits used, resulting in the billing increasing
+
 ### Cloning Repositories
 
 The site was cloned onto my desktop. The steps to clone are as follows:
 
-- In the GitHub repository, click on the green button that says "Code".
+1. In the GitHub repository, click on the green button that says "Code".
 A drop-down menu will appear
-- In the "Local" tab of the drop-down, there will be a link under the "HTTPS"
+2. In the "Local" tab of the drop-down, there will be a link under the "HTTPS"
 section. Click the copy button to the right of the link.
-- In the search bar of your PC desktop, search for terminal and open.
-- Type the following command:
+3. In the search bar of your PC desktop, search for terminal and open.
+4. Type the following command:
 `git clone https://github.com/ShaneByrne0963/bake-it-up.git`
-- The site will be cloned to your desktop.
+5. The site will be cloned to your desktop.
 
 ### Forking Repositories
 
@@ -1309,12 +1332,12 @@ repository can be found
 
 The steps to fork are as follows:
 
-- Navigate to the page of the repository you wish to fork.
-- Click on the green button that says "Use this template". A drop-down will
+1. Navigate to the page of the repository you wish to fork.
+2. Click on the green button that says "Use this template". A drop-down will
 appear underneath, and select "create a new repository"
-- Enter a repository name where specified.
-- Ensure the site is set to public
-- Click "Create repository from template". GitHub will begin to build a
+3. Enter a repository name where specified.
+4. Ensure the site is set to public
+5. Click "Create repository from template". GitHub will begin to build a
 new project from that template.
 
 ## Other points to note
