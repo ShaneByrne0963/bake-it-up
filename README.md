@@ -754,7 +754,113 @@ The lists can be arranged in multiple different ways:
 
 ### Keywords
 
+- To improve the chances of the page appearing higher in search results, I tagged the site with specific keywords. These keywords are general terms that potential users could enter into a search engine, so we want as many of these keywords present on our site as possible, so that the users are more likely to find our site first.
+- Keywords can range from short-tail (i.e. "Bakery Dublin") to long-tail (i.e. "Where can I buy a personalised cake")
+- The first step was to jot down potential topics, or in other words, the general idea of what the user has in mind when making their search
+- The topics I came up with were:
+  - Bread
+  - Pastries
+  - Cakes
+  - Local Bakery
+
+- The next step was to brainstorm as many keywords as possible
+
+<details><summary>View Keyword Brainstorming</summary>
+
+- Bread:
+  - Buy bread online
+  - White bread
+  - Loaf
+  - Whole Grain
+  - Baguettes
+  - Burger buns
+  - French toast bread
+  - Sourdough
+  - Sour dough
+  - Stone baked bread
+  - Personalised bread
+  - Deliver bread to me
+- Pastries
+  - Scones
+  - Fruit Scones
+  - Raisin Scones
+  - Fresh croissants near me
+  - Fresh Treats
+  - Cookies
+  - Doughnuts
+  - Cupcakes
+  - Muffins
+  - Brownies
+  - Sweets
+  - Sweet shop near me
+  - Buy pastries online
+  - Where to buy red velvet cookies
+  - Where to buy buttercream filled cupcakes
+- Cakes
+  - Birthday cakes
+  - Special cakes
+  - Custom cake
+  - Wedding cakes
+  - Buy cake with custom message
+  - Order wedding cake online
+- Local Bakery
+  - Dublin bakery
+  - Bakery Wood Quay
+  - Local bakery Dublin
+  - Dublin bread
+
+</details>
+
+- After coming up with as many ideas as possible, it is recommended to search some of these terms, taking note of the results and keeping an eye out for the related terms
+
+![Related terms for "Where to buy Red Velvet Cookies"](media/images/readme/seo/red-velvet-cookies-suggestions.JPG)
+
+- After searching through several keywords, I found several extra related keywords to consider:
+  - Freshest ingredients
+  - Bread made for me
+  - Buy pastries as a gift
+  - Cake delivery Dublin
+  - Best bakery in Dublin
+
+- Next, the list has to be reduced. Search engines don't like an abundance of keywords as it interprets that as spam-like. Also, you don't want to include keywords that are too specific, such as "Where to buy buttercream filled cupcakes", or too broad, like "Cupcakes"
+- With all that in mind, I decided on using the following:
+  - Buy bread online
+  - Personalised bread
+  - Custom bread
+  - Gluten-free
+  - Fresh Treats
+  - Sweet Treats
+  - Buy pastries online
+  - Cake delivery Dublin
+  - Birthday cakes Dublin
+  - Wedding cakes Dublin
+  - Buy cake with custom message
+  - Order wedding cake online
+  - Dublin bakery
+  - Local Dublin bakery
+  - Dublin bread
+
+- To implement these, it is recommended to include them in headings and wrapped in a "strong" or "em" tag within paragraphs. However, the page cannot be "stuffed" with these keywords, as the search engines will detect this and decrease the page's ranking.
+- For this reason, I wrote the introduction paragraph of the bakery to include these keywords in a meaningful way, along with only including keywords in headings where it would make sense
+
+![The opening paragraph of the home page, including keywords](media/images/readme/seo/keyword-paragraph.JPG)
+
+- There is another method to include keywords, which is within the "keywords" meta tag in the page's header. The search engines are more lenient to this method, so it is acceptable to put as many keywords as you like here
+
+![Keywords in the meta tag](media/images/readme/seo/meta-tags.JPG)
+
+- Adhering to proper SEO standards maximises the chances of your page being seen by your target audience, so it is vital for the success of the page
+
 ### "sitemap.xml" and "robots.txt" Files
+
+The following files were created to further boost the SEO results of this site:
+- "sitemap.xml" is a file that gives a list of pages that can be navigated through the site. This allows search engines to understand the structure of the site, and giving them the ability to scan through them efficiently
+
+![The sitemap.xml file](media/images/readme/seo/sitemap.JPG)
+
+- "robots.txt" tells the search engines what pages should not be included in the scan of the site. This includes actions that require user actions, such as the shopping cart page, checkout page and profile page. The existence of this file improves the chances of the site appearing higher on the results as it demonstrates to the search engines that the site is willing to be scanned through
+
+![The robots.txt file](media/images/readme/seo/robots.JPG)
 
 ## Web Marketing
 
