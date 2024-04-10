@@ -6,9 +6,14 @@ from core.constants import COUNTY_CHOICES
 
 class ContactDetailsForm(forms.Form):
 
-    name = forms.CharField(
-        label="Full Name",
-        max_length=70,
+    first_name = forms.CharField(
+        label="First Name",
+        max_length=30,
+        required=True
+    )
+    last_name = forms.CharField(
+        label="Last Name",
+        max_length=30,
         required=True
     )
     email = forms.EmailField(

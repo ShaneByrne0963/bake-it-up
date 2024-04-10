@@ -174,9 +174,10 @@ $('#checkout-form').on('submit', function(event) {
 function paymentSubmit() {
     setModalLoading(true);
     let form = $('#checkout-form').get(0);
+    let fullName = `${form.first_name.value} ${form.last_name.value}`;
 
     let base_details = {
-        name: $.trim(form.name.value),
+        name: fullName,
         phone: $.trim(form.phone.value),
         address: {
             line1: $.trim(form.street_address1.value),

@@ -26,7 +26,7 @@ class ViewCart(View):
 
         if 'cart_products' not in context:
             messages.error(request, "Your cart is empty")
-            return redirect('home')
+            return redirect('product_list')
         
         current_date = timezone.now()
         print(current_date)

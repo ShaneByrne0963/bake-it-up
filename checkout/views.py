@@ -54,17 +54,9 @@ class Checkout(View):
                 profile = UserProfile.objects.get(
                     user=request.user
                 )
-                first_name = request.user.first_name
-                last_name = request.user.last_name
-                full_name = ''
-                if first_name:
-                    full_name = first_name
-                    if last_name:
-                        full_name += ' '
-                full_name += last_name
-
                 contact_details = {
-                    'name': full_name,
+                    'first_name': request.user.first_name,
+                    'last_name': request.user.last_name,
                     'email': request.user.email,
                     'phone': profile.saved_phone_number
                 }
@@ -131,6 +123,9 @@ class Checkout(View):
         is_delivery = 'delivery' in request.POST
 
         checkout_data = request.POST.copy()
+        checkout_data['full_name'] = f"""
+            {checkout_data['first_name']} {checkout_data['last_name']}"""               
+
         checkout_data.update({
             'bake_date': bake_date,
             'customer_note': customer_note
