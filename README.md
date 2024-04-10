@@ -1342,10 +1342,32 @@ new project from that template.
 
 ## Other points to note
 
-### Naming conventions
+### Spelling
+
+- Throughout the development of the project, I used 2 different ways of spelling for some words:
+  - **The Engligh spelling** (for example, "colour") is used for anything on the front-end of the site that could be visible to the user. This was done because the website belongs to an Irish company, so its users would be more inclined to spell in this manner
+  - **The American spelling** (for example, "color") is used for naming variables. This was done in case the website was handed over to an American or non-fluent English speaker, both more inclined to use this spelling. This would prevent confusion when searching for these variables
 
 ## Credits
 
 ### Code Snippets/Tutorials
 
+- [Adding first and last name fields to signup form](https://www.geeksforgeeks.org/python-extending-and-customizing-django-allauth/)
+- [Get queryset of generic listview](https://stackoverflow.com/questions/52510586/how-to-filter-a-generic-listview)
+- [Remove the number input spinner](https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box)
+- [Chaining 2 model sets together](https://sentry.io/answers/combine-querysets-django/)
+- [sorted() function](https://stackoverflow.com/questions/22286610/sort-two-joined-querysets-django)
+- [Checking if a model has an attribute](https://stackoverflow.com/questions/610883/how-to-check-if-an-object-has-an-attribute/610923#610923)
+- [Python enumerate](https://realpython.com/python-enumerate/#:~:text=Use%20enumerate()%20to%20get,enumerate()%20with%20conditional%20statements)
+- [Style Chrome's autocomplete input](https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete)
+- [Manually logging out](https://stackoverflow.com/questions/25251719/how-can-i-logout-a-user-in-django)
+- [Hex to RGB in JavaScript](https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb)
+- [JavaScript viewport](https://stackoverflow.com/questions/11309859/css-media-queries-and-jquery-window-width-do-not-match)
+
 ### Media
+
+- [Gluten-Free Bread](https://www.kingarthurbaking.com/sites/default/files/styles/featured_image/public/2023-07/GF-Bread-Flour-GF-Artisan-Bread-0024.jpg?itok=-FrZF6RJ)
+- [Cream Cake](https://e8e9e5q5.rocketcdn.me/wp-content/uploads/2021/11/Fresh-Cream-and-Fruit-2023.jpg)
+- [Coffee Cake](https://thenaturalbakery.ie/wp-content/uploads/2021/12/IMG_8617.jpg)
+- Hero Image was taken from ShutterStock
+- All other images are from Pexels
