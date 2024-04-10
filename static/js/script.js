@@ -222,6 +222,10 @@ function validateInput() {
     let customValidity = '';
     let value = $(this).val().trim().trim('\n');
 
+    if (value && $(this).hasClass('dont-fill') && !$(this).prop('disabled')) {
+        customValidity = 'Warning: This input has not been submitted yet';
+    }
+
     // Remove double spaces, or all spaces if the "no-spaces" class is applied
     let spaceCheck = ' ';
     let spaceReplace = '';

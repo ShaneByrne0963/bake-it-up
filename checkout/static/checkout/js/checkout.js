@@ -29,6 +29,11 @@ function updateDeliveryDetails() {
     $('#id_county').get(0).setCustomValidity('');
     $('#delivery-county').get(0).setCustomValidity('');
 
+    // Removing any hidden custom validity
+    $('#delivery-options').find('.no-special-chars').each(function() {
+        this.setCustomValidity('');
+    });
+
     $('#delivery-notice-content').text('');
     $('#delivery-other-content').text('');
 
@@ -37,7 +42,14 @@ function updateDeliveryDetails() {
 
     if ($('#delivery').prop('checked')) {
         // If "Deliver to another address" is selected, the second select input takes precedence
-        let deliverOtherAddress = Boolean($('#delivery-other-address').prop('checked'))
+        let deliverOtherAddress = Boolean($('#delivery-other-address').prop('checked'));
+        if (deliverOtherAddress) {
+            // Re-validating the inputs
+            $('#delivery-options').find('.no-special-chars').each(function() {
+                $(this).trigger('change');
+            });
+        }
+
         let countySelect = deliverOtherAddress ? '#delivery-county' : '#id_county';
         let deliveryNotice = deliverOtherAddress ? '#delivery-other-notice' : '#delivery-notice';
         let noticeContent = deliverOtherAddress ? '#delivery-other-content' : '#delivery-notice-content';
@@ -59,6 +71,8 @@ function updateDeliveryDetails() {
             $('#delivery-charge').text(`€${deliveryCost}`);
         }
         $(noticeContent).text(deliveryText);
+
+        
     }
     else {
         $('#delivery-notice').addClass('d-none');

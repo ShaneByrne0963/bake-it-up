@@ -292,8 +292,21 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Next day bake date, after the cutoff point | The page refreshes, the bake date is now 2 days ahead, and an error message under the bake date explains the problem | Works as intended |
 | Blank date entered | The page refreshes, with an error message under the bake date to select a valid date | **The user can move to the checkout with a blank date. The error isn't caught until the payment is submitted** |
 
+### Part 7 - Checkout
 
-
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The payment modal appears | Works as intended |
+| No first name given | The form fails to send, requesting a first name | Works as intended |
+| No last name given | The form fails to send, requesting a last name | Works as intended |
+| No email given | The form fails to send, requesting an email | Works as intended |
+| No phone number given | The form fails to send, requesting a phone number | Works as intended |
+| No address line 1 given | The form fails to send, requesting a street address | Works as intended |
+| No town or city given | The form fails to send, requesting a town or city | Works as intended |
+| No postcode given | The form fails to send, requesting a postcode | Works as intended |
+| Special characters for each input | The form fails to send, requesting the removal of the special characters | Works as intended |
+| Non-numeric phone number | The form fails to send, requesting a phone number of only figits | Works as intended |
+| Invalid Input hidden behind checkbox | The input won't affect the form and should continue as normal | **Hidden invalid inputs cause the form to not submit**|
 
 
 
