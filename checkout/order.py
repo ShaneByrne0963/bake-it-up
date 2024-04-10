@@ -42,6 +42,11 @@ def create_order(checkout_data, cart, save_info=False, user=None):
     )
     new_data = dict(checkout_data.copy())
 
+    first_name = checkout_data['first_name'] \
+        if 'first_name' in checkout_data else None
+    last_name = checkout_data['last_name'] \
+        if 'last_name' in checkout_data else None
+
     # Deleting any unknown keys in the input
     for key, value in checkout_data.items():
         if isinstance(value, list):
@@ -112,6 +117,12 @@ def create_order(checkout_data, cart, save_info=False, user=None):
     
     # Saving the user's profile information
     if save_info and user:
+        if first_name:
+            user.first_name = first_name
+            user.save()
+        if last_name:
+            user.last_name = last_name
+            user.save()
         update_user_profile(new_data, user)
     
     # Sending a confirmation email

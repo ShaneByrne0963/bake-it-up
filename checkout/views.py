@@ -274,6 +274,8 @@ def cache_checkout_data(request):
 
         metadata = {
             'user': request.user.id,
+            'first_name': request.POST['first_name'],
+            'last_name': request.POST['last_name'],
             'bake_date': bake_date,
             'customer_note': customer_note,
             'save_info': request.POST.get('save_info'),

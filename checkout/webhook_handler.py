@@ -41,6 +41,8 @@ class StripeWH_Handler():
                 time.sleep(1)
         
         # Extracting the metadata from the payment intent
+        first_name = intent.metadata.first_name
+        last_name = intent.metadata.last_name
         save_info = (intent.metadata.save_info == 'on')
         bake_date = intent.metadata.bake_date
         discount = int(intent.metadata.discount)
@@ -109,6 +111,8 @@ class StripeWH_Handler():
                 'discount': discount,
                 'delivery': delivery,
                 'name': billing_details.name,
+                'first_name': first_name,
+                'last_name': last_name,
                 'email': billing_details.email,
                 'phone': billing_details.phone,
                 'street_address1': billing_details.address.line1,

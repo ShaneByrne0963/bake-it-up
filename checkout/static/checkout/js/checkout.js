@@ -209,7 +209,9 @@ function paymentSubmit() {
     }
 
     let postData = {
-        'client_secret': clientSecret
+        'client_secret': clientSecret,
+        first_name: form.first_name.value,
+        last_name: form.last_name.value,
     }
     $('#checkout-form').find('input, select').each(function() {
         let inputType = $(this).attr('type');
@@ -248,7 +250,7 @@ function paymentSubmit() {
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     // Removes the event listener that triggers the modal
-                    $('#checkout-form').off('submit').trigger('submit');
+                    // $('#checkout-form').off('submit').trigger('submit');
                 }
             }
         });
