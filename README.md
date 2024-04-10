@@ -487,11 +487,96 @@ The lists can be arranged in multiple different ways:
 
 </details>
 
+<details><summary><strong>Add/Edit Products</strong></summary>
+
+- Admins can add products to the database in the "Add Product" page, found within the profile dropdown. Products can have a lot of different attributes, so I deemed having a user interface to handle these complexities absolutely necessary
+- Here, users can enter the fundamental information, such as the product's name, category, description, price, ingredients and image.
+
+![The "Add Product" page](media/images/readme/features/add-products/add-product-page.JPG)
+
+- Products also give the option to add custom properties. These properties depend on the category that has been selected for the product
+- Properties that are not enabled are hidden by default. This allows the user to expand the properties one by one, and get a feel of how to interpret the property forms. If all the properties started out expanded, it results in a plethora of information being thrown at the admin all at once.
+- Bread products have 3 properties:
+  - Shape
+  - Size
+  - Contents
+- Pastry products have 6 properties:
+  - Type
+  - Contents
+  - Colour
+  - Icing
+  - Decoration
+  - Text
+
+![Custom properties of a bread product, all collapsed](media/images/readme/features/add-products/product-property-list.JPG)
+
+- When a user checks one of these checkboxes, a collapse expands beneath it, revealing a label input and a property list, with the option to add more properties
+
+![A product property, expanded](media/images/readme/features/add-products/product-property.JPG)
+
+- Properties have a default label attached to them. However, properties can take many forms, so there is an option to replace the default label with a custom one. This opens the door to many possibilities to have different properties for different products
+
+![A custom label on a property](media/images/readme/features/add-products/custom-label.JPG)
+
+- Values can be added to properties by entering the name of the value and pressing the "Add" button
+- When a value is added, it is added to the list of values in that property
+
+![A list of custom values in a property](media/images/readme/features/add-products/product-property-values.JPG)
+
+- The "Colour" property uses a similar method of adding properties, but looking visually different
+- This property uses the same colour picker as the one found in the product detail page, allowing the admin to get a feel of how the finished product would look
+- Colours can be added by selecting a colour and clicking "Add"
+
+![The colour picker input](media/images/readme/features/add-products/colour-picker.JPG)
+
+- Colours can also be selected, and updated or removed from the list. This allows the admin to correct any mistakes they may have made
+
+![A selected colour value in the list](media/images/readme/features/add-products/colour-selected.JPG)
+
+- Making the colour completely black indicates a "No Colour" value, allowing the colour input to be optional for the user
+
+![A list containing the "No Colour" property](media/images/readme/features/add-products/no-colour.JPG)
+
+- Some properties have pre-existing values attached to them, allowing common values to be ready to go and not have to be repeatedly entered.
+- This is done using the *SiteData* model in the database. This model stores a list of default properties, separated by a "|" symbol. I decided against adding CRUD functionality to this without access to the admin panel as the process is straightforward, and is more suitable for the role of the site owner, preventing an excess of default values to be entered by several admins
+- Existing properties can be removed by clicking on the "x" button to the right of each property
+- The "No colour" property exists as a default colour value. When clicked on, the colour input changes to black, informing the user that they have to enter a black colour to get this value
+
+![The bread size default properties, found in the admin panel](media/images/readme/features/add-products/admin-default-values.JPG)
+
+![The same values found in the bread size property in the add product page](media/images/readme/features/add-products/product-property-default-values.JPG)
+
+- There is no limits to the amount of values a property can have. This is intentional as Bake It Up wants the same freedoms for the users to create as they can when ordering in store. On top of that, admins are the only users who have this capability, so the public cannot exploit this
+
+![A lot of values in a property](media/images/readme/features/add-products/limitless-properties.JPG)
+
+- The "Edit Product" page uses an exact copy of this page, except all the previous information of the product is filled in on page load
+
+![Editing a product](media/images/readme/features/add-products/edit-product-page.JPG)
+
+- This property form makes a complex system fairly intuitive for new administrators, allowing them to create and update products with ease
+
+</details>
+
 ## Design
 
 ### User Interface
 
 ### Layout
+
+<details><summary><strong>Header</strong></summary>
+
+
+
+</details>
+
+# Navigation
+
+# Footer
+
+# Modal
+
+# Toasts
 
 ### Colour Scheme
 
@@ -534,7 +619,6 @@ The lists can be arranged in multiple different ways:
 ![The product list page for desktop](media/images/readme/wireframes/desktop/product-list.jpg) | ![The product list page for mobile](media/images/readme/wireframes/mobile/product-list.jpg)
 
 #### Product Details
-
 
 <table><tr><th>Desktop</th><th>Mobile</th></tr><tr>
 <td>
