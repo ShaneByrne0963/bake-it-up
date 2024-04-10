@@ -673,4 +673,8 @@ form select,
     #hero-image {
         height: 128px;
     }
+
+    #modal-content-inner {
+        padding: 8px 4px;
+    }
 }

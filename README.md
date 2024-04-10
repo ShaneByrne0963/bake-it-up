@@ -487,96 +487,119 @@ The lists can be arranged in multiple different ways:
 
 </details>
 
-<details><summary><strong>Add/Edit Products</strong></summary>
-
-- Admins can add products to the database in the "Add Product" page, found within the profile dropdown. Products can have a lot of different attributes, so I deemed having a user interface to handle these complexities absolutely necessary
-- Here, users can enter the fundamental information, such as the product's name, category, description, price, ingredients and image.
-
-![The "Add Product" page](media/images/readme/features/add-products/add-product-page.JPG)
-
-- Products also give the option to add custom properties. These properties depend on the category that has been selected for the product
-- Properties that are not enabled are hidden by default. This allows the user to expand the properties one by one, and get a feel of how to interpret the property forms. If all the properties started out expanded, it results in a plethora of information being thrown at the admin all at once.
-- Bread products have 3 properties:
-  - Shape
-  - Size
-  - Contents
-- Pastry products have 6 properties:
-  - Type
-  - Contents
-  - Colour
-  - Icing
-  - Decoration
-  - Text
-
-![Custom properties of a bread product, all collapsed](media/images/readme/features/add-products/product-property-list.JPG)
-
-- When a user checks one of these checkboxes, a collapse expands beneath it, revealing a label input and a property list, with the option to add more properties
-
-![A product property, expanded](media/images/readme/features/add-products/product-property.JPG)
-
-- Properties have a default label attached to them. However, properties can take many forms, so there is an option to replace the default label with a custom one. This opens the door to many possibilities to have different properties for different products
-
-![A custom label on a property](media/images/readme/features/add-products/custom-label.JPG)
-
-- Values can be added to properties by entering the name of the value and pressing the "Add" button
-- When a value is added, it is added to the list of values in that property
-
-![A list of custom values in a property](media/images/readme/features/add-products/product-property-values.JPG)
-
-- The "Colour" property uses a similar method of adding properties, but looking visually different
-- This property uses the same colour picker as the one found in the product detail page, allowing the admin to get a feel of how the finished product would look
-- Colours can be added by selecting a colour and clicking "Add"
-
-![The colour picker input](media/images/readme/features/add-products/colour-picker.JPG)
-
-- Colours can also be selected, and updated or removed from the list. This allows the admin to correct any mistakes they may have made
-
-![A selected colour value in the list](media/images/readme/features/add-products/colour-selected.JPG)
-
-- Making the colour completely black indicates a "No Colour" value, allowing the colour input to be optional for the user
-
-![A list containing the "No Colour" property](media/images/readme/features/add-products/no-colour.JPG)
-
-- Some properties have pre-existing values attached to them, allowing common values to be ready to go and not have to be repeatedly entered.
-- This is done using the *SiteData* model in the database. This model stores a list of default properties, separated by a "|" symbol. I decided against adding CRUD functionality to this without access to the admin panel as the process is straightforward, and is more suitable for the role of the site owner, preventing an excess of default values to be entered by several admins
-- Existing properties can be removed by clicking on the "x" button to the right of each property
-- The "No colour" property exists as a default colour value. When clicked on, the colour input changes to black, informing the user that they have to enter a black colour to get this value
-
-![The bread size default properties, found in the admin panel](media/images/readme/features/add-products/admin-default-values.JPG)
-
-![The same values found in the bread size property in the add product page](media/images/readme/features/add-products/product-property-default-values.JPG)
-
-- There is no limits to the amount of values a property can have. This is intentional as Bake It Up wants the same freedoms for the users to create as they can when ordering in store. On top of that, admins are the only users who have this capability, so the public cannot exploit this
-
-![A lot of values in a property](media/images/readme/features/add-products/limitless-properties.JPG)
-
-- The "Edit Product" page uses an exact copy of this page, except all the previous information of the product is filled in on page load
-
-![Editing a product](media/images/readme/features/add-products/edit-product-page.JPG)
-
-- This property form makes a complex system fairly intuitive for new administrators, allowing them to create and update products with ease
-
-</details>
-
 ## Design
 
-### User Interface
+### Site Layout
 
-### Layout
+- The site uses a base template, which remains the same throughout all pages. This enforces a feeling of familiarity for the user, as the base includes the means to navigate through the site.
 
-<details><summary><strong>Header</strong></summary>
+<details><summary><strong>Header/Navigation</strong></summary>
 
+- The page header consists of a hero image, the site owner's logo, a page navigation and a profile actions section
 
+![The page header](media/images/readme/design/site-layout/header/page-header.JPG)
+
+- The hero image exists to visually compliment the look and feel of the site, as it matches the site's colour scheme of gray and orange.
+- As the user scrolls down the page, the hero image has a slight perspective movement, moving slightly slower than the rest of the page. This makes the page feel more lively and animated.
+
+![The hero image](media/images/readme/design/site-layout/header/hero-image.JPG)
+
+- The navigation bar is simple, only involving pages related to products. This prevents users from being drawn away from the main focus of the site: buying the bakery's products.
+
+![The page navigation](media/images/readme/design/site-layout/header/navigation.JPG)
+
+- The four buttons relate to categories of products. Most users would enter the site with the intention of finding a specific type of product, whether it be a loaf of bread, a dessert, or a cake. Having these options readily available from the start is convenient for these users.
+
+![Product categories](media/images/readme/design/site-layout/header/categories.JPG)
+
+- Clicking on the search icon expands a search bar that overlaps the content heading. This bar was kept hidden from users not looking to use it in order to conserve space
+
+![The search bar, revealed when the search icon is clicked](media/images/readme/design/site-layout/header/search.JPG)
+
+- For mobile devices, this search bar becomes too small to host the navigation links, so they are instead hidden from view, and moved to a collapsible on the top-left corner of the screen. Clicking on this collapsible reveals all the navigation features desktop users have access to.
+- This collapse moves through the collapse icon and the user actions section, but as we still want the user to have access to these, this new section does not overlap them, allowing full access to all user interface elements in a small space
+
+![The mobile collapse dropdown](media/images/readme/design/site-layout/header/mobile-collapse.JPG)
+
+- The bakery logo is the logo that Bake It Up uses for their physical bakery
+
+![Bake It Up's logo](media/images/bakery-logo.webp)
+
+- This logo sits on top of the navigation, extruding from the flow of the webpage. The design is made to resemble a ribbon-like object, allowing some interpretation that the site is like a gift wrapped up in a bow
+
+![The logo sitting atop the navigation bar](media/images/readme/design/site-layout/header/logo-on-ui.JPG)
+
+- The logo scales with the size of the screen, to make sure it isn't obstructing the rest of the site.
+- The site has been programmed to start the main content section just below the logo, so the logo cannot overlap any of the text content
+
+![The carousel avoids going beneath the logo](media/images/readme/design/site-layout/header/no-overlap.JPG)
 
 </details>
 
-# Navigation
+<details><summary><strong>Footer</strong></summary>
 
-# Footer
+- The footer contains general information pertaining to the website as well as the bakery itself, mostly including information on a lower demand
+- It contains the following:
+  - The bakery's physical address and contact details
+  - The bakery's opening hours
+  - A link to subscribe to the newsletter
+  - A site navigation, similar to the one in the mobile collapse
+  - A link to the "About Us" section of the home page
+  - A link to contact the bakery directly
+  - A privacy policy
+  - Links to the bakery's Facebook and Instagram accounts
+- Having a footer is important as it marks the end of the page, without just abruptly ending without any warning
+- I included the links to other parts of the website to give the users extra options to continue their navigation, along with using the "Back to Top" button
 
-# Modal
+![The page footer](media/images/readme/design/site-layout/footer/page-footer.JPG)
 
-# Toasts
+- The content of the footer is sectioned appropriately, and spread out in an easy to read manner, which reorganises itself seamlessly for smaller screens
+
+![The footer for medium screens](media/images/readme/design/site-layout/footer/footer-medium.JPG)
+
+![The footer for medium screens](media/images/readme/design/site-layout/footer/footer-small.JPG)
+
+<details>
+
+<details><summary><strong>Modal</strong></summary>
+
+- A modal is used to perform and confirm many actions throughout the site. It appears in the center of the screen, with a base comprised of a title, a body, a confirmation button and a cancel button.
+
+![A standard modal](media/images/readme/design/site-layout/modal/modal-base.JPG)
+
+- Modals can also have forms attached to it, which was used to host the login, signup and Stripe payment forms
+
+![The signup form in the modal](media/images/readme/design/site-layout/modal/signup-modal.JPG)
+
+- For asynchronous actions, such as processing a payment intent, the modal has a loading screen in order to portray to users that their are actions taking place in the backend, and the page has not frozen
+- Once this screen is active, users cannot click close the modal, or click on any buttons within it. This is to stop the user from performing the action multiple times while the first process is undergoing
+
+![The loading overlay on the modal](media/images/readme/design/site-layout/modal/modal-loading.JPG)
+
+</details>
+
+<details><summary><strong>Toasts</strong></summary>
+
+- Toasts are popup messages that appear to give feedback on a user action, for example, logging out of their account. This visual confirmation leaves the user with no doubt that their action was processed, and any errors will be made known
+- On page load, the toast animates its way in from the right hand side of the screen, below the user sction button so it isn't blocked
+- Users can manually close these modals, or they will close automatically after a few seconds, so the users don't have to manually close them
+
+![A toast appearing on logout](media/images/readme/design/site-layout/toasts/toast-logout.JPG)
+
+- These toast messages can stack, allowing the user to see all of their messages if multiple were given
+
+![Two toasts stacked together](media/images/readme/design/site-layout/toasts/toasts-stacked.JPG)
+
+- Toasts come in 4 different ways:
+  - Success: Shown when a user action is successful
+  - Info: Used to provide information to the user
+  - Warning: Used to warn the user of a potential harmful action
+  - Error: Shown when something goes wrong. Is useful for giving feedback
+- Having messages grouped into categories like this helps the user to understand better the context of the message
+
+![The four different types of toasts](media/images/readme/design/site-layout/toasts/toast-types.JPG)
+
+<details>
 
 ### Colour Scheme
 
@@ -947,6 +970,81 @@ Bake It Up was developed using an Agile methodology
 ![A list of all models used for Bake It Up](media/images/readme/data-models/model-list.JPG)
 
 ### CRUD Functionality
+
+<details><summary><strong>Products</strong></summary>
+
+- Admins can add products to the database in the "Add Product" page, found within the profile dropdown. Products can have a lot of different attributes, so I deemed having a user interface to handle these complexities absolutely necessary
+- Here, users can enter the fundamental information, such as the product's name, category, description, price, ingredients and image.
+- This property form makes a complex system fairly intuitive for new administrators, allowing them to create and update products with ease
+
+![The "Add Product" page](media/images/readme/features/add-products/add-product-page.JPG)
+
+- Products also give the option to add custom properties. These properties depend on the category that has been selected for the product
+- Properties that are not enabled are hidden by default. This allows the user to expand the properties one by one, and get a feel of how to interpret the property forms. If all the properties started out expanded, it results in a plethora of information being thrown at the admin all at once.
+- Bread products have 3 properties:
+  - Shape
+  - Size
+  - Contents
+- Pastry products have 6 properties:
+  - Type
+  - Contents
+  - Colour
+  - Icing
+  - Decoration
+  - Text
+
+![Custom properties of a bread product, all collapsed](media/images/readme/features/add-products/product-property-list.JPG)
+
+- When a user checks one of these checkboxes, a collapse expands beneath it, revealing a label input and a property list, with the option to add more properties
+
+![A product property, expanded](media/images/readme/features/add-products/product-property.JPG)
+
+- Properties have a default label attached to them. However, properties can take many forms, so there is an option to replace the default label with a custom one. This opens the door to many possibilities to have different properties for different products
+
+![A custom label on a property](media/images/readme/features/add-products/custom-label.JPG)
+
+- Values can be added to properties by entering the name of the value and pressing the "Add" button
+- When a value is added, it is added to the list of values in that property
+
+![A list of custom values in a property](media/images/readme/features/add-products/product-property-values.JPG)
+
+- The "Colour" property uses a similar method of adding properties, but looking visually different
+- This property uses the same colour picker as the one found in the product detail page, allowing the admin to get a feel of how the finished product would look
+- Colours can be added by selecting a colour and clicking "Add"
+
+![The colour picker input](media/images/readme/features/add-products/colour-picker.JPG)
+
+- Colours can also be selected, and updated or removed from the list. This allows the admin to correct any mistakes they may have made
+
+![A selected colour value in the list](media/images/readme/features/add-products/colour-selected.JPG)
+
+- Making the colour completely black indicates a "No Colour" value, allowing the colour input to be optional for the user
+
+![A list containing the "No Colour" property](media/images/readme/features/add-products/no-colour.JPG)
+
+- Some properties have pre-existing values attached to them, allowing common values to be ready to go and not have to be repeatedly entered.
+- This is done using the *SiteData* model in the database. This model stores a list of default properties, separated by a "|" symbol. I decided against adding CRUD functionality to this without access to the admin panel as the process is straightforward, and is more suitable for the role of the site owner, preventing an excess of default values to be entered by several admins
+- Existing properties can be removed by clicking on the "x" button to the right of each property
+- The "No colour" property exists as a default colour value. When clicked on, the colour input changes to black, informing the user that they have to enter a black colour to get this value
+
+![The bread size default properties, found in the admin panel](media/images/readme/features/add-products/admin-default-values.JPG)
+
+![The same values found in the bread size property in the add product page](media/images/readme/features/add-products/product-property-default-values.JPG)
+
+- There is no limits to the amount of values a property can have. This is intentional as Bake It Up wants the same freedoms for the users to create as they can when ordering in store. On top of that, admins are the only users who have this capability, so the public cannot exploit this
+
+![A lot of values in a property](media/images/readme/features/add-products/limitless-properties.JPG)
+
+- The "Edit Product" page uses an exact copy of this page, except all the previous information of the product is filled in on page load
+
+![Editing a product](media/images/readme/features/add-products/edit-product-page.JPG)
+
+- Admins can access this page through clicking the "Edit Product" link in the product details page of the product they wish to edit
+- Beside this link, there is another link for admins to delete the product. The defensive modal kicks in, requesting assurance that the admin really wants to delete this product, preventing accidental deletion of any products
+
+![The product edit/delete buttons](media/images/readme/features/add-products/edit-or-delete-product.JPG)
+
+</details>
 
 ## Testing
 

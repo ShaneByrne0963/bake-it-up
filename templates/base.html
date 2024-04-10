@@ -113,10 +113,10 @@
                     <i class="fa-solid fa-bars align-middle"></i>
                 </button>
             </div>
-            <div id="account-nav">
+            <div id="account-nav" class="text-right">
                 {% if cart_total %}
-                    <a href="{% url 'cart' %}" class="btn btn-nav shadow-none">
-                        <i class="fa-solid fa-cart-shopping mr-2"></i>
+                    <a href="{% url 'cart' %}" class="btn btn-nav shadow-none px-1 px-sm-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
                         <span>&euro;{{ cart_total|floatformat:2 }}</span>
                     </a>
                 {% endif %}
@@ -154,8 +154,8 @@
                         </div>
                     </div>
                 {% else %}
-                    <button type="button" class="btn btn-nav shadow-none modal-trigger-login">Login</button>
-                    <button type="button" class="btn btn-nav shadow-none modal-trigger-signup">Signup</button>
+                    <button type="button" class="btn btn-nav shadow-none modal-trigger-login p-1 px-sm-2">Login</button>
+                    <button type="button" class="btn btn-nav shadow-none modal-trigger-signup p-1 px-sm-2">Signup</button>
                 {% endif %}
             </div>
         </div>
