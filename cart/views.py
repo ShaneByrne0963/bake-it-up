@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import View
 from django.conf import settings
+from django.utils import timezone
 
 from .cartfunctions import add_to_cart, get_properties_from_dict, \
                            has_reached_cutoff_time
@@ -27,7 +28,8 @@ class ViewCart(View):
             messages.error(request, "Your cart is empty")
             return redirect('home')
         
-        current_date = datetime.now()
+        current_date = timezone.now()
+        print(current_date)
         min_days_to_bake = 2
 
         # Allowing the user to order for tomorrow before the cutoff

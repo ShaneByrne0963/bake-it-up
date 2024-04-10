@@ -1199,9 +1199,11 @@ Bake It Up was developed using an Agile methodology
 
 ### Manual Testing
 
+Due to the excessive number of tests performed on this site, the testing can be found [here](TESTING.md)
+
 ### Automated Testing
 
-#### add_to_cart
+#### The add_to_cart function
 
 - For the purposes of demonstration, the function add_to_cart in the cart/cartfunctions.py file was automatically tested using Unittest.
   - *What does this function do?*: This function takes an object containing the details of an ordered product and appends it to the shopping cart object in session storage. Each product order object contains the product's name, any custom properties and the quantity of the product ordered. If there is already an object in the cart with the exact same properties as the new product (besides the quantity), then instead of the object being added to the list, the quantity of the new object will be added to the quantity of the old object
@@ -1630,13 +1632,21 @@ appear underneath, and select "create a new repository"
 5. Click "Create repository from template". GitHub will begin to build a
 new project from that template.
 
-## Other points to note
+## Other Points to Note
 
 ### Spelling
 
 - Throughout the development of the project, I used 2 different ways of spelling for some words:
   - **The Engligh spelling** (for example, "colour") is used for anything on the front-end of the site that could be visible to the user. This was done because the website belongs to an Irish company, so its users would be more inclined to spell in this manner
   - **The American spelling** (for example, "color") is used for naming variables. This was done in case the website was handed over to an American or non-fluent English speaker, both more inclined to use this spelling. This would prevent confusion when searching for these variables
+
+### Daylight Savings Time
+
+- When developing the next day baking cutoff point, when testing the feature it worked as intended. However, when the clocks went 1 hour ahead for daylight savings, the time became out of sync with Python's time.
+- This seems like this is an issue that is not on my end, as I tried to resolve this by using Django's timezone module, ensuring my timezone settings were correct in my settings file, with no change in result
+- To work around this, I added an environment variable "USE_DAYLIGHT_SAVINGS", that, if the issue is resolved, I will remove to ensure the time is synchronised without altering the project
+
+![The USE_DAYLIGHT_SAVINGS environment variable](media/images/readme/daylight-savings.JPG)
 
 ## Credits
 

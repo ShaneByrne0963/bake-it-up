@@ -4,6 +4,7 @@ from products.forms import get_default_label
 from core.shortcuts import convert_24_hour_to_12
 
 from datetime import datetime, timedelta
+import os
 
 
 def add_to_cart(product, cart):
@@ -111,6 +112,9 @@ def has_reached_cutoff_time(current_datetime=None):
     """
     if not current_datetime:
         current_datetime = timezone.now()
+    
+    if 'USE_DAYLIGHT_SAVINGS' in os.environ:
+        current_datetime += timedelta(hours=1)
 
     current_time = datetime.time(current_datetime).strftime('%H:%M')
     current_hour = current_time.split(':')[0]
