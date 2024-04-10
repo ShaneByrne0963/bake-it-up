@@ -505,6 +505,7 @@ The lists can be arranged in multiple different ways:
 ![The hero image](media/images/readme/design/site-layout/header/hero-image.JPG)
 
 - The navigation bar is simple, only involving pages related to products. This prevents users from being drawn away from the main focus of the site: buying the bakery's products.
+- The navigation bar has a background that came from the texture of the bakery logo. This allows the logo to sit with it seamlessly without standing out too much
 
 ![The page navigation](media/images/readme/design/site-layout/header/navigation.JPG)
 
@@ -513,6 +514,7 @@ The lists can be arranged in multiple different ways:
 ![Product categories](media/images/readme/design/site-layout/header/categories.JPG)
 
 - Clicking on the search icon expands a search bar that overlaps the content heading. This bar was kept hidden from users not looking to use it in order to conserve space
+- This search bar is made of two double white outlines, a property that is also shared by the bakery logo. This is the general theme of the site, and sticking to it enforces a level of consistency
 
 ![The search bar, revealed when the search icon is clicked](media/images/readme/design/site-layout/header/search.JPG)
 
@@ -559,11 +561,12 @@ The lists can be arranged in multiple different ways:
 
 ![The footer for medium screens](media/images/readme/design/site-layout/footer/footer-small.JPG)
 
-<details>
+</details>
 
 <details><summary><strong>Modal</strong></summary>
 
 - A modal is used to perform and confirm many actions throughout the site. It appears in the center of the screen, with a base comprised of a title, a body, a confirmation button and a cancel button.
+- For consistency, the modal uses the same texture as the bakery logo, while also both sharing a double white outline. This is to maintain consistency with the theme of the site, with other components having similar properties
 
 ![A standard modal](media/images/readme/design/site-layout/modal/modal-base.JPG)
 
@@ -583,6 +586,7 @@ The lists can be arranged in multiple different ways:
 - Toasts are popup messages that appear to give feedback on a user action, for example, logging out of their account. This visual confirmation leaves the user with no doubt that their action was processed, and any errors will be made known
 - On page load, the toast animates its way in from the right hand side of the screen, below the user sction button so it isn't blocked
 - Users can manually close these modals, or they will close automatically after a few seconds, so the users don't have to manually close them
+- Like the modal, toasts share the same background and double white outlines as the bakery logo, for consistency's sake
 
 ![A toast appearing on logout](media/images/readme/design/site-layout/toasts/toast-logout.JPG)
 
@@ -599,11 +603,43 @@ The lists can be arranged in multiple different ways:
 
 ![The four different types of toasts](media/images/readme/design/site-layout/toasts/toast-types.JPG)
 
-<details>
+</details>
 
 ### Colour Scheme
 
+- The colour scheme of the website began by evaluating the company brand logo
+
+![The Bake It Up logo](media/images/bakery-logo.webp)
+
+- This logo is composed of 2 colours: dark grey and white.
+- The texture of the background resembles some sort of stone. I liked this as it could represent the stone-baked nature of Bake It Up's goods, so I decided to extract the texture of it to use throughout the site
+
+![The texture of the bakery logo](media/images/ui-back.webp)
+
+- This was decided to be the primary colour of the site, with this texture becoming the background for several sections, including the navigation and footer
+
+![The texture in use behind the footer](media/images/readme/design/site-layout/footer/page-footer.JPG)
+
+- For the secondary colour, I decided to use a brown-hue colour. This leans towards the colour of bread, which suits the theme bakery aspect of the site
+- This colour was primarily used for action buttons, such as submitting forms
+
+![The button to add a product to the cart](media/images/readme/design/submit-button.JPG)
+
+- These colours are both highlighed well within the hero image
+
+![The hero image](media/images/readme/design/site-layout/header/page-header.JPG)
+
 ### Typography
+
+- The general theme for the typography is "hand-drawn", which gives the website a more informal and cosy feel
+- The website uses 4 different fonts:
+  - **Handlee**: This font is the main font of the site, used for main bodies of text
+  - **Just Another Hand**: This font is reserved for titles
+  - **Delicious Handdrawn**: This is for the navigation buttons and headings within the footer, i.e. for the user interface. It is also the same font that was used for the "Bake It Up" logo, and works very well with the stone-like texture
+  - **Roboto**: This is used for form inputs. I decided to use a regular font instead of a "hand-drawn" one for the form inputs as using a hand-drawn one felt very out of place
+- Breaking the typography up into sections like this gives more power to differentiate between content
+
+![The four different fonts](media/images/readme/design/fonts.JPG)
 
 ### Wireframes
 
