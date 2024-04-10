@@ -248,7 +248,10 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | --------- | --------------- | ------------- |
 | Valid Data | The user is taken to the account verification page, and an email is sent to their email address | Works as intended |
 | No email provided | The form fails to send, requesting an email address | Works as intended |
+| No password 1 provided | The form fails to send, requesting a password | Works as intended |
+| No password 2 provided | The form fails to send, requesting a password | Works as intended |
 | Invalid email address | The page refreshes, and the modal alerts the user of the invalid email address | Works as intended |
+| email already exists | The page refreshes, and the modal alerts the user that the email is already in use | Works as intended |
 | Invalid password | The page refreshes, and the modal alerts the user of the invalid password | Works as intended |
 | Non-matching passwords | The page refreshes, and the modal alerts the user of the invalid passwords | Works as intended |
 
@@ -258,13 +261,24 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | --------- | --------------- | ------------- |
 | Valid Data | The user is signed up to the newsletter, they get a welcome email, and the discount code BAKEITUPNEWS10 is added to their email | Works as intended |
 | No email provided | The form fails to send, requesting an email address | Works as intended |
-| Invalid Email | The page refreshes, and an invalid feedback message under the email input requests a valid email | **The page refreshes, and a toast message appears, saying "An unexpected error occurred. None** |
+| Invalid Email | The page refreshes, and an invalid feedback message under the email input requests a valid email | **The page refreshes, and a toast message appears, saying "An unexpected error occurred. None**" |
+| Existing email, inactive | The email is resubscribed to the newsletter, and another email is sent, without a discount code | Works as intended |
 | Existing email, already subscribed | The page refreshes, and an invalid feedback message under the email input states the user is already subscribed | Works as intended |
-| Existing email, already subscribed | The page refreshes, and an invalid feedback message under the email input states the user is already subscribed | Works as intended |
 
+### Part 4 - Product Search
 
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The database is searched for products containing the query | Works as intended |
+| No query provided | The form fails to send, requesting a query | Works as intended |
+| Special characters entered | The form fails to send, informing the user that no special characters are to be used | Works as intended |
+| White space entered | The form fails to send, requesting a query to be entered | Works as intended |
 
+### Part 5 - Product Detail
 
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The product is added to the cart | Works as intended |
 
 
 
@@ -272,3 +286,6 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
 | Valid Data | The user's account is deleted | Works as intended |
+| Quantity less than 1 | The quantity updates to the minimum value: 1 | Works as intended |
+| Quantity greater than 99 | The quantity updates to the maximum value: 99 | Works as intended |
+| No quantity entered | The quantity updates to the minimum value: 1 | **The quantity remains empty, and the item total turns to NaN. Clicking the "Add to Cart" button causes an error.** |

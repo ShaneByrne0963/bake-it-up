@@ -228,6 +228,13 @@ $(document).ready(() => {
         $('.color-input').addClass('animated').click(selectColorInput);
     }
 
+    // Ensure the quantity input is never empty
+    $('#product-quantity').change(function() {
+        if (!($(this).val())) {
+            $(this).val(1);
+        }
+    });
+
     highlightAllergens();
     checkAllDisableButtons();
 
