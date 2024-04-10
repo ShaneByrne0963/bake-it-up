@@ -750,6 +750,13 @@ The lists can be arranged in multiple different ways:
 
 ## Business Model
 
+- The bakery has a Business to Customer, and possibly a Business to Business, relationship.
+- Because orders vary from day to day, a subscription service would be impractical, so a single payment method is most suitable for this business
+- The checkout process, from entering the site to payment, is reduced as much as possible to ensure the customer doesn't leave the site before making a payment. This is done in a number of ways:
+  - Easy access to view all products
+  - Minimum information required to fill in, no unnecessary required inputs
+  - Extra information, such as the bake date and customer message, are included in the shopping cart page rather than their own page, to reduce the number of clicks
+
 ## Search Engine Optimization
 
 ### Keywords
