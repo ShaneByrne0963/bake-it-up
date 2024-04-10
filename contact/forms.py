@@ -14,10 +14,3 @@ class NewsletterSignupForm(forms.ModelForm):
     class Meta:
         model = NewsletterEmails
         fields = ('email',)
-
-
-class NewsletterSignupForm(forms.Form):
-
-    email = forms.EmailField(label="Email",
-                             max_length=320,
-                             required=True)
