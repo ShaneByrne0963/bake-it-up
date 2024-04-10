@@ -1644,6 +1644,7 @@ new project from that template.
 
 - When developing the next day baking cutoff point, when testing the feature it worked as intended. However, when the clocks went 1 hour ahead for daylight savings, the time became out of sync with Python's time.
 - This seems like this is an issue that is not on my end, as I tried to resolve this by using Django's timezone module, ensuring my timezone settings were correct in my settings file, with no change in result
+- This oddity is also present on Stripe's webhook times on their website, so I'm not the only one experiencing this
 - To work around this, I added an environment variable "USE_DAYLIGHT_SAVINGS", that, if the issue is resolved, I will remove to ensure the time is synchronised without altering the project
 
 ![The USE_DAYLIGHT_SAVINGS environment variable](media/images/readme/daylight-savings.JPG)

@@ -26,7 +26,9 @@ class Checkout(View):
 
     @handle_server_errors
     def get(self, request):
-        cart = request.session['cart']
+        cart = None
+        if 'cart' in request.session:
+            cart = request.session['cart']
         if not cart:
             messages.add_message(request,
                                  messages.ERROR,

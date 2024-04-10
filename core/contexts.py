@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from products.models import BreadProduct, PastryProduct
 from contact.models import CustomerMessage
+from contact.forms import NewsletterSignupForm
 
 from .shortcuts import price_as_float, find_dict_in_list
 from .constants import PRODUCT_PROPERTIES
@@ -96,6 +97,8 @@ def get_base_context(request):
     context['company_county'] = settings.COUNTY
     context['company_email'] = settings.DEFAULT_FROM_EMAIL
     context['company_phone'] = settings.PHONE_NUMBER
+
+    context['newsletter_signup'] = NewsletterSignupForm()
 
     return context
 

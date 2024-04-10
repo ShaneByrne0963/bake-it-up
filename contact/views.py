@@ -125,6 +125,14 @@ class NewsletterSignup(View):
                 'newsletter_error': 'Please enter an email address'
             }
             return redirect(f'{url_next}{focus}')
+
+        newsletter_form = NewsletterSignupForm(request.POST)
+        if not newsletter_form.is_valid():
+            request.session['global_context'] = {
+                'newsletter_error': 'Please enter a valid email address'
+            }
+            return redirect(f'{url_next}{focus}')
+
         email = request.POST['email']
 
         # Checking if the email already exists in the database

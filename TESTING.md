@@ -12,6 +12,7 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | ------ | ---- | --------------- | ------------- |
 | Login | All | The login modal appears | Works as intended |
 | Signup | All | The signup modal appears | Works as intended |
+| Verify Account | Confirm Email | The user's email is confirmed, and their account is activated | Works as intended |
 | Forgot Password? | Login modal | The user is taken to the "Forgot Password" page | Works as intended |
 | Contact | Forgot Password | The user is taken to the "Store Contact" page | Works as intended |
 | Log out | Logout modal | The user is logged out, and taken to the home page | Works as intended |
@@ -145,6 +146,7 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | ------ | --------------- | ------------- |
 | "Deliver to me" checkbox | A delivery charge, as well as another checkbox to deliver to another address, appears/disappears | Works as intended |
 | "Deliver to another address" checkbox | A delivery address form expands/collapses | Works as intended |
+| "Deliver to another address" checkbox double click | The checkbox should remain synchronised with the collapse | Works as intended |
 | Back to cart | The user is taken to their shopping cart | Works as intended |
 
 ### Part 13 - Checkout Success
@@ -179,3 +181,94 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Button | Expected Result | Actual Result |
 | ------ | --------------- | ------------- |
 | Form clear button | The form is cleared | Works as intended |
+
+### Part 17 - Privacy Policy
+
+| Button | Expected Result | Actual Result |
+| ------ | --------------- | ------------- |
+| Termsfeed Privacy Policy Generator | The user is taken to the Termsfeed Privacy Policy Generator, opening in a new tab | Works as intended |
+| Termsfeed website | This takes the user to the cookies section of the TermsFeed website, opening in another tab | Works as intended |
+| Contact link | The user is taken to the store contact page | Works as intended |
+
+### Part 18 - Daily Orders
+
+| Button | Expected Result | Actual Result |
+| ------ | --------------- | ------------- |
+| Date input update | The page is refreshed, and the orders for the selected date are shown | Works as intended |
+| Order card | The Order's details are shown/hidden | Works as intended |
+
+### Part 19 - Customer Messages
+
+| Button | Expected Result | Actual Result |
+| ------ | --------------- | ------------- |
+| New message card | The messages details are revealed/hidden, and the message is marked as read | Works as intended |
+| Past message card | The messages details are revealed/hidden | Works as intended |
+| Delete message | The delete message modal appears | Works as intended |
+| Confirm delete message | The selected message is deleted | Works as intended |
+
+### Part 20 - Add Product
+
+| Button | Expected Result | Actual Result |
+| ------ | --------------- | ------------- |
+| Category select update | The appropriate property list appears in the product properties section | Works as intended |
+| Product property enable | The property inputs of that property are revealed/hidden | Works as intended |
+| Product property double click | The checkbox should remain synchronised with the collapse | Works as intended |
+| "Use Default" label checkbox | The label input should disable if the checkbox is checked, and vice versa | Works as intended |
+
+### Part 20 - Send Newsletter
+
+| Button | Expected Result | Actual Result |
+| ------ | --------------- | ------------- |
+| "Add a discount code" checkbox | The discount inputs are enabled when the checkbox is checked, and vice versa | Works as intended |
+| "when you spend over" checkbox | The min spending input is enabled when the checkbox is checked, and vice versa | Works as intended |
+| Form clear | The form is reset | Works as intended |
+
+### Part 22 - "Back To Top" Button
+
+| Expected Result | Actual Result |
+| --------------- | ------------- |
+| The user is taken to the top of the page | Works as intended |
+
+## Section 2 - Form Validation
+
+### Part 1 - Login
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data, unverified user | The user is taken to the account verification page, and an email is sent to their email address | Works as intended |
+| Valid Data, verified user | The user is logged in | Works as intended |
+| No email provided | The form fails to send, requesting an email address | Works as intended |
+| No password provided | The form fails to send, requesting an email address | Works as intended |
+| Invalid Username | The page refreshes, notifying the user their credentials are incorrect | Works as intended |
+| Invalid Password | The page refreshes, notifying the user their credentials are incorrect | Works as intended |
+
+### Part 2 - Signup
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The user is taken to the account verification page, and an email is sent to their email address | Works as intended |
+| No email provided | The form fails to send, requesting an email address | Works as intended |
+| Invalid email address | The page refreshes, and the modal alerts the user of the invalid email address | Works as intended |
+| Invalid password | The page refreshes, and the modal alerts the user of the invalid password | Works as intended |
+| Non-matching passwords | The page refreshes, and the modal alerts the user of the invalid passwords | Works as intended |
+
+### Part 3 - Newsletter Signup
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The user is signed up to the newsletter, they get a welcome email, and the discount code BAKEITUPNEWS10 is added to their email | Works as intended |
+| No email provided | The form fails to send, requesting an email address | Works as intended |
+| Invalid Email | The page refreshes, and an invalid feedback message under the email input requests a valid email | **The page refreshes, and a toast message appears, saying "An unexpected error occurred. None** |
+| Existing email, already subscribed | The page refreshes, and an invalid feedback message under the email input states the user is already subscribed | Works as intended |
+| Existing email, already subscribed | The page refreshes, and an invalid feedback message under the email input states the user is already subscribed | Works as intended |
+
+
+
+
+
+
+
+### Part ? - Delete Account
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The user's account is deleted | Works as intended |
