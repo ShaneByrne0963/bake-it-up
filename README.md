@@ -1201,8 +1201,275 @@ Bake It Up was developed using an Agile methodology
 
 ### Automated Testing
 
+#### add_to_cart
+
 - For the purposes of demonstration, the function add_to_cart in the cart/cartfunctions.py file was automatically tested using Unittest.
-  - 
+  - *What does this function do?*: This function takes an object containing the details of an ordered product and appends it to the shopping cart object in session storage. Each product order object contains the product's name, any custom properties and the quantity of the product ordered. If there is already an object in the cart with the exact same properties as the new product (besides the quantity), then instead of the object being added to the list, the quantity of the new object will be added to the quantity of the old object
+  - *What parameters does it take?*:
+    - product (Type: Dictionary): The product to be appended to the shopping cart. Must contain values "name" and "quantity". Every other value is optional
+    - cart (Type: List): A list of all products currently in the cart
+  - *What does it return?*: It returns a variable of type *list*, which is basically the cart but with the product appended to it
+- The test cases for this function are as follows:
+  - Returns a TypeError when product is not of type dict
+  - Returns a TypeError when cart is not of type list
+  - Returns a KeyError when no key "name" is found in product
+  - Returns a KeyError when no key "quantity" is found in product
+  - Returns a TypeError when value of product "name" is not String
+  - Returns a TypeError when value of product "quantity" is not Integer
+  - Returns a ValueError when "quantity" value is less than 1
+  - Function returns a value of type List
+  - product parameter exists in returned list
+  - Return value length is one larger than cart parameter length if product is not found in cart
+  - Return value length is the same as cart parameter length if product is found in cart
+  - Return value length is the same as cart parameter length if product is found in cart, but quantities are different
+  - Adds the quantity values together if product is found in cart
+  - Products with extra keys are counted as different from products of the same name without them
+- *Note*: Because the cart is just a list of previously validated product objects, validation for every item in the cart list is not necessary
+
+#### Red, Green, Refactor
+
+- This is the method used in automated testing, where the code is tested before the code for the test is written, knowing the test will fail.
+- After it fails, the bare minimum code is then written to make the test pass.
+- Then, if any repeating lines of code are present, the next phase is to refactor that code to make it more efficient
+- In my opinion, I dislike this method of testing, as I find it slower and less efficient than testing my code visually, but I included it as a learning experience
+
+#### The Tests
+
+<details><summary><strong>Test Case 1</strong></summary>
+
+![Test case 1](media/images/readme/testing/automated/test-cases/test_case_1.JPG)
+
+> Red
+
+- ![Red phase for test case 1](media/images/readme/testing/automated/red/red_case_1.JPG)
+
+> Solution
+
+- ![Solution for test case 1](media/images/readme/testing/automated/solutions/solution_case_1.JPG)
+
+> Green
+
+- ![Green phase for test case 1](media/images/readme/testing/automated/green/green_case_1.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 2</strong></summary>
+
+![Test case 2](media/images/readme/testing/automated/test-cases/test_case_2.JPG)
+
+> Red
+
+- ![Red phase for test case 2](media/images/readme/testing/automated/red/red_case_2.JPG)
+
+> Solution
+
+- ![Solution for test case 2](media/images/readme/testing/automated/solutions/solution_case_2.JPG)
+
+> Green
+
+- ![Green phase for test case 2](media/images/readme/testing/automated/green/green_case_2.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 3</strong></summary>
+
+![Test case 3](media/images/readme/testing/automated/test-cases/test_case_3.JPG)
+
+> Red
+
+- ![Red phase for test case 3](media/images/readme/testing/automated/red/red_case_3.JPG)
+
+> Solution
+
+- ![Solution for test case 3](media/images/readme/testing/automated/solutions/solution_case_3.JPG)
+
+> Green
+
+- ![Green phase for test case 3](media/images/readme/testing/automated/green/green_case_3.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 4</strong></summary>
+
+![Test case 4](media/images/readme/testing/automated/test-cases/test_case_4.JPG)
+
+> Red
+
+- ![Red phase for test case 4](media/images/readme/testing/automated/red/red_case_4.JPG)
+
+> Solution
+
+- ![Solution for test case 4](media/images/readme/testing/automated/solutions/solution_case_4.JPG)
+
+> Green
+
+- ![Green phase for test case 4](media/images/readme/testing/automated/green/green_case_4.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 5</strong></summary>
+
+![Test case 5](media/images/readme/testing/automated/test-cases/test_case_5.JPG)
+
+> Red
+
+- ![Red phase for test case 5](media/images/readme/testing/automated/red/red_case_5.JPG)
+
+> Solution
+
+- ![Solution for test case 5](media/images/readme/testing/automated/solutions/solution_case_5.JPG)
+
+> Green
+
+- ![Green phase for test case 5](media/images/readme/testing/automated/green/green_case_5.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 6</strong></summary>
+
+![Test case 6](media/images/readme/testing/automated/test-cases/test_case_6.JPG)
+
+> Red
+
+- ![Red phase for test case 6](media/images/readme/testing/automated/red/red_case_6.JPG)
+
+> Solution
+
+- ![Solution for test case 6](media/images/readme/testing/automated/solutions/solution_case_6.JPG)
+
+> Green
+
+- ![Green phase for test case 6](media/images/readme/testing/automated/green/green_case_6.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 7</strong></summary>
+
+![Test case 7](media/images/readme/testing/automated/test-cases/test_case_7.JPG)
+
+> Red
+
+- ![Red phase for test case 7](media/images/readme/testing/automated/red/red_case_7.JPG)
+
+> Solution
+
+- ![Solution for test case 7](media/images/readme/testing/automated/solutions/solution_case_7.JPG)
+
+> Green
+
+- ![Green phase for test case 7](media/images/readme/testing/automated/green/green_case_7.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 8</strong></summary>
+
+![Test case 8](media/images/readme/testing/automated/test-cases/test_case_8.JPG)
+
+> Red
+
+- ![Red phase for test case 8](media/images/readme/testing/automated/red/red_case_8.JPG)
+
+> Solution
+
+- ![Solution for test case 8](media/images/readme/testing/automated/solutions/solution_case_8.JPG)
+
+> Green
+
+- ![Green phase for test case 8](media/images/readme/testing/automated/green/green_case_8.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 9</strong></summary>
+
+![Test case 9](media/images/readme/testing/automated/test-cases/test_case_9.JPG)
+
+> Red
+
+- ![Red phase for test case 9](media/images/readme/testing/automated/red/red_case_9.JPG)
+
+> Solution
+
+- ![Solution for test case 9](media/images/readme/testing/automated/solutions/solution_case_9.JPG)
+
+> Green
+
+- ![Green phase for test case 9](media/images/readme/testing/automated/green/green_case_9.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 10</strong></summary>
+
+![Test case 10](media/images/readme/testing/automated/test-cases/test_case_10.JPG)
+
+- This test immediately passed without having to change the code
+
+![Green phase for test case 10](media/images/readme/testing/automated/green/green_case_10.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 11</strong></summary>
+
+![Test case 11](media/images/readme/testing/automated/test-cases/test_case_11.JPG)
+
+> Red
+
+- ![Red phase for test case 11](media/images/readme/testing/automated/red/red_case_11.JPG)
+
+> Solution
+
+- ![Solution for test case 11](media/images/readme/testing/automated/solutions/solution_case_11.JPG)
+
+> Green
+
+- ![Green phase for test case 11](media/images/readme/testing/automated/green/green_case_11.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 12</strong></summary>
+
+![Test case 12](media/images/readme/testing/automated/test-cases/test_case_12.JPG)
+
+> Red
+
+- ![Red phase for test case 12](media/images/readme/testing/automated/red/red_case_12.JPG)
+
+> Solution
+
+- ![Solution for test case 12](media/images/readme/testing/automated/solutions/solution_case_12.JPG)
+
+> Green
+
+- ![Green phase for test case 12](media/images/readme/testing/automated/green/green_case_12.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 13</strong></summary>
+
+![Test case 13](media/images/readme/testing/automated/test-cases/test_case_13.JPG)
+
+> Red
+
+- ![Red phase for test case 13](media/images/readme/testing/automated/red/red_case_13.JPG)
+
+> Solution
+
+- ![Solution for test case 13](media/images/readme/testing/automated/solutions/solution_case_13.JPG)
+
+> Green
+
+- ![Green phase for test case 13](media/images/readme/testing/automated/green/green_case_13.JPG)
+
+</details>
+
+<details><summary><strong>Test Case 14</strong></summary>
+
+![Test case 14](media/images/readme/testing/automated/test-cases/test_case_14.JPG)
+
+- This test immediately passed without having to change the code
+
+- ![Green phase for test case 14](media/images/readme/testing/automated/green/green_case_14.JPG)
+
+</details>
 
 ### Browser Testing
 
