@@ -1201,7 +1201,30 @@ Bake It Up was developed using an Agile methodology
 
 ### Automated Testing
 
+- For the purposes of demonstration, the function add_to_cart in the cart/cartfunctions.py file was automatically tested using Unittest.
+  - 
+
 ### Browser Testing
+
+Bake It Up's website was tested in Chrome, Firefox and Microsoft Edge. On all sites, everything is working as normal, and all the files and fonts are loaded correctly
+
+<details><summary><strong>Google Chrome</strong></summary>
+
+![Bake It Up on Google Chrome](media/images/readme/testing/browser/chrome.JPG)
+
+</details>
+
+<details><summary><strong>Firefox</strong></summary>
+
+![Bake It Up on Firefox](media/images/readme/testing/browser/firefox.JPG)
+
+</details>
+
+<details><summary><strong>Microsoft Edge</strong></summary>
+
+![Bake It Up on Microsoft Edge](media/images/readme/testing/browser/microsoft-edge.JPG)
+
+</details>
 
 ### Error Handling
 
