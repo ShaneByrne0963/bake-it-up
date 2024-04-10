@@ -499,6 +499,112 @@ The lists can be arranged in multiple different ways:
 
 ### Wireframes
 
+<details><summary><strong>Click to reveal wireframes</strong></summary>
+
+#### Base Template
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The base template for desktop](media/images/readme/wireframes/desktop/base.jpg) | ![The base template for mobile](media/images/readme/wireframes/mobile/base.jpg)
+
+#### Page Footer
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The footer for desktop](media/images/readme/wireframes/desktop/footer.jpg) | ![The footer for mobile](media/images/readme/wireframes/mobile/footer.jpg)
+
+#### Home Page
+
+- Top
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The top index page for desktop](media/images/readme/wireframes/desktop/index-top.jpg) | ![The top index page for mobile](media/images/readme/wireframes/mobile/index-top.jpg)
+
+- Bottom
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The bottom index page for desktop](media/images/readme/wireframes/desktop/index-bottom.jpg) | ![The bottom index page for mobile](media/images/readme/wireframes/mobile/index-bottom.jpg)
+
+#### Product List
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The product list page for desktop](media/images/readme/wireframes/desktop/product-list.jpg) | ![The product list page for mobile](media/images/readme/wireframes/mobile/product-list.jpg)
+
+#### Product Details
+
+
+<table><tr><th>Desktop</th><th>Mobile</th></tr><tr>
+<td>
+
+![The product detail page for desktop](media/images/readme/wireframes/desktop/product-detail.jpg)
+
+</td><td>
+
+- Top
+
+![The product detail page for mobile - 1](media/images/readme/wireframes/mobile/product-detail-top.jpg)
+
+</td></tr></tr><td></td><td>
+
+- Bottom
+
+![The product detail page for mobile - 2](media/images/readme/wireframes/mobile/product-detail-bottom.jpg)
+
+</td></tr></table>
+
+#### Shopping Cart
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The shopping cart page for desktop](media/images/readme/wireframes/desktop/cart.jpg) | ![The shopping cart page for mobile](media/images/readme/wireframes/mobile/cart.jpg)
+
+#### Checkout
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The checkout page for desktop](media/images/readme/wireframes/desktop/checkout.jpg) | ![The checkout page for mobile](media/images/readme/wireframes/mobile/checkout.jpg)
+
+#### Checkout Success
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The checkout success page for desktop](media/images/readme/wireframes/desktop/checkout-success.jpg) | ![The checkout success page for mobile](media/images/readme/wireframes/mobile/checkout-success.jpg)
+
+#### Account Settings
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The profile page for desktop](media/images/readme/wireframes/desktop/profile.jpg) | ![The profile page for mobile](media/images/readme/wireframes/mobile/profile.jpg)
+
+#### Store Contact
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The profile page for desktop](media/images/readme/wireframes/desktop/contact.jpg) | ![The profile page for mobile](media/images/readme/wireframes/mobile/contact.jpg)
+
+#### Customer Messages (Admin)
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The messages page for desktop](media/images/readme/wireframes/desktop/messages.jpg) | ![The messages page for mobile](media/images/readme/wireframes/mobile/messages.jpg)
+
+#### Daily Orders (Admin)
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The orders page for desktop](media/images/readme/wireframes/desktop/daily-orders.jpg) | ![The orders page for mobile](media/images/readme/wireframes/mobile/daily-orders.jpg)
+
+#### Add Products (Admin)
+
+| Desktop | Mobile |
+| ------- | ------ |
+![The orders page for desktop](media/images/readme/wireframes/desktop/add-product.jpg) | ![The orders page for mobile](media/images/readme/wireframes/mobile/add-product.jpg)
+
+</details>
+
 ## Business Model
 
 ## Search Engine Optimization

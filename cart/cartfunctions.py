@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils import timezone
 from products.forms import get_default_label
 from core.shortcuts import convert_24_hour_to_12
 
@@ -109,7 +110,7 @@ def has_reached_cutoff_time(current_datetime=None):
     to bake the products the next day
     """
     if not current_datetime:
-        current_datetime = datetime.now()
+        current_datetime = timezone.now()
 
     current_time = datetime.time(current_datetime).strftime('%H:%M')
     current_hour = current_time.split(':')[0]
