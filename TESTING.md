@@ -279,6 +279,29 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
 | Valid Data | The product is added to the cart | Works as intended |
+| Quantity less than 1 | The quantity updates to the minimum value: 1 | Works as intended |
+| Quantity greater than 99 | The quantity updates to the maximum value: 99 | Works as intended |
+| No quantity entered | The quantity updates to the minimum value: 1 | **The quantity remains empty, and the item total turns to NaN. Clicking the "Add to Cart" button causes an error.** |
+
+### Part 6 - Shopping Cart
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The user is taken to the checkout page | Works as intended |
+| Invalid bake date | The form fails to send, requesting the user to input a date that falls within the allowed dates | Works as intended |
+| Next day bake date, after the cutoff point | The page refreshes, the bake date is now 2 days ahead, and an error message under the bake date explains the problem | Works as intended |
+| Blank date entered | The page refreshes, with an error message under the bake date to select a valid date | **The user can move to the checkout with a blank date. The error isn't caught until the payment is submitted** |
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -286,6 +309,5 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
 | Valid Data | The user's account is deleted | Works as intended |
-| Quantity less than 1 | The quantity updates to the minimum value: 1 | Works as intended |
-| Quantity greater than 99 | The quantity updates to the maximum value: 99 | Works as intended |
-| No quantity entered | The quantity updates to the minimum value: 1 | **The quantity remains empty, and the item total turns to NaN. Clicking the "Add to Cart" button causes an error.** |
+| Invalid Password | The page refreshes, with a feedback message telling the user the password is incorrect | Works as intended |
+| No password provided | The form fails to send, requesting a password | Works as intended |

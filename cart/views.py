@@ -14,7 +14,7 @@ from core.shortcuts import price_as_int, convert_24_hour_to_12, \
                            is_tomorrows_date
 from products.forms import create_properties_form
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class ViewCart(View):
@@ -63,6 +63,23 @@ class ViewCart(View):
         note = ''
         if 'note' in request.POST:
             note = request.POST['note']
+        
+        # Validation of bake date
+        try:
+            selected_timestamp = datetime.strptime(
+                request.POST['bake_date'],
+                '%Y-%m-%d').timestamp()
+
+            min_timestamp = datetime.now().timestamp()
+            max_time = datetime.now() + timedelta(days=settings.ORDER_MAX_DAYS)
+            max_timestamp = max_time.timestamp()
+
+            if (selected_timestamp < min_timestamp
+                    or selected_timestamp > max_timestamp):
+                raise ValueError("Date is out of bounds")
+        except Exception as e:
+            messages.error(request, f"Please enter a valid bake date. {e}")
+            return redirect('cart')
         
         # Checking if the cutoff point has been reached since page load
         selected_date = request.POST['bake_date']
