@@ -304,11 +304,15 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | No address line 1 given | The form fails to send, requesting a street address | Works as intended |
 | No town or city given | The form fails to send, requesting a town or city | Works as intended |
 | No postcode given | The form fails to send, requesting a postcode | Works as intended |
-| Special characters for each input | The form fails to send, requesting the removal of the special characters | Works as intended |
+| Invalid special characters for each input | The form fails to send, requesting the removal of the special characters | Works as intended |
 | Non-numeric phone number | The form fails to send, requesting a phone number of only figits | Works as intended |
-| Invalid Input hidden behind checkbox | The input won't affect the form and should continue as normal | **Hidden invalid inputs cause the form to not submit**|
+| Invalid input hidden behind checkbox | The input won't affect the form and should continue as normal | **Hidden invalid inputs cause the form to not submit**|
+| Discount code left unsubmitted | The form warns the user that their discount code is not submitted | Works as intended |
 
+### Part 8 - Account Management
 
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
 
 
 

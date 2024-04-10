@@ -298,10 +298,11 @@ $(document).ready(() => {
     $(window).on('scroll', scrollScreen).resize(resizeWindow);
 
     // Adding validation to inputs
-    $('input[type="text"]:not(.option-input)').addClass('no-special-chars');
-    $('input[name="phone"]').addClass('only-numbers');
+    $('input[type="text"]:not(.ignore-default)').addClass('no-special-chars');
+    $('input[name="phone"]:not(.ignore-default)').addClass('only-numbers');
     $('input[type="text"], input[type="email"], textarea').on('change', validateInput);
     $('input[type="number"]').on('change', clampNumberInput);
+    $('.ignore-default').removeClass('ignore-default');
 
     // Returns to the top of the screen when the "Back to Top" button is clicked
     $('#to-top').click(function() {
