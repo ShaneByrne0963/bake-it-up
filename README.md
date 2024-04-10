@@ -89,9 +89,38 @@ This e-commerce website was produced using Stripe Payments and the Django framew
 <details><summary>Signup</summary>
 
 - When the user clicks the signup page, the signup modal appears, requesting an email, a password validated by being entered twice, and an optional first and last name
-- 
+
+![The signup modal](media/images/readme/features/auth/signup-modal.JPG)
+
+- Entering invalid details will give feedback for each invalid input, with the reason why the signup failed. This allows the user to easily evaluate the errors and make corrections where necessary
+
+![An invalid signup with feedback](media/images/readme/features/auth/invalid-signup.JPG)
+
+- If the user signs up with valid information, a confirmation email is sent to the given email address. This is done to ensure that the email address actually belongs to the user
+
+![A message alerting the user of a confirmation email](media/images/readme/features/auth/signup-validation.JPG)
+
+- The email contains a link to activate their account. When activated, the user can freely use their account
+
+![The confirmation email](media/images/readme/features/auth/signup-email.JPG)
+
+![The page the email takes the user to](media/images/readme/features/auth/access-account.JPG)
 
 </details>
+
+<details><summary>Logout</summary>
+
+- Authenticated users can always log out through the profile dropdown. The ability to log out is critical to keep the user's information secure if they were to log in on a public device
+
+![The logout button in the profile dropdown](media/images/readme/features/auth/logout-button.JPG)
+
+- When a logout is attempted, a confirmation modal will first appear asking the user for confirmation that the logout is intentional. This avoids any misclicks logging the user out, and making the user have to go through the process of logging in again
+
+![The logout modal](media/images/readme/features/auth/logout-modal.JPG)
+
+</details>
+
+<br>
 
 </details>
 
