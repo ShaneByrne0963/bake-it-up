@@ -25,7 +25,8 @@
                             <div class="carousel-text left">
                                 <div>
                                     <p>Get a custom-made wedding cake for your special day</p>
-                                    <a href="{% url 'store_contact' %}?about=wedding-cake" class="btn btn-primary">Order Yours</a>
+                                    <a href="{% url 'store_contact' %}?about=wedding-cake" class="btn btn-primary"
+                                        aria-label="Go to the store contact page">Order Yours</a>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +37,8 @@
                             <div class="carousel-text right">
                                 <div>
                                     <p>Try some of our delicious cinnamon rolls!</p>
-                                    <a href="{% url 'product_detail' 'cinnamon-swirl' %}" class="btn btn-primary">Try It!</a>
+                                    <a href="{% url 'product_detail' 'cinnamon-swirl' %}" class="btn btn-primary"
+                                        aria-label="Go to the cinnamon swirls page">Try It!</a>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +49,8 @@
                             <div class="carousel-text right lower">
                                 <div>
                                     <p>We offer a wide range of cookies</p>
-                                    <a href="{% url 'product_detail' 'cookies' %}" class="btn btn-primary">Get Yours</a>
+                                    <a href="{% url 'product_detail' 'cookies' %}" class="btn btn-primary"
+                                        aria-label="Go to the cookie product page">Get Yours</a>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +61,8 @@
                             <div class="carousel-text left upper">
                                 <div>
                                     <p>Have your birthday cake tailored to you</p>
-                                    <a href="{% url 'product_list' %}?category=cakes" class="btn btn-primary">Order</a>
+                                    <a href="{% url 'product_list' %}?category=cakes" class="btn btn-primary"
+                                        aria-label="View our cake products">Order</a>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +132,7 @@
                 {% include 'products/includes/product_card.html' %}
             {% endfor %}
             <div class="col-12 text-center">
-                <a href="{% url 'product_list' %}">View All of Our Products</a>
+                <a href="{% url 'product_list' %}" aria-label="Go to the product list page">View All of Our Products</a>
             </div>
         </div>
     </div>

@@ -12,7 +12,8 @@
                     {% endif %}
                     {% for p in page_obj.paginator.page_range %}
                         <li class="page-item{% if p == page_obj.number %} active{% endif %}">
-                            <a class="page-link" href="?{% if get_url %}{{ get_url }}&{% endif %}page={{ p }}">{{ p }}</a>
+                            <a class="page-link" href="?{% if get_url %}{{ get_url }}&{% endif %}page={{ p }}"
+                                aria-label="Go to product page {{ p }}">{{ p }}</a>
                         </li>
                     {% endfor %}
                     {% if page_obj.has_next %}

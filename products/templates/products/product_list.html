@@ -45,7 +45,7 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="col d-flex align-items-end pb-3 order-1 order-md-last px-0">
-                    <a href="{% url 'product_list' %}{{ url_favourites_toggle }}" class="text-dark">
+                    <a href="{% url 'product_list' %}{{ url_favourites_toggle }}" class="text-dark" aria-label="Toggle your favourite products">
                         <i class="h2 fa-{% if favourites %}solid{% else %}regular{% endif %} fa-heart mb-1"></i>
                     </a>
                 </div>
@@ -62,12 +62,13 @@
                     <i class="fa-solid fa-heart-crack"></i>
                     {% if q %}
                         <h2>Sorry, but we could not find any products that met your criteria.</h2>
-                        <p>Why don't you <a href="{% url 'product_list' %}?category={{ category }}">clear your criteria</a> 
+                        <p>Why don't you <a href="{% url 'product_list' %}?category={{ category }}"
+                            aria-label="View a list of our products without your criteria">clear your criteria</a> 
                             so that you can see what{% if category == 'all' %} products{% else %} {{ category }}{% endif %} we have to offer?</p>
                     {% else %}
                         <h2>Sorry, but we don't have any{% if category == 'all' %} products{% else %} {{ category }}{% endif %} yet...</h2>
                         <p>Don't worry though. We still have plenty of other products to enjoy. 
-                            <a href="{% url 'product_list' %}">Check them out here!</a></p>
+                            <a href="{% url 'product_list' %}" aria-label="View a list of our products">Check them out here!</a></p>
                     {% endif %}
                 </div>
             {% endif %}

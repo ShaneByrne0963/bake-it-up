@@ -89,7 +89,8 @@
                         </ul>
                     {% endif %}
                     {% if newsletter_active %}
-                        <a href="{% url 'newsletter_unsubscribe' user.email %}">Unsubscribe from newsletter</a>
+                        <a href="{% url 'newsletter_unsubscribe' user.email %}"
+                            aria-label="Unsubscribe from the newsletter">Unsubscribe from newsletter</a>
                     {% endif %}
                 {% endif %}
                 <hr class="my-5">
@@ -103,7 +104,8 @@
                             {% for order in orders %}
                                 <div class="list-group-item p-0">
                                     <div class="card-header border-0 text-break">
-                                        <a href="{% url 'order_details' order.order_number %}" class="d-block text-dark">{{ order }}</a>
+                                        <a href="{% url 'order_details' order.order_number %}" class="d-block text-dark"
+                                            aria-label="Go to the order summary page for this order.">{{ order }}</a>
                                         <small>Placed on: {{ order.order_date }}</small>
                                     </div>
                                 </div>

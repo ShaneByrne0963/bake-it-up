@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content_heading %}
-    <a href="{% url 'account_settings' %}">
+    <a href="{% url 'account_settings' %}" aria-label="Return to your account settings page">
         <i class="fa-solid fa-caret-left mr-2"></i>Back to account settings
     </a>
 {% endblock %}
@@ -159,7 +159,7 @@
                     </div>
                 {% endif %}
                 <div class="text-center">
-                    <a href="{% url 'account_settings' %}">
+                    <a href="{% url 'account_settings' %}" aria-label="Return to your account settings page">
                         <i class="fa-solid fa-caret-left mr-2"></i>Back to account settings
                     </a>
                 </div>

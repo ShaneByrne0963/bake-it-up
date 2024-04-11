@@ -16,9 +16,9 @@
         {% elif error_status == 'received' %}
             <p>Our team has been notified of the issue and is working hard to resolve it.</p>
         {% else %}
-            <p>If this problem persists, please <a href="{% url 'store_contact' %}">contact us</a> and report the issue.
+            <p>If this problem persists, please <a href="{% url 'store_contact' %}" aria-label="Go to the store contact page">contact us</a> and report the issue.
             </p>
         {% endif %}
-        <a href="{% url 'home' %}">Back to the home page.</a>
+        <a href="{% url 'home' %}" aria-label="Go to the home page">Back to the home page.</a>
     </div>
 {% endblock %}
