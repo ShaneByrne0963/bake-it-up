@@ -309,10 +309,18 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Invalid input hidden behind checkbox | The input won't affect the form and should continue as normal | **Hidden invalid inputs cause the form to not submit**|
 | Discount code left unsubmitted | The form warns the user that their discount code is not submitted | Works as intended |
 
-### Part 8 - Account Management
+### Part 8 - Account Management (Contact Details)
 
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
+| Valid Data (email not changed) | The user's information is updated | Works as intended |
+| Valid Data (email changed) | A modal requesting the user's password appears | Works as intended |
+| Special characters in names | The form fails to send, requesting the names without special characters | Works as intended |
+| Non-numerical values in number input | The form fails to send, requesting only numbers in the input | Works as intended |
+| White Space in fields | Any white space will be trimmed from the input | Works as intended |
+| Already existing email entered | The page refreshes, and the user is notified that the email already exists | **Instead of feedback, the user encounters a server error** |
+
+
 
 
 

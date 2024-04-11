@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
+from django.contrib.auth.models import User
 from django.views import View
 from home.views import CustomLogin
 from allauth.account.admin import EmailAddress
@@ -178,9 +179,10 @@ class AccountSettings(View):
             new_fname = request.POST.get('profile_fname', '')
             new_lname = request.POST.get('profile_lname', '')
             new_phone = request.POST.get('phone', '')
+            request.session['global_context'] = {}
 
             # Password verification for changing emails
-            new_email = request.POST.get('email', '')
+            new_email = request.POST.get('email', request.user.email)
             old_email = request.user.email
             if new_email != old_email:
                 if 'password' not in request.POST:
@@ -208,10 +210,16 @@ class AccountSettings(View):
                         'modal_form_type': 'update_email',
                         'modal_form_errors': form_error,
                     }
+                else:
+                    if User.objects.filter(email=new_email).exists():
+                        messages.error(
+                            request,
+                            "A user with this email already exists"
+                        )
+                        return redirect('account_settings')
             # Form Validation
             if update_success:
                 update_success = False
-                request.session['global_context'] = {}
                 form = ProfileContactForm(request.POST)
                 if form.is_valid():
                     request.user.first_name = new_fname
