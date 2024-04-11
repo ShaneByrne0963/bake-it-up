@@ -53,7 +53,7 @@ function triggerModal(context) {
     if ('onSubmit' in context) {
         $('#modal-content-inner').on('submit', function(event) {
             event.preventDefault();
-            context['onSubmit']();
+            context.onSubmit();
         });
     }
 
@@ -88,7 +88,7 @@ function modalFormInit(formId, formType="") {
         case 'verify-password':
             context.title = 'Verify Password';
             context.button = 'Verify';
-            if (formType == 'update_email') {
+            if (formType === 'update_email') {
                 context.body = `
                 <p>You are about to change your email address. To make sure it is
                 you, please verify your password.</p>
@@ -97,7 +97,7 @@ function modalFormInit(formId, formType="") {
                 context.url = '';
                 context.hiddenInputs = '#contact-form';
             }
-            else if (formType = 'delete_account') {
+            else if (formType === 'delete_account') {
                 context.body = `
                 <p>Are you sure you want to delete your account?</p>
                 <p class="ui-error">This action is irreversible, and you will lose all of your saved information!</p>

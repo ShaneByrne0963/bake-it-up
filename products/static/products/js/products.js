@@ -17,13 +17,13 @@ const allergens = [
     'crustacean',
     'mollusc',
     'soya',
-]
+];
 
 // Global variables. Initialize here ONLY. Ensure no duplicates
 const global = {
     containerWidth: 0,
     colorListWidth: 0
-}
+};
 
 
 /**
@@ -182,8 +182,8 @@ function colorScroll(direction) {
         colorIteration += (colorWidth * direction);
 
         // Checks if the current color input extends past the container border
-        if ((isRight && colorIteration > global.containerWidth - listPosition + scrollMargin)
-            || (!isRight && colorIteration < -listPosition - scrollMargin)) {
+        if ((isRight && colorIteration > global.containerWidth - listPosition + scrollMargin) || 
+                (!isRight && colorIteration < -listPosition - scrollMargin)) {
             break;
         }
     }

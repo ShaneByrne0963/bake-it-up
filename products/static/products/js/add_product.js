@@ -195,7 +195,7 @@ function addProductColor() {
 function addColorToList(color, colorList) {
     // Creating the color input
     let colorInput = $('<div></div>').addClass('color-input animated').click(colorSelectAddProduct);
-    let colorOverlay = $('<div></div>')
+    let colorOverlay = $('<div></div>');
 
     // Black means no color selected
     if (color === '#000000') {
@@ -429,7 +429,7 @@ $(document).ready(() => {
 
         $(this).find('input, select, textarea').each(function() {
             let key = $(this).attr('name');
-            let inputType = $(this).attr('type')
+            let inputType = $(this).attr('type');
 
             switch (inputType) {
                 case 'file':

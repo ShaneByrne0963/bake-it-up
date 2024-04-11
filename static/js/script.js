@@ -147,7 +147,7 @@ function highlightQueries() {
                 let isWholeWord = true;
 
                 // Finding the start of the word
-                let startOfWord = queryPosition
+                let startOfWord = queryPosition;
                 while (startOfWord > 0 && elementLower[startOfWord - 1] !== ' ') {
                     startOfWord--;
                     isWholeWord = false;
@@ -240,7 +240,7 @@ function validateInput() {
 
     if ($(this).hasClass('no-special-chars')) {
         let numExceptions = 0;
-        let specCharValidity = 'Cannot contain any special characters.'
+        let specCharValidity = 'Cannot contain any special characters.';
         if ($(this).hasClass('allow-commas')) {
             value = value.replaceAll(',', '');
             numExceptions++;

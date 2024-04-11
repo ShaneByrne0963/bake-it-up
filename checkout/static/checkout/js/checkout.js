@@ -215,7 +215,7 @@ function paymentSubmit() {
             state: $.trim(form.delivery_county.value),
             country: 'IE',
             postal_code: $.trim(form.delivery_postcode.value)
-        }
+        };
     }
     else {
         shipping_details.address = {...base_details.address};
@@ -226,7 +226,7 @@ function paymentSubmit() {
         'client_secret': clientSecret,
         first_name: form.first_name.value,
         last_name: form.last_name.value,
-    }
+    };
     $('#checkout-form').find('input, select').each(function() {
         let inputType = $(this).attr('type');
         let inputName = $(this).attr('name');
@@ -299,7 +299,7 @@ function applyDiscountCode() {
         csrfmiddlewaretoken: csrfToken,
         code_name: codeName,
         email: email
-    }
+    };
     let url = '/checkout/get_discount/';
     $.post(url, postData).done(function(result) {
         $('#discount-code').attr('name', 'code_name').prop('disabled', true);

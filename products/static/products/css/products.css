@@ -152,10 +152,6 @@
     height: 100%;
 }
 
-.color-input:has(.color-input-none) {
-    border-color: #973535;
-}
-
 /* The "X" marked color input, to allow users to select no color */
 .color-input-none {
     display: flex;

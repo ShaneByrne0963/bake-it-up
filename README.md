@@ -1532,7 +1532,89 @@ Bake It Up's website was tested in Chrome, Firefox and Microsoft Edge. On all si
 
 ### W3C CSS
 
+<details><summary><strong>style.css</strong></summary>
+
+![style.css validated](media/images/readme/validation/css/style.JPG)
+
+</details>
+
+<details><summary><strong>home.css</strong></summary>
+
+![home.css validated](media/images/readme/validation/css/home.JPG)
+
+</details>
+
+<details><summary><strong>products.css</strong></summary>
+
+![products.css validated](media/images/readme/validation/css/products.JPG)
+
+</details>
+
+<details><summary><strong>cart.css</strong></summary>
+
+![cart.css validated](media/images/readme/validation/css/cart.JPG)
+
+</details>
+
+<details><summary><strong>checkout.css</strong></summary>
+
+![checkout.css validated](media/images/readme/validation/css/checkout.JPG)
+
+</details>
+
 ### JSHint
+
+<details><summary><strong>script.js</strong></summary>
+
+![script.js validated](media/images/readme/validation/js/script.JPG)
+
+</details>
+
+<details><summary><strong>modal.js</strong></summary>
+
+![modal.js validated](media/images/readme/validation/js/modal.JPG)
+
+- The warning isn't a concern as there is no unwanted properties in the prototype
+
+</details>
+
+<details><summary><strong>products.js</strong></summary>
+
+![products.js validated](media/images/readme/validation/js/products.JPG)
+
+</details>
+
+<details><summary><strong>checkout.js</strong></summary>
+
+![checkout.js validated](media/images/readme/validation/js/checkout.JPG)
+
+</details>
+
+<details><summary><strong>profiles.js</strong></summary>
+
+![profiles.js validated](media/images/readme/validation/js/profiles.JPG)
+
+</details>
+
+<details><summary><strong>contact.js</strong></summary>
+
+![contact.js validated](media/images/readme/validation/js/contact.JPG)
+
+</details>
+
+<details><summary><strong>orders.js</strong></summary>
+
+![orders.js validated](media/images/readme/validation/js/orders.JPG)
+
+</details>
+
+<details><summary><strong>add_product.js</strong></summary>
+
+![add_product.js validated](media/images/readme/validation/js/add-product.JPG)
+
+- The warnings are being caused by a hexToRgb function I imported from [here](https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb). It works fine so I don't see it as a major issue
+
+</details>
 
 ### PEP8
 

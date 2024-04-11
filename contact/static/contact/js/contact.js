@@ -1,4 +1,4 @@
-const url = '/contact/open_message/'
+const url = '/contact/open_message/';
 const maxAttempts = 5;
 const attemptDelay = 1000;
 /**
@@ -10,7 +10,7 @@ function openMessage(counter=0) {
     const csrfToken = $('#unopen-messages').find('input').val();
     let formData = {
         'csrfmiddlewaretoken': csrfToken
-    }
+    };
     let messageId = $(this).data('message-id');
 
     $.post(url + messageId, formData).done(function(result) {
@@ -121,12 +121,11 @@ function checkCodeNameIsUnique() {
     let postData = {
         'csrfmiddlewaretoken': csrfToken,
         'code_name': $('#code-name').val(),
-    }
+    };
     let url = '/contact/check_code_name';
     $.post(url, postData).done(function() {
         codeName.setCustomValidity('');
         setDiscountPreview();
-
     }).fail(function(result) {
         $('#code-name-feedback').removeClass('d-none').text(result.responseText);
         codeName.setCustomValidity(result.responseText);
@@ -173,12 +172,12 @@ function setDiscountPreview() {
     let discountValidation = [
         validateCodeName(),
         validateDiscountType(),
-    ]
+    ];
     let discountError = '';
     for (let value of discountValidation) {
         if (value) {
             discountError = value;
-            break
+            break;
         }
     }
 

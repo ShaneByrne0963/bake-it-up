@@ -5,4 +5,4 @@ $(document).ready(() => {
             $('#select-date').submit();
         }
     });
-})
+});
