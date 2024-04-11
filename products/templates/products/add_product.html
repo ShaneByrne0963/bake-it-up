@@ -61,7 +61,8 @@
                                 </div>
                             </div>
                             <input type="text" id="bread-label-{{ value }}" name="bread_label_{{ value }}"
-                                value="{{ bread.default_label }}" data-default-label="{{ bread.default_label }}" class="form-control product-label" disabled>
+                                value="{{ bread.default_label }}" data-default-label="{{ bread.default_label }}"
+                                class="form-control product-label ignore-default" disabled>
                         </div>
                         <div class="form-group">
                             <textarea id="bread-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
@@ -72,7 +73,7 @@
                                 {% endfor %}
                             </ul>
                             <div class="property-input d-flex">
-                                <input type="text" id="bread-{{ value }}" class="form-control option-input dont-fill" maxlength="30">
+                                <input type="text" id="bread-{{ value }}" class="form-control option-input ignore-default dont-fill" maxlength="30">
                                 <button type="button" id="add-bread-{{ value }}" class="btn btn-primary ml-2 add-product-property">Add</button>
                             </div>
                         </div>
@@ -109,7 +110,8 @@
                                 </div>
                             </div>
                             <input type="text" id="pastry-label-{{ value }}" name="pastry_label_{{ value }}"
-                                value="{{ pastry.default_label }}" data-default-label="{{ pastry.default_label }}" class="form-control product-label" disabled>
+                                value="{{ pastry.default_label }}" data-default-label="{{ pastry.default_label }}"
+                                class="form-control product-label ignore-default" disabled>
                         </div>
                         <div class="form-group">
                             <textarea id="pastry-{{ value }}-json" name="prop_{{ value }}" class="d-none" aria-hidden="true"></textarea>
@@ -154,7 +156,7 @@
                                     <button type="button" id="add-pastry-color" class="btn btn-primary ml-2 add-product-color">Add</button>
                                     <button type="button" id="remove-pastry-color" class="btn btn-secondary ml-2 remove-product-color" disabled>Remove</button>
                                 {% else %}
-                                    <input type="text" id="pastry-{{ value }}" class="form-control option-input dont-fill" maxlength="30">
+                                    <input type="text" id="pastry-{{ value }}" class="form-control option-input ignore-default dont-fill" maxlength="30">
                                     <button type="button" id="add-pastry-{{ value }}" class="btn btn-primary ml-2 add-product-property">Add</button>
                                 {% endif %}
                             </div>

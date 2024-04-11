@@ -80,7 +80,7 @@
                                 {% endfor %}
                             </ul>
                             <div class="property-input d-flex">
-                                <input type="text" id="bread-{{ value }}" class="form-control option-input ignore-default">
+                                <input type="text" id="bread-{{ value }}" class="form-control option-input ignore-default dont-fill">
                                 <button type="button" id="add-bread-{{ value }}" class="btn btn-primary ml-2 add-product-property">Add</button>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                     <button type="button" id="add-pastry-color" class="btn btn-primary ml-2 add-product-color">Add</button>
                                     <button type="button" id="remove-pastry-color" class="btn btn-secondary ml-2 remove-product-color" disabled>Remove</button>
                                 {% else %}
-                                    <input type="text" id="pastry-{{ value }}" class="form-control option-input ignore-default">
+                                    <input type="text" id="pastry-{{ value }}" class="form-control option-input ignore-default dont-fill">
                                     <button type="button" id="add-pastry-{{ value }}" class="btn btn-primary ml-2 add-product-property">Add</button>
                                 {% endif %}
                             </div>

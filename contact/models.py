@@ -54,7 +54,7 @@ class DiscountCode(models.Model):
 
 
 class NewsletterEmails(models.Model):
-    email = models.EmailField(max_length=320, unique=True)
+    email = models.EmailField(max_length=320)
     is_active = models.BooleanField(default=True)
     received_codes = models.ManyToManyField(DiscountCode, blank=True, related_name='pending_subscribers')
 

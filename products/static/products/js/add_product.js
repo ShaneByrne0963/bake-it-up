@@ -353,7 +353,7 @@ $(document).ready(() => {
     $('#pastry-collapse-color').on('show.bs.collapse', function() {
         setTimeout(updateColorListWidth, 2);
     });
-    // Prevents double-clicking to async the checkbox and the collapse
+    // Prevents double-clicking to desync the checkbox and the collapse
     $('.property-group-collapse').on('shown.bs.collapse', function() {
         let isChecked = Boolean($(this).closest('.product-property-group').find('.allow-prop').prop('checked'));
         if (!isChecked) {
@@ -418,6 +418,7 @@ $(document).ready(() => {
         $(this).find('.spinner-border').removeClass('d-none');
         // Removing any previous errors
         $('#general-errors').children().remove();
+        $('.product-feedback').remove();
 
         // Getting the correct URL
         let url;

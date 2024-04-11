@@ -353,3 +353,31 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Missing required inputs | The form will not submit until all required inputs are given | Works as intended |
 | Special characters in display name and url name | Other than dashes, special characters cannot be entered into these inputs | Works as intended |
 | Spaces in url name | The spaces are removed from the url name | **Spaces pass through the form validation** |
+| Non-numerical values in price input | The form fails to send, requesting only numbers in the input | Works as intended |
+| A number less than the input minimum or greater than the input maximum | The value is clamped to the inputs boundaries | Works as intended |
+| A number with more than 2 decimal places | The number is rounded to 2 decimal places | Works as intended |
+| Uploading a file that is not an image | Django's forms produce an error, giving feedback to allow the user to upload another image | Works as intended |
+| Decimal number in the batch size | The number is rounded to an integer | Works as intended|
+| Invalid properties hidden behind unchecked checkboxes | If a user enters an invalid input into a product property form and unchecks this property with the input still there, it should not affect the form validation | Works as intended |
+
+### Part 13 - Edit Product
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | A product is created under the given category | Works as intended |
+| Missing required inputs | The form will not submit until all required inputs are given | Works as intended |
+| Special characters in display name and url name | Other than dashes, special characters cannot be entered into these inputs | Works as intended |
+| Spaces in url name | The spaces are removed from the url name | **Spaces pass through the form validation** |
+| Non-numerical values in price input | The form fails to send, requesting only numbers in the input | Works as intended |
+| A number less than the input minimum or greater than the input maximum | The value is clamped to the inputs boundaries | Works as intended |
+| A number with more than 2 decimal places | The number is rounded to 2 decimal places | Works as intended |
+| Uploading a file that is not an image | Django's forms produce an error, giving feedback to allow the user to upload another image | Works as intended |
+| Decimal number in the batch size | The number is rounded to an integer | Works as intended|
+| Invalid properties hidden behind unchecked checkboxes | If a user enters an invalid input into a product property form and unchecks this property with the input still there, it should not affect the form validation | Works as intended |
+| Changing a products category | The product can change categories, keeping everything except its properties | Works as intended |
+
+### Part 14 - Newsletter
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | A product is created under the given category | Works as intended |
