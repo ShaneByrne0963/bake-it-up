@@ -308,6 +308,7 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Non-numeric phone number | The form fails to send, requesting a phone number of only figits | Works as intended |
 | Invalid input hidden behind checkbox | The input won't affect the form and should continue as normal | **Hidden invalid inputs cause the form to not submit**|
 | Discount code left unsubmitted | The form warns the user that their discount code is not submitted | Works as intended |
+| Applying 
 
 ### Part 8 - Account Management (Contact Details)
 
@@ -381,3 +382,4 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
 | Valid Data | A product is created under the given category | Works as intended |
+

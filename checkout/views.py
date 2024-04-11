@@ -332,7 +332,7 @@ def get_discount_code(request):
         cart_total = request.session['cart_total']
         discount = None
 
-        if discount_code.min_spending > cart_total:
+        if (discount_code.min_spending * 100) > cart_total:
             return HttpResponse(
                 content=f"""Your cart needs to be at least
                     €{discount_code.min_spending} for this
