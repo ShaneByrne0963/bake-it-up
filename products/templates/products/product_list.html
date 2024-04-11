@@ -38,10 +38,10 @@
                 </select>
             </div>
             {% if favourites %}
-                <input type="hidden" name="favourites" value="on" aria-hidden="true">
+                <input type="hidden" name="favourites" value="on">
             {% endif %}
             {% if q %}
-                <input type="hidden" name="q" value="{{ q }}" aria-hidden="true">
+                <input type="hidden" name="q" value="{{ q }}">
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="col d-flex align-items-end pb-3 order-1 order-md-last px-0">

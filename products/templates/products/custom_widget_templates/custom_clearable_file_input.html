@@ -1,7 +1,7 @@
 <div class="card p-2 mb-5 mb-xl-3">
     {% if widget.is_initial %}
         <p class="mb-0">{{ widget.initial_text }}:</p>
-        <img class="w-50" src="{{ widget.value.url }}">
+        <img class="w-50" src="{{ widget.value.url }}" alt="{{ widget.value }}">
         <a href="{{ widget.value.url }}">{{ widget.value }}</a>
         {% if not widget.required %}
             <input type="checkbox" name="{{ widget.checkbox_name }}"

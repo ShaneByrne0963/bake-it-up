@@ -55,10 +55,10 @@
                                             <button class="btn-no-style btn-block text-left position-relative" type="button" data-toggle="collapse"
                                                 data-target="#order-collapse-{{ i }}" aria-expanded="true"
                                                 aria-controls="order-collapse-{{ i }}">
-                                                <div>
+                                                <span>
                                                     <i class="fa-solid fa-caret-down mr-1 mr-md-3"></i>
                                                     <span class="text-break">{{ order }}</span>
-                                                </div>
+                                                </span>
                                             </button>
                                         </div>
                                     </div>
@@ -78,10 +78,10 @@
                                                                         &times;{{ item.quantity }}
                                                                     </span>
                                                                     {% include 'includes/property_list.html' %}
+                                                                    {% if not forloop.last %}
+                                                                        <hr>
+                                                                    {% endif %}
                                                                 </li>
-                                                                {% if not forloop.last %}
-                                                                    <hr>
-                                                                {% endif %}
                                                             {% endfor %}
                                                         </ul>
                                                     </div>

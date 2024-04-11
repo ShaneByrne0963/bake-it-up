@@ -422,7 +422,7 @@ input::-webkit-inner-spin-button {
     z-index: 100;
 }
 
-#to-top>div {
+#to-top>* {
     border: 2px solid whitesmoke;
     color: whitesmoke;
     padding: 4px 16px;

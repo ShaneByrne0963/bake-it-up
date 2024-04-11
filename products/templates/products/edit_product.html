@@ -52,7 +52,7 @@
                     <div class="form-group form-check mb-1">
                         <input type="checkbox" id="allow-bread-{{ value }}" name="allow_{{ value }}"
                             class="form-check-input allow-prop" data-toggle="collapse"{% if bread.data %} checked{% endif %}
-                            data-target="#bread-collapse-{{ value }}" aria-expanded="false" aria-controls="bread-collapse-{{ value }}">
+                            data-target="#bread-collapse-{{ value }}" aria-controls="bread-collapse-{{ value }}">
                         <label for="allow-bread-{{ value }}" class="mb-0">Add Bread {{ bread.label }}</label>
                     </div>
 
@@ -76,7 +76,7 @@
                             <label for="bread-{{ value }}">Options</label>
                             <ul class="property-answer-list d-none">
                                 {% for answer in bread.data.answers %}
-                                    <div class="default-answer">{{ answer }}</div>
+                                    <li class="default-answer">{{ answer }}</li>
                                 {% endfor %}
                             </ul>
                             <div class="property-input d-flex">
@@ -102,7 +102,7 @@
                     <div class="form-group form-check mb-1">
                         <input type="checkbox" id="allow-pastry-{{ value }}" name="allow_{{ value }}"
                             class="form-check-input allow-prop" data-toggle="collapse"{% if pastry.data %} checked{% endif %}
-                            data-target="#pastry-collapse-{{ value }}" aria-expanded="false" aria-controls="pastry-collapse-{{ value }}">
+                            data-target="#pastry-collapse-{{ value }}" aria-controls="pastry-collapse-{{ value }}">
                         <label for="allow-pastry-{{ value }}" class="mb-0 pastry-label">Add Pastry {{ pastry.label }}</label>
                     </div>
 
@@ -153,7 +153,7 @@
                             {% else %}
                                 <ul class="property-answer-list d-none">
                                     {% for answer in pastry.data.answers %}
-                                        <div class="default-answer">{{ answer }}</div>
+                                        <li class="default-answer">{{ answer }}</li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
@@ -183,7 +183,7 @@
 {% endblock %}
 
 {% block postloadjs %}
-    <script src="{% static 'products/js/products.js' %}" type="text/javascript"></script>
-    <script src="{% static 'products/js/add_product.js' %}" type="text/javascript"></script>
+    <script src="{% static 'products/js/products.js' %}"></script>
+    <script src="{% static 'products/js/add_product.js' %}"></script>
     {{ block.super }}
 {% endblock %}

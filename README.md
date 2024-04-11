@@ -1530,6 +1530,28 @@ Bake It Up's website was tested in Chrome, Firefox and Microsoft Edge. On all si
 
 ### W3C HTML
 
+- When validating my HTML pages I found one issue in the Edit Product page. This issue is caused by crispy forms, where the value attribute is entered twice upon generating the input. However, I decided to leave it as after testing the input, it sets the value to what the user enters, so it doesn't interfere with the product manipulation
+
+![One small error in the Edit Product page](media/images/readme/validation/html/edit-product.JPG)
+
+- Every other page I tested received a pass, with the following success message received for each:
+
+![The HTML success message](media/images/readme/validation/html/home.JPG)
+
+- The pages tested were:
+   - The home page
+   - The product list page
+   - The product detail page
+   - The cart page
+   - The checkout page
+   - The checkout success page
+   - The profile page
+   - The order history page
+   - The contact page
+   - The daily orders page
+   - The add product page
+   - The newsletter page
+
 ### W3C CSS
 
 <details><summary><strong>style.css</strong></summary>

@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block content_heading %}
-    <a href="{% url 'account_settings' %}" aria-label="Return to your account settings page">
-        <i class="fa-solid fa-caret-left mr-2"></i>Back to account settings
-    </a>
+    <h1>Your Order</h1>
 {% endblock %}
 
 {% block content %}
@@ -54,13 +52,13 @@
                                                 data-target="#product-collapse-{{ i }}" aria-expanded="true" aria-controls="product-collapse-{{ i }}">
                                     {% endif %}
                                         
-                                        <div class="d-flex justify-content-between">
+                                        <span class="d-flex justify-content-between">
                                             <span>
                                                 <i class="fa-solid fa-caret-down mr-3{% if not has_properties %} invisible{% endif %}"></i>
                                                 {{ product.display_name }} &times; {{ item.quantity }}
                                             </span>
                                             <span class="ml-2">&euro;{{ item.get_total|floatformat:2 }}</span>
-                                        </div>
+                                        </span>
                                     {% if has_properties %}
                                         </button>
                                     {% endif %}

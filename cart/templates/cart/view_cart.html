@@ -45,7 +45,7 @@
                     <div class="cart-product-options">
                         <a href="{% url 'edit_cart_item' forloop.counter0 %}" class="mr-4" aria-label="Edit this product">Edit</a>
                         <span class="pseudo-anchor text-danger modal-trigger-remove-item"
-                            aria-label="Remove this product from your cart" data-url="{% url 'remove_cart_item' forloop.counter0 %}">Remove</span>
+                            data-url="{% url 'remove_cart_item' forloop.counter0 %}">Remove</span>
                     </div>
                 </div>
             </div>

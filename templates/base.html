@@ -66,13 +66,13 @@
             <div id="search-collapse" class="invisible d-none d-md-block">
                 <form id="search-form" action="{% url 'product_list' %}" method="GET" class="d-flex justify-content-center">
                     {% if category %}
-                        <input type="hidden" name="category" value="{{ category }}" aria-hidden="true">
+                        <input type="hidden" name="category" value="{{ category }}">
                     {% endif %}
                     {% if sort %}
-                        <input type="hidden" name="sort" value="{{ sort }}" aria-hidden="true">
+                        <input type="hidden" name="sort" value="{{ sort }}">
                     {% endif %}
                     {% if favourites %}
-                        <input type="hidden" name="favourites" value="on" aria-hidden="true">
+                        <input type="hidden" name="favourites" value="on">
                     {% endif %}
                     <div id="search-bar-container">
                         <div id="search-bar">
@@ -178,10 +178,10 @@
     </section>
     <!-- Back to Top button -->
     <button id="to-top">
-        <div>
+        <span>
             <i class="fa-solid fa-arrow-up"></i>
             <span class="d-none d-md-inline">Back To Top</span>
-        </div>
+        </span>
     </button>
 
     <!-- Custom Modal -->
@@ -229,8 +229,8 @@
 
     <!-- JavaScript -->
     {% block postloadjs %}
-        <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
-        <script src="{% static 'js/modal.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+        <script src="{% static 'js/modal.js' %}"></script>
     {% endblock %}
 </body>
 </html>
