@@ -315,24 +315,41 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | --------- | --------------- | ------------- |
 | Valid Data (email not changed) | The user's information is updated | Works as intended |
 | Valid Data (email changed) | A modal requesting the user's password appears | Works as intended |
+| Valid Data in modal | The user is logged out, and a confirmation email is sent to their email address | Works as intended |
 | Special characters in names | The form fails to send, requesting the names without special characters | Works as intended |
 | Non-numerical values in number input | The form fails to send, requesting only numbers in the input | Works as intended |
 | White Space in fields | Any white space will be trimmed from the input | Works as intended |
-| Already existing email entered | The page refreshes, and the user is notified that the email already exists | **Instead of feedback, the user encounters a server error** |
+| Already existing email entered | The page refreshes, and the user is notified that the email already exists | **Instead of feedback, the user encounters a server error, and the user is locked out of their account** |
 
+### Part 9 - Account Management (Billing Details)
 
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The user's information is updated | Works as intended |
+| Special Characters in the text inputs | The form fails to send, requesting the inputs without special characters | Works as intended |
+| White Space in fields | Any white space will be trimmed from the input | Works as intended |
 
-
-
-
-
-
-
-
-
-### Part ? - Delete Account
+### Part 10 - Delete Account
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
 | Valid Data | The user's account is deleted | Works as intended |
 | Invalid Password | The page refreshes, with a feedback message telling the user the password is incorrect | Works as intended |
 | No password provided | The form fails to send, requesting a password | Works as intended |
+
+### Part 11 - Contact Form
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The user's account is deleted | Works as intended |
+| No email given | The form fails to send, requesting an email| Works as intended |
+| No message given | The form fails to send, requesting a message | Works as intended |
+| White space email/message | The form removes any white space, treating inputs of only spaces as an empty input | Works as intended |
+
+### Part 12 - Add Product
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | A product is created under the given category | Works as intended |
+| Missing required inputs | The form will not submit until all required inputs are given | Works as intended |
+| Special characters in display name and url name | Other than dashes, special characters cannot be entered into these inputs | Works as intended |
+| Spaces in url name | The spaces are removed from the url name | **Spaces pass through the form validation** |

@@ -323,6 +323,8 @@ $(document).ready(() => {
     $('#id_category').on('change', updateProductPropertyInputs);
     updateProductPropertyInputs();
 
+    $('input[name="name"]').addClass('no-spaces');
+
     $('#div_id_ingredients').append(`
         <p class="text-info">Allergens are automatically marked,
             but you can manually override this by adding an asterisk (*) beside ingredients
