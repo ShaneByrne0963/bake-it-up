@@ -1211,6 +1211,33 @@ Bake It Up was developed using an Agile methodology
 
 Due to the excessive number of tests performed on this site, the testing can be found [here](TESTING.md)
 
+#### Webhook Testing
+
+- It is crucial to have a backup if an error occurs during payment. Stripe's webhooks are an excellent way to ensure that no data is lost.
+- To test these, I proceeded with a payment, adding every option the checkout process has to offer
+- In the cart page, I added a customer message and a custom bake date
+
+![The message and date in the cart](media/images/readme/testing/webhooks/webhook-cart.JPG)
+
+- In the checkout page, I filled in every detail, requested to save my information, opted to deliver, with another delivery address given, I applied a discount code to the cart total, and I checked to subscribe to the newsletter
+
+![The checkout page with all custom attributes](media/images/readme/testing/webhooks/webhook-checkout.JPG)
+
+- Upon submitting the payment, I immediately closed the tab, preventing the normal checkout process from happening.
+- However, an email was still sent to me confirming the order
+
+![The confirmation email](media/images/readme/testing/webhooks/webhook-email.JPG)
+
+- The order was created in the database
+
+![The order created by the webhook](media/images/readme/testing/webhooks/order-webhook.JPG)
+
+- And my profile was updated, with my newsletter subscription being reactivated
+
+![The updated details in the profile](media/images/readme/testing/webhooks/updated-account.JPG)
+
+- This demonstrates that the webhooks are working as intended, and will be there to safeguard any future mishappenings.
+
 ### Automated Testing
 
 #### The add_to_cart function

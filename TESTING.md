@@ -308,7 +308,6 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Non-numeric phone number | The form fails to send, requesting a phone number of only figits | Works as intended |
 | Invalid input hidden behind checkbox | The input won't affect the form and should continue as normal | **Hidden invalid inputs cause the form to not submit**|
 | Discount code left unsubmitted | The form warns the user that their discount code is not submitted | Works as intended |
-| Applying 
 
 ### Part 8 - Account Management (Contact Details)
 
@@ -382,4 +381,17 @@ This section is to ensure that all buttons and links are working on the site. Fo
 | Test Case | Expected Result | Actual Result |
 | --------- | --------------- | ------------- |
 | Valid Data | A product is created under the given category | Works as intended |
+| Missing required inputs | The form will not submit until all required inputs are given | Works as intended |
+| Code name containing special characters | The code cannot contain special characters except for dashes | Works as intended |
+| Code name already existing | An error message will appear under the code name input, indicating the code name already exists | Works as intended |
+| No minimum spend for a fixed discount | The form will not submit, providing feedback for the user to enter a minimum spend value | Works as intended |
+| Minimum spend lower than fixed discount | The form will not submit, providing feedback for the user to enter a higher minimum spend value | Works as intended |
 
+### Part 15 - Applying Discount Codes
+
+| Test Case | Expected Result | Actual Result |
+| --------- | --------------- | ------------- |
+| Valid Data | The discount code given is applied | Works as intended |
+| Invalid code name | A product is created under the given category | Works as intended |
+| Special characters | Since this is only querying the database, it doesn't matter what the user enters. If the input doesn't match the code, they will get an error | Works as intended |
+| Applying a code with a minimum spend greater than the cart total | An error message appears, notifying the user they have to spend more on the order to apply the discount
