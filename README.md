@@ -1052,6 +1052,16 @@ The final Instagram page looks like this
 
 </details>
 
+<details><summary><strong>Privacy Policy</strong></summary>
+
+- Because this is an ecommerce website, information is collected from the user in order to process payments. It is crucial that the user understands how their data is being used. The site's privacy policy takes on that responsibility.
+- Located in the footer, this policy goes in-depth about the use of their information, as well as their rights to keep that information protected
+- This privacy policy was generated using the [TermsFeed privacy policy generator](https://www.termsfeed.com/privacy-policy-generator/)
+
+![The privacy policy](media/images/readme/web-marketing/privacy-policy.JPG)
+
+</details>
+
 ## Agile Methodologies
 
 Bake It Up was developed using an Agile methodology
@@ -1549,6 +1559,7 @@ Bake It Up's website was tested in Chrome, Firefox and Microsoft Edge. On all si
    - The order history page
    - The contact page
    - The daily orders page
+   - The voew messages page
    - The add product page
    - The newsletter page
 
@@ -1729,6 +1740,48 @@ Bake It Up's website was tested in Chrome, Firefox and Microsoft Edge. On all si
 </details>
 
 ### Lighthouse
+
+The reason for the low "Best Practices" score is because of the use of Stripe, which uses third-party cookies
+
+- The home page
+
+![The home page results](media/images/readme/validation/lighthouse/home.JPG)
+
+- The product list page
+
+![The product list page results](media/images/readme/validation/lighthouse/product-list.JPG)
+
+- The product detail page page
+
+![The product detail page results](media/images/readme/validation/lighthouse/product-detail.JPG)
+
+- The cart page
+
+![The cart page results](media/images/readme/validation/lighthouse/cart.JPG)
+
+- The checkout page
+
+![The checkout page results](media/images/readme/validation/lighthouse/checkout.JPG)
+
+- The checkout success page
+
+![The checkout success page results](media/images/readme/validation/lighthouse/checkout-success.JPG)
+
+- The profile page
+
+![The cart page results](media/images/readme/validation/lighthouse/profile.JPG)
+
+- The order history page
+
+![The order history page results](media/images/readme/validation/lighthouse/order-history.JPG)
+
+- The contact page
+
+![The contact page results](media/images/readme/validation/lighthouse/contact.JPG)
+
+- The messages page
+
+![The messages page results](media/images/readme/validation/lighthouse/messages.JPG)
 
 ### WebAIM Colour Contrast
 
