@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 Convenient functions that can be used across the site
 """
 
+
 def price_as_int(price):
     """
     Converts a float price to an integer
@@ -72,5 +73,5 @@ def is_tomorrows_date(current_date):
     """
     datetime_tomorrow = (datetime.now() + timedelta(days=1)) \
         .strftime('%Y-%m-%d')
-    
+
     return current_date == datetime_tomorrow

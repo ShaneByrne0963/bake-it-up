@@ -31,7 +31,7 @@ def add_to_cart(product, cart):
     if product['quantity'] <= 0:
         raise ValueError('"quantity" value in product must be \
         greater than zero')
-    
+
     is_in_cart = False
     for cart_product in cart:
 
@@ -112,7 +112,7 @@ def has_reached_cutoff_time(current_datetime=None):
     """
     if not current_datetime:
         current_datetime = timezone.now()
-    
+
     if 'USE_DAYLIGHT_SAVINGS' in os.environ:
         current_datetime += timedelta(hours=1)
 

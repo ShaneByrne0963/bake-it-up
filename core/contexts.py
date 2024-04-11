@@ -21,16 +21,16 @@ import os
     modal_show {String}: Shows the modal on page load if
         exists. The string value indicates the form to be
         displayed in the modal, if any
-    
+
     modal_load_fade {Truthy Expression}: Allows the modal fade
         animation on page load
 
     modal_form_errors {JSON}: A list of errors to be
         displayed in a modal form
-    
+
     modal_form_type {String}: Describes the on-load form's specific
         purpose if a form is used in multiple instances
-    
+
     login_custom_redirect {String}: A redirect string which will
         take the user to a custom url on login (Is cleared
         when the modal is closed)
@@ -39,20 +39,20 @@ import os
 
     val_remember {Truthy Expression}: Checks the login "Remember Me"
         checkbox
-    
+
     val_username {String}: The prefilled value for the signup username
 
     val_email {String}: The prefilled value for the signup email address
 
     val_note {String}: The prefilled value for the user's note in
         the cart
-    
+
     invalid_contact_details {Truthy Expression}: Shows the profile contact
         details form instead of the list on page load
-    
+
     invalid_billing_details {Truthy Expression}: Shows the profile billing
         details form instead of the list on page load
-    
+
     The following are prefilled values for the profile {String}
     val_profile_fname
     val_profile_lname
@@ -62,14 +62,15 @@ import os
     val_profile_line2
     val_profile_city
     val_profile_county
-    val_profile_country 
-    
+    val_profile_country
+
     cutoff_reached {Truthy Expression}: If true, displays an error
         message in the cart that the user has reached the cutoff
         time for next day bake date
 }
 """
 # endregion
+
 
 def get_base_context(request):
     """
@@ -85,12 +86,12 @@ def get_base_context(request):
 
         parsed_total = price_as_float(cart_total)
         context['cart_total'] = parsed_total
-    
+
     # Getting the number of messages, if the user is an admin
     if request.user.is_superuser:
         new_messages = CustomerMessage.objects.filter(opened=False)
         context['num_messages'] = new_messages.count()
-    
+
     # The company address and phone number
     context['company_street_address'] = settings.STREET_ADDRESS
     context['company_city'] = settings.CITY
@@ -111,7 +112,7 @@ def get_cart_context(request):
     context = get_base_context(request)
     cart = request.session.get('cart', [])
     cart_products = []
-    
+
     for item in cart:
         product = get_product_by_name(item['name'])
         quantity = int(item['quantity'])
@@ -199,11 +200,11 @@ def get_products(request, **kwargs):
         pastries = PastryProduct.objects.all()
     if q:
         breads = breads.filter(
-            Q(display_name__icontains=q) | \
+            Q(display_name__icontains=q) |
             Q(description__icontains=q)
         )
         pastries = pastries.filter(
-            Q(display_name__icontains=q) | \
+            Q(display_name__icontains=q) |
             Q(description__icontains=q)
         )
 
@@ -240,7 +241,7 @@ def sort_queryset(queryset, sort):
         else:
             reverse = '-' if '-' in sort else ''
             return queryset.annotate(num_favorites=Count('favorites')) \
-                    .order_by(f'{reverse}num_favorites')
+                .order_by(f'{reverse}num_favorites')
     else:
         if isinstance(queryset, list):
             reverse = '-' in sort
@@ -329,7 +330,7 @@ def handle_server_errors(func):
                 )
                 message.save()
                 context['error_status'] = 'sent'
-            except:
+            except Exception:
                 pass
 
             finally:

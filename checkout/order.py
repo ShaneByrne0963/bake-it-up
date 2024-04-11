@@ -70,7 +70,8 @@ def create_order(checkout_data, cart, save_info=False, user=None):
     if 'delivery' not in new_data:
         new_data['delivery'] = False
     new_data['bake_date'] = bake_date
-    new_data['profile'] = UserProfile.objects.get(user=user)
+    if user:
+        new_data['profile'] = UserProfile.objects.get(user=user)
 
     # Calculating the delivery cost
     if new_data['delivery']:
@@ -114,7 +115,7 @@ def create_order(checkout_data, cart, save_info=False, user=None):
             prop_text=properties['text'],
         )
         line_item.save()
-    
+
     # Saving the user's profile information
     if save_info and user:
         if first_name:
@@ -124,16 +125,16 @@ def create_order(checkout_data, cart, save_info=False, user=None):
             user.last_name = last_name
             user.save()
         update_user_profile(new_data, user)
-    
+
     # Sending a confirmation email
     from_email = settings.DEFAULT_FROM_EMAIL
     subject = render_to_string(
         'checkout/confirmation_emails/email_subject.txt',
-        { 'order': order }
+        {'order': order}
     )
     body = render_to_string(
         'checkout/confirmation_emails/email_body.txt',
-        { 'order': order, 'contact_email': from_email }
+        {'order': order, 'contact_email': from_email}
     )
     send_mail(subject, body, from_email, [checkout_data['email']])
 

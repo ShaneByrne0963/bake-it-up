@@ -1618,6 +1618,94 @@ Bake It Up's website was tested in Chrome, Firefox and Microsoft Edge. On all si
 
 ### PEP8
 
+<details><summary><strong>Core</strong></summary>
+
+- contexts.py
+
+![validation for contexts.py](media/images/readme/validation/python/contexts.JPG)
+
+- constants.py
+
+![validation for constants.py](media/images/readme/validation/python/constants.JPG)
+
+- shortcuts.py
+
+![validation for shortcuts.py](media/images/readme/validation/python/shortcuts.JPG)
+
+</details>
+
+<details><summary><strong>Home</strong></summary>
+
+- views.py
+
+![views validation for the Home app](media/images/readme/validation/python/views-home.JPG)
+
+</details>
+
+<details><summary><strong>Products</strong></summary>
+
+- views.py
+
+![views validation for the Products app](media/images/readme/validation/python/views-products.JPG)
+
+</details>
+
+<details><summary><strong>Cart</strong></summary>
+
+- views.py
+
+![views validation for the Cart app](media/images/readme/validation/python/views-cart.JPG)
+
+- cartfunctions.py
+
+![validation for cartfunctions.py](media/images/readme/validation/python/cartfunctions.JPG)
+
+</details>
+
+<details><summary><strong>Checkout</strong></summary>
+
+- views.py
+
+![views validation for the Checkout app](media/images/readme/validation/python/views-checkout.JPG)
+
+- webhooks.py
+
+![validation for webhooks.py](media/images/readme/validation/python/webhooks.JPG)
+
+- webhook_handler.py
+
+![validation for webhook_handler.py](media/images/readme/validation/python/webhook-handler.JPG)
+
+- order.py
+
+![validation for order.py](media/images/readme/validation/python/order.JPG)
+
+</details>
+
+<details><summary><strong>Profiles</strong></summary>
+
+- views.py
+
+![views validation for the Profiles app](media/images/readme/validation/python/views-profile.JPG)
+
+</details>
+
+<details><summary><strong>Contact</strong></summary>
+
+- views.py
+
+![views validation for the Contact app](media/images/readme/validation/python/views-contact.JPG)
+
+</details>
+
+<details><summary><strong>Orders</strong></summary>
+
+- views.py
+
+![views validation for the Orders app](media/images/readme/validation/python/views-orders.JPG)
+
+</details>
+
 ### Lighthouse
 
 ### WebAIM Colour Contrast

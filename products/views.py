@@ -36,10 +36,10 @@ class ProductList(generic.ListView):
 
         if 'sort' in self.request.GET:
             sort = self.request.GET['sort']
-        
+
         if 'q' in self.request.GET:
             q = self.request.GET['q']
-        
+
         favorites = 'favourites' in self.request.GET
 
         products = get_products(
@@ -68,7 +68,7 @@ class ProductList(generic.ListView):
             if get_url != '':
                 get_url += '&'
             get_url += f'sort={sort}'
-        
+
         url_favourites_toggle = f'?{get_url}'
         if 'favourites' in self.request.GET:
             if get_url != '':
@@ -90,17 +90,17 @@ class ProductList(generic.ListView):
             url_favourites_toggle += f'q={q}'
             q = self.request.GET['q']
             context['q'] = q
-    
+
         context['category'] = category
         context['sort'] = sort
         context['get_url'] = get_url
         context['url_favourites_toggle'] = url_favourites_toggle
-        
+
         # Building the title
         product_title = ''
         if q:
             product_title = f'{query_length} '
-            
+
             if category == 'bread':
                 product_title += 'Bread'
             elif category == 'pastries':
@@ -128,7 +128,7 @@ class ProductList(generic.ListView):
                 product_title += 'Delicious Cakes'
             else:
                 product_title += 'Products'
-        
+
         context['product_title'] = product_title
         return context
 
@@ -169,7 +169,8 @@ class AddToFavorites(View):
                 f"An error occurred. {e}"
             )
 
-        return HttpResponseRedirect(reverse('product_detail', args=[product_name]))
+        return HttpResponseRedirect(reverse('product_detail',
+                                            args=[product_name]))
 
 
 class AddProduct(View):
@@ -186,7 +187,7 @@ class AddProduct(View):
         site_data = None
         try:
             site_data = SiteData.objects.all()[0]
-        except:
+        except Exception:
             messages.error(
                 request,
                 "Site data couldn't be found"
@@ -242,7 +243,7 @@ class EditProduct(View):
             else 'pastry'
         form = AddProductForm if product_type == 'bread' \
             else AddPastryProductForm
-        
+
         product_form = form(instance=product)
         context['product_form'] = product_form
 
@@ -261,7 +262,7 @@ class EditProduct(View):
                         prop_name
                     )
                     prop_checking['data'] = product_prop
-            except:
+            except Exception:
                 continue
 
         return render(request, self.template, context)
@@ -282,14 +283,14 @@ def validate_add_product(request):
         try:
             BreadProduct.objects.get(name=product_name)
             product_in = 'bread'
-        except:
+        except BreadProduct.DoesNotExist:
             pass
         try:
             PastryProduct.objects.get(name=product_name)
             product_in = 'pastry'
-        except:
+        except PastryProduct.DoesNotExist:
             pass
-        
+
         if product_in:
             error_message = {
                 'name': [{
@@ -322,7 +323,7 @@ def validate_add_product(request):
                     setattr(product, prop_val, val_formatted)
             if category != 1:
                 product.prop_text = 'prop_text' in request.POST
-            
+
             product.save()
             messages.success(
                 request,
@@ -372,14 +373,14 @@ def validate_edit_product(request, product_name):
             try:
                 BreadProduct.objects.get(name=new_name)
                 product_in = 'bread'
-            except:
+            except BreadProduct.DoesNotExist:
                 pass
             try:
                 PastryProduct.objects.get(name=new_name)
                 product_in = 'pastry'
-            except:
+            except PastryProduct.DoesNotExist:
                 pass
-        
+
         if product_in:
             error_message = {
                 'name': [{
@@ -406,13 +407,14 @@ def validate_edit_product(request, product_name):
             if different_form:
                 # Setting the default values to the products original values
                 model_data = {
-                    key: value for key, value in product_form.cleaned_data.items()
+                    key: value for key, value in
+                    product_form.cleaned_data.items()
                 }
                 # Updating the old model data with the form
                 for key in model_data:
                     if key in request.POST:
                         model_data[key] = request.POST[key]
-                
+
                 # Getting the category
                 model_data['category'] = Category.objects.get(
                     id=model_data['category']
@@ -443,7 +445,7 @@ def validate_edit_product(request, product_name):
                     setattr(new_product, prop_val, None)
             if category != 1:
                 new_product.prop_text = 'prop_text' in request.POST
-            
+
             new_product.save()
             messages.success(
                 request,

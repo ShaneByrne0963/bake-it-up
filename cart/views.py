@@ -27,7 +27,7 @@ class ViewCart(View):
         if 'cart_products' not in context:
             messages.error(request, "Your cart is empty")
             return redirect('product_list')
-        
+
         current_date = timezone.now()
         print(current_date)
         min_days_to_bake = 2
@@ -39,7 +39,7 @@ class ViewCart(View):
             )
             context['next_day_cutoff'] = next_day_cutoff
             min_days_to_bake = 1
-        
+
         min_date_value = get_datetime_as_date_input(
             min_days_to_bake
         )
@@ -49,21 +49,21 @@ class ViewCart(View):
         if settings.ORDER_MAX_DAYS:
             max_days_to_bake = settings.ORDER_MAX_DAYS \
                 + min_days_to_bake - 1
-        
+
             max_date_value = get_datetime_as_date_input(
                 max_days_to_bake
             )
             context['max_date_value'] = max_date_value
 
         return render(request, self.template, context)
-    
+
     @handle_server_errors
     def post(self, request):
         # The user's attached message
         note = ''
         if 'note' in request.POST:
             note = request.POST['note']
-        
+
         # Validation of bake date
         try:
             selected_timestamp = datetime.strptime(
@@ -80,10 +80,10 @@ class ViewCart(View):
         except Exception as e:
             messages.error(request, f"Please enter a valid bake date. {e}")
             return redirect('cart')
-        
+
         # Checking if the cutoff point has been reached since page load
         selected_date = request.POST['bake_date']
-        if (is_tomorrows_date(selected_date) \
+        if (is_tomorrows_date(selected_date)
                 and has_reached_cutoff_time()):
             request.session['global_context'] = {
                 'val_note': note,
@@ -92,13 +92,13 @@ class ViewCart(View):
             messages.error(request, "Sorry, but you have \
                 passed the time for next day baking!")
             return redirect('cart')
-        
+
         order_context = {
             'customer_note': note,
             'bake_date': selected_date
         }
         request.session['order_context'] = order_context
-        
+
         return redirect('checkout')
 
 

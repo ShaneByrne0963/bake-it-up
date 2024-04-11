@@ -93,7 +93,7 @@ def open_message(request, message_id):
         num_messages = CustomerMessage.objects.filter(
             opened=False
         ).count()
-    
+
         return HttpResponse(content=num_messages, status=200)
     except Exception as e:
         return HttpResponse(content=e, status=400)
@@ -160,7 +160,7 @@ class NewsletterSignup(View):
                 f"An unexpected error occurred. {response}"
             )
         return redirect(url_next)
-    
+
     @staticmethod
     def subscribe_email(email):
         """
@@ -210,9 +210,9 @@ class SendNewsletter(View):
     def get(self, request):
         context = get_base_context(request)
         context['today'] = date.today()
-        
+
         return render(request, self.template, context)
-    
+
     @handle_server_errors
     @admin_action
     def post(self, request):
@@ -268,7 +268,7 @@ class NewsletterUnsubscribe(View):
         context['unsubscribe_email'] = email
 
         return render(request, self.template, context)
-    
+
     @handle_server_errors
     def post(self, request, email):
         newsletter_email = None

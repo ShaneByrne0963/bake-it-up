@@ -18,19 +18,19 @@ class StripeWH_Handler():
 
     def __init__(self, request):
         self.request = request
-    
+
     def handle_payment_intent_succeeded(self, event):
         """
         Handles the payment_intent.succeeded webhook
         """
         intent = event.data.object
         pid = intent.id
-        
+
         attempt = 1
         while attempt < 5:
             try:
                 order = Order.objects.get(stripe_pid=pid)
-            
+
                 return HttpResponse(
                     content=f"""Webhook received: {event['type']}.
                     Order already exists in database""",
@@ -39,7 +39,7 @@ class StripeWH_Handler():
             except Order.DoesNotExist:
                 attempt += 1
                 time.sleep(1)
-        
+
         # Extracting the metadata from the payment intent
         first_name = intent.metadata.first_name
         last_name = intent.metadata.last_name
@@ -57,7 +57,7 @@ class StripeWH_Handler():
         try:
             user_id = int(intent.metadata.user)
             user = User.objects.get(pk=user_id)
-        except:
+        except Exception:
             save_info = False
 
         stripe_charge = stripe.Charge.retrieve(
@@ -83,7 +83,7 @@ class StripeWH_Handler():
             unordered_cart = {}
             number_of_products = 0
             for key, value in intent.metadata.items():
-                if not 'product_' in key:
+                if 'product_' not in key:
                     continue
                 number_of_products += 1
                 product_number = key.replace('product_', '')

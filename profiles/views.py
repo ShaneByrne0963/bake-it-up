@@ -88,7 +88,7 @@ class AccountSettings(View):
                     } for key, value in contact_details.items()
                 }
                 break
-    
+
         has_billing_details = False
         for key in billing_details:
             if billing_details[key]:
@@ -100,7 +100,7 @@ class AccountSettings(View):
                     } for key, value in billing_details.items()
                 }
                 break
-        
+
         context['has_contact_details'] = has_contact_details
         context['has_billing_details'] = has_billing_details
 
@@ -153,7 +153,7 @@ class AccountSettings(View):
 
             include_newsletter = (len(discount_codes) > 0
                                   or user_newsletter.is_active)
-        except:
+        except Exception:
             pass
         context['include_newsletter'] = include_newsletter
 
@@ -233,7 +233,7 @@ class AccountSettings(View):
                     'val_profile_email': new_email,
                     'val_profile_phone': new_phone
                 })
-    
+
         # The billing details form
         elif form_type == 'billing':
             new_line1 = request.POST.get('street_address1', '')
@@ -272,9 +272,7 @@ class AccountSettings(View):
         elif form_invalid:
             messages.error(
                 request,
-                """Your information was invalid. 
-                Please check your details"""
-            )
+                """Your information was invalid. Please check your details""")
 
         # New email authentication
         if email_changed:

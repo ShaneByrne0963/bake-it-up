@@ -70,7 +70,7 @@ class CustomLogin(LoginView):
             # Allowing a different URL to be redirected to
             if 'login_custom_redirect' in request.POST:
                 return redirect(request.POST['login_custom_redirect'])
-            
+
             return login_next
 
         request.session['global_context'] = {
@@ -119,7 +119,7 @@ class CustomSignup(SignupView):
                     user=user
                 )
                 profile.save()
-            except:
+            except Exception:
                 messages.error(
                     request,
                     "There was a problem creating your account. \

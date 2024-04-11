@@ -93,7 +93,7 @@ class Checkout(View):
             )
             if not newsletter_email.is_active:
                 raise Exception
-        except:
+        except Exception:
             context['newsletter_checkbox'] = True
 
         # Get the context to create the select form
@@ -125,8 +125,8 @@ class Checkout(View):
         is_delivery = 'delivery' in request.POST
 
         checkout_data = request.POST.copy()
-        checkout_data['full_name'] = f"""
-            {checkout_data['first_name']} {checkout_data['last_name']}"""               
+        checkout_data['full_name'] = (
+            f"""{checkout_data['first_name']} {checkout_data['last_name']}""")
 
         checkout_data.update({
             'bake_date': bake_date,
@@ -145,7 +145,7 @@ class Checkout(View):
                 'delivery_county': None,
                 'delivery_postcode': None
             })
-        
+
         # Updating the user profile if save info is checked
         user = None
         if request.user.is_authenticated:
@@ -163,7 +163,7 @@ class Checkout(View):
         if save_info:
             messages.success(request, """Your billing information has
                 been saved!""")
-        
+
         # Signing up for the newsletter
         if 'newsletter_subscribe' in request.POST:
             response = NewsletterSignup.subscribe_email(
@@ -174,7 +174,7 @@ class Checkout(View):
                     subscribed to the newsletter.""")
             elif response == 'New subscription':
                 messages.success(request,
-                    'You have signed up for our newsletter!')
+                                 'You have signed up for our newsletter!')
             elif response == 'Subscription reactivated':
                 messages.success(request, """
                     'Your newsletter subscription has been
@@ -252,7 +252,7 @@ def cache_checkout_data(request):
                 newsletter.received_codes.remove(discount_code)
                 newsletter.save()
                 request.session['discount'] = discount
-            except:
+            except Exception:
                 # Because we already validated the discount code, this
                 # can only happen if the user uses the code in another
                 # tab
@@ -300,7 +300,7 @@ def cache_checkout_data(request):
                 prop['name']: prop['answer'] for prop in item['prop_list']
             }
             metadata[f'product_{count}'] = json.dumps(item_data)
-        
+
         stripe.PaymentIntent.modify(
             pid,
             metadata=metadata,
@@ -312,8 +312,7 @@ def cache_checkout_data(request):
         messages.error(request, f"""
             Sorry, but your payment cannot be processed.
             Please try again. {e}
-            """
-        )
+            """)
         return HttpResponse(content=e, status=400)
 
 
@@ -341,7 +340,7 @@ def get_discount_code(request):
                 status=400
             )
         discount = discount_code.get_discount(cart_total)
-        
+
         response_data = json.dumps({
             'discount': price_as_float(discount),
             'new_total': price_as_float(cart_total - discount)
@@ -350,7 +349,7 @@ def get_discount_code(request):
             content=response_data,
             status=200
         )
-        
+
     except NewsletterEmails.DoesNotExist:
         return HttpResponse(
             content='Your email has no discount codes available',
