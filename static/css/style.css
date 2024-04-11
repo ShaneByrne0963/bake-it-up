@@ -47,8 +47,9 @@ h3, .product-card-title {
     font-size: 1.2em;
 }
 
+a,
 .pseudo-anchor {
-    color: #007bff;
+    color: #115dad;
 }
 
 .pseudo-anchor:hover {

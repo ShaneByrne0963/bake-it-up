@@ -122,7 +122,8 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <div class="dropdown d-inline-block">
-                        <button class="btn btn-nav dropdown-toggle position-relative" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-nav dropdown-toggle position-relative" type="button" data-toggle="dropdown"
+                            aria-label="User actions dropdown" aria-expanded="false">
                             <i class="fa-regular fa-lg fa-user"></i>
                             {% if num_messages %}
                                 <span class="badge badge-danger">{{ num_messages }}</span>
